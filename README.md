@@ -1,7 +1,7 @@
 kodeWeave
 ===================
 
-kodeWeave is your on the go coding playground! Design with TailwindCSS or PicoCSS, see how your app or website will look and behave on a desktop. kodeWeave also easily converts your app into a Progressive Web App so both mobile and desktop users can install and use your app offline!
+kodeWeave is your on the go coding playground! Design with TailwindCSS or Pico.css, see how your app or website will look and behave on a desktop. kodeWeave also easily converts your app into a Progressive Web App so both mobile and desktop users can install and use your app offline!
 
 If you've ever used jsfiddle, jsbin, dabblet, liveweave, codepen, cssdeck, cssdesk, tinkerbin, d3 playground, plunker and/or pastebin kodeWeave is the tool for you when you're away from a computer!
 
