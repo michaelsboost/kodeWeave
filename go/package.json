@@ -4,7 +4,7 @@
   "description": "Your on the go code playground!",
   "main": "index.js",
   "scripts": {
-    "start": "rollup -c",
+    "build": "rollup -c",
     "serve": "http-server -p 1336 build -c-1"
   },
   "repository": {
