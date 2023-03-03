@@ -462,7 +462,7 @@ const app = {
       };
     };
     
-    // function to load an image as base64
+    // function to load json file
     document.getElementById('import').onchange = () => {
       let reader = new FileReader();
     
@@ -501,6 +501,22 @@ const app = {
             insert: js,
           },
         });
+
+        // remove images if they already exist for exporting
+        if (document.querySelector('[data-image]')) {
+          document.querySelectorAll('[data-image]').forEach((child, index) => {
+            child.remove();
+          });
+        }
+
+        // convert create logo image sizes for manifest.json
+        let imageArr = ['192', '256', '384', '512', logo.width];
+        for (let i of imageArr) {
+          embedImage(logo.src, i);
+        }
+
+        // after everything has been loaded trigger change on css to grab the source code
+        css.onchange();
       };
       reader.readAsText(document.getElementById('import').files[0]);
 
@@ -572,40 +588,40 @@ const app = {
       }
 
       let manifestJSONCode = `{
-"theme_color":      "hsl(207, 31%, 11%)",
-"background_color": "hsl(207, 31%, 11%)",
-"display":      "standalone",
-"start_url":    "./index.html",
-"lang":         "en-US",
-"name":         "${appJSON.name}",
-"short_name":   "${appJSON.name}",
-"description" : "${appJSON.description}",
-"icons": [
-  {
-    "src":     "./imgs/icon-192x192.png",
-    "sizes":   "192x192",
-    "type":    "image/png",
-    "purpose": "any"
-  },
-  {
-    "src":     "./imgs/icon-256x256.png",
-    "sizes":   "256x256",
-    "type":    "image/png",
-    "purpose": "any"
-  },
-  {
-    "src":     "./imgs/icon-384x384.png",
-    "sizes":   "384x384",
-    "type":    "image/png",
-    "purpose": "any"
-  },
-  {
-    "src":     "./imgs/icon-512x512.png",
-    "sizes":   "512x512",
-    "type":    "image/png",
-    "purpose": "maskable"
-  }
-]
+  "theme_color":      "hsl(207, 31%, 11%)",
+  "background_color": "hsl(207, 31%, 11%)",
+  "display":      "standalone",
+  "start_url":    "./index.html",
+  "lang":         "en-US",
+  "name":         "${appJSON.name}",
+  "short_name":   "${appJSON.name}",
+  "description" : "${appJSON.description}",
+  "icons": [
+    {
+      "src":     "./imgs/icon-192x192.png",
+      "sizes":   "192x192",
+      "type":    "image/png",
+      "purpose": "any"
+    },
+    {
+      "src":     "./imgs/icon-256x256.png",
+      "sizes":   "256x256",
+      "type":    "image/png",
+      "purpose": "any"
+    },
+    {
+      "src":     "./imgs/icon-384x384.png",
+      "sizes":   "384x384",
+      "type":    "image/png",
+      "purpose": "any"
+    },
+    {
+      "src":     "./imgs/icon-512x512.png",
+      "sizes":   "512x512",
+      "type":    "image/png",
+      "purpose": "maskable"
+    }
+  ]
 }`;
       let packageJSONCode = `{
 "name": "${appJSON.name.toLowerCase().trim()}",
@@ -654,102 +670,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.`;
-      let swCode = `
-"./manifest.json",
-"./imgs/logo.png",
-"./imgs/logo.svg",
-"./index.html",
-"./css/style.css",
-"./js/app.js",
-"./js/app.min.js",
-"./libraries/font-awesome/css/all.css",
-"./libraries/font-awesome/css/all.min.css",
-"./libraries/font-awesome/css/brands.css",
-"./libraries/font-awesome/css/brands.min.css",
-"./libraries/font-awesome/css/fontawesome.css",
-"./libraries/font-awesome/css/fontawesome.min.css",
-"./libraries/font-awesome/css/regular.css",
-"./libraries/font-awesome/css/regular.min.css",
-"./libraries/font-awesome/css/solid.css",
-"./libraries/font-awesome/css/solid.min.css",
-"./libraries/font-awesome/css/svg-with-js.css",
-"./libraries/font-awesome/css/svg-with-js.min.css",
-"./libraries/font-awesome/css/v4-font-face.css",
-"./libraries/font-awesome/css/v4-font-face.min.css",
-"./libraries/font-awesome/css/v4-shims.css",
-"./libraries/font-awesome/css/v4-shims.min.css",
-"./libraries/font-awesome/css/v5-font-face.css",
-"./libraries/font-awesome/css/v5-font-face.min.css",
-"./libraries/font-awesome/js/all.js",
-"./libraries/font-awesome/js/all.min.js",
-"./libraries/font-awesome/js/brands.js",
-"./libraries/font-awesome/js/brands.min.js",
-"./libraries/font-awesome/js/conflict-detection.js",
-"./libraries/font-awesome/js/conflict-detection.min.js",
-"./libraries/font-awesome/js/fontawesome.js",
-"./libraries/font-awesome/js/fontawesome.min.js",
-"./libraries/font-awesome/js/regular.js",
-"./libraries/font-awesome/js/regular.min.js",
-"./libraries/font-awesome/js/solid.js",
-"./libraries/font-awesome/js/solid.min.js",
-"./libraries/font-awesome/js/v4-shims.js",
-"./libraries/font-awesome/js/v4-shims.min.js",
-"./libraries/font-awesome/LICENSE.txt",
-"./libraries/font-awesome/webfonts/fa-brands-400.ttf",
-"./libraries/font-awesome/webfonts/fa-brands-400.woff2",
-"./libraries/font-awesome/webfonts/fa-regular-400.ttf",
-"./libraries/font-awesome/webfonts/fa-regular-400.woff2",
-"./libraries/font-awesome/webfonts/fa-solid-900.ttf",
-"./libraries/font-awesome/webfonts/fa-solid-900.woff2",
-"./libraries/font-awesome/webfonts/fa-v4compatibility.ttf",
-"./libraries/font-awesome/webfonts/fa-v4compatibility.woff2"
-];
-
-/* Start the service worker and cache all of the app's content */
-self.addEventListener('install', function(e) {
-e.waitUntil(
-  caches.open(cacheName).then(function(cache) {
-    return cache.addAll(filesToCache);
-  })
-);
-self.skipWaiting();
-});
-
-/* Serve cached content when offline */
-self.addEventListener('fetch', function(e) {
-e.respondWith(
-  caches.match(e.request).then(function(response) {
-    return response || fetch(e.request);
-  })
-);
-});`;
-      let swStart = `
-  "./manifest.json",
+      let swStart = `"./manifest.json",
   "./imgs/logo.png",
-  "./imgs/logo.svg",
   "./index.html",
   "./css/style.css",
-  "./js/app.js",
   "./js/bundle.js"`;
       let swEnd = `
 
 /* Start the service worker and cache all of the app's content */
-self.addEventListener('install', function(e) {
-e.waitUntil(
-caches.open(cacheName).then(function(cache) {
-return cache.addAll(filesToCache);
-})
-);
-self.skipWaiting();
+self.addEventListener("install", function(e) {
+  e.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      return cache.addAll(filesToCache);
+    })
+  );
+  self.skipWaiting();
 });
 
 /* Serve cached content when offline */
-self.addEventListener('fetch', function(e) {
-e.respondWith(
-caches.match(e.request).then(function(response) {
-return response || fetch(e.request);
-})
-);
+self.addEventListener("fetch", function(e) {
+  e.respondWith(
+    caches.match(e.request).then(function(response) {
+      return response || fetch(e.request);
+    })
+  );
 });`;
       let pwaHTML = `
       <script>
@@ -1047,7 +991,6 @@ let filesToCache = [
           }
         }
 
-        zip.file("js/app.js", appJSON.javascript);
         zip.file("js/bundle.js", `${forJSfile}${(appJSON.javascript === '') ? '' : appJSON.javascript.toString()}`);
         zip.file("css/style.css", `/* imports */
 ${cssImport}`);
@@ -1084,6 +1027,9 @@ ${htmlEditor.state.doc.toString()}
         zip.file("package.json", packageJSONCode);
         zip.file("LICENSE.md", licenseStr);
 
+        // save kodeWeave project file in export
+        zip.file(`${appJSON.name.toString().toLowerCase().replace(/ /g,"")}-kodeWeave.json`, JSON.stringify(appJSON));
+
         if (appJSON.pwa) {
           zip.file("sw.js", `let cacheName    = "${appJSON.name}";
 let filesToCache = [
@@ -1117,6 +1063,7 @@ let filesToCache = [
     
       let data = {
         title        : appJSON.title,
+        description  : appJSON.description,
         html         : `<!-- 
   Shared from kodeWeave!
   Try kodeWeave today at https://michaelsboost.com/kodeWeave/
