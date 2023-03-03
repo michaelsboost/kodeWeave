@@ -302,6 +302,84 @@ const app = {
     };
   },
 
+  // toggle HTML and JS editors
+  toggleDialogs: () => {
+    htmlBtn.onclick = () => {
+      // if html editor is hidden display it
+      if (document.querySelector('.fa-html5').classList.contains('text-blue-500')) {
+        document.querySelector('.fa-html5').classList.remove('text-blue-500');
+        document.getElementById('htmlEditor').classList.add('hidden');
+
+        // make editors fill area
+        document.getElementById('editorContainer').className = `absolute bottom-0 top-1/2 inset-x-0 md:top-0 overflow-hidden`;
+
+        // make canvas fill area
+        document.getElementById('canvasContainer').className = `absolute inset-0 p-0 overflow-hidden bg-repeat`;
+
+        // center canvas
+        rotate.onclick();
+        rotate.onclick();
+      } else {
+        // if js editor is visible hide it
+        if (document.querySelector('.fa-js').classList.contains('text-blue-500')) {
+          document.querySelector('.fa-js').classList.remove('text-blue-500');
+          document.getElementById('jsEditor').classList.add('hidden');
+        }
+
+        // display html editor
+        document.querySelector('.fa-html5').classList.add('text-blue-500');
+        document.getElementById('htmlEditor').classList.remove('hidden');
+
+        // reset editor container
+        document.getElementById('editorContainer').className = `absolute bottom-0 top-1/2 w-full md:w-1/2 md:top-0 overflow-hidden`;
+
+        // reset canvas
+        document.getElementById('canvasContainer').className = `absolute bottom-1/2 top-0 w-full md:w-1/2 md:bottom-0 md:left-1/2 p-0 overflow-hidden bg-repeat`;
+
+        // center canvas
+        rotate.onclick();
+        rotate.onclick();
+      }
+    };
+    jsBtn.onclick = () => {
+      // if js editor is hidden display it
+      if (document.querySelector('.fa-js').classList.contains('text-blue-500')) {
+        document.querySelector('.fa-js').classList.remove('text-blue-500');
+        document.getElementById('jsEditor').classList.add('hidden');
+
+        // make editors fill area
+        document.getElementById('editorContainer').className = `absolute bottom-0 top-1/2 inset-x-0 md:top-0 overflow-hidden`;
+
+        // make canvas fill area
+        document.getElementById('canvasContainer').className = `absolute inset-0 p-0 overflow-hidden bg-repeat`;
+
+        // center canvas
+        rotate.onclick();
+        rotate.onclick();
+      } else {
+        // if html editor is visible hide it
+        if (document.querySelector('.fa-html5').classList.contains('text-blue-500')) {
+          document.querySelector('.fa-html5').classList.remove('text-blue-500');
+          document.getElementById('htmlEditor').classList.add('hidden');
+        }
+
+        // display js editor
+        document.querySelector('.fa-js').classList.add('text-blue-500');
+        document.getElementById('jsEditor').classList.remove('hidden');
+
+        // reset editor container
+        document.getElementById('editorContainer').className = `absolute bottom-0 top-1/2 w-full md:w-1/2 md:top-0 overflow-hidden`;
+
+        // reset canvas
+        document.getElementById('canvasContainer').className = `absolute bottom-1/2 top-0 w-full md:w-1/2 md:bottom-0 md:left-1/2 p-0 overflow-hidden bg-repeat`;
+
+        // center canvas
+        rotate.onclick();
+        rotate.onclick();
+      }
+    };
+  },
+
   // initalize application function
   init: () => {
     // check localStorage
@@ -357,6 +435,9 @@ const app = {
 
     // init zooming and panning
     app.initZoomPan();
+
+    // toggle HTML and JS editors
+    app.toggleDialogs();
 
     // Convert logo to png images for manifest.json
     let embedImage = (source, size) => {

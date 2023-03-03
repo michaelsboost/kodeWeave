@@ -40,15 +40,12 @@
     "@codemirror/theme-one-dark": "^6.1.1",
     "@codemirror/view": "^6.9.1",
     "@emmetio/codemirror6-plugin": "^0.2.0",
-    "@panzoom/panzoom": "^4.5.1",
     "@replit/codemirror-css-color-picker": "^6.0.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "codemirror": "^6.0.1",
     "eslint": "^8.35.0",
     "eslint-linter-browserify": "^8.35.0",
-    "file-saver": "^2.0.5",
     "htmlhint": "^1.1.4",
-    "jszip": "^3.10.1",
     "rollup": "^2.79.1"
   }
 }

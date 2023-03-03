@@ -29,7 +29,7 @@
   </head>
   <body>
     <!-- editor container -->
-    <div class="absolute bottom-0 top-1/2 w-full md:w-1/2 md:top-0 overflow-hidden">
+    <div id="editorContainer" class="absolute bottom-0 top-1/2 w-full md:w-1/2 md:top-0 overflow-hidden">
 
       <div id="htmlEditor" class="absolute top-0 inset-x-0 bottom-10 p-x-4 pt-4 pb-4 md:pt-16 overflow-auto"></div>
       <div id="jsEditor" class="absolute top-0 inset-x-0 bottom-10 p-x-4 pt-4 pb-4 md:pt-16 overflow-auto hidden"></div>
@@ -44,7 +44,7 @@
       </nav>
         
       <!-- bottom navbar -->
-      <nav class="absolute bottom-0 inset-x-0 px-2 block">
+      <nav class="absolute bottom-0 inset-x-0 px-2 block z-10">
         <ul class="justify-evenly">
           <li>
             <button id="run" class="py-0 my-0 border-none bg-transparent text-current">
@@ -52,12 +52,12 @@
             </button>
           </li>
           <li>
-            <button onclick="document.querySelector('.fa-html5').classList.add('text-blue-500'); document.querySelector('.fa-js').classList.remove('text-blue-500'); htmlEditor.classList.remove('hidden'); jsEditor.classList.add('hidden');" class="py-0 my-0 border-none bg-transparent text-current">
+            <button id="htmlBtn" class="py-0 my-0 border-none bg-transparent text-current">
               <i class="text-blue-500 text-xl fa-brands fa-html5"></i>
             </button>
           </li>
           <li>
-            <button onclick="document.querySelector('.fa-js').classList.add('text-blue-500'); document.querySelector('.fa-html5').classList.remove('text-blue-500'); htmlEditor.classList.add('hidden'); jsEditor.classList.remove('hidden');" class="py-0 my-0 border-none bg-transparent text-current">
+            <button id="jsBtn" class="py-0 my-0 border-none bg-transparent text-current">
               <i class="text-xl fa-brands fa-js"></i>
             </button>
           </li>
@@ -242,7 +242,7 @@
     </span>
     
     <!-- canvas container -->
-    <div class="absolute bottom-1/2 top-0 w-full md:w-1/2 md:bottom-0 md:left-1/2 p-0 overflow-hidden bg-repeat" style="background-image: url('imgs/bg.svg');">
+    <div id="canvasContainer" class="absolute bottom-1/2 top-0 w-full md:w-1/2 md:bottom-0 md:left-1/2 p-0 overflow-hidden bg-repeat" style="background-image: url('imgs/bg.svg');">
 
       <!-- top navbar -->
       <nav class="absolute inset-x-0 pt-0 pl-3 pr-2 z-10">
