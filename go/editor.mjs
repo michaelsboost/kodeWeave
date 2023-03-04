@@ -1237,8 +1237,8 @@ ${jsEditor.state.doc.toString()}`,
       }
     }
 
-    let picoStyle     = '.wrapper_yOR7u {width: 100%!important; border-radius: 15px 15px 0 0!important;} .btn_yOR7u { background: inherit; padding: 0 0.5rem; margin: inherit; margin-right: 10px; border: inherit; } .nav_yOR7u {padding-bottom: 14px!important;} .line_yOR7u {background: inherit!important;}';
-    let tailwindStyle = '.wrapper_yOR7u {width: 100%!important; border-radius: 15px 15px 0 0!important;} .btn_yOR7u { background: inherit; padding: 0 0.5rem; margin: inherit; margin-right: 10px; border: inherit; color: #fff!important; } .nav_yOR7u {padding-bottom: 14px!important;} .line_yOR7u {background: inherit!important;}';
+    let picoStyle     = '.wrapper_yOR7u {width: 100%!important; border-radius: 15px 15px 0 0!important; z-index: 99999999;} .btn_yOR7u { background: inherit; padding: 0 0.5rem; margin: inherit; margin-right: 10px; border: inherit; } .nav_yOR7u {padding-bottom: 14px!important;} .line_yOR7u {background: inherit!important;}';
+    let tailwindStyle = '.wrapper_yOR7u {width: 100%!important; border-radius: 15px 15px 0 0!important; z-index: 99999999;} .btn_yOR7u { background: inherit; padding: 0 0.5rem; margin: inherit; margin-right: 10px; border: inherit; color: #fff!important; } .nav_yOR7u {padding-bottom: 14px!important;} .line_yOR7u {background: inherit!important;}';
     let consoleStyle  = (css.value === 'picocss') ? `<style>${picoStyle}</style>` : `<style>${tailwindStyle}</style>`;
     let addConsoleCSS = (appJSON.console) ? consoleStyle : '';
     let faHTMLChoice      = (appJSON.fontawesome) ? `
