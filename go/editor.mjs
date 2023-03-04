@@ -836,6 +836,10 @@ ${cssImport}
     <meta name="msapplication-starturl" content="./index.html">
     <link rel="apple-touch-icon" href="imgs/logo.${logoType}">
     <link rel="icon" href="imgs/logo.${logoType}" type="image/x-icon" />
+    <meta property="og:url"         content="${appJSON.website}" />
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content="${appJSON.title}" />
+    <meta property="og:description" content="${appJSON.description}" />
     ${cssLib}
   </head>
   <body>
@@ -848,6 +852,9 @@ ${htmlEditor.state.doc.toString()}
         zip.file("manifest.json", manifestJSONCode);
         zip.file("package.json", packageJSONCode);
         zip.file("LICENSE.md", licenseStr);
+
+        // save kodeWeave project file in export
+        zip.file(`${appJSON.name.toString().toLowerCase().replace(/ /g,"")}-kodeWeave.json`, JSON.stringify(appJSON));
 
         if (appJSON.pwa) {
           zip.file("sw.js", `let cacheName    = "${appJSON.name}";
@@ -1021,6 +1028,10 @@ ${cssImport}`);
     <meta name="msapplication-starturl" content="./index.html">
     <link rel="apple-touch-icon" href="imgs/logo.${logoType}">
     <link rel="icon" href="imgs/logo.${logoType}" type="image/x-icon" />
+    <meta property="og:url"         content="${appJSON.website}" />
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content="${appJSON.title}" />
+    <meta property="og:description" content="${appJSON.description}" />
     ${cssLib}
   </head>
   <body>
