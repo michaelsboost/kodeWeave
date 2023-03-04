@@ -425,7 +425,10 @@ const app = {
         },
       });
 
-      document.querySelector('.cm-editor').style.fontSize = `${fz.value}px`;
+      let cmEditor = document.querySelectorAll('.cm-editor');
+      cmEditor.forEach((child) => {
+        child.style.fontSize = `${fz.value}px`;
+      });
     }
 
     if (appJSON.autoupdate) run.classList.add('hidden');
@@ -1148,7 +1151,10 @@ ${jsEditor.state.doc.toString()}`,
     
     // remember state for the following elements
     fz.onchange = () => {
-      document.querySelector('.cm-editor').style.fontSize = `${fz.value}px`;
+      let cmEditor = document.querySelectorAll('.cm-editor');
+      cmEditor.forEach((child) => {
+        child.style.fontSize = `${fz.value}px`;
+      });
       app.updateStorage();
     };
     appname.onkeyup = () => app.updateStorage();
