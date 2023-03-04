@@ -109,6 +109,7 @@ let appJSON = {
   analytics: '',
   logo: logo.src,
   css: 'picocss',
+  fontSize: 16,
   theme: false,
   autoupdate: false,
   console: true,
@@ -403,6 +404,7 @@ const app = {
       logo.src                    = appJSON.logo;
       scratchpad.value            = appJSON.scratchpad;
       css.value                   = appJSON.css;
+      fz.value                    = appJSON.fontSize;
       theme.checked               = (appJSON.theme)       ? true : false;
       autoupdate.checked          = (appJSON.autoupdate)  ? true : false;
       toggleconsole.checked       = (appJSON.console)     ? true : false;
@@ -422,6 +424,8 @@ const app = {
           insert: js,
         },
       });
+
+      document.querySelector('.cm-editor').style.fontSize = `${fz.value}px`;
     }
 
     if (appJSON.autoupdate) run.classList.add('hidden');
@@ -708,7 +712,7 @@ self.addEventListener("fetch", function(e) {
 
       if (appJSON.fontawesome) {
       // join font awesome library into users new project
-      JSZipUtils.getBinaryContent("../zips/font-awesome.zip", function(err, data) {
+      JSZipUtils.getBinaryContent("zips/font-awesome.zip", function(err, data) {
         if(err) {
           throw err; // or handle err
         }
@@ -1143,14 +1147,18 @@ ${jsEditor.state.doc.toString()}`,
     };
     
     // remember state for the following elements
-    appname.onkeyup = () => app.updatePreview();
-    title.onkeyup = () => app.updatePreview();
-    description.onkeyup = () => app.updatePreview();
-    version.onkeyup = () => app.updatePreview();
-    author.onkeyup = () => app.updatePreview();
-    website.onkeyup = () => app.updatePreview();
-    googleanalytics.onkeyup = () => app.updatePreview();
-    scratchpad.onkeyup = () => app.updatePreview();
+    fz.onchange = () => {
+      document.querySelector('.cm-editor').style.fontSize = `${fz.value}px`;
+      app.updateStorage();
+    };
+    appname.onkeyup = () => app.updateStorage();
+    title.onkeyup = () => app.updateStorage();
+    description.onkeyup = () => app.updateStorage();
+    version.onkeyup = () => app.updateStorage();
+    author.onkeyup = () => app.updateStorage();
+    website.onkeyup = () => app.updateStorage();
+    googleanalytics.onkeyup = () => app.updateStorage();
+    scratchpad.onkeyup = () => app.updateStorage();
     theme.onchange = () => app.updatePreview();
     toggleconsole.onchange = () => app.updatePreview();
     fa.onchange = () => app.updatePreview();
@@ -1279,6 +1287,7 @@ ${jsEditor.state.doc.toString()}`,
     appJSON.logo                  = logo.src;
     appJSON.scratchpad            = scratchpad.value;
     appJSON.css                   = css.value;
+    appJSON.fontSize              = fz.value;
     appJSON.theme                 = (theme.checked)         ? true : false;
     appJSON.autoupdate            = (autoupdate.checked)    ? true : false;
     appJSON.console               = (toggleconsole.checked) ? true : false;
