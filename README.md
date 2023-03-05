@@ -22,7 +22,7 @@ Tech
 
 kodeWeave uses a number of open source projects to work properly:
 
-* [Codemirror](http://codemirror.net/) - Awesome web-based text editor
+* [Codemirror v6](http://codemirror.net/) - Awesome web-based text editor
 * [Emmet](http://emmet.io/) - Codemirror Plugin for Zen Coding
 * [JSZip](https://stuk.github.io/jszip/) - Create .zip files using Javascript
 * [FileSaver.js](https://github.com/eligrey/FileSaver.js/) - Save files client-side in Javascript
