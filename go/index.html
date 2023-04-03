@@ -37,7 +37,7 @@
       <!-- top logo -->
       <nav class="absolute inset-x-0 pt-2 pl-4 pr-2">
         <ul class="hidden md:block">
-          <a onclick="about.setAttribute('open', true);" class="cursor-pointer py-0 my-0 border-none bg-transparent text-current">
+          <a onclick="about.setAttribute('open', true)" class="cursor-pointer py-0 my-0 border-none bg-transparent text-current">
             <img class="h-10" src="imgs/logo.svg">
           </a>
         </ul>
@@ -62,10 +62,15 @@
             </button>
           </li>
           <li>
+            <button class="py-0 my-0 border-none bg-transparent text-current" onclick="actions.setAttribute('open', true)">
+              <i class="text-xl fa fa-bolt"></i>
+            </button>
+          </li>
+          <!-- <li>
             <button id="share" class="py-0 my-0 border-none bg-transparent text-current">
               <i class="text-xl fa fa-share"></i>
             </button>
-          </li>
+          </li> -->
           <li>
             <a href="https://michaelsboost.com/donate/" target="_blank" class="py-0 my-0 border-none bg-transparent text-current">
               <i class="text-xl fa fa-heart text-red-500"></i>
@@ -79,7 +84,7 @@
     <dialog id="settings" class="cursor-pointer">
       <!-- <article class="absolute inset-y-0 right-0 m-0 p-4 w-full max-w-xl max-h-full rounded-none cursor-default"> -->
       <article class="absolute inset-y-0 right-0 m-0 p-4 w-full max-w-full max-h-full rounded-none cursor-default">
-        <button onclick="settings.removeAttribute('open');" role="button" class="p-0 w-auto max-h-full rounded-full border-0 float-right text-current bg-transparent">
+        <button onclick="this.closest('dialog').removeAttribute('open')" role="button" class="p-0 w-auto max-h-full rounded-full border-0 float-right text-current bg-transparent">
           <i class="fa fa-times"></i>
         </button>
 
@@ -194,18 +199,25 @@
               </div>
             </span>
           </label>
-          <button id="exportJSON" class="cursor-pointer w-auto p-0 m-0 bg-transparent border-none text-current">
+          <!-- <button class="cursor-pointer w-auto p-0 m-0 bg-transparent border-none text-current" onclick="app.exportJSON()">
             <i class="fa fa-file-export text-2xl mb-2"></i>
 
             <div class="text-xs">
               save json
             </div>
-          </button>
-          <button id="exportZip" class="cursor-pointer w-auto p-0 m-0 bg-transparent border-none text-current">
+          </button> -->
+          <button class="cursor-pointer w-auto p-0 m-0 bg-transparent border-none text-current" onclick="app.exportZip()">
             <i class="fa fa-download text-2xl mb-2"></i>
 
             <div class="text-xs">
               export zip
+            </div>
+          </button>
+          <button id="share" class="cursor-pointer w-auto p-0 m-0 bg-transparent border-none text-current">
+            <i class="fa fa-share text-2xl mb-2"></i>
+
+            <div class="text-xs">
+              share
             </div>
           </button>
           <a href="https://michaelsboost.com/donate/" target="_blank" class="text-red-500">
@@ -218,7 +230,90 @@
         </nav>
       </article>
     </dialog>
-    <dialog id="about" class="cursor-pointer" onclick="about.removeAttribute('open');">
+    <dialog id="actions" class="cursor-pointer">
+      <!-- <article class="absolute inset-y-0 right-0 m-0 p-4 w-full max-w-xl max-h-full rounded-none cursor-default"> -->
+      <article class="absolute inset-y-0 right-0 m-0 p-4 w-full max-w-full max-h-full rounded-none cursor-default">
+        <button onclick="this.closest('dialog').removeAttribute('open')" role="button" class="p-0 w-auto max-h-full rounded-full border-0 float-right text-current bg-transparent">
+          <i class="fa fa-times"></i>
+        </button>
+
+        <h5 class="capitalize text-3xl">
+          actions
+        </h5>
+
+        <div class="grid grid-cols-2 gap-2">
+          <button id="snr"  class="capitalize bg-transparent text-current">search/replace</button>
+          <button id="goto"  class="capitalize bg-transparent text-current">go to line</button>
+        </div>
+
+        <h5 class="capitalize">
+          quick symbols
+        </h5>
+
+        <div class="grid grid-cols-2 gap-2">
+          <button data-snippet class="bg-transparent text-current">{}</button>
+          <button data-snippet class="bg-transparent text-current">()</button>
+          <button data-snippet class="bg-transparent text-current">[]</button>
+          <button data-snippet class="bg-transparent text-current">''</button>
+          <button data-snippet class="bg-transparent text-current">""</button>
+          <button data-snippet class="bg-transparent text-current">``</button>
+          <button data-snippet class="bg-transparent text-current">=></button>
+          <button data-snippet class="bg-transparent text-current">=</button>
+          <button data-snippet class="bg-transparent text-current">&gt;</button>
+          <button data-snippet class="bg-transparent text-current">&lt;</button>
+          <button data-snippet class="bg-transparent text-current">;</button>
+          <button data-snippet class="bg-transparent text-current">,</button>
+          <button data-snippet class="bg-transparent text-current">/</button>
+          <button data-snippet class="bg-transparent text-current">\</button>
+          <button data-snippet class="bg-transparent text-current">?</button>
+          <button data-snippet class="bg-transparent text-current">:</button>
+        </div>
+
+        <div data-forjs class="hidden">
+          <h5 class="capitalize">
+            methods
+          </h5>
+  
+          <div class="grid grid-cols-2 gap-2">
+            <button data-snippet class="bg-transparent text-current">.getElementById()</button>
+            <button data-snippet class="bg-transparent text-current">.querySelector()</button>
+            <button data-snippet class="bg-transparent text-current">.querySelectorAll()</button>
+            <button data-snippet class="bg-transparent text-current">.querySelectorAll()[]</button>
+            <button data-snippet class="bg-transparent text-current">.getAttribute()</button>
+            <button data-snippet class="bg-transparent text-current">.setAttribute()</button>
+            <button data-snippet class="bg-transparent text-current">.removeAttribute()</button>
+            <button data-snippet class="bg-transparent text-current">.onkeyup = e => {}</button>
+            <button data-snippet class="bg-transparent text-current">.onkeydown = e => {}</button>
+            <button data-snippet class="bg-transparent text-current">.ontouchstart = e => {}</button>
+            <button data-snippet class="bg-transparent text-current">.ontouchmove = e => {}</button>
+            <button data-snippet class="bg-transparent text-current">.ontouchend = e => {}</button>
+          </div>
+  
+          <h5 class="capitalize">
+            loops
+          </h5>
+  
+          <div class="grid grid-cols-2 gap-2">
+            <button data-snippet class="bg-transparent text-current">for (let i in arr) {}</button>
+            <button data-snippet class="bg-transparent text-current">for (let i of arr) {}</button>
+            <button data-snippet class="bg-transparent text-current">.forEach((child, index) =&gt; {})</button>
+          </div>
+  
+  
+          <h5 class="capitalize">
+            events
+          </h5>
+  
+          <div class="grid grid-cols-2 gap-2">
+            <button data-snippet class="bg-transparent text-current">.onclick = () => {}</button>
+            <button data-snippet class="bg-transparent text-current">.onchange = () => {}</button>
+            <button data-snippet class="bg-transparent text-current">.onkeyup = e => {}</button>
+            <button data-snippet class="bg-transparent text-current">.onkeydown = e => {}</button>
+          </div>
+        </div>
+      </article>
+    </dialog>
+    <dialog id="about" class="cursor-pointer" onclick="this.removeAttribute('open')">
       <article class="w-2/3 text-center cursor-default">
         <div class="mb-2">
           <a href="https://michaelsboost.com/donate/" target="_blank" role="button" class="border-none bg-transparent text-red-500">
@@ -232,7 +327,7 @@
           About kodeWeave
         </div>
         <div class="my-2">
-          <small>Version 1.1.4</small>
+          <small>Version 1.1.41</small>
         </div>
         <div>
           <a href="https://github.com/michaelsboost/kodeWeave/blob/gh-pages/LICENSE" target="_blank">
@@ -253,7 +348,7 @@
       <!-- top navbar -->
       <nav class="absolute inset-x-0 pt-0 pl-3 pr-2 z-10">
         <ul class="relative p-3 z-10 flex md:hidden">
-          <a onclick="about.setAttribute('open', true);" class="cursor-pointer py-0 my-0 border-none bg-transparent text-current">
+          <a onclick="about.setAttribute('open', true)" class="cursor-pointer py-0 my-0 border-none bg-transparent text-current">
             <img class="h-10" src="imgs/logo.svg">
           </a>
         </ul>
@@ -284,7 +379,7 @@
             </label>
           </li>
           <li>
-            <button onclick="settings.setAttribute('open', true);" class="py-0 my-0 border-none bg-transparent text-current">
+            <button onclick="settings.setAttribute('open', true)" class="py-0 my-0 border-none bg-transparent text-current">
               <i class="fa fa-cog"></i>
             </button>
           </li>
@@ -302,8 +397,8 @@
       // service worker for progressive web app
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js');
-        });
+          navigator.serviceWorker.register('./sw.js')
+        })
       }
     </script>
   </body>
