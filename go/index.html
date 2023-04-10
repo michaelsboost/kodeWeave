@@ -269,9 +269,24 @@
           <button data-snippet class="bg-transparent text-current">:</button>
         </div>
 
+        <div data-forhtml>
+          <h5 class="capitalize">
+            event snippets
+          </h5>
+  
+          <div class="grid grid-cols-2 gap-2">
+            <button data-snippet class="bg-transparent text-current">onclick=""</button>
+            <button data-snippet class="bg-transparent text-current">onchange=""</button>
+            <button data-snippet class="bg-transparent text-current">onkeyup=""</button>
+            <button data-snippet class="bg-transparent text-current">onkeydown=""</button>
+            <button data-snippet class="bg-transparent text-current">ontouchstart=""</button>
+            <button data-snippet class="bg-transparent text-current">ontouchend=""</button>
+          </div>
+        </div>
+
         <div data-forjs class="hidden">
           <h5 class="capitalize">
-            methods
+            method snippets
           </h5>
   
           <div class="grid grid-cols-2 gap-2">
@@ -282,26 +297,158 @@
             <button data-snippet class="bg-transparent text-current">.getAttribute()</button>
             <button data-snippet class="bg-transparent text-current">.setAttribute()</button>
             <button data-snippet class="bg-transparent text-current">.removeAttribute()</button>
-            <button data-snippet class="bg-transparent text-current">.onkeyup = e => {}</button>
-            <button data-snippet class="bg-transparent text-current">.onkeydown = e => {}</button>
-            <button data-snippet class="bg-transparent text-current">.ontouchstart = e => {}</button>
-            <button data-snippet class="bg-transparent text-current">.ontouchmove = e => {}</button>
-            <button data-snippet class="bg-transparent text-current">.ontouchend = e => {}</button>
+            <button data-snippet class="bg-transparent text-current">.checked</button>
+            <button data-snippet class="bg-transparent text-current">.textContent</button>
+            <button data-snippet class="bg-transparent text-current">.innerHTML</button>
+            <button data-snippet class="bg-transparent text-current">.outerHTML</button>
+            <button data-snippet class="bg-transparent text-current">.clientWidth</button>
+            <button data-snippet class="bg-transparent text-current">.clientHeight</button>
+            <button data-snippet class="bg-transparent text-current">.className</button>
+            <button data-snippet class="bg-transparent text-current">.classList.add("")</button>
+            <button data-snippet class="bg-transparent text-current">.classList.remove("")</button>
+            <button data-snippet class="bg-transparent text-current">.style</button>
+            <button data-snippet class="bg-transparent text-current">.toString()</button>
+            <button data-snippet class="bg-transparent text-current">.toExponential()</button>
+            <button data-snippet class="bg-transparent text-current">.toFixed()</button>
+            <button data-snippet class="bg-transparent text-current">.toPrecision()</button>
+            <button data-snippet class="bg-transparent text-current">.ValueOf()</button>
+            <button data-snippet class="bg-transparent text-current">.length</button>
+            <button data-snippet class="bg-transparent text-current">.substring()</button>
+            <button data-snippet class="bg-transparent text-current">.trim()</button>
+            <button data-snippet class="bg-transparent text-current">.trimStart()</button>
+            <button data-snippet class="bg-transparent text-current">.trimEnd()</button>
+            <button data-snippet class="bg-transparent text-current">.padStart()</button>
+            <button data-snippet class="bg-transparent text-current">.padEnd()</button>
+            <button data-snippet class="bg-transparent text-current">.charAt()</button>
+            <button data-snippet class="bg-transparent text-current">.charCodeAt()</button>
+            <button data-snippet class="bg-transparent text-current">.slice()</button>
+            <button data-snippet class="bg-transparent text-current">.splice()</button>
+            <button data-snippet class="bg-transparent text-current">.replace(//g, "")</button>
+            <button data-snippet class="bg-transparent text-current">.replaceAll()</button>
+            <button data-snippet class="bg-transparent text-current">.concat()</button>
+            <button data-snippet class="bg-transparent text-current">.split("")</button>
+            <button data-snippet class="bg-transparent text-current">.join("")</button>
+            <button data-snippet class="bg-transparent text-current">.toLowerCase()</button>
+            <button data-snippet class="bg-transparent text-current">.toUpperCase()</button>
+            <button data-snippet class="bg-transparent text-current">.pop()</button>
+            <button data-snippet class="bg-transparent text-current">.push()</button>
+            <button data-snippet class="bg-transparent text-current">.shift()</button>
+            <button data-snippet class="bg-transparent text-current">.unshift()</button>
+            <button data-snippet class="bg-transparent text-current">.flat()</button>
+            <button data-snippet class="bg-transparent text-current">.sort()</button>
+            <button data-snippet class="bg-transparent text-current">.reverse()</button>
+            <button data-snippet class="bg-transparent text-current">JSON.stringify()</button>
           </div>
-  
+
           <h5 class="capitalize">
-            loops
+            arithmetic snippets
           </h5>
   
           <div class="grid grid-cols-2 gap-2">
+            <button data-snippet class="bg-transparent text-current">+</button>
+            <button data-snippet class="bg-transparent text-current">-</button>
+            <button data-snippet class="bg-transparent text-current">*</button>
+            <button data-snippet class="bg-transparent text-current">**</button>
+            <button data-snippet class="bg-transparent text-current">/</button>
+            <button data-snippet class="bg-transparent text-current">%</button>
+            <button data-snippet class="bg-transparent text-current">++</button>
+            <button data-snippet class="bg-transparent text-current">--</button>
+          </div>
+
+          <h5 class="capitalize">
+            assignment snippets
+          </h5>
+  
+          <div class="grid grid-cols-2 gap-2">
+            <button data-snippet class="bg-transparent text-current">=</button>
+            <button data-snippet class="bg-transparent text-current">+=</button>
+            <button data-snippet class="bg-transparent text-current">-=</button>
+            <button data-snippet class="bg-transparent text-current">*=</button>
+            <button data-snippet class="bg-transparent text-current">/=</button>
+            <button data-snippet class="bg-transparent text-current">%=</button>
+            <button data-snippet class="bg-transparent text-current">**=</button>
+            <button data-snippet class="bg-transparent text-current">&lt;&lt;=</button>
+            <button data-snippet class="bg-transparent text-current">&gt;&gt;=</button>
+            <button data-snippet class="bg-transparent text-current">&gt;&gt;&gt;=</button>
+            <button data-snippet class="bg-transparent text-current">&amp;=</button>
+            <button data-snippet class="bg-transparent text-current">^=</button>
+            <button data-snippet class="bg-transparent text-current">|=</button>
+            <button data-snippet class="bg-transparent text-current">&amp;&amp;=</button>
+            <button data-snippet class="bg-transparent text-current">||=</button>
+            <button data-snippet class="bg-transparent text-current">??=</button>
+          </div>
+  
+          <h5 class="capitalize">
+            search snippets
+          </h5>
+  
+          <div class="grid grid-cols-2 gap-2">
+
+            <button data-snippet class="bg-transparent text-current">.classList.contains("")</button>
+            <button data-snippet class="bg-transparent text-current">.indexOf("")</button>
+            <button data-snippet class="bg-transparent text-current">.lastIndexOf("")</button>
+            <button data-snippet class="bg-transparent text-current">.search("")</button>
+            <button data-snippet class="bg-transparent text-current">.match("")</button>
+            <button data-snippet class="bg-transparent text-current">.matchAll("")</button>
+            <button data-snippet class="bg-transparent text-current">.includes("")</button>
+            <button data-snippet class="bg-transparent text-current">.startsWith("")</button>
+            <button data-snippet class="bg-transparent text-current">.endsWith("")</button>
+          </div>
+  
+          <h5 class="capitalize">
+            math snippets
+          </h5>
+  
+          <div class="grid grid-cols-2 gap-2">
+            <button data-snippet class="bg-transparent text-current">Math.E</button>
+            <button data-snippet class="bg-transparent text-current">Math.PI</button>
+            <button data-snippet class="bg-transparent text-current">Math.SQRT2</button>
+            <button data-snippet class="bg-transparent text-current">Math.SQRT1_2</button>
+            <button data-snippet class="bg-transparent text-current">Math.LN2</button>
+            <button data-snippet class="bg-transparent text-current">Math.LN10</button>
+            <button data-snippet class="bg-transparent text-current">Math.LOG2E</button>
+            <button data-snippet class="bg-transparent text-current">Math.LOG10E</button>
+            <button data-snippet class="bg-transparent text-current">Math.round()</button>
+            <button data-snippet class="bg-transparent text-current">Math.ceil()</button>
+            <button data-snippet class="bg-transparent text-current">Math.floor()</button>
+            <button data-snippet class="bg-transparent text-current">Math.trunc()</button>
+            <button data-snippet class="bg-transparent text-current">Math.sign()</button>
+            <button data-snippet class="bg-transparent text-current">Number()</button>
+            <button data-snippet class="bg-transparent text-current">Number.isInteger()</button>
+            <button data-snippet class="bg-transparent text-current">.parseInt()</button>
+            <button data-snippet class="bg-transparent text-current">.parseFloat()</button>
+          </div>
+  
+          <h5 class="capitalize">
+            loop snippets
+          </h5>
+  
+          <div class="grid grid-cols-2 gap-2">
+            <button data-snippet class="bg-transparent text-current">while() {}</button>
+            <button data-snippet class="bg-transparent text-current">do() while()</button>
             <button data-snippet class="bg-transparent text-current">for (let i in arr) {}</button>
             <button data-snippet class="bg-transparent text-current">for (let i of arr) {}</button>
             <button data-snippet class="bg-transparent text-current">.forEach((child, index) =&gt; {})</button>
           </div>
   
-  
           <h5 class="capitalize">
-            events
+            condition snippets
+          </h5>
+  
+          <div class="grid grid-cols-2 gap-2">
+            <button data-snippet class="bg-transparent text-current">if {}</button>
+            <button data-snippet class="bg-transparent text-current">switch {}</button>
+            <button data-snippet class="bg-transparent text-current">===</button>
+            <button data-snippet class="bg-transparent text-current">!=</button>
+            <button data-snippet class="bg-transparent text-current">!==</button>
+            <button data-snippet class="bg-transparent text-current">&gt;=</button>
+            <button data-snippet class="bg-transparent text-current">&lt;=</button>
+            <button data-snippet class="bg-transparent text-current">||</button>
+            <button data-snippet class="bg-transparent text-current">&amp;&amp;</button>
+          </div>
+    
+          <h5 class="capitalize">
+            event snippets
           </h5>
   
           <div class="grid grid-cols-2 gap-2">
@@ -309,6 +456,40 @@
             <button data-snippet class="bg-transparent text-current">.onchange = () => {}</button>
             <button data-snippet class="bg-transparent text-current">.onkeyup = e => {}</button>
             <button data-snippet class="bg-transparent text-current">.onkeydown = e => {}</button>
+            <button data-snippet class="bg-transparent text-current">.ontouchstart = e => {}</button>
+            <button data-snippet class="bg-transparent text-current">.ontouchmove = e => {}</button>
+            <button data-snippet class="bg-transparent text-current">.ontouchend = e => {}</button>
+            <button data-snippet class="bg-transparent text-current">setTimeout(() => {}, 1000)</button>
+          </div>
+  
+          <h5 class="capitalize">
+            date snippets
+          </h5>
+  
+          <div class="grid grid-cols-2 gap-2">
+            <button data-snippet class="bg-transparent text-current">new Date()</button>
+            <button data-snippet class="bg-transparent text-current">Date.parse()</button>
+            <button data-snippet class="bg-transparent text-current">.toDateString()</button>
+            <button data-snippet class="bg-transparent text-current">.toUTCString()</button>
+            <button data-snippet class="bg-transparent text-current">.toISOString()</button>
+            <button data-snippet class="bg-transparent text-current">.getFullYear()</button>
+            <button data-snippet class="bg-transparent text-current">.getMonth()</button>
+            <button data-snippet class="bg-transparent text-current">.getDate()</button>
+            <button data-snippet class="bg-transparent text-current">.getDay()</button>
+            <button data-snippet class="bg-transparent text-current">.getHours()</button>
+            <button data-snippet class="bg-transparent text-current">.getMinutes()</button>
+            <button data-snippet class="bg-transparent text-current">.getSeconds()</button>
+            <button data-snippet class="bg-transparent text-current">.getMilliseconds()</button>
+            <button data-snippet class="bg-transparent text-current">.getTime()</button>
+            <button data-snippet class="bg-transparent text-current">.setFullYear()</button>
+            <button data-snippet class="bg-transparent text-current">.setMonth()</button>
+            <button data-snippet class="bg-transparent text-current">.setDate()</button>
+            <button data-snippet class="bg-transparent text-current">.setDay()</button>
+            <button data-snippet class="bg-transparent text-current">.setHours()</button>
+            <button data-snippet class="bg-transparent text-current">.setMinutes()</button>
+            <button data-snippet class="bg-transparent text-current">.setSeconds()</button>
+            <button data-snippet class="bg-transparent text-current">.setMilliseconds()</button>
+            <button data-snippet class="bg-transparent text-current">.setTime()</button>
           </div>
         </div>
       </article>

@@ -311,16 +311,13 @@ const app = {
         document.querySelector('.fa-html5').classList.remove('text-blue-500')
         document.getElementById('htmlEditor').classList.add('hidden')
         document.querySelector('[data-forjs]').classList.add('hidden')
+        document.querySelector('[data-forhtml]').classList.remove('hidden')
 
         // make editors fill area
         editorContainer.className = `absolute bottom-0 top-1/2 inset-x-0 md:top-0 overflow-hidden`
 
         // make canvas fill area
         canvasContainer.className = `absolute inset-0 p-0 overflow-hidden bg-repeat`
-
-        // center canvas
-        rotate.onclick()
-        rotate.onclick()
       } else {
         // if js editor is visible hide it
         if (document.querySelector('.fa-js').classList.contains('text-blue-500')) {
@@ -332,19 +329,17 @@ const app = {
         document.querySelector('.fa-html5').classList.add('text-blue-500')
         document.getElementById('htmlEditor').classList.remove('hidden')
         document.querySelector('[data-forjs]').classList.add('hidden')
+        document.querySelector('[data-forhtml]').classList.remove('hidden')
 
         // reset editor container
         editorContainer.className = `absolute bottom-0 top-1/2 w-full md:w-1/2 md:top-0 overflow-hidden`
 
         // reset canvas
         canvasContainer.className = `absolute bottom-1/2 top-0 w-full md:w-1/2 md:bottom-0 md:left-1/2 p-0 overflow-hidden bg-repeat`
-
-        // center canvas
-        rotate.onclick()
-        rotate.onclick()
       }
 
       document.querySelector('[data-forjs]').classList.add('hidden')
+      document.querySelector('[data-forhtml]').classList.remove('hidden')
     }
     jsBtn.onclick = () => {
       // if js editor is hidden display it
@@ -352,16 +347,13 @@ const app = {
         document.querySelector('.fa-js').classList.remove('text-blue-500')
         document.getElementById('jsEditor').classList.add('hidden')
         document.querySelector('[data-forjs]').classList.remove('hidden')
+        document.querySelector('[data-forhtml]').classList.add('hidden')
 
         // make editors fill area
         editorContainer.className = `absolute bottom-0 top-1/2 inset-x-0 md:top-0 overflow-hidden`
 
         // make canvas fill area
         canvasContainer.className = `absolute inset-0 p-0 overflow-hidden bg-repeat`
-
-        // center canvas
-        rotate.onclick()
-        rotate.onclick()
       } else {
         // if html editor is visible hide it
         if (document.querySelector('.fa-html5').classList.contains('text-blue-500')) {
@@ -373,19 +365,17 @@ const app = {
         document.querySelector('.fa-js').classList.add('text-blue-500')
         document.getElementById('jsEditor').classList.remove('hidden')
         document.querySelector('[data-forjs]').classList.remove('hidden')
+        document.querySelector('[data-forhtml]').classList.add('hidden')
 
         // reset editor container
         editorContainer.className = `absolute bottom-0 top-1/2 w-full md:w-1/2 md:top-0 overflow-hidden`
 
         // reset canvas
         canvasContainer.className = `absolute bottom-1/2 top-0 w-full md:w-1/2 md:bottom-0 md:left-1/2 p-0 overflow-hidden bg-repeat`
-
-        // center canvas
-        rotate.onclick()
-        rotate.onclick()
       }
 
       document.querySelector('[data-forjs]').classList.remove('hidden')
+      document.querySelector('[data-forhtml]').classList.add('hidden')
     }
   },
 
