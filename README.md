@@ -1,7 +1,7 @@
 kodeWeave
 ===================
 
-kodeWeave is your on the go coding playground! Design with TailwindCSS or Pico.css, see how your app or website will look and behave on a desktop. kodeWeave also easily converts your app into a Progressive Web App so both mobile and desktop users can install and use your app offline!
+kodeWeave is your on the go coding playground! Design with TailwindCSS, Pico.css or any library or framework of your choosing. See how your app or website will look and behave on a desktop.
 
 If you've ever used jsfiddle, jsbin, dabblet, liveweave, codepen, cssdeck, cssdesk, tinkerbin, d3 playground, plunker and/or pastebin kodeWeave is the tool for you when you're away from a computer!
 
@@ -10,7 +10,7 @@ If you've ever used jsfiddle, jsbin, dabblet, liveweave, codepen, cssdeck, cssde
 Version
 -------------
 
-1.1.41
+1.1.42
 
 License
 -------------
@@ -30,6 +30,7 @@ kodeWeave uses a number of open source projects to work properly:
 * [JSZip](https://stuk.github.io/jszip/) - Package zip files locally in javascript
 * [FileSaver.js](https://github.com/eligrey/FileSaver.js/) - JSZip comes prebuilt with this. Allows us to save files locally in Javascript
 * [panzoom](https://github.com/anvaka/panzoom/) - Used to pan and zoom the canvas
+* [cdnjs](https://cdnjs.com/api) - Used to easily add the latest libraries and frameworks in the app by a single search
 
 Development
 -------------
@@ -37,9 +38,6 @@ Development
 Want to contribute? Great!  
 
 You can submit a pull request or simply share the project :)
-
-*As of Sunday, May 12th, 2023 kodeWeave is no longer an active project.
-All updates as of that date and on are solely contributor based implementations.*
 
 Of course, kodeWeave is free and open source, so you can always fork the project and have fun :)
 

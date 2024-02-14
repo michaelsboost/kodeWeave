@@ -1,7 +1,8 @@
-let cacheName    = "JSStringReplacer";
+let cacheName    = "kodeWeave";
 let filesToCache = [
   "./",
   "./app.js",
+  "./bundle.js",
   "./css/style.css",
   "./editor.mjs",
   "./favicon.ico",
@@ -16,10 +17,6 @@ let filesToCache = [
   "./index.html",
   "./js/dom-console.js",
   "./js/libraries.js",
-  "./json/chartjsdemo-kodeWeave.json",
-  "./json/helloworld-kodeWeave.json",
-  "./json/panzoomdemo-kodeWeave.json",
-  "./json/savefileshtmldemo-kodeWeave.json",
   "./libraries/font-awesome/css/all.css",
   "./libraries/font-awesome/css/all.min.css",
   "./libraries/font-awesome/css/brands.css",

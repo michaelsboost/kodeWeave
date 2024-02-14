@@ -1,13 +1,13 @@
-import { EditorView } from '@codemirror/view'
-import { lineNumbers, highlightActiveLineGutter, highlightSpecialChars, drawSelection, dropCursor, rectangularSelection, crosshairCursor, highlightActiveLine, keymap } from '@codemirror/view'
-import { EditorState } from '@codemirror/state'
-import { foldGutter, indentOnInput, syntaxHighlighting, defaultHighlightStyle, bracketMatching, foldKeymap } from '@codemirror/language'
-import { history, defaultKeymap, historyKeymap } from '@codemirror/commands'
+import { EditorView, lineNumbers, highlightActiveLineGutter, highlightSpecialChars, drawSelection, dropCursor, rectangularSelection, crosshairCursor, highlightActiveLine, keymap } from '@codemirror/view'
+import { EditorState, StateField, EditorSelection, StateEffect } from '@codemirror/state'
+import { foldGutter, indentOnInput, syntaxHighlighting, defaultHighlightStyle, bracketMatching, foldKeymap, foldAll, unfoldAll, syntaxTree, syntaxTreeAvailable } from '@codemirror/language'
+import { history, undo, redo, indentWithTab, indentMore, indentLess, defaultKeymap, historyKeymap, toggleComment} from '@codemirror/commands'
 import { openSearchPanel, gotoLine, highlightSelectionMatches, searchKeymap } from '@codemirror/search'
 import { closeBrackets, autocompletion, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete'
 import { linter, lintKeymap, lintGutter } from '@codemirror/lint'
-import { javascript, esLint } from "@codemirror/lang-javascript"
 import { html } from "@codemirror/lang-html"
+import { css, cssLanguage } from '@codemirror/lang-css'
+import { javascript, esLint } from "@codemirror/lang-javascript"
 import * as eslint from "eslint-linter-browserify"
 import { expandAbbreviation } from '@emmetio/codemirror6-plugin'
 import { abbreviationTracker } from '@emmetio/codemirror6-plugin'
@@ -25,27 +25,35 @@ const config = {
   rules: {
     semi: ["error", "never"],
   },
-}
+};
 const basicSetup = [
-    lineNumbers(),
-    highlightActiveLineGutter(),
-    highlightSpecialChars(),
-    history(),
-    foldGutter(),
-    drawSelection(),
-    dropCursor(),
-    EditorState.allowMultipleSelections.of(true),
-    indentOnInput(),
-    syntaxHighlighting(defaultHighlightStyle),
-    bracketMatching(),
-    closeBrackets(),
-    autocompletion(),
-    rectangularSelection(),
-    crosshairCursor(),
-    highlightActiveLine(),
-    highlightSelectionMatches(),
-    lintGutter(),
-]
+  lineNumbers(),
+  highlightActiveLineGutter(),
+  highlightSpecialChars(),
+  history(),
+  foldGutter(),
+  drawSelection(),
+  dropCursor(),
+  EditorState.allowMultipleSelections.of(true),
+  indentOnInput(),
+  syntaxHighlighting(defaultHighlightStyle),
+  bracketMatching(),
+  closeBrackets(),
+  autocompletion(),
+  rectangularSelection(),
+  crosshairCursor(),
+  highlightActiveLine(),
+  highlightSelectionMatches(),
+  lintGutter(),
+  keymap.of([
+    {
+      key: "Tab",
+      run: indentMore
+    },
+    // Other key bindings...
+  ])
+];
+let activeEditor;
 const htmlEditor = new EditorView({
   state: EditorState.create({
     extensions: [
@@ -67,12 +75,49 @@ const htmlEditor = new EditorView({
       html(),
       abbreviationTracker(),
       EditorView.updateListener.of((v) => {
-        if (autoupdate.checked) app.updatePreview()
+        if (autoupdate.checked) {
+          setTimeout(() => {
+            app.updatePreview(autoupdate.checked);
+          }, 300);
+        }
       }),
     ],
   }),
   parent: document.getElementById('htmlEditor'),
-})
+  allowMultipleSelections: true,
+});
+const cssEditor = new EditorView({
+  state: EditorState.create({
+    extensions: [
+      basicSetup,
+      EditorView.lineWrapping,
+      keymap.of([
+        {
+          key: "Enter",
+          run: expandAbbreviation
+        },
+          ...closeBracketsKeymap,
+          ...defaultKeymap,
+          ...searchKeymap,
+          ...historyKeymap,
+          ...foldKeymap,
+          ...completionKeymap,
+          ...lintKeymap
+      ]),
+      css(),
+      abbreviationTracker(),
+      EditorView.updateListener.of((v) => {
+        if (autoupdate.checked) {
+          setTimeout(() => {
+            app.updatePreview(autoupdate.checked);
+          }, 300);
+        }
+      }),
+    ],
+  }),
+  parent: document.getElementById('cssEditor'),
+  allowMultipleSelections: true,
+});
 const jsEditor = new EditorView({
   state: EditorState.create({
     extensions: [
@@ -90,556 +135,567 @@ const jsEditor = new EditorView({
       linter(esLint(new eslint.Linter(), config)),
       javascript(),
       EditorView.updateListener.of((v) => {
-        if (autoupdate.checked) app.updatePreview()
+        if (autoupdate.checked) {
+          setTimeout(() => {
+            app.updatePreview(autoupdate.checked);
+          }, 300);
+        }
       }),
     ],
   }),
   parent: document.getElementById('jsEditor'),
-})
-
-// project json
-let appJSON = {
-  name:  'AppName',
-  title: 'An attractive title',
-  description: 'The most attractive description ever!',
-  version: '0.1',
-  author: 'kodeWeave',
-  website: '',
-  scratchpad: '',
-  analytics: '',
-  logo: logo.src,
-  css: 'picocss',
-  fontSize: 16,
-  theme: false,
-  autoupdate: false,
-  console: true,
-  pwa: false,
-  fontawesome: false,
-  html: '',
-  javascript: ''
-}
+  allowMultipleSelections: true,
+});
+activeEditor = htmlEditor;
+let project;
+let sortable;
 
 const app = {
-  cssObj: {
-    id: [],
-    data: []
-  },
-
-  // dynamically load js file function
-  dynamicallyLoadScript: url => {
-    // dynamically load a css file
-    if (url.substring(url.length - 3).toLowerCase() === 'css') {
-      let link = document.createElement('link')
-      link.setAttribute('rel', 'stylesheet')
-      link.href = url
-
-      document.head.appendChild(link)
-      return false
-    }
-    // dynamically load a javascript file
-    if (url.substring(url.length - 2).toLowerCase() === 'js') {
-      let script = document.createElement('script')
-      script.src = url
-      script.setAttribute('defer', '')
-    
-      document.head.appendChild(script)
-    }
-  },
-
-  // zooming and panning function
-  initZoomPan: () => {
-    // variables
-    const userDevice    = document.querySelector('[data-device]')
-    let canvas          = document.querySelector('[data-canvas]')
-    let canvasH         = parseFloat(canvas.clientHeight)
-    let canvasW         = parseFloat(canvas.clientWidth / 2)
+	// This is used to grab the active page and remember all contents used within that page's index
+	activePage: 0,
   
-    // init panzoom
-    let instance = panzoom(canvas, {
-      bounds: true,
-      boundsPadding: 0.1
-    })
+  // ajax function to get source of a file
+  getFile: (url, callback) => {
+    var xhr = new XMLHttpRequest()
+    xhr.open("GET", url)
+    xhr.send()
   
-    let centerCanvas = () => {
-      let canvas          = document.querySelector('[data-canvas]')
-      let canvasH         = parseFloat(canvas.clientHeight)
-      let canvasW         = parseFloat(canvas.clientWidth / 2)
-      canvasW = parseFloat(canvas.clientWidth)
-      canvasH = parseFloat(canvas.clientHeight)
-  
-      // detect if canvas is in portrait mode
-      if (canvasW < canvasH) {
-        // ratio for zoom
-        let zoomRatio = 0.75
-      
-        // to center the canvas horizontally we first need to...
-        // get half the body & canvas's width
-        let bodyW   = parseFloat(canvas.parentElement.clientWidth / 2)
-        canvasW = parseFloat(canvas.clientWidth / 2)
-        // then add them together
-        let initialXPos = parseFloat(parseFloat(bodyW) - parseFloat(canvasW) * zoomRatio)
-      
-        // to center the canvas vertically we first need to...
-        // get the size of both the body and the canvas
-        let bodyH   = parseFloat(canvas.parentElement.clientHeight)
-        bodyH   = bodyH / 2
-        canvasH = canvasH / 2
-        // then add them together
-        let initialYPos = parseFloat(parseFloat(canvasH) - parseFloat(bodyH) * zoomRatio)
-      
-        // set initial zoom
-        instance.zoomAbs(
-          initialXPos, // initial x position
-          initialYPos, // initial y position
-          zoomRatio // initial zoom
-        )
-        instance.moveTo(initialXPos, initialYPos)
-        return false
+    xhr.onreadystatechange = (data) => {
+      if (xhr.readyState !== 4) {
+        return
       }
   
-      // ratio for zoom
-      let zoomRatio = 0.75
-  
-      // to center the canvas horizontally we first need to...
-      // get half the body & canvas's width
-      let bodyW   = parseFloat(canvas.parentElement.clientWidth / 2)
-      canvasW = parseFloat(canvas.clientWidth / 2)
-      // then add them together
-      let initialXPos = parseFloat(parseFloat(bodyW) - parseFloat(canvasW) * zoomRatio)
-  
-      // to center the canvas vertically we first need to...
-      // get the size of both the body and the canvas
-      let bodyH   = parseFloat(canvas.parentElement.clientHeight)
-      bodyH   = bodyH / 2
-      canvasH = canvasH / 2
-      // then add them together
-      let initialYPos = parseFloat(parseFloat(bodyH) - parseFloat(canvasH) * zoomRatio)
-  
-      // set initial zoom
-      instance.zoomAbs(
-        initialXPos, // initial x position
-        initialYPos, // initial y position
-        zoomRatio // initial zoom
-      )
-      instance.moveTo(initialXPos, initialYPos)
-    }
-    centerCanvas()
-  
-    // enable disable zoom/pan
-    const zoomIcon = document.querySelector('[data-zoom]')
-    zoomIcon.onclick = () => {
-      if (zoomIcon.getAttribute('data-zoom') === 'true') {
-        canvas.selection = false
-        instance.pause()
-        zoomIcon.innerHTML = '<i class="fa fa-light fa-magnifying-glass-minus"></i>'
-        zoomIcon.setAttribute('data-zoom', false)
-        fill.classList.add('hidden')
+      if (xhr.status === 200) {
+        callback(xhr.responseText)
       } else {
-        canvas.selection = true
-        instance.resume()
-        zoomIcon.innerHTML = '<i class="fa fa-light fa-magnifying-glass-plus"></i>'
-        zoomIcon.setAttribute('data-zoom', true)
-        fill.classList.remove('hidden')
+        console.warn("request_error")
       }
     }
-  
-    // rotate canvas
-    rotate.onclick = () => {
-      canvasW = parseFloat(canvas.clientWidth)
-      canvasH = parseFloat(canvas.clientHeight)
-  
-      canvas.style.width  = canvasH + 'px'
-      canvas.style.height = canvasW + 'px'
-      centerCanvas()
-    }
+  },
 
-    // reset canvas dimentions and center it
-    let resetCanvas = (w, h) => {
-      canvasW = w
-      canvasH = h
+	// Function to update settings
+	updateSettings: () => {
+		let settings = project.settings;
+		settings.theme = theme.checked;
+		settings.fontSize = fz.value;
+		settings.autoupdate = document.getElementById('autoupdate').checked;
+		settings.console = toggleconsole.checked;
+	},
 
-      if (canvasW > canvasH) {
-        // landscape
-        canvas.style.width  = canvasW + 'px'
-        canvas.style.height = canvasH + 'px'
-        centerCanvas()
-        return false
-      }
+  // Update localStorage
+  updateStorage: () => {
+    project.settings.autoupdate = autoupdate.checked;
+    project.settings.console = toggleconsole.checked;
+    project.settings.fontSize = fz.value;
+    project.settings.theme = theme.checked;
+    project.settings.scratchpad = scratchpad.value;
     
-      canvas.style.width  = canvasH + 'px'
-      canvas.style.height = canvasW + 'px'
-      centerCanvas()
-    }
-  
-    // toggle between mobile and desktop view
-    userDevice.onclick = () => {
-      if (userDevice.getAttribute('data-device') === 'mobile') {
-        userDevice.setAttribute('data-device', 'tablet')
-        userDevice.innerHTML = '<i class="fa fa-tablet"></i>'
+    project.pages[app.activePage].html = htmlEditor.state.doc.toString();
+    project.pages[app.activePage].css = cssEditor.state.doc.toString();
+    project.pages[app.activePage].javascript = jsEditor.state.doc.toString();
+    
+    localStorage.setItem('kodeWeave', JSON.stringify(project));
+  },
+
+	// Funtion to create button list of total pages 
+	createPageButtonList: () => {
+    const pagesTab = document.querySelector('[data-pagecontent]');
+    pagesTab.innerHTML = '';
+
+    for (let i = 0; i < project.pages.length; i++) {
+        let val = project.pages[i].name;
+
+        let pageContainer = document.createElement('div');
+        pageContainer.className = 'h-full pb-28';
+
+        let pageName = document.createElement('div');
+        pageName.classList.add('name');
+        if (i === app.activePage) {
+            pageName.classList.add('text-blue-500', 'activepage');
+        } else {
+            pageName.classList.add('text-current', 'bg-transparent', 'border-current');
+        }
+        pageName.classList.add('mb-2');
+        pageName.textContent = val;
+        pageName.addEventListener('click', () => app.activatePage(i));
+
+        let article = document.createElement('article');
+        article.classList.add('relative', 'h-full', 'm-0', 'p-0');
+
+        let previewElm = document.createElement('div');
+        previewElm.id = `previewElm${i}`;
+        previewElm.classList.add('rounded-md', 'w-full', 'h-full');
+
+        let clickOverlay = document.createElement('div');
+        clickOverlay.classList.add('absolute', 'inset-0');
+        clickOverlay.addEventListener('click', () => app.activatePage(i));
+
+        let section = document.createElement('section');
+        section.classList.add('mt-2');
+
+        let buttonGrid = document.createElement('div');
+
+        let eraseButton = document.createElement('button');
+        eraseButton.classList.add('inline-block', 'text-current', 'bg-transparent', 'border-current');
+        eraseButton.innerHTML = '<i class="fa fa-eraser"></i>';
+        eraseButton.addEventListener('click', () => app.clearPage(i));
+
+        let cloneButton = document.createElement('button');
+        cloneButton.classList.add('inline-block', 'text-current', 'bg-transparent', 'border-current');
+        cloneButton.innerHTML = '<i class="fa fa-clone"></i>';
+        cloneButton.addEventListener('click', () => app.clonePage(i));
         
-        // reset canvas dimensions and center it
-        // dimensions of iPad Mini used
-        resetCanvas(1024, 768)
-        return false
-      }
-      if (userDevice.getAttribute('data-device') === 'tablet') {
-        userDevice.setAttribute('data-device', 'desktop')
-        userDevice.innerHTML = '<i class="fa fa-desktop"></i>'
-  
-        // reset canvas dimensions and center it
-        // 2012 macbook pro dimensions used
-        resetCanvas(1440, 834)
-        return false
-      }
-      if (userDevice.getAttribute('data-device') === 'desktop') {
-        userDevice.setAttribute('data-device', 'mobile')
-        userDevice.innerHTML = '<i class="fa fa-mobile"></i>'
-  
-        // reset canvas dimensions and center it
-        // dimensions of Galaxy S8+ used
-        resetCanvas(360, 740)
-        return false
-      }
-    }
-  },
-
-  // toggle HTML and JS editors
-  toggleDialogs: () => {
-    htmlBtn.onclick = () => {
-      // if html editor is hidden display it
-      if (document.querySelector('.fa-html5').classList.contains('text-blue-500')) {
-        document.querySelector('.fa-html5').classList.remove('text-blue-500')
-        document.getElementById('htmlEditor').classList.add('hidden')
-        document.querySelector('[data-forjs]').classList.add('hidden')
-        document.querySelector('[data-forhtml]').classList.remove('hidden')
-
-        // make editors fill area
-        editorContainer.className = `absolute bottom-0 top-1/2 inset-x-0 md:top-0 overflow-hidden`
-
-        // make canvas fill area
-        canvasContainer.className = `absolute inset-0 p-0 overflow-hidden bg-repeat`
-      } else {
-        // if js editor is visible hide it
-        if (document.querySelector('.fa-js').classList.contains('text-blue-500')) {
-          document.querySelector('.fa-js').classList.remove('text-blue-500')
-          document.getElementById('jsEditor').classList.add('hidden')
+        if (i === 0) {
+            buttonGrid.classList.add('grid', 'grid-cols-2', 'gap-1');
+            buttonGrid.appendChild(cloneButton);
+            buttonGrid.appendChild(eraseButton);
+        } else {
+            buttonGrid.classList.add('grid', 'grid-cols-4', 'gap-1');
+        
+            let renameButton = document.createElement('button');
+            renameButton.classList.add('inline-block', 'text-current', 'bg-transparent', 'border-current');
+            renameButton.innerHTML = '<i class="fa fa-font"></i>';
+            renameButton.addEventListener('click', () => app.renamePage(i));
+        
+            let deleteButton = document.createElement('button');
+            deleteButton.classList.add('inline-block', 'text-current', 'bg-transparent', 'border-current');
+            deleteButton.innerHTML = '<i class="fa fa-trash"></i>';
+            deleteButton.addEventListener('click', () => app.deletePage(i));
+        
+            buttonGrid.appendChild(renameButton);
+            buttonGrid.appendChild(cloneButton);
+            buttonGrid.appendChild(eraseButton);
+            buttonGrid.appendChild(deleteButton);
         }
 
-        // display html editor
-        document.querySelector('.fa-html5').classList.add('text-blue-500')
-        document.getElementById('htmlEditor').classList.remove('hidden')
-        document.querySelector('[data-forjs]').classList.add('hidden')
-        document.querySelector('[data-forhtml]').classList.remove('hidden')
+        section.appendChild(buttonGrid);
+        article.appendChild(previewElm);
+        article.appendChild(clickOverlay);
+        article.appendChild(section);
 
-        // reset editor container
-        editorContainer.className = `absolute bottom-0 top-1/2 w-full md:w-1/2 md:top-0 overflow-hidden`
+        pageContainer.appendChild(pageName);
+        pageContainer.appendChild(article);
 
-        // reset canvas
-        canvasContainer.className = `absolute bottom-1/2 top-0 w-full md:w-1/2 md:bottom-0 md:left-1/2 p-0 overflow-hidden bg-repeat`
-      }
+        pagesTab.appendChild(pageContainer);
 
-      document.querySelector('[data-forjs]').classList.add('hidden')
-      document.querySelector('[data-forhtml]').classList.remove('hidden')
+        app.renderPagePreviews(i);
     }
-    jsBtn.onclick = () => {
-      // if js editor is hidden display it
-      if (document.querySelector('.fa-js').classList.contains('text-blue-500')) {
-        document.querySelector('.fa-js').classList.remove('text-blue-500')
-        document.getElementById('jsEditor').classList.add('hidden')
-        document.querySelector('[data-forjs]').classList.remove('hidden')
-        document.querySelector('[data-forhtml]').classList.add('hidden')
-
-        // make editors fill area
-        editorContainer.className = `absolute bottom-0 top-1/2 inset-x-0 md:top-0 overflow-hidden`
-
-        // make canvas fill area
-        canvasContainer.className = `absolute inset-0 p-0 overflow-hidden bg-repeat`
-      } else {
-        // if html editor is visible hide it
-        if (document.querySelector('.fa-html5').classList.contains('text-blue-500')) {
-          document.querySelector('.fa-html5').classList.remove('text-blue-500')
-          document.getElementById('htmlEditor').classList.add('hidden')
-        }
-
-        // display js editor
-        document.querySelector('.fa-js').classList.add('text-blue-500')
-        document.getElementById('jsEditor').classList.remove('hidden')
-        document.querySelector('[data-forjs]').classList.remove('hidden')
-        document.querySelector('[data-forhtml]').classList.add('hidden')
-
-        // reset editor container
-        editorContainer.className = `absolute bottom-0 top-1/2 w-full md:w-1/2 md:top-0 overflow-hidden`
-
-        // reset canvas
-        canvasContainer.className = `absolute bottom-1/2 top-0 w-full md:w-1/2 md:bottom-0 md:left-1/2 p-0 overflow-hidden bg-repeat`
-      }
-
-      document.querySelector('[data-forjs]').classList.remove('hidden')
-      document.querySelector('[data-forhtml]').classList.add('hidden')
-    }
+    app.updateStorage();
   },
 
-  // update iframe preview function
-  updatePreview: () => {
-    app.updateStorage()
-    const previewElm = document.getElementById('previewElm')
-    const elm  = document.querySelector('html[data-theme]')
-    const icon = document.querySelectorAll('label[for=theme] i')
+	// Funtion to add a page
+	addPage: () => {
+		// first detect if user can clone a page
+		if (!projectTitle.value || !description.value) {
+			alert('Error: Website is missing the title and/or description meta information!');
+			return false
+		}
 
-    if (!theme.checked) {
-      elm.setAttribute('data-theme', 'light')
-      previewElm.setAttribute('data-theme', 'light')
+		// value for the new page name
+		let val = prompt("What's the page's file name?").toLowerCase();
 
-      // update icon
-      icon.forEach((child) => {
-        child.classList.add('fa-sun')
-        child.classList.remove('fa-moon')
+		// detect if page name already exists
+		for (let i in project.pages) {
+			if (project.pages[i].name === val) {
+				alert('Operation aborted: Page name already exists!');
+				return false
+			}
+		}
+
+		// push page info to object
+		let tempObj = {
+			"name": val,
+			"title": `${projectTitle.value}`,
+			"description": `${description.value}`,
+  		"scratchpad": "",
+  		"libraries": [],
+  		"html": "",
+  		"css": "",
+  		"javascript": ""
+		};
+		project.pages.push(tempObj);
+
+		// refresh pages list
+		app.createPageButtonList();
+	},
+
+	// Funtion to rename a page
+	renamePage: index => {
+		// value for page name
+		let val = prompt("What's the page's file name?").toLowerCase();
+
+		// detect if page name already exists
+		for (let i in project.pages) {
+			if (project.pages[i].name === val) {
+				alert('Operation aborted: Page name already exists!');
+				return false
+			}
+		}
+
+		// remember old name
+		project.pages[index].name;
+
+		// renames the object
+		project.pages[index].name = val;
+
+		// apply the new name to the page button
+		undefined.textContent = val;
+
+		// refresh pages list
+		app.createPageButtonList();
+	},
+
+	// Funtion to clone a page
+  clonePage: i => {
+    // Clone the object
+    let originalPage = project.pages[i];
+    let clonedPage = JSON.parse(JSON.stringify(originalPage));
+
+    // Apply the new name to the cloned object
+    clonedPage.name = `${originalPage.name}_clone${project.pages.length}`;
+
+    // Push the cloned object to the pages object array
+    project.pages.push(clonedPage);
+
+    // Refresh pages list
+    app.createPageButtonList();
+  },
+
+	// Funtion to empty a page
+	clearPage: i => {
+		// Clear the object
+		let originalPage = project.pages[i];
+		originalPage.libraries = [];
+		originalPage.html = "";
+		originalPage.css = "";
+		originalPage.javascript = "";
+		
+		let resetEditor = editor => {
+      // Get the current state of the editor
+      const currentState = editor.state;
+      
+      // Create a new state with the updated content
+      editor.dispatch({
+        changes: {
+          from: 0,
+          to: editor.state.doc.toString().length,
+          insert: "",
+        },
       })
-    } else {
-      elm.setAttribute('data-theme', 'dark')
-      previewElm.setAttribute('data-theme', 'dark')
+		}
+		
+		// detect if currently active page
+		if (i === app.activePage) {
+		  resetEditor(htmlEditor)
+		  resetEditor(cssEditor)
+		  resetEditor(jsEditor)
+		}
 
-      // update icon
-      icon.forEach((child) => {
-        child.classList.remove('fa-sun')
-        child.classList.add('fa-moon')
-      })
-    }
+		// Refresh pages list
+		app.createPageButtonList();
+	},
 
-    // variables
-    const run = document.getElementById('run')
+	// Funtion to delete a page
+	deletePage: i => {
+		// Remember page name for history stack
+		project.pages[i].name;
 
-    // bottom menu style for run button
-    let showConsole = (appJSON.console) ? `<script type="module" src="js/dom-console.js" defer></script>
-    ` : ''
+		// delete page from object
+		project.pages.splice(i, 1);
 
-    // css libraries
-    let cssLib, picotheme = ''
+		// refresh pages list
+		app.createPageButtonList();
 
-    // if user is just using picocss
-    if (css.value === 'picocss') {
-      cssLib = `<link rel="stylesheet" href="libraries/pico/pico.classless.min.css" />`
+		// if user deletes the active page, make the index the active page
+		if (i === app.activePage) {
+			const buttons = document.querySelectorAll("[data-pagecontent] button");
+			const newActivePageButton = buttons[0];
 
-      if (appJSON.theme === true) {
-        picotheme = `data-theme="dark"`
-      }
-      if (appJSON.theme === false) {
-        picotheme = `data-theme="light"`
-      }
-    }
-    // if user is just using tailwind
-    if (css.value === 'tailwind') {
-      cssLib = `<link rel="stylesheet" href="libraries/tailwind/tailwind.min.css" />
-      <script src="libraries/tailwind/tailwind.min.js" defer></script>`
-    }
+			app.activatePage(0, newActivePageButton);
+		}
+	},
 
-    // if user is using picocss and tailwind
-    if (css.value === 'both') {
-      cssLib = `<link rel="stylesheet" href="libraries/pico/pico.classless.min.css" />
-      <link rel="stylesheet" href="libraries/tailwind/tailwind-mod.min.css" />`
+	// Funtion to make page active
+	activatePage: i => {
+		app.activePage = i;
+		const projectTitle = document.getElementById('projectTitle');
 
-      if (appJSON.theme === true) {
-        picotheme = `data-theme="dark"`
-      }
-      if (appJSON.theme === false) {
-        picotheme = `data-theme="light"`
-      }
-    }
+		// Check if project has pages and the index is within bounds
+		if (project.pages && project.pages.length > i && project.pages[i]) {
+			const currentPage = project.pages[i];
 
-    let picoStyle     = '.wrapper_yOR7u {width: 100%!important; border-radius: 15px 15px 0 0!important; z-index: 99999999;} .btn_yOR7u { background: inherit; padding: 0 0.5rem; margin: inherit; margin-right: 10px; border: inherit; } .nav_yOR7u {padding-bottom: 14px!important;} .line_yOR7u {background: inherit!important;}'
-    let tailwindStyle = '.wrapper_yOR7u {width: 100%!important; border-radius: 15px 15px 0 0!important; z-index: 99999999;} .btn_yOR7u { background: inherit; padding: 0 0.5rem; margin: inherit; margin-right: 10px; border: inherit; color: #fff!important; } .nav_yOR7u {padding-bottom: 14px!important;} .line_yOR7u {background: inherit!important;}'
-    let consoleStyle  = (css.value === 'picocss') ? `<style>${picoStyle}</style>` : `<style>${tailwindStyle}</style>`
-    let addConsoleCSS = (appJSON.console) ? consoleStyle : ''
-    let faHTMLChoice      = (appJSON.fontawesome) ? `
-    <link rel="stylesheet" href="libraries/font-awesome/css/all.min.css" />` : ''
+			// Update input values
+			css.value = project.settings.css
+			projectTitle.value = currentPage.title || '';
+			description.value = currentPage.description || '';
+			scratchpad.value = currentPage.scratchpad || '';
+      
+      // Create a new state with the updated content
+      htmlEditor.dispatch({
+        changes: {
+          from: 0,
+          to: htmlEditor.state.doc.toString().length,
+          insert: currentPage.html,
+        },
+      });
+      cssEditor.dispatch({
+        changes: {
+          from: 0,
+          to: cssEditor.state.doc.toString().length,
+          insert: currentPage.css,
+        },
+      });
+      jsEditor.dispatch({
+        changes: {
+          from: 0,
+          to: jsEditor.state.doc.toString().length,
+          insert: currentPage.javascript,
+        },
+      });
 
-    let htmlCode  = `<!DOCTYPE html>
-<html ${picotheme}>
+			// Remove old active page color indicator
+			let activePageBtn = document.querySelector("[data-pagecontent] .activepage");
+			if (activePageBtn) {
+				activePageBtn.classList.remove("text-blue-500", "activepage");
+			}
+
+			// Add new active page color indicator
+			activePageBtn = document.querySelectorAll("[data-pagecontent] .name")[i];
+			activePageBtn.classList.add("text-blue-500", "activepage");
+
+			// Update preview to show the active page
+			app.displayLibrariesArray();
+			app.updatePreview(autoupdate.checked);
+		} else {
+			console.error('Invalid page data at index', i, 'in pages array:', project.pages);
+			console.log('Current project state:', project);
+		}
+	},
+
+	// update iframe preview function
+	updatePreview: (runManually = false) => {
+		app.updateSettings();
+    app.updateStorage();
+		const previewElm = document.getElementById('previewElm');
+		const elm = document.querySelector('html[data-theme]');
+
+		const theme = project.settings.theme ? 'dark' : 'light';
+		elm.setAttribute('data-theme', theme);
+		const css = project.pages[app.activePage].css;
+		
+		const consoleStyle = project.settings.console ? `.wrapper_yOR7u {width: 95%!important; border-radius: 15px 15px 0 0!important; z-index: 99999999;} .btn_yOR7u { background: inherit; padding: 0 0.5rem; margin: inherit; margin-right: 10px; border: inherit; color: #fff!important; } .nav_yOR7u {padding-bottom: 14px!important;} .line_yOR7u {background: inherit!important;}` : '';
+
+		const generateHtmlCode = (theme, showConsole, consoleStyle) => {
+        let libraryTags = '';
+        const libraries = project.pages[app.activePage].libraries;
+        libraries.forEach(library => {
+            if (library.endsWith('.js')) {
+                libraryTags += `<script src="${library}" defer></script>
+    `;
+            } else if (library.endsWith('.css')) {
+                libraryTags += `<link rel="stylesheet" href="${library}">
+    `;
+            } else {
+                // Assuming it's a Google font
+                libraryTags += `<link href="${library}" rel="stylesheet">
+    `;
+            }
+        });
+			return `<!DOCTYPE html>
+<html data-theme="${theme}">
   <head>
-    <title>${appJSON.title}</title>
+    <title>${project.pages[app.activePage].title}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="${appJSON.description}">
-    ${cssLib}${addConsoleCSS}${faHTMLChoice}
-    ${showConsole}
+    <meta name="description" content="${project.pages[app.activePage].description}">
+    ${libraryTags}
+    <style>
+      ${css}
+      ${consoleStyle}
+    </style>
   </head>
   <body>
-    ${appJSON.html}
-    
-    <script>setTimeout(() => {${appJSON.javascript}}, 100)</script>
+    ${project.pages[app.activePage].html}
+    <script>setTimeout(() => {${project.pages[app.activePage].javascript}}, 100)</script>
+    ${showConsole}
   </body>
-</html>`
+</html>`;
+		};
 
-    previewElm.innerHTML = ""
-    let frame            = document.createElement("iframe")
-    frame.setAttribute("id", "preview")
-    frame.setAttribute("title", appJSON.title)
-    frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups")
-    previewElm.appendChild(frame)
-    let previewFrame = document.getElementById("preview")
-    let preview      =  previewFrame.contentDocument ||  previewFrame.contentWindow.document
+		const showConsole = project.settings.console ? `<script type="module" src="js/dom-console.js" defer></script>\n` : '';
+		const htmlCode = generateHtmlCode(theme, showConsole, consoleStyle);
 
-    preview.open()
-    preview.write(htmlCode)
-    preview.close()
+		previewElm.innerHTML = '';
+		const frame = document.createElement('iframe');
+		frame.setAttribute('id', 'preview');
+		frame.setAttribute('title', project.pages[app.activePage].title);
+		frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups');
+		previewElm.appendChild(frame);
+		const previewFrame = document.getElementById('preview');
+		const preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
+
+		preview.open();
+		preview.write(htmlCode);
+		preview.close();
+	},
+	renderPagePreviews: initPage => {
+    const elm = document.querySelector('html[data-theme]');
+    const theme = project.settings.theme ? 'dark' : 'light';
+    elm.setAttribute('data-theme', theme);
+    const css = project.pages[initPage].css;
+
+		const generateHtmlCode = theme => {
+        let libraryTags = '';
+        const libraries = project.pages[initPage].libraries;
+        libraries.forEach(library => {
+            if (library.endsWith('.js')) {
+                libraryTags += `<script src="${library}" defer></script>
+    `;
+            } else if (library.endsWith('.css')) {
+                libraryTags += `<link rel="stylesheet" href="${library}">
+    `;
+            } else {
+                // Assuming it's a Google font
+                libraryTags += `<link href="${library}" rel="stylesheet">
+    `;
+            }
+        });
+			return `<!DOCTYPE html>
+<html data-theme="${theme}">
+  <head>
+    <title>${project.pages[initPage].title}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="${project.pages[initPage].description}">
+    ${libraryTags}
+    <style>
+      ${css}
+    </style>
+  </head>
+  <body>
+    ${project.pages[initPage].html}
+  </body>
+</html>`;
+		};
+		const htmlCode = generateHtmlCode(theme);
+
+    const outputPage = (pageid, pageframe) => {
+      const container = document.getElementById(`${pageid}`);
+      container.innerHTML = ''; // Clear existing content
+      const frame = document.createElement('iframe');
+      frame.setAttribute('id', pageframe);
+	  	frame.setAttribute('title', project.pages[initPage].title);
+      frame.className = "transform scale-50"; // Apply Tailwind classes for transform
+      frame.style.width = "200%";
+      frame.style.height = "200%";
+      frame.style.transformOrigin = "top left"; // Set transform origin to center
+	  	frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups');
+      container.appendChild(frame);
+      const previewFrame = document.getElementById(`${pageframe}`);
+      const previewDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+      previewDoc.open();
+      previewDoc.write(htmlCode);
+      previewDoc.close();
+    };
+
+    outputPage(`previewElm${initPage}`, `preview${initPage}`);
   },
-
-  // update localStorage
-  updateStorage: () => {
-    appJSON.name                  = appname.value
-    appJSON.title                 = title.value
-    appJSON.description           = description.value
-    appJSON.version               = version.value
-    appJSON.author                = author.value
-    appJSON.website               = website.value
-    appJSON.analytics             = googleanalytics.value
-    appJSON.logo                  = logo.src
-    appJSON.scratchpad            = scratchpad.value
-    appJSON.css                   = css.value
-    appJSON.fontSize              = fz.value
-    appJSON.theme                 = (theme.checked)         ? true : false
-    appJSON.autoupdate            = (autoupdate.checked)    ? true : false
-    appJSON.console               = (toggleconsole.checked) ? true : false
-    appJSON.pwa                   = (pwa.checked)           ? true : false
-    appJSON.fontawesome           = (fa.checked)            ? true : false
-    appJSON.html                  = htmlEditor.state.doc.toString()
-    appJSON.javascript            =   jsEditor.state.doc.toString()
-  
-    // left to push is logic and data
-    localStorage.setItem('kodeWeave', JSON.stringify(appJSON))
-  },
-
+	
   // share weave
   shareWeave: () => {
-    let grabPicoURL     = 'https://cdnjs.cloudflare.com/ajax/libs/picocss/1.5.7/pico.classless.min.css'
-    let grabTailWindURL = 'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css'
-    let ifBoth          = `@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css')
-@import url('https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.css')`
-    let cssLibrary
+    let cssLibrary = "";
+    let jsLibrary = "";
 
-    if (css.value === 'picocss' || css.value === 'both') {
-      cssLibrary = grabPicoURL
-    }
-    if (css.value === 'tailwind') {
-      cssLibrary = grabTailWindURL
-    }
-  
-    let checkTheme  = (appJSON.theme) ? 'dark' : 'light'
-    let picotheme   = `document.querySelector('html').setAttribute('data-theme', '${checkTheme}')`
-    let istailwind  = (css.value === 'tailwind') ? '' : picotheme
-  
+    const libraries = project.pages[app.activePage].libraries;
+
+    libraries.forEach(library => {
+      if (library.endsWith('.js')) {
+        jsLibrary += `${library};`;
+      } else if (library.endsWith('.css')) {
+        cssLibrary += `${library};`;
+      } else {
+        // Assuming it's a Google font, treat it as CSS
+        cssLibrary += `${library};`;
+      }
+    });
+
     let data = {
-      title        : appJSON.title,
-      description  : appJSON.description,
-      html         : `<!-- 
+        title: projectTitle.value,
+        description: description.value,
+        html: `<!-- 
 Shared from kodeWeave!
 Try kodeWeave today at https://michaelsboost.com/kodeWeave/
 -->
 
 ${htmlEditor.state.doc.toString()}`,
-      css          : (css.value === 'both') ? ifBoth : "@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css')",
-      js           : `// Shared from kodeWeave: https://michaelsboost.com/kodeWeave/ 
+        css: `/* Shared from kodeWeave: https://michaelsboost.com/kodeWeave/ */
+${cssEditor.state.doc.toString()}`,
+        js: `// Shared from kodeWeave: https://michaelsboost.com/kodeWeave/ 
 
-${istailwind}
 ${jsEditor.state.doc.toString()}`,
-      css_external : cssLibrary,
-      editors: '000'
+        css_external: cssLibrary,
+        js_external: jsLibrary,
+        editors: '000', // Set HTML and JS editors open, CSS editor closed
+        layout: 'left' // Set the layout to left
+    };
+
+    // Remove the trailing semicolon
+    if (cssLibrary !== "") {
+        cssLibrary = cssLibrary.slice(0, -1);
     }
-    let JSONstring = JSON.stringify(data).replace(/"/g, "&quot").replace(/'/g, "&apos")
-    
-    let form = 
-    '<form id="tempForm" action="https://codepen.io/pen/define" method="POST" target="_blank" style="display: none">' + 
-      '<input type="hidden" name="data" value=\'' + 
-        JSONstring + 
-        '\'>' + 
-      '<button id="tempBtn">Create New Pen with Prefilled Data</button>' +
-    '</form>'
-  
-    // append click then remove
-    document.body.innerHTML += form
-    tempBtn.click()
-    document.getElementById('tempForm').remove()
-    location.reload(true)
-  },
+    if (jsLibrary !== "") {
+        jsLibrary = jsLibrary.slice(0, -1);
+    }
 
-  // export project json
-  exportJSON: () => {
-    let blob = new Blob([JSON.stringify(appJSON)], {type: "application/json"})
-    saveAs(blob, `${appJSON.name.toString().toLowerCase().replace(/ /g,"")}-kodeWeave.json`)
-  },
+    let JSONstring = JSON.stringify(data).replace(/"/g, "&quot").replace(/'/g, "&apos");
 
+    let form =
+        '<form action="https://codepen.io/pen/define" method="POST" target="_blank" style="display: none">' +
+        '<input type="hidden" name="data" value=\'' +
+        JSONstring +
+        '\'>' +
+        '<input type="submit" value="Create New Pen with Prefilled Data">' +
+        '</form>';
+
+    // Append click then remove
+    document.body.innerHTML += form;
+    document.querySelector('form').submit();
+    document.querySelector('form').remove();
+},
+
+	// export project json
+	exportProjectFile: () => {
+		let blob = new Blob([JSON.stringify(project)], {
+			type: "application/json"
+		});
+		saveAs(blob, `${project.pages[app.activePage].name.toString().toLowerCase().replace(/ /g,"")}-kodeWeave.json`);
+	},
+	
   // export zip file
   exportZip: () => {
-    if (!appname.value || !title.value || !description.value || !version.value || !author.value) {
-      alert('Error: Cannot cancelled! Reason: "Missing some metadata!"')
-      return false
-    }
+    const theme = project.settings.theme ? 'dark' : 'light';
 
-    let manifestJSONCode = `{
-"theme_color":      "hsl(207, 31%, 11%)",
-"background_color": "hsl(207, 31%, 11%)",
-"display":      "standalone",
-"start_url":    "./index.html",
-"lang":         "en-US",
-"name":         "${appJSON.name}",
-"short_name":   "${appJSON.name}",
-"description" : "${appJSON.description}",
-"icons": [
-  {
-    "src":     "./imgs/icon-192x192.png",
-    "sizes":   "192x192",
-    "type":    "image/png",
-    "purpose": "any"
-  },
-  {
-    "src":     "./imgs/icon-256x256.png",
-    "sizes":   "256x256",
-    "type":    "image/png",
-    "purpose": "any"
-  },
-  {
-    "src":     "./imgs/icon-384x384.png",
-    "sizes":   "384x384",
-    "type":    "image/png",
-    "purpose": "any"
-  },
-  {
-    "src":     "./imgs/icon-512x512.png",
-    "sizes":   "512x512",
-    "type":    "image/png",
-    "purpose": "maskable"
-  }
-]
-}`
-    let packageJSONCode = `{
-"name": "${appJSON.name.toLowerCase().trim()}",
-"version": "${appJSON.version}",
-"description": "${appJSON.description}",
-"main": "index.js",
-"scripts": {
-"serve": "http-server -p 1336 build -c-1"
-},
-"author": "${appJSON.author}",
-"license": "MIT"
-}`
-    let readmeCode = `${appJSON.name}
+    let zip = new JSZip();
+    
+    let readmeCode = `${project.pages[0].title}
 ===================
 
-${appJSON.description}
+${project.pages[0].description}
 
 Version
 -------------
 
-${appJSON.version}
+0.0.1
 
 License
 -------------
 
 MIT
 
-This app was created and exported with [kodeWeave](https://michaelsboost.github.io/kodeWeave/)`
+This app was created and exported with [kodeWeave](https://michaelsboost.github.io/kodeWeave/)`;
+
     let licenseStr = `The MIT License (MIT)
-Copyright (c) ${new Date().getFullYear()} ${appJSON.author}
+Copyright (c) ${new Date().getFullYear()} John Doe
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -657,736 +713,855 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.`
-    let swStart = `"./manifest.json",
-"./imgs/logo.png",
-"./index.html",
-"./css/style.css",
-"./js/bundle.js"`
-    let swEnd = `
+SOFTWARE.`;
 
-/* Start the service worker and cache all of the app's content */
-self.addEventListener("install", function(e) {
-e.waitUntil(
-  caches.open(cacheName).then(function(cache) {
-    return cache.addAll(filesToCache)
-  })
-)
-self.skipWaiting()
-})
+    zip.file(`README.md`, readmeCode);
+    zip.file(`LICENSE.md`, licenseStr);
+    
+    project.pages.forEach(page => {
+      const css = page.css ? `<link rel="stylesheet" href="css/${page.name}.css">` : '';
 
-/* Serve cached content when offline */
-self.addEventListener("fetch", function(e) {
-e.respondWith(
-  caches.match(e.request).then(function(response) {
-    return response || fetch(e.request)
-  })
-)
-})`
-    let pwaHTML = `
-    <script>
-      // service worker for progressive web app
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js')
-        })
-      }
-    </script>`
-    let pwaHTMLCheck = (appJSON.pwa) ? pwaHTML : ``
-
-    if (appJSON.fontawesome) {
-    // join font awesome library into users new project
-    JSZipUtils.getBinaryContent("zips/font-awesome.zip", function(err, data) {
-      if(err) {
-        throw err // or handle err
-      }
+        let libraryTags = '';
+        page.libraries.forEach(library => {
+          if (library.endsWith('.js')) {
+            libraryTags += `<script src="${library}" defer></script>\n`;
+          } else if (library.endsWith('.css')) {
+            libraryTags += `<link rel="stylesheet" href="${library}">\n`;
+          } else {
+            // Assuming it's a Google font
+            libraryTags += `<link href="${library}" rel="stylesheet">\n`;
+          }
+        });
+        
+        zip.file(`${page.name}/js/${page.name}.js`, `${page.javascript}`);
+        zip.file(`${page.name}/css/${page.name}.css`, `${page.css}`);
+        zip.file(`${page.name}/${page.name}.html`, `<!DOCTYPE html>
+<html lang="en-US" data-theme="${theme}">
+  <head>
+    <title>${page.title}</title>
+    <meta charset="utf-8">
+    <meta name="description" content="${page.description}">
+    <meta name="author" content="kodeWeave">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="${page.title}">
+    <meta name="apple-mobile-web-app-title" content="${page.title}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="hsl(207, 31%, 11%)">
+    <meta name="msapplication-navbutton-color" content="hsl(207, 31%, 11%)">
+    <meta name="msapplication-starturl" content="./${page.name}.html">
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content="${page.title}" />
+    <meta property="og:description" content="${page.description}" />
+    ${libraryTags}
+    ${css}
+  </head>
+  <body>
+  ${page.html}
   
-      let zip = new JSZip(data)
+    <script src="js/${page.name}.js"></script>
+  </body>
+</html>`);
 
-      // save css libraries/frameworks
-      let cssortailwind, forJSfile = ''
-      if (css.value === 'picocss') {
-        zip.file("libraries/pico/pico.classless.min.css", app.cssObj.data[0])
-
-        // variable for the service worker
-        cssortailwind = `"./libraries/pico/pico.classless.min.css",`
+        // Add libraries for the current page
+        /*
+      // Fetch and add external libraries
+      for (const library of page.libraries) {
+        const fileType = library.endsWith('.js') ? 'js' : 'css';
+        app.getFile(library, content => {
+          zip.folder(`${page.name}/${fileType}_external`).file(library.split('/').pop(), content);
+        });
       }
-      if (css.value === 'tailwind') {
-        zip.file("libraries/tailwind/tailwind.min.js",  app.cssObj.data[0])
-        zip.file("libraries/tailwind/tailwind.min.css", app.cssObj.data[1])
+        */
+    });
 
-        // variable for the app.min.js file
-        forJSfile = app.cssObj.data[0]
-
-        // variable for the service worker
-        cssortailwind = `"./libraries/tailwind/tailwind.min.css",
-"./libraries/tailwind/tailwind.min.js",`
-      }
-      if (css.value === 'both') {
-        zip.file("libraries/pico/pico.classless.min.css", app.cssObj.data[0])
-        zip.file("libraries/tailwind/tailwind-mod.min.css", app.cssObj.data[1])
-
-        // variable for the service worker
-        cssortailwind = `"./libraries/pico/pico.classless.min.css",
-"./libraries/tailwind/tailwind-mod.min.css",`
-      }
+    // save kodeWeave project file in export
+    zip.file('project-kodeWeave.json', JSON.stringify(project));
   
-      const base64Content = logo.src
-      // base64 encoded data doesn't contain commas    
-      let base64ContentArray = base64Content.split(",")
-      // base64 content cannot contain whitespaces but nevertheless skip if there are!
-      let mimeType = base64ContentArray[0].match(/[^:\s*]\w+\/[\w-+\d.]+(?=[| ])/)[0]
-  
-      let logoType
-      if (mimeType === 'image/png') {
-        zip.file("imgs/logo.png", logo.src.split('base64,')[1],{base64: true})
-        logoType = 'png'
-      }
-      if (mimeType === 'image/jpeg') {
-        zip.file("imgs/logo.jpeg", logo.src.split('base64,')[1],{base64: true})
-        logoType = 'jpeg'
-      }
-      if (mimeType === 'image/svg+xml') {
-        zip.file("imgs/logo.svg", logo.src.split('base64,')[1],{base64: true})
-        logoType = 'svg'
-      }
-
-      // save images for manifest.json
-      zip.file("imgs/icon-192x192.png", document.querySelectorAll('[data-image]')[0].src.split('base64,')[1],{base64: true})
-      zip.file("imgs/icon-256x256.png", document.querySelectorAll('[data-image]')[1].src.split('base64,')[1],{base64: true})
-      zip.file("imgs/icon-384x384.png", document.querySelectorAll('[data-image]')[2].src.split('base64,')[1],{base64: true})
-      zip.file("imgs/icon-512x512.png", document.querySelectorAll('[data-image]')[3].src.split('base64,')[1],{base64: true})
-      zip.file("imgs/logo.png",         document.querySelectorAll('[data-image]')[4].src.split('base64,')[1],{base64: true})
-
-      let cssLib, cssImport, picotheme = ''
-
-      // if user is just using picocss
-      if (css.value === 'picocss') {
-        cssLib    = `<link rel="stylesheet" href="css/style.css" />`
-        cssImport = `@import url('../libraries/pico/pico.classless.min.css')`
-
-        if (appJSON.theme === true) {
-          picotheme = `data-theme="dark"`
-        }
-        if (appJSON.theme === false) {
-          picotheme = `data-theme="light"`
-        }
-      }
-      // if user is just using tailwind
-      if (css.value === 'tailwind') {
-        cssLib = `<link rel="stylesheet" href="css/style.css" />`
-        cssImport = `@import url('../libraries/tailwind/tailwind.min.css')`
-      }
-
-      // if user is using picocss and tailwind
-      if (css.value === 'both') {
-        cssLib = `<link rel="stylesheet" href="css/style.css" />`
-        cssImport = `@import url('../libraries/pico/pico.classless.min.css')
-@import url('../libraries/tailwind/tailwind-mod.min.css')`
-
-        if (appJSON.theme === true) {
-          picotheme = `data-theme="dark"`
-        }
-        if (appJSON.theme === false) {
-          picotheme = `data-theme="light"`
-        }
-      }
-
-      zip.file("js/app.js", appJSON.javascript)
-      zip.file("js/bundle.js", `${forJSfile}${(appJSON.javascript === '') ? '' : appJSON.javascript.toString()}`)
-      zip.file("css/style.css", `/* imports */
-${cssImport}
-@import url('../libraries/font-awesome/css/all.min.css')`)
-      zip.file("index.html", `<!DOCTYPE html>
-<html lang="en-US" ${picotheme}>
-<head>
-  <title>${appJSON.title}</title>
-  <meta charset="utf-8">
-  <meta name="description" content="${appJSON.description}">
-  <meta name="author" content="${appJSON.author}">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="manifest" href="manifest.json">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="${appJSON.name}">
-  <meta name="apple-mobile-web-app-title" content="${appJSON.title}">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="hsl(207, 31%, 11%)">
-  <meta name="msapplication-navbutton-color" content="hsl(207, 31%, 11%)">
-  <meta name="msapplication-starturl" content="./index.html">
-  <link rel="apple-touch-icon" href="imgs/logo.${logoType}">
-  <link rel="icon" href="imgs/logo.${logoType}" type="image/x-icon" />
-  <meta property="og:url"         content="${appJSON.website}" />
-  <meta property="og:type"        content="website" />
-  <meta property="og:title"       content="${appJSON.title}" />
-  <meta property="og:description" content="${appJSON.description}" />
-  ${cssLib}
-</head>
-<body>
-${htmlEditor.state.doc.toString()}
-
-  <script src="js/bundle.js"></script>${pwaHTMLCheck}
-</body>
-</html>`)
-      zip.file("README.md", readmeCode)
-      zip.file("manifest.json", manifestJSONCode)
-      zip.file("package.json", packageJSONCode)
-      zip.file("LICENSE.md", licenseStr)
-
-      // save kodeWeave project file in export
-      zip.file(`${appJSON.name.toString().toLowerCase().replace(/ /g,"")}-kodeWeave.json`, JSON.stringify(appJSON))
-
-      if (appJSON.pwa) {
-        zip.file("sw.js", `let cacheName    = "${appJSON.name}"
-let filesToCache = [
-"./",
-${cssortailwind}
-${swStart},
-"./libraries/font-awesome/css/all.css",
-"./libraries/font-awesome/css/all.min.css",
-"./libraries/font-awesome/css/brands.css",
-"./libraries/font-awesome/css/brands.min.css",
-"./libraries/font-awesome/css/fontawesome.css",
-"./libraries/font-awesome/css/fontawesome.min.css",
-"./libraries/font-awesome/css/regular.css",
-"./libraries/font-awesome/css/regular.min.css",
-"./libraries/font-awesome/css/solid.css",
-"./libraries/font-awesome/css/solid.min.css",
-"./libraries/font-awesome/css/svg-with-js.css",
-"./libraries/font-awesome/css/svg-with-js.min.css",
-"./libraries/font-awesome/css/v4-font-face.css",
-"./libraries/font-awesome/css/v4-font-face.min.css",
-"./libraries/font-awesome/css/v4-shims.css",
-"./libraries/font-awesome/css/v4-shims.min.css",
-"./libraries/font-awesome/css/v5-font-face.css",
-"./libraries/font-awesome/css/v5-font-face.min.css",
-"./libraries/font-awesome/js/all.js",
-"./libraries/font-awesome/js/all.min.js",
-"./libraries/font-awesome/js/brands.js",
-"./libraries/font-awesome/js/brands.min.js",
-"./libraries/font-awesome/js/conflict-detection.js",
-"./libraries/font-awesome/js/conflict-detection.min.js",
-"./libraries/font-awesome/js/fontawesome.js",
-"./libraries/font-awesome/js/fontawesome.min.js",
-"./libraries/font-awesome/js/regular.js",
-"./libraries/font-awesome/js/regular.min.js",
-"./libraries/font-awesome/js/solid.js",
-"./libraries/font-awesome/js/solid.min.js",
-"./libraries/font-awesome/js/v4-shims.js",
-"./libraries/font-awesome/js/v4-shims.min.js",
-"./libraries/font-awesome/LICENSE.txt",
-"./libraries/font-awesome/webfonts/fa-brands-400.ttf",
-"./libraries/font-awesome/webfonts/fa-brands-400.woff2",
-"./libraries/font-awesome/webfonts/fa-regular-400.ttf",
-"./libraries/font-awesome/webfonts/fa-regular-400.woff2",
-"./libraries/font-awesome/webfonts/fa-solid-900.ttf",
-"./libraries/font-awesome/webfonts/fa-solid-900.woff2",
-"./libraries/font-awesome/webfonts/fa-v4compatibility.ttf",
-"./libraries/font-awesome/webfonts/fa-v4compatibility.woff2"
-]${swEnd}`)
-      }
-  
-      let content = zip.generate({type:"blob"})
-      saveAs(content, `${appJSON.name.toString().toLowerCase().replace(/ /g,"")}.zip`)
-      return false
-    })
-
-    return false
-    }
-
-    // join font awesome library into users new project
-      let zip = new JSZip()
-
-      // save css libraries/frameworks
-      let cssortailwind, forJSfile = ''
-      if (css.value === 'picocss') {
-        zip.file("libraries/pico/pico.classless.min.css", app.cssObj.data[0])
-
-        // variable for the service worker
-        cssortailwind = `"./libraries/pico/pico.classless.min.css",`
-      }
-      if (css.value === 'tailwind') {
-        zip.file("libraries/tailwind/tailwind.min.js",  app.cssObj.data[0])
-        zip.file("libraries/tailwind/tailwind.min.css", app.cssObj.data[1])
-
-        // variable for the bundle.js file
-        forJSfile = app.cssObj.data[0]
-
-        // variable for the service worker
-        cssortailwind = `"./libraries/tailwind/tailwind.min.css",
-"./libraries/tailwind/tailwind.min.js",`
-      }
-      if (css.value === 'both') {
-        zip.file("libraries/pico/pico.classless.min.css", app.cssObj.data[0])
-        zip.file("libraries/tailwind/tailwind-mod.min.css", app.cssObj.data[1])
-
-        // variable for the service worker
-        cssortailwind = `"./libraries/pico/pico.classless.min.css",
-"./libraries/tailwind/tailwind-mod.min.css",`
-      }
-  
-      const base64Content = logo.src
-      // base64 encoded data doesn't contain commas    
-      let base64ContentArray = base64Content.split(",")
-      // base64 content cannot contain whitespaces but nevertheless skip if there are!
-      let mimeType = base64ContentArray[0].match(/[^:\s*]\w+\/[\w-+\d.]+(?=[| ])/)[0]
-  
-      let logoType
-      if (mimeType === 'image/png') {
-        zip.file("imgs/logo.png", logo.src.split('base64,')[1],{base64: true})
-        logoType = 'png'
-      }
-      if (mimeType === 'image/jpeg') {
-        zip.file("imgs/logo.jpeg", logo.src.split('base64,')[1],{base64: true})
-        logoType = 'jpeg'
-      }
-      if (mimeType === 'image/svg+xml') {
-        zip.file("imgs/logo.svg", logo.src.split('base64,')[1],{base64: true})
-        logoType = 'svg'
-      }
-
-      // save images for manifest.json
-      zip.file("imgs/icon-192x192.png", document.querySelectorAll('[data-image]')[0].src.split('base64,')[1],{base64: true})
-      zip.file("imgs/icon-256x256.png", document.querySelectorAll('[data-image]')[1].src.split('base64,')[1],{base64: true})
-      zip.file("imgs/icon-384x384.png", document.querySelectorAll('[data-image]')[2].src.split('base64,')[1],{base64: true})
-      zip.file("imgs/icon-512x512.png", document.querySelectorAll('[data-image]')[3].src.split('base64,')[1],{base64: true})
-      zip.file("imgs/logo.png",         document.querySelectorAll('[data-image]')[4].src.split('base64,')[1],{base64: true})
-
-      let cssLib, cssImport, picotheme = ''
-      // if user is just using picocss
-      if (css.value === 'picocss') {
-        cssLib    = `<link rel="stylesheet" href="css/style.css" />`
-        cssImport = `@import url('../libraries/pico/pico.classless.min.css')`
-
-        if (appJSON.theme === true) {
-          picotheme = `data-theme="dark"`
-        }
-        if (appJSON.theme === false) {
-          picotheme = `data-theme="light"`
-        }
-      }
-      // if user is just using tailwind
-      if (css.value === 'tailwind') {
-        cssLib = `<link rel="stylesheet" href="css/style.css" />`
-        cssImport = `@import url('../libraries/tailwind/tailwind.min.css')`
-      }
-
-      // if user is using picocss and tailwind
-      if (css.value === 'both') {
-        cssLib = `<link rel="stylesheet" href="css/style.css" />`
-        cssImport = `@import url('../libraries/pico/pico.classless.min.css')
-@import url('../libraries/tailwind/tailwind-mod.min.css')`
-
-        if (appJSON.theme === true) {
-          picotheme = `data-theme="dark"`
-        }
-        if (appJSON.theme === false) {
-          picotheme = `data-theme="light"`
-        }
-      }
-
-      zip.file("js/bundle.js", `${forJSfile}${(appJSON.javascript === '') ? '' : appJSON.javascript.toString()}`)
-      zip.file("css/style.css", `/* imports */
-${cssImport}`)
-      zip.file("index.html", `<!DOCTYPE html>
-<html lang="en-US" ${picotheme}>
-<head>
-  <title>${appJSON.title}</title>
-  <meta charset="utf-8">
-  <meta name="description" content="${appJSON.description}">
-  <meta name="author" content="${appJSON.author}">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="manifest" href="manifest.json">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="${appJSON.name}">
-  <meta name="apple-mobile-web-app-title" content="${appJSON.title}">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="hsl(207, 31%, 11%)">
-  <meta name="msapplication-navbutton-color" content="hsl(207, 31%, 11%)">
-  <meta name="msapplication-starturl" content="./index.html">
-  <link rel="apple-touch-icon" href="imgs/logo.${logoType}">
-  <link rel="icon" href="imgs/logo.${logoType}" type="image/x-icon" />
-  <meta property="og:url"         content="${appJSON.website}" />
-  <meta property="og:type"        content="website" />
-  <meta property="og:title"       content="${appJSON.title}" />
-  <meta property="og:description" content="${appJSON.description}" />
-  ${cssLib}
-</head>
-<body>
-${htmlEditor.state.doc.toString()}
-
-  <script src="js/bundle.js"></script>${pwaHTMLCheck}
-</body>
-</html>`)
-      zip.file("README.md", readmeCode)
-      zip.file("manifest.json", manifestJSONCode)
-      zip.file("package.json", packageJSONCode)
-      zip.file("LICENSE.md", licenseStr)
-
-      // save kodeWeave project file in export
-      zip.file(`${appJSON.name.toString().toLowerCase().replace(/ /g,"")}-kodeWeave.json`, JSON.stringify(appJSON))
-
-      if (appJSON.pwa) {
-        zip.file("sw.js", `let cacheName    = "${appJSON.name}"
-let filesToCache = [
-"./",
-${cssortailwind}
-${swStart}
-]${swEnd}`)
-      }
-  
-      let content = zip.generate({type:"blob"})
-      saveAs(content, `${appJSON.name.toString().toLowerCase().replace(/ /g,"")}.zip`)
+    let content = zip.generate({type:"blob"});
+    saveAs(content, 'project.zip');
   },
 
-  // push code snippet to editor
-  pushSnippet: e => {
-    // detect the active editor
-    let activeEditor
-    if (document.querySelector('.fa-html5').classList.contains('text-blue-500')) {
-      activeEditor = htmlEditor
+	// zooming and panning function
+	initZoomPan: () => {
+		// variables
+		document.querySelector('[data-device]');
+		let canvas = document.querySelector('[data-canvas]');
+		let canvasH = parseFloat(canvas.clientHeight);
+		let canvasW = parseFloat(canvas.clientWidth / 2);
+
+		// init panzoom
+		let instance = panzoom(canvas, {
+			bounds: true,
+			boundsPadding: 0.1
+		});
+
+		let centerCanvas = () => {
+			let canvas = document.querySelector('[data-canvas]');
+			let canvasH = parseFloat(canvas.clientHeight);
+			let canvasW = parseFloat(canvas.clientWidth / 2);
+			canvasW = parseFloat(canvas.clientWidth);
+			canvasH = parseFloat(canvas.clientHeight);
+
+			// detect if canvas is in portrait mode
+			if (canvasW < canvasH) {
+				// ratio for zoom
+				let zoomRatio = 0.75;
+
+				// to center the canvas horizontally we first need to...
+				// get half the body & canvas's width
+				let bodyW = parseFloat(canvas.parentElement.clientWidth / 2);
+				canvasW = parseFloat(canvas.clientWidth / 2);
+				// then add them together
+				let initialXPos = parseFloat(parseFloat(bodyW) - parseFloat(canvasW) * zoomRatio);
+
+				// to center the canvas vertically we first need to...
+				// get the size of both the body and the canvas
+				let bodyH = parseFloat(canvas.parentElement.clientHeight);
+				bodyH = bodyH / 2;
+				canvasH = canvasH / 2;
+				// then add them together
+				let initialYPos = parseFloat(parseFloat(canvasH) - parseFloat(bodyH) * zoomRatio);
+
+				// set initial zoom
+				instance.zoomAbs(
+					initialXPos, // initial x position
+					initialYPos, // initial y position
+					zoomRatio // initial zoom
+				);
+				instance.moveTo(initialXPos, initialYPos);
+
+				// display size
+				viewx.value = parseInt(canvas.style.width);
+				viewy.value = parseInt(canvas.style.height);
+				return false
+			}
+
+			// ratio for zoom
+			let zoomRatio = 0.75;
+
+			// to center the canvas horizontally we first need to...
+			// get half the body & canvas's width
+			let bodyW = parseFloat(canvas.parentElement.clientWidth / 2);
+			canvasW = parseFloat(canvas.clientWidth / 2);
+			// then add them together
+			let initialXPos = parseFloat(parseFloat(bodyW) - parseFloat(canvasW) * zoomRatio);
+
+			// to center the canvas vertically we first need to...
+			// get the size of both the body and the canvas
+			let bodyH = parseFloat(canvas.parentElement.clientHeight);
+			bodyH = bodyH / 2;
+			canvasH = canvasH / 2;
+			// then add them together
+			let initialYPos = parseFloat(parseFloat(bodyH) - parseFloat(canvasH) * zoomRatio);
+
+			// set initial zoom
+			instance.zoomAbs(
+				initialXPos, // initial x position
+				initialYPos, // initial y position
+				zoomRatio // initial zoom
+			);
+			instance.moveTo(initialXPos, initialYPos);
+
+			// display size
+			viewx.value = parseInt(canvas.style.width);
+			viewy.value = parseInt(canvas.style.height);
+		};
+		centerCanvas();
+
+		// enable disable zoom/pan
+		const zoomIcon = document.querySelector('[data-zoom]');
+		zoomIcon.onclick = () => {
+			if (zoomIcon.getAttribute('data-zoom') === 'true') {
+				canvas.selection = false;
+				instance.pause();
+				zoomIcon.innerHTML = '<i class="text-xl fa fa-light fa-magnifying-glass-minus"></i>';
+				zoomIcon.setAttribute('data-zoom', false);
+				fill.classList.add('hidden');
+			} else {
+				canvas.selection = true;
+				instance.resume();
+				zoomIcon.innerHTML = '<i class="text-xl fa fa-light fa-magnifying-glass-plus"></i>';
+				zoomIcon.setAttribute('data-zoom', true);
+				fill.classList.remove('hidden');
+			}
+		};
+
+		// rotate canvas
+		let rotateview = () => {
+			canvasW = parseFloat(canvas.clientWidth);
+			canvasH = parseFloat(canvas.clientHeight);
+
+			canvas.style.width = canvasH + 'px';
+			canvas.style.height = canvasW + 'px';
+			centerCanvas();
+		};
+
+		// reset canvas dimentions and center it
+		let resetCanvas = (w, h) => {
+			canvasW = w;
+			canvasH = h;
+
+			if (canvasW > canvasH) {
+				// landscape
+				canvas.style.width = canvasW + 'px';
+				canvas.style.height = canvasH + 'px';
+				centerCanvas();
+				return false
+			}
+
+			canvas.style.width = canvasH + 'px';
+			canvas.style.height = canvasW + 'px';
+			centerCanvas();
+		};
+
+		// reset canvas dimensions and center it
+		// dimensions of Galaxy S8+ used
+		mobilep.onclick = () => {
+			resetCanvas(360, 740);
+			rotateview();
+		};
+		mobilel.onclick = () => {
+			resetCanvas(360, 740);
+		};
+
+		// reset canvas dimensions and center it
+		// dimensions of iPad Mini used
+		tabletp.onclick = () => {
+			resetCanvas(1024, 768);
+			rotateview();
+		};
+		tabletl.onclick = () => {
+			resetCanvas(1024, 768);
+		};
+
+		// reset canvas dimensions and center it
+		// 2012 macbook pro dimensions used
+		desktopsize.onclick = () => {
+			resetCanvas(1440, 834);
+		};
+
+		// manually reset canvas dimensions and center it
+		viewx.onkeyup = () => {
+			resetCanvas(viewx.value, viewy.value);
+		};
+		viewy.onkeyup = () => {
+			resetCanvas(viewx.value, viewy.value);
+		};
+	},
+  
+  // Function to handle storage and display of library/framework
+  fetchSuggestions: searchText => {
+    fetch(`https://api.cdnjs.com/libraries?search=${searchText}&fields=filename,description,version`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data && data.results && data.results.length > 0) {
+          const libraries = data.results.map(result => result);
+          app.displaySuggestions(libraries);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  },
+  displaySuggestions: suggestions => {
+    const suggestionsList = document.getElementById('suggestions');
+    suggestionsList.innerHTML = ''; // Clear previous suggestions
+
+    suggestions.forEach(result => {
+        const listItem = document.createElement('li');
+        listItem.className = 'list-none';
+        listItem.innerHTML = `<div class="flex justify-between mb-2 font-bold text-1xl">
+            <span>${result.name}</span>
+            <span>${result.version}</span>
+        </div>
+        <div class="text-sm">${result.description}<br><hr></div>`;
+        listItem.onclick = () => {
+            // Add the clicked suggestion to the libraries array
+            const url = result.latest; // Assuming 'latest' holds the URL
+            project.pages[app.activePage].libraries.push(url);
+            // Clear the suggestions list
+            suggestionsList.innerHTML = '';
+            // Display the libraries display
+            app.displayLibrariesArray();
+            app.updatePreview(autoupdate.checked);
+            app.createPageButtonList();
+        };
+        suggestionsList.appendChild(listItem);
+    });
+  },
+  displayLibrariesArray: () => {
+    const librariesArray = project.pages[app.activePage].libraries;
+    let sortLibrariesContainer = document.getElementById('sortLibraries');
+    sortLibrariesContainer.innerHTML = '';
+    const embedArray = (result, index) => {
+      const newNav = document.createElement('nav');
+      newNav.setAttribute('data-index', index);
+
+      const sortButton = document.createElement('button');
+      sortButton.className = 'w-auto border-0 bg-transparent text-current py-2';
+      sortButton.innerHTML = '<i class="fa fa-sort"></i>';
+      sortButton.setAttribute('data-sort', index);
+
+      const newInput = document.createElement('input');
+      newInput.type = 'text';
+      newInput.placeholder = 'https://website.com/index.css/.js';
+      newInput.setAttribute('data', 'library')
+      newInput.className = 'rounded-r-none py-2';
+      newInput.value = result;
+      newInput.onkeyup = () => {
+        // Update the value of the librariesArray at the corresponding index
+        librariesArray[index] = newInput.value.trim();
+        app.updatePreview(autoupdate.checked);
+        app.createPageButtonList();
+      };
+
+      const deleteButton = document.createElement('button');
+      deleteButton.className = 'delete-button w-auto border-0 bg-red-400 rounded-l-none py-2';
+      deleteButton.innerHTML = '<i class="fa fa-trash"></i>';
+      deleteButton.onclick = () => {
+        // Remove the library from the array by its index
+        project.pages[app.activePage].libraries.splice(index, 1);
+        // Re-render the libraries array
+        app.createPageButtonList();
+        app.displayLibrariesArray();
+        app.updatePreview(autoupdate.checked);
+      };
+
+      newNav.appendChild(sortButton);
+      newNav.appendChild(newInput);
+      newNav.appendChild(deleteButton);
+      sortLibrariesContainer.appendChild(newNav);
+    };
+
+    // Embed each library into a new input field and delete button
+    librariesArray.forEach((input, index) => {
+      embedArray(librariesArray[index], index);
+    });
+    
+    // Initialize SortableJS if it hasn't been initialized yet
+    if (!sortable) {
+      sortable = new Sortable(sortLibrariesContainer, {
+        handle: '[data-sort]', // Selector for the handle element
+        animation: 150, // Animation duration in milliseconds
+        onEnd: (event) => {
+          // Update the libraries array after sorting
+          const startIndex = event.oldIndex;
+          const endIndex = event.newIndex;
+          const movedLibrary = librariesArray.splice(startIndex, 1)[0];
+          librariesArray.splice(endIndex, 0, movedLibrary);
+          app.updatePreview(autoupdate.checked);
+          app.createPageButtonList();
+        }
+      });
     }
-    if (document.querySelector('.fa-js').classList.contains('text-blue-500')) {
-      activeEditor = jsEditor
+
+    // Check if the last input field is empty, and append an additional empty input field if needed
+    if (librariesArray.length === 0 || librariesArray[librariesArray.length - 1].trim() !== '') {
+        embedArray('', librariesArray.length);
     }
-
-    let pos = activeEditor.state.selection.main.head
-
-    activeEditor.dispatch({
-      changes: {
-        from: pos,
-        insert: e.textContent,
-      },
-      selection: {anchor: parseInt(parseInt(e.textContent.length) + pos)}
-    })
-
-    // close dialog
-    actions.closest('dialog').removeAttribute('open')
+    app.updatePreview(autoupdate.checked);
+    app.createPageButtonList();
   },
 
-  // actions (search/replace, gotoline)
-  actions: () => {
-    // search/replace
-    snr.onclick = () => {
-      // close dialog
-      actions.closest('dialog').removeAttribute('open')
-
-      // detect the active editor
-      if (document.querySelector('.fa-html5').classList.contains('text-blue-500')) {
-        openSearchPanel(htmlEditor)
-      }
-      if (document.querySelector('.fa-js').classList.contains('text-blue-500')) {
-        openSearchPanel(jsEditor)
-      }
-    }
-    // go to line
-    goto.onclick = () => {
-      // close dialog
-      actions.closest('dialog').removeAttribute('open')
-      
-      // detect the active editor
-      if (document.querySelector('.fa-html5').classList.contains('text-blue-500')) {
-        gotoLine(htmlEditor)
-      }
-      if (document.querySelector('.fa-js').classList.contains('text-blue-500')) {
-        gotoLine(jsEditor)
-      }
-    }
-  },
-
-  // initalize application function
-  init: () => {
-    // check localStorage
+	// initalize application function
+	init: () => {
     if (!localStorage.getItem('kodeWeave')) {
-      appname.value     = appJSON.name
-      title.value       = appJSON.title
-      description.value = appJSON.description
-      version.value     = appJSON.version
-      author.value      = appJSON.author
+      // project json
+      project = {
+      	"version": "1.1.43",
+      	"settings": {
+      		"theme": false,
+      		"fontSize": 16,
+      		"autoupdate": true,
+      		"console": true,
+      		"scratchpad": "",
+      	},
+      	"pages": [{
+      		"name": "index",
+      		"title": "An attractive title",
+      		"description": "The most attractive description ever!",
+      		"libraries": ['https://cdnjs.cloudflare.com/ajax/libs/picocss/1.5.7/pico.classless.min.css', 'https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css', 'https://michaelsboost.github.io/kodeWeave/go/libraries/tailwind/tailwind.min.js'],
+      		"html": "",
+      		"css": "",
+      		"javascript": ""
+      	}]
+      };
     } else {
-      appJSON = JSON.parse(localStorage.getItem('kodeWeave'))
-
-      let js = appJSON.javascript
-      appname.value               = appJSON.name
-      title.value                 = appJSON.title
-      description.value           = appJSON.description
-      version.value               = appJSON.version
-      author.value                = appJSON.author
-      website.value               = appJSON.website
-      googleanalytics.value       = appJSON.analytics
-      logo.src                    = appJSON.logo
-      scratchpad.value            = appJSON.scratchpad
-      css.value                   = appJSON.css
-      fz.value                    = appJSON.fontSize
-      theme.checked               = (appJSON.theme)       ? true : false
-      autoupdate.checked          = (appJSON.autoupdate)  ? true : false
-      toggleconsole.checked       = (appJSON.console)     ? true : false
-      pwa.checked                 = (appJSON.pwa)         ? true : false
-      fa.checked                  = (appJSON.fontawesome) ? true : false
+      project = JSON.parse(localStorage.getItem('kodeWeave'))
+      
+      // Make first page as active page
+      app.activePage = 0;
+      
+      // Update settings
+      autoupdate.checked = project.settings.autoupdate;
+      const runParent = run.parentElement;
+      autoupdate.checked ? runParent.classList.add('hidden') : runParent.classList.remove('hidden');
+      toggleconsole.checked = project.settings.console;
+      fz.value = project.settings.fontSize;
+      theme.checked = project.settings.theme;
+      scratchpad.value = project.settings.scratchpad;
+      let cmEditor = document.querySelectorAll('.cm-editor');
+      cmEditor.forEach((child) => {
+        child.style.fontSize = `${fz.value}px`;
+      });
+      
+      // Load code into appropriate editors
       htmlEditor.dispatch({
         changes: {
           from: 0,
           to: htmlEditor.state.doc.toString().length,
-          insert: appJSON.html,
+          insert: project.pages[0].html,
         },
-      })
+      });
+      cssEditor.dispatch({
+        changes: {
+          from: 0,
+          to: cssEditor.state.doc.toString().length,
+          insert: project.pages[0].css,
+        },
+      });
       jsEditor.dispatch({
         changes: {
           from: 0,
           to: jsEditor.state.doc.toString().length,
-          insert: js,
+          insert: project.pages[0].javascript,
         },
-      })
-
-      let cmEditor = document.querySelectorAll('.cm-editor')
-      cmEditor.forEach((child) => {
-        child.style.fontSize = `${fz.value}px`
-      })
-    }
-
-    if (appJSON.autoupdate) run.classList.add('hidden')
-
-    // dynamically load scripts
-    // app.dynamicallyLoadScript('libraries/panzoom/panzoom.mod.js')
-    // app.dynamicallyLoadScript('libraries/jszip/Blob.js')
-    // app.dynamicallyLoadScript('libraries/jszip/FileSaver.js')
-    // app.dynamicallyLoadScript('libraries/jszip/jszip-utils.js')
-    // app.dynamicallyLoadScript('libraries/jszip/jszip.min.js')
-
-    // init zooming and panning
-    app.initZoomPan()
-
-    // toggle HTML and JS editors
-    app.toggleDialogs()
-
-    // Convert logo to png images for manifest.json
-    let embedImage = (source, size) => {
-      // Load images
-      let image = new Image()
-      image.src = source
-      image.onload = function() {
-        let canvas = document.createElement("canvas")
-        canvas.width = size
-        canvas.height = size
-        let ctx = canvas.getContext("2d")
-        ctx.clearRect(0, 0, size, size)
-        ctx.drawImage(this, 0, 0, size, size)
-        let imageURL = canvas.toDataURL("image/png")
-        let newImage = document.createElement("img")
-            newImage.classList.add("hidden")
-            newImage.setAttribute("data-image", "")
-            newImage.src = imageURL
-
-        // Append new image
-        document.body.appendChild(newImage)
-      }
+      });
+      
+      // render previews
+      app.createPageButtonList();
+      app.activatePage(0);
+      app.displayLibrariesArray();
+      app.updatePreview(autoupdate.checked);
     }
     
+    const sortLibrariesContainer = document.getElementById('sortLibraries');
+		const searchBox = document.getElementById('searchBox');
+    const suggestionsList = document.getElementById('suggestions');
+    searchBox.addEventListener('keyup', function() {
+      const searchText = this.value.trim();
+      suggestionsList.innerHTML = '';
+      if (!searchBox.value) {
+        suggestionsList.innerHTML = '';
+        return false
+      }
+    
+      if (searchText.length > 0) {
+        app.fetchSuggestions(searchText);
+      }
+    });
+    addanother.onclick = () => app.displayLibrariesArray()
+    logit.onclick = () => console.log(JSON.stringify(project.pages[app.activePage]))
+	  
+		// init zooming and panning
+		app.initZoomPan();
+		
+		// display libraries array
+		app.displayLibrariesArray();
+
+    // Define an array of objects containing element IDs, corresponding project properties, and event types
+    const elementProperties = [
+      { id: 'autoupdate', property: 'settings.autoupdate', event: 'change' },
+      { id: 'toggleconsole', property: 'settings.console', event: 'change' },
+      { id: 'fa', property: 'settings.fontawesome', event: 'change' },
+      { id: 'fz', property: 'settings.fontSize', events: ['keyup', 'change'] },
+      { id: 'theme', property: 'settings.theme', event: 'change' },
+      { id: 'css', property: 'settings.css', event: 'change' }
+    ];
+    
+    // Function to handle saving project data on keyup or change event
+    const handleProjectDataChange = (element, property) => {
+      let value;
+      if (element.type === 'checkbox') {
+        value = element.checked;
+      } else {
+        value = element.value;
+      }
+      // Update the project data
+      const nestedProperties = property.split('.');
+      let obj = project;
+      for (const prop of nestedProperties.slice(0, -1)) {
+        obj = obj[prop];
+        if (obj === undefined) break; // Stop if any nested property is undefined
+      }
+      obj[nestedProperties.slice(-1)[0]] = value;
+    };
+    
+    // Loop through the array and attach event handlers to the elements
+    elementProperties.forEach(({ id, property, event, events }) => {
+      const element = document.getElementById(id);
+      if (element) {
+        const handler = () => {
+          handleProjectDataChange(element, property);
+          if (element === autoupdate) {
+            run.parentElement.classList.toggle('hidden', autoupdate.checked);
+          }
+          if (element === fz) {
+            let cmEditor = document.querySelectorAll('.cm-editor');
+            cmEditor.forEach((child) => {
+              child.style.fontSize = `${fz.value}px`
+            });
+          }
+          app.updatePreview(autoupdate.checked);
+        };
+        if (events) {
+          events.forEach(ev => element.addEventListener(ev, handler));
+        } else {
+          element.addEventListener(event, handler);
+        }
+      }
+    });
+    
+    // Define an array of objects containing element IDs, corresponding project properties, and event types
+    const elementProperties2 = [
+      { id: 'projectTitle', property: 'title', events: ['keyup', 'change'] },
+      { id: 'description', property: 'description', events: ['keyup', 'change'] },
+      { id: 'scratchpad', property: 'scratchpad', events: ['keyup', 'change'] }
+    ];
+    
+    // Function to handle saving project data
+    const savePageData = (element, property) => {
+      // Update the project data
+      const currentPage = project.pages[app.activePage];
+      currentPage[property] = element.value;
+      app.updatePreview(autoupdate.checked);
+    };
+    
+    // Loop through the array and attach event listeners to the elements for each event type
+    elementProperties2.forEach(({ id, property, events }) => {
+      const element = document.getElementById(id);
+      if (element) {
+        events.forEach(event => {
+          element.addEventListener(event, () => {
+            savePageData(element, property);
+            app.updatePreview(autoupdate.checked);
+          });
+        });
+      }
+    });
+		
+		// function to add a page
+		addPage.onclick = app.addPage;
+		
+		// Function to init a new project
+		initNewProject.onclick = () => {
+		  localStorage.clear();
+		  location.reload(true);
+		};
+		
+		// Create a function to dynamically create and append the navbar
+    const createNavbar = container => {
+      // Create the main nav element
+      const navbar = document.createElement('nav');
+      navbar.className = 'absolute bottom-10 inset-x-0 px-4 text-center inline-block overflow-auto';
+      const navbar2 = document.createElement('nav');
+      navbar2.className = 'absolute bottom-0 inset-x-0 px-4 text-center inline-block overflow-auto';
+    
+      // Create the ul element
+      const ul = document.createElement('ul');
+      ul.className = 'flex justify-between';
+      const ul2 = document.createElement('ul');
+      ul2.className = 'flex justify-between';
+    
+      // Button data for first nav
+      const buttons1 = [
+        { name: 'indent command', dataCommand: 'indent', icon: 'fa-indent' },
+        { name: 'outdent command', dataCommand: 'outdent', icon: 'fa-outdent' },
+        { name: 'undo command', dataCommand: 'undo', icon: 'fa-undo' },
+        { name: 'redo command', dataCommand: 'redo', icon: 'fa-redo' },
+        { name: 'search/replace command', dataCommand: 'search', icon: 'fa-magnifying-glass' },
+        { name: 'go to line', dataCommand: 'goto', icon: 'fa-thumbtack' },
+      ];
+    
+      // Create buttons for first nav and append to ul
+      buttons1.forEach(buttonData => {
+        const li = document.createElement('li');
+        const button = createButton(buttonData);
+        li.appendChild(button);
+        ul.appendChild(li);
+      });
+    
+      // Button data for second nav
+      const buttons2 = [
+        { name: 'toggle comment', dataCursor: 'toggle comment', icon: 'fa-comment' },
+        { name: 'fold all', dataCursor: 'fold all', icon: 'fa-chevron-right' },
+        { name: 'unfold all', dataCursor: 'unfold all', icon: 'fa-chevron-down' },
+        { name: 'cut', dataCommand: 'cut', icon: 'fa-cut' },
+        { name: 'copy', dataCommand: 'copy', icon: 'fa-copy' },
+        { name: 'paste', dataCommand: 'paste', icon: 'fa-paste' },
+        { name: 'select all', dataCommand: 'selectall', icon: 'fa-arrow-pointer' },
+      ];
+    
+      // Create buttons for second nav and append to ul
+      buttons2.forEach(buttonData => {
+        const li = document.createElement('li');
+        const button = createButton(buttonData);
+        li.appendChild(button);
+        ul2.appendChild(li);
+      });
+    
+      // Append ul to navbar
+      navbar.appendChild(ul);
+      navbar2.appendChild(ul2);
+    
+      // Get the element to which you want to append the created navbar
+      const embedNavbar = document.querySelector(`[data-${container}]`);
+      
+      // Clear embedNavbar before append refresh
+      embedNavbar.innerHTML = '';
+      
+      // Append the navbar to the embedNavbar element
+      embedNavbar.appendChild(navbar);
+      embedNavbar.appendChild(navbar2);
+    };
+    
+    // Function to create button element
+    const createButton = ({ name, dataID, dataKey, dataCommand, dataOpen, dataCursor, icon }) => {
+      const button = document.createElement('button');
+      button.dataset.command = dataCommand || '';
+      button.dataset.cursor = dataCursor || '';
+      button.name = button.dataset.name;
+      button.className = 'py-0 px-3 mt-2 border-none bg-transparent text-sm text-current';
+    
+      // Create icon element
+      const iconElement = document.createElement('i');
+      iconElement.className = 'fa ' + icon;
+      button.appendChild(iconElement);
+    
+      // Add onclick function to button
+      button.onclick = e => {
+        // commands
+        if (button.dataset.command === "indent") {
+          indentMore(activeEditor);
+          e.preventDefault();
+        }
+        if (button.dataset.command === "outdent") {
+          indentLess(activeEditor);
+          e.preventDefault();
+        }
+        if (button.dataset.command === "goto") {
+          gotoLine(activeEditor);
+        }
+        if (button.dataset.command === "undo") {
+          undo(activeEditor);
+          e.preventDefault();
+        }
+        if (button.dataset.command === "redo") {
+          redo(activeEditor);
+          e.preventDefault();
+        }
+        if (button.dataset.command === "search") {
+          openSearchPanel(activeEditor);
+          e.preventDefault();
+        }
+        if (button.dataset.cursor === "toggle comment") {
+          toggleComment(activeEditor);
+        }
+        if (button.dataset.cursor === "fold all") {
+          foldAll(activeEditor);
+        }
+        if (button.dataset.cursor === "unfold all") {
+          unfoldAll(activeEditor);
+        }
+        if (button.dataset.command === "cut") {
+          cutSelection(activeEditor);
+        }
+        if (button.dataset.command === "copy") {
+          copySelection(activeEditor);
+        }
+        if (button.dataset.command === "paste") {
+          pasteText(activeEditor);
+        }
+        if (button.dataset.command === "selectall") {
+          selectAll(activeEditor);
+        }
+        // Helper function to clamp a value between min and max
+        function clamp(value, min, max) {
+            return Math.min(Math.max(value, min), max);
+        }
+        e.preventDefault();
+      };
+    
+      return button;
+    };
+    
+    // Function to cut the selected text
+    const cutSelection = editor => {
+        const { state, dispatch } = editor;
+        const { selection } = state;
+        const selectedText = state.sliceDoc(selection.main.from, selection.main.to);
+        navigator.clipboard.writeText(selectedText);
+        dispatch(state.update({
+            changes: { from: selection.main.from, to: selection.main.to, insert: '' }
+        }));
+    };
+    
+    // Function to copy the selected text
+    const copySelection = editor => {
+        const { state } = editor;
+        const { selection } = state;
+        const selectedText = state.sliceDoc(selection.main.from, selection.main.to);
+        navigator.clipboard.writeText(selectedText);
+    };
+    
+    // Function to paste text at the cursor position
+    const pasteText = async editor => {
+        const { state, dispatch } = editor;
+        try {
+            const text = await navigator.clipboard.readText();
+            if (text) {
+                const { selection } = state;
+                dispatch(state.update({ changes: { from: selection.main.from, to: selection.main.to, insert: text } }));
+            } else {
+                console.log('Clipboard is empty or does not contain text.');
+            }
+        } catch (error) {
+            console.error('Failed to paste text:', error);
+        }
+    };
+    
+    // Function to select all text in the active editor
+    const selectAll = editor => {
+        const { state, dispatch } = editor;
+        const { doc } = state;
+        const selection = { anchor: 0, head: doc.length };
+        dispatch(state.update({ selection }));
+    };
+    
+		// init tabs
+		const tabButtons = document.querySelectorAll('[data-toggletab]');
+		const tabContent = document.querySelectorAll('[data-tabcontent]');
+		tabButtons.forEach(button => {
+			button.addEventListener('click', function() {
+				// Check if the clicked button already has the text-blue-500 class
+				const isAlreadyActive = this.classList.contains('text-blue-500');
+
+				// Remove text-blue-500 from all buttons
+				tabButtons.forEach((btn) => btn.classList.remove('text-blue-500'));
+
+				// Hide all tab contents
+				tabContent.forEach((tab) => tab.classList.add('hidden'));
+
+				if (!isAlreadyActive) {
+					// If the clicked button wasn't active, add text-blue-500 and show corresponding tab
+					this.classList.add('text-blue-500');
+					const tabName = this.getAttribute('data-toggletab');
+					const selectedTab = document.querySelector(`[data-tabcontent="${tabName}"]`);
+					selectedTab.classList.remove('hidden');
+
+					// Check if the selected tab is the 'pages' tab
+					if (tabName === 'pages') {
+						// push demo to the display tab
+						app.createPageButtonList();
+					}
+					// remember the active editor
+					if (tabName === 'html') {
+					  document.querySelector('[data-editorJSNavbar]').innerHTML = '';
+					  document.querySelector('[data-editorCSSNavbar]').innerHTML = '';
+            activeEditor = htmlEditor;
+		        createNavbar("editorHTMLNavbar");
+					}
+					if (tabName === 'css') {
+					  document.querySelector('[data-editorHTMLNavbar]').innerHTML = '';
+					  document.querySelector('[data-editorJSNavbar]').innerHTML = '';
+            activeEditor = cssEditor;
+		        createNavbar("editorCSSNavbar");
+					}
+					if (tabName === 'js') {
+					  document.querySelector('[data-editorHTMLNavbar]').innerHTML = '';
+					  document.querySelector('[data-editorCSSNavbar]').innerHTML = '';
+            activeEditor = jsEditor;
+		        createNavbar("editorJSNavbar");
+					}
+				} else {
+					// If the clicked button was already active, show the random tab
+					const randomTab = document.querySelector('[data-tabcontent="menu"]');
+					randomTab.classList.remove('hidden');
+				}
+			});
+		});
+
+		// init preview via onclick
+		run.onclick = () => app.updatePreview(autoupdate.checked);
+    
     // function to load json file
-    document.getElementById('import').onchange = () => {
-      let reader = new FileReader()
+    document.getElementById('importProject').onchange = () => {
+      let reader = new FileReader();
     
       reader.onload = e => {
         // grab file
-        appJSON = JSON.parse(e.target.result)
-    
-        let js = appJSON.javascript
-        appname.value               = appJSON.name
-        title.value                 = appJSON.title
-        description.value           = appJSON.description
-        version.value               = appJSON.version
-        author.value                = appJSON.author
-        website.value               = appJSON.website
-        googleanalytics.value       = appJSON.analytics
-        logo.src                    = appJSON.logo
-        scratchpad.value            = appJSON.scratchpad
-        css.value                   = appJSON.css
-        theme.checked               = (appJSON.theme)       ? true : false
-        if (css.value === 'tailwind') theme.parentElement.parentElement.classList.add('hidden')
-        autoupdate.checked          = (appJSON.autoupdate)  ? true : false
-        toggleconsole.checked       = (appJSON.console)     ? true : false
-        pwa.checked                 = (appJSON.pwa)         ? true : false
-        fa.checked                  = (appJSON.fontawesome) ? true : false
+        project = JSON.parse(e.target.result);
+        
+        // Make first page as acrive page
+        app.activePage = 0;
+        
+        // Update settings
+        autoupdate.checked = (project.settings.autoupdate) ? true : false;
+        toggleconsole.checked = (project.settings.console) ? true : false;
+        fz.value = project.settings.fontSize;
+        theme.checked = (project.settings.theme) ? true : false;
+        scratchpad.value = project.settings.scratchpad;
+        let cmEditor = document.querySelectorAll('.cm-editor');
+        cmEditor.forEach((child) => {
+          child.style.fontSize = `${fz.value}px`
+        });
+      
+        // Load code into appropriate editors
         htmlEditor.dispatch({
           changes: {
             from: 0,
             to: htmlEditor.state.doc.toString().length,
-            insert: appJSON.html,
+            insert: project.pages[0].html,
           },
-        })
+        });
+        cssEditor.dispatch({
+          changes: {
+            from: 0,
+            to: cssEditor.state.doc.toString().length,
+            insert: project.pages[0].css,
+          },
+        });
         jsEditor.dispatch({
           changes: {
             from: 0,
             to: jsEditor.state.doc.toString().length,
-            insert: js,
+            insert: project.pages[0].javascript,
           },
-        })
-
-        // remove images if they already exist for exporting
-        if (document.querySelector('[data-image]')) {
-          document.querySelectorAll('[data-image]').forEach((child, index) => {
-            child.remove()
-          })
-        }
-
-        // convert create logo image sizes for manifest.json
-        let imageArr = ['192', '256', '384', '512', logo.width]
-        for (let i of imageArr) {
-          embedImage(logo.src, i)
-        }
-
-        // after everything has been loaded trigger change on css to grab the source code
-        css.onchange()
+        });
+      
+        // render previews
+        app.createPageButtonList();
+        app.activatePage(0);
+        app.displayLibrariesArray();
+        app.updatePreview(autoupdate.checked);
       }
-      reader.readAsText(document.getElementById('import').files[0])
+      reader.readAsText(document.getElementById('importProject').files[0]);
+    };
 
-      // close settings
-      settings.removeAttribute('open')
-    }
-    
-    // function to load logo
-    importlogo.onchange = () => {
-      let reader = new FileReader()
-    
-      reader.onload = (e) => {
-        // grab file
-        logo.src = e.target.result
-        app.updateStorage()
-
-        // remove images if they already exist for exporting
-        if (document.querySelector('[data-image]')) {
-          document.querySelectorAll('[data-image]').forEach((child, index) => {
-            child.remove()
-          })
-        }
-
-        // convert create logo image sizes for manifest.json
-        let imageArr = ['192', '256', '384', '512', logo.width]
-        for (let i of imageArr) {
-          embedImage(logo.src, i)
-        }
-      }
-      reader.readAsDataURL(importlogo.files[0])
-    }
-
-    // convert create logo image sizes for manifest.json
-    let imageArr = ['192', '256', '384', '512', logo.width]
-    for (let i of imageArr) {
-      embedImage(logo.src, i)
-    }
-    
-    // ajax function to get source of a file
-    let getFile = (url, callback) => {
-      let xhr = new XMLHttpRequest()
-      xhr.open("GET", url)
-      xhr.send()
-    
-      xhr.onreadystatechange = (data) => {
-        if (xhr.readyState !== 4) {
-          return
-        }
-    
-        if (xhr.status === 200) {
-          callback(xhr.responseText)
-        } else {
-          console.warn("request_error")
-        }
-      }
-    }
-    
-    // toggle autoupdate
-    autoupdate.onchange = () => {
-      if (autoupdate.checked) run.classList.add('hidden')
-    
-      if (!autoupdate.checked) {
-        run.classList.remove('hidden')
-      }
-      app.updatePreview()
-    }
-    run.onclick = () => app.updatePreview()
-    
-    // css
-    css.onchange = () => {
-      app.cssObj.id   = []
-      app.cssObj.data = []
-      if (css.value === 'picocss') {
-        let urls  = ["libraries/pico/pico.classless.min.css"]
-        app.cssObj.id = urls
-        for (let i of urls) {
-          getFile(i, (source) => {
-            app.cssObj.data = [...app.cssObj.data, source]
-          })
-        }
-      }
-      if (css.value === 'tailwind') {
-        let urls  = ["libraries/tailwind/tailwind.min.js", "libraries/tailwind/tailwind.min.css"]
-        app.cssObj.id = urls
-        for (let i of urls) {
-          getFile(i, (source) => {
-            app.cssObj.data = [...app.cssObj.data, source]
-          })
-        }
-      }
-      if (css.value === 'both') {
-        let urls  = ["libraries/pico/pico.classless.min.css", "libraries/tailwind/tailwind-mod.min.css"]
-        app.cssObj.id = urls
-        for (let i of urls) {
-          getFile(i, (source) => {
-            app.cssObj.data = [...app.cssObj.data, source]
-          })
-        }
-      }
-    
-      app.updateStorage()
-      app.updatePreview()
-    }
-    
-    // remember state for the following elements
-    fz.onchange = () => {
-      let cmEditor = document.querySelectorAll('.cm-editor')
-      cmEditor.forEach((child) => {
-        child.style.fontSize = `${fz.value}px`
-      })
-      app.updateStorage()
-    }
-    appname.onkeyup         = () => app.updateStorage()
-    title.onkeyup           = () => app.updateStorage()
-    description.onkeyup     = () => app.updateStorage()
-    version.onkeyup         = () => app.updateStorage()
-    author.onkeyup          = () => app.updateStorage()
-    website.onkeyup         = () => app.updateStorage()
-    googleanalytics.onkeyup = () => app.updateStorage()
-    scratchpad.onkeyup      = () => app.updateStorage()
-    theme.onchange          = () => app.updatePreview()
-    toggleconsole.onchange  = () => app.updatePreview()
-    fa.onchange             = () => app.updatePreview()
-    pwa.onchange            = () => app.updateStorage()
-
-    // after everything has been loaded trigger change on css to grab the source code
-    css.onchange()
-
-    // init preview
-    app.updatePreview()
-    
-    // make sure every snippet clicked adds it's textContent to the editor
-    document.querySelectorAll('[data-snippet]').forEach(child => {
-      child.onclick = () => {
-        app.pushSnippet(child)
-      }
-    })
-
-    // init actions
-    app.actions()
-  }
-}
+		// init preview
+		setTimeout(app.updatePreview, 300);
+		
+		// export project file
+		exportProjectFile.onclick = () => app.exportProjectFile();
+		
+		// export zip file
+		exportZip.onclick = () => app.exportZip();
+	}
+};
 
 // check if FileReader API is available
 if (!window.FileReader) {
-  alert('File API & FileReader API not supported!')
+	alert('File API & FileReader API not supported!');
 }
 
 // initialize application
-app.init()
+app.init();
