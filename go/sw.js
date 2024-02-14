@@ -4,7 +4,6 @@ let filesToCache = [
   "./app.js",
   "./bundle.js",
   "./css/style.css",
-  "./editor.mjs",
   "./favicon.ico",
   "./imgs/bg.svg",
   "./imgs/favicon.ico",
