@@ -25,132 +25,79 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <nav class="absolute inset-x-0 pt-0 pl-3 pr-2 z-10 bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg overflow-auto">
-      <ul class="p-3">
+    <nav class="absolute top-0 inset-x-0 z-10 bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg m-0 px-8 py-2">
+      <ul>
         <a href="#" class="py-0 my-0 border-none bg-transparent text-current">
-          <img class="h-10" src="imgs/logo.svg"> 
-          <span class="relative top-1 ml-3 text-2xl hidden sm:inline-block">kodeWeave</span>
+          <img style="height: 50px;" src="imgs/logo.svg"> 
+          <span class="relative ml-3 text-sm">kodeWeave</span>
         </a>
       </ul>
-      <ul class="pr-3">
+      <ul>
         <li>
-          <a href="https://michaelsboost.com/donate/" target="_blank" class="py-0 my-0 border-none bg-transparent text-current">
-            <i class="text-base sm:text-xl fa fa-heart text-red-500"></i>
+          <a href="https://michaelsboost.com/donate/" target="_blank" class="py-0 my-0 border-none bg-transparent text-black">
+            <i class="text-base sm:text-xl fa fa-heart"></i>
           </a>
         </li>
         <li>
-          <a href="https://twitter.com/kodeweave_app/" target="_blank" class="pl-6 py-0 my-0 border-none bg-transparent text-current">
-            <i class="text-base sm:text-xl fa-brands fa-twitter"></i>
+          <a rel="noopener noreferrer" class="text-black" aria-label="GitHub repository" href="https://github.com/michaelsboost/kodeWeave/" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24.25" viewBox="0 0 496 512" class="icon-github">
+              <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path>
+            </svg>
           </a>
         </li>
         <li>
-          <button class="py-0 my-0 border-none bg-transparent text-current">
-            <i class="text-base sm:text-xl fa-brands fa-github-alt"></i>
-          </button>
+          <a rel="noopener noreferrer" class="text-black" aria-label="Twitter" href="https://twitter.com/kodeweave_app" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 512 512" class="icon-x">
+              <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path>
+            </svg>
+          </a>
         </li>
         <li>
-          <a href="./go/" target="_blank">
-            <button>
+          <a href="./go/" role="button" target="_blank">
+            <span class="text-xs">
               Launch
-            </button>
+            </span>
           </a>
         </li>
       </ul>
     </nav>
-
-    <div class="absolute inset-0 overflow-auto text-center">
-      <div class="pt-20 pb-0 md:pb-20 md:px-20 bg-gradient-to-r from-pink-200 to-blue-300">
-        <h1 id="heading" class="px-2 py-10 text-3xl sm:text-4xl md:text-6xl">
-          Coding on mobile doesn't have to suck!
-        </h1>
-
-        <iframe
-class="w-full h-80" src="https://www.youtube.com/embed/us_x5k2p-Q8">
-        </iframe>
-      </div>
-
-      <div class="pt-20 pb-0 md:pb-20 md:px-20 bg-gradient-to-b from-red-100 to-blue-500">
-        <hgroup class="px-2 py-10">
-          <h2>
-            See how your app or website will look like on a desktop!
-          </h2>
-          <h3>
-            You don't even have to own or use a desktop either 😉
-          </h3>
-        </hgroup>
-
-        <a href="imgs/screenshots/desktoponmobile.png" target="_blank">
-          <img src="imgs/screenshots/desktoponmobile.png" alt="Screenshot">
-        </a>
-      </div>
-
-      <div class="pt-20 pb-0 md:pb-20 md:px-20 bg-gradient-to-t from-blue-400 to-green-100">
-        <h2 class="px-2 py-10 text-3xl sm:text-4xl md:text-6xl">
-          See errors in your code right away!
-        </h2>
-
-        <a href="imgs/screenshots/lintandconsole.png" target="_blank">
-          <img src="imgs/screenshots/lintandconsole.png" alt="Screenshot">
-        </a>
-      </div>
-
-      <div class="py-20 md:pb-20 md:px-20 bg-gradient-to-t from-blue-400 to-green-100 text-left">
-        <article>
-          <p class="text-center">
-            <a href="https://michaelsboost.github.io/" target="_blank">
-              <img class="rounded-full w-44" src="imgs/author.jpg" alt="kodeWeave's Creator Michael Schwartz">
-            </a>
+    <main class="pt-28">
+      <section>
+        <div>
+          <h1>
+            <mark>kodeWeave</mark> <br/>
+            Your on the go code playground!
+          </h1>
+          <p>
+            kodeWeave is your on the go coding playground! Design with TailwindCSS, Pico.css or any library or framework of your choosing. See how your app or website will look and behave on a desktop.
           </p>
           <p>
-            Hello! My name is <a href="https://michaelsboost.github.io/" target="_blank">Michael Schwartz</a> and I created kodeWeave because I wanted to have a fast and reliable application I can code with on the go. In order for that to happen I decided to sell my laptop and rebuild kodeWeave solely on my Android phone and thus the following requirements where built in.
-  
-            <ol>
-              <li>
-                <strong>Auto Update</strong>:
-                This doesnt just render the preview but saves all your code, libraries, pages and settings.
-              </li>
-              <li>
-                <strong>Integrated Console</strong>:
-                kodeWeave is built with an integrated developer console that way if any errors occur you can see those errors instantly and what line that error was triggered in your code. The console can also be toggled in settings so you have the option whether you want to use it or not.
-              </li>
-              <li>
-                <strong>Cross Platform Development</strong>:
-                kodeWeave itself is a PWA (Progressive Web App) therefore you can easily use kodeWeave on any device from a single codebase.
-                <br><br>
-  
-                In addition kodeWeave allows you to zoom and pan the preview so you can see how your app will look or behave for a desktop even though you're developing on a phone whether you're connected to the internet or not.
-              </li>
-              <li>
-                <a href="http://emmet.io/" target="_blank">Emmet</a> makes it possible to write a lot of html extremely quickly just by using abbreviations. To expand the appreviation and insert all the code all you need to do is hit the enter get on your keyboard.
-              </li>
-              <li>
-                <a href="https://picocss.com/" target="_blank">Pico.css</a> and/or <a href="https://tailwindcss.com/" target="_blank">Tailwind CSS</a>: Design and style your website or app extremely fast by using Pico.css and/or Tailwind CSS for your CSS style system. If you're not familiar with either Pico.css is a minimal css framework for semantic html. Meaning all the styling is already done for you (with both a light and dark theme). Tailwind CSS is a huge css library filed with utility classes for everything you can think of from display, color, box-shadow, you name it. This way if you want complete creative freedom to style your website and to do it fast Tailwind CSS is ideal especially for those coding on a phone. Just because I prefer this method which is why it's the default. I understand others may not. That is why you can still load other libraries/frameworks as well as code in the CSS editor.
-              </li>
-              <li>
-                kodeWeave also comes with linting, ES6 Support, close tags, close brackets, match tags, match brackets, among many other handy goodies.
-              </li>
-            </ol>
-  
-            <nav>
-              <ul>
-                <li>
-                  <a href="https://michaelsboost.github.io/donate/" role="button" target="_blank">
-                    Support The Project
-                  </a>
-                </li>
-              </ul>
-              <ul>
-                <li>
-                  <a href="./go/" role="button" target="_blank">
-                    Launch The App!
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            If you've ever used jsfiddle, jsbin, dabblet, liveweave, codepen, cssdeck, cssdesk, tinkerbin, d3 playground, plunker and/or pastebin kodeWeave is the tool for you when you're away from a computer!
           </p>
-        </article>
-      </div>
-    </div>
+          <div class="text-center md:text-left">
+            <a class="block w-full md:inline-block md:w-auto" role="button" href="./go">
+              Launch
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow-right">
+                <g class="head">
+                  <path d="M10 16L14 12"></path>
+                  <path d="M10 8L14 12"></path>
+                </g>
+                <path class="line" d="M0 12H14"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <article class="whitespace-nowrap overflow-auto">
+            <img src="imgs/screenshots/kodeweave.png" alt="kodeWeave">
+            <img src="imgs/screenshots/emmet.png" alt="kodeWeave">
+            <img src="imgs/screenshots/lintandconsole.png" alt="kodeWeave">
+            <img src="imgs/screenshots/pages.png" alt="kodeWeave">
+            <img src="imgs/screenshots/settings.png" alt="kodeWeave">
+          </article>
+        </div>
+      </section>
+    </main>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
