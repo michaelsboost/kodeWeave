@@ -27,281 +27,283 @@
     <script src="app.js" defer></script>
   </head>
   <body>
-    <!-- editor container -->
-    <div id="editorContainer" class="absolute bottom-0 top-1/2 w-full md:w-1/2 md:top-0 overflow-hidden">
-
-      <!-- tabs -->
-      <div class="absolute top-0 inset-x-0 bottom-16 p-4 overflow-auto md:left-16 md:bottom-0">
-        <div data-tabcontent="menu" class="h-full overflow-auto">
-          <article class="text-center cursor-default shadow-none m-0">
-            <a href="https://github.com/michaelsboost/kodeWeave" target="_blank">
-              <img class="w-24" src="imgs/logo.svg">
-            </a>
-            <div class="mt-8 text-2xl">
-              About kodeWeave
-            </div>
-            <div class="my-2">
-              <small>Version 1.1.42</small>
-            </div>
-            <div>
-              <a href="https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE" target="_blank">
-                Open Source License
+    <div class="relative flex flex-col h-screen">
+      <!-- canvas container -->
+      <div id="canvasContainer" class="relative flex-grow bg-repeat overflow-hidden" style="background-image: url('imgs/bg.svg');">
+  
+        <!-- preview application here -->
+        <div class="absolute inset-0">
+          <div id="previewElm" data-canvas class="border border-solid bg-white" style="width: 360px; height: 740px;"></div>
+          <div id="fill" class="absolute inset-0 
+            "></div>
+        </div>
+      </div>
+      
+      <!-- editor container -->
+      <div id="editorContainer" class="relative flex-grow overflow-auto z-10">
+  
+        <!-- tabs -->
+        <div class="absolute top-0 inset-x-0 bottom-16 p-4 overflow-auto md:left-16 md:bottom-0">
+          <div data-tabcontent="menu" class="h-full overflow-auto">
+            <article class="text-center cursor-default shadow-none m-0">
+              <a href="https://github.com/michaelsboost/kodeWeave" target="_blank">
+                <img class="w-24" src="imgs/logo.svg">
               </a>
+              <div class="mt-8 text-2xl">
+                About kodeWeave
+              </div>
+              <div class="my-2">
+                <small>Version 1.1.42</small>
+              </div>
+              <div>
+                <a href="https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE" target="_blank">
+                  Open Source License
+                </a>
+              </div>
+            </article>
+            <div class="grid grid-cols-2 gap-4">
+              <button 
+                id="initNewProject"
+                name="init a new project">
+              
+                <i class="text-xl fa fa-file"></i>
+              </button>
+              <button 
+                name="import the json project"
+                onclick="document.getElementById('importProject').click()">
+              
+                <i class="text-xl fa fa-file-import"></i>
+              </button>
             </div>
-          </article>
-          <div class="grid grid-cols-2 gap-4">
-            <button 
-              id="initNewProject"
-              name="init a new project">
-            
-              <i class="text-xl fa fa-file"></i>
-            </button>
-            <button 
-              name="import the json project"
-              onclick="document.getElementById('importProject').click()">
-            
-              <i class="text-xl fa fa-file-import"></i>
-            </button>
-          </div>
-          <div class="grid grid-cols-2 gap-4"> 
-            <button 
-              id="exportProjectFile"
-              name="export the json project">
-            
-              <i class="text-xl fa fa-file-export"></i>
-            </button>
-            <button
-              id="exportZip"
-              name="export zip">
-            
-              <i class="text-xl fa fa-download"></i>
-            </button>
-          </div>
-        </div>
-        <div data-tabcontent="pages" class="hidden overflow-hidden">
-          <div data-pagecontent class="grid grid-cols-2 gap-4 absolute inset-0 overflow-y-auto overflow-x-hidden p-4"></div>
-          
-          <button 
-            name="Add a page"
-            class="inline-block rounded-full fixed bottom-16 right-4 w-auto" id="addPage">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-        <div data-tabcontent="html" class="hidden">
-          <div class="absolute top-0 bottom-24 inset-x-0 overflow-auto">
-            <div id="htmlEditor"></div>
-          </div>
-          
-          <div data-editorHTMLNavbar></div>
-        </div>
-        <div data-tabcontent="css" class="hidden">
-          <div class="absolute top-0 bottom-24 inset-x-0 overflow-auto">
-            <div id="cssEditor"></div>
-          </div>
-          
-          <div data-editorCSSNavbar></div>
-        </div>
-        <div data-tabcontent="js" class="hidden">
-          <div class="absolute top-0 bottom-24 inset-x-0 overflow-auto">
-            <div id="jsEditor"></div>
-          </div>
-          
-          <div data-editorJSNavbar></div>
-        </div>
-        <div data-tabcontent="metadata" class="hidden">
-          <h5 class="capitalize text-3xl">
-            metadata
-          </h5>
-          
-          <input    id="projectTitle"   type="text"   placeholder="Title..." value="An attractive title">
-          <textarea id="description"           placeholder="Description..." class="h-40 resize-none">The most attractive description ever!</textarea>
-          
-          <hr>
-          
-          <h5 class="capitalize text-1xl">
-            libraries & frameworks
-          </h5>
-
-          <input id="searchBox" type="search" placeholder="Search for resources (JQuery, Bootstrap, Foundation...)">
-          <ul id="suggestions" class="capitalize"></ul>
-          <div id="sortLibraries"></div>
-          
-          <button id="addanother">
-            Add another
-          </button>
-          <button id="logit">
-            Log
-          </button>
-        </div>
-        <div data-tabcontent="settings" class="hidden">
-          <h5 class="capitalize text-3xl">
-            settings
-          </h5>
-
-        <div class="hidden">
-          <input id="importProject"     type="file" accept="application/json">
-        </div>
-
-          <h5 class="capitalize">
-            dark mode <input id="theme" type="checkbox" role="switch" class="float-right">
-          </h5>
-
-          <h5 class="capitalize">
-            size
-          </h5>
-          <div class="grid grid-cols-2 gap-4">
-            <button id="mobilep" name="mobile portrait preset size">
-              <i class="fa fa-mobile"></i>
-            </button>
-            <button id="tabletp" name="tablet portrait preset size">
-              <i class="fa fa-tablet"></i>
-            </button>
-          </div>
-          <div class="grid grid-cols-3 gap-4">
-            <button id="mobilel" name="mobile landscape preset size">
-              <i class="fa fa-mobile transform -rotate-90"></i>
-            </button>
-            <button id="tabletl" name="tablet landscape preset size">
-              <i class="fa fa-tablet transform -rotate-90"></i>
-            </button>
-            <button id="desktopsize" name="mobile portrait preset size">
-              <i class="fa fa-desktop"></i>
-            </button>
-          </div>
-
-          <input id="viewx" type="number" placeholder="width">
-          <input id="viewy" type="number" placeholder="height">
-  
-          <h5 class="capitalize">
-            scratchpad
-          </h5>
-          <textarea id="scratchpad"            placeholder="Type something..." class="h-40 resize-none"></textarea>
-  
-          <div class="grid grid-cols-2 justify-between capitalize">
-            <span class="capitalize">
-              font size
-            </span>
-  
-            <div class="mb-4">
-              <input id="fz" type="number" value="16" min="1" step="1" placeholder="font size (in px)">
+            <div class="grid grid-cols-2 gap-4"> 
+              <button 
+                id="exportProjectFile"
+                name="export the json project">
+              
+                <i class="text-xl fa fa-file-export"></i>
+              </button>
+              <button
+                id="exportZip"
+                name="export zip">
+              
+                <i class="text-xl fa fa-download"></i>
+              </button>
             </div>
           </div>
+          <div data-tabcontent="pages" class="hidden overflow-hidden">
+            <div data-pagecontent class="grid grid-cols-2 gap-4 absolute inset-0 overflow-y-auto overflow-x-hidden p-4"></div>
+            
+            <button 
+              name="Add a page"
+              class="inline-block rounded-full fixed bottom-16 right-4 w-auto" id="addPage">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+          <div data-tabcontent="html" class="hidden">
+            <div class="absolute top-0 bottom-24 inset-x-0 overflow-auto">
+              <div id="htmlEditor"></div>
+            </div>
+            
+            <div data-editorHTMLNavbar></div>
+          </div>
+          <div data-tabcontent="css" class="hidden">
+            <div class="absolute top-0 bottom-24 inset-x-0 overflow-auto">
+              <div id="cssEditor"></div>
+            </div>
+            
+            <div data-editorCSSNavbar></div>
+          </div>
+          <div data-tabcontent="js" class="hidden">
+            <div class="absolute top-0 bottom-24 inset-x-0 overflow-auto">
+              <div id="jsEditor"></div>
+            </div>
+            
+            <div data-editorJSNavbar></div>
+          </div>
+          <div data-tabcontent="metadata" class="hidden">
+            <h5 class="capitalize text-3xl">
+              metadata
+            </h5>
+            
+            <input    id="projectTitle"   type="text"   placeholder="Title..." value="An attractive title">
+            <textarea id="description"           placeholder="Description..." class="h-40 resize-none">The most attractive description ever!</textarea>
+            
+            <hr>
+            
+            <h5 class="capitalize text-1xl">
+              libraries & frameworks
+            </h5>
   
-          <nav class="items-center capitalize">
-            <span class="mb-2">
-              auto update
-            </span>
+            <input id="searchBox" type="search" placeholder="Search for resources (JQuery, Bootstrap, Foundation...)">
+            <ul id="suggestions" class="capitalize"></ul>
+            <div id="sortLibraries"></div>
+            
+            <button id="addanother">
+              Add another
+            </button>
+            <button id="logit">
+              Log
+            </button>
+          </div>
+          <div data-tabcontent="settings" class="hidden">
+            <h5 class="capitalize text-3xl">
+              settings
+            </h5>
   
-            <input id="autoupdate" type="checkbox" role="switch" checked>
-          </nav>
+          <div class="hidden">
+            <input id="importProject"     type="file" accept="application/json">
+          </div>
   
-          <nav class="items-center capitalize">
-            <span class="mb-2">
-              console
-            </span>
+            <h5 class="capitalize">
+              dark mode <input id="theme" type="checkbox" role="switch" class="float-right">
+            </h5>
   
-            <label for="toggleconsole">
-                <input type="checkbox" id="toggleconsole" name="switch" role="switch" checked>
-              </label>
-          </nav>
-        </div>
-      </div>
-        
-      <!-- navbar -->
-      <div>
-        <button 
-          name="Toggle about dialog"
-          onclick="about.setAttribute('open', true)" 
-          class="cursor-pointer py-0 md:pt-4 md:pl-3 my-0 border-none bg-transparent w-auto absolute bottom-3 left-0 md:top-0 md:bottom-auto md:left-2">
-        <img class="h-10" src="imgs/logo.svg">
-        </button>
-        
-        <nav class="absolute bottom-0 inset-x-20 md:inset-x-auto md:left-2 md:inset-y-20 text-center inline-block overflow-auto md:overflow-x-hidden md:block">
-          <ul class="inline-block whitespace-nowrap md:flex md:flex-col md:p-1">
-            <li>
-              <button 
-                name="toggle menu"
-                data-toggletab="menu" 
-                class="py-0 mt-2 md:m-0 border-none bg-transparent text-current text-blue-500">
-                <i class="text-xl fa fa-bars"></i>
+            <h5 class="capitalize">
+              size
+            </h5>
+            <div class="grid grid-cols-2 gap-4">
+              <button id="mobilep" name="mobile portrait preset size">
+                <i class="fa fa-mobile"></i>
               </button>
-            </li>
-            <li class="hidden">
-              <button 
-                name="Toggle auto run"
-                id="run" 
-                class="py-0 my-0 border-none bg-transparent text-current">
-                <i class="text-xl fa fa-play"></i>
+              <button id="tabletp" name="tablet portrait preset size">
+                <i class="fa fa-tablet"></i>
               </button>
-            </li>
-            <li>
-              <button 
-                name="toggle zooming and panning"
-                data-zoom="true" 
-                class="py-0 mt-2 md:m-0 border-none bg-transparent text-current">
-                <i class="text-xl fa ga-light fa-magnifying-glass-plus"></i>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+              <button id="mobilel" name="mobile landscape preset size">
+                <i class="fa fa-mobile transform -rotate-90"></i>
               </button>
-            </li>
-            <li>
-              <button 
-                name="toggle html tab"
-                data-toggletab="html" 
-                class="py-0 mt-2 border-none bg-transparent text-current">
-                <i class="text-xl fa fa-brands fa-html5"></i>
+              <button id="tabletl" name="tablet landscape preset size">
+                <i class="fa fa-tablet transform -rotate-90"></i>
               </button>
-            </li>
-            <li>
-              <button 
-                name="toggle css tab"
-                data-toggletab="css" 
-                class="py-0 mt-2 border-none bg-transparent text-current">
-                <i class="text-xl fa fa-brands fa-css3"></i>
+              <button id="desktopsize" name="mobile portrait preset size">
+                <i class="fa fa-desktop"></i>
               </button>
-            </li>
-            <li>
-              <button 
-                name="toggle javascript tab"
-                data-toggletab="js" 
-                class="py-0 mt-2 border-none bg-transparent text-current">
-                <i class="text-xl fa fa-brands fa-js"></i>
-              </button>
-            </li>
-            <li>
-              <button 
-                name="toggle pages tab"
-                data-toggletab="pages" 
-                class="py-0 mt-2 border-none bg-transparent text-current">
-                <i class="text-xl fa fa-book"></i>
-              </button>
-            </li>
-            <li>
-              <button 
-                name="toggle metadata tab"
-                data-toggletab="metadata" 
-                class="py-0 mt-2 border-none bg-transparent text-current">
-                <i class="text-xl fa fa-solid fa-tachograph-digital"></i>
-              </button>
-            </li>
-          </ul>
-        </nav>
-          
-          <button 
-            name="toggle settings tab"
-            data-toggletab="settings" 
-            class="py-0 md:pb-4 md:pl-3 my-0 border-none bg-transparent text-current w-auto absolute bottom-3 md:bottom-0 right-0 md:right-auto md:left-3">
-          <i class="text-3xl fa fa-cog"></i>
-        </button>
-      </div>
-    </div>
+            </div>
+  
+            <input id="viewx" type="number" placeholder="width">
+            <input id="viewy" type="number" placeholder="height">
     
-    <!-- canvas container -->
-    <div id="canvasContainer" class="absolute bottom-1/2 top-0 w-full md:w-1/2 md:bottom-0 md:left-1/2 p-0 overflow-hidden bg-repeat" style="background-image: url('imgs/bg.svg');">
-
-      <!-- preview application here -->
-      <div class="absolute inset-0">
-        <div id="previewElm" data-canvas class="border border-solid bg-white" style="width: 360px; height: 740px;"></div>
-        <div id="fill" class="absolute inset-0 
-          "></div>
+            <h5 class="capitalize">
+              scratchpad
+            </h5>
+            <textarea id="scratchpad"            placeholder="Type something..." class="h-40 resize-none"></textarea>
+    
+            <div class="grid grid-cols-2 justify-between capitalize">
+              <span class="capitalize">
+                font size
+              </span>
+    
+              <div class="mb-4">
+                <input id="fz" type="number" value="16" min="1" step="1" placeholder="font size (in px)">
+              </div>
+            </div>
+    
+            <nav class="items-center capitalize">
+              <span class="mb-2">
+                auto update
+              </span>
+    
+              <input id="autoupdate" type="checkbox" role="switch" checked>
+            </nav>
+    
+            <nav class="items-center capitalize">
+              <span class="mb-2">
+                console
+              </span>
+    
+              <label for="toggleconsole">
+                  <input type="checkbox" id="toggleconsole" name="switch" role="switch" checked>
+                </label>
+            </nav>
+          </div>
+        </div>
+          
+        <!-- navbar -->
+        <div>
+          <button 
+            name="Toggle about dialog"
+            onclick="about.setAttribute('open', true)" 
+            class="cursor-pointer py-0 md:pt-4 md:pl-3 my-0 border-none bg-transparent w-auto absolute bottom-3 left-0 md:top-0 md:bottom-auto md:left-2">
+          <img class="h-10" src="imgs/logo.svg">
+          </button>
+          
+          <nav class="absolute bottom-0 inset-x-20 md:inset-x-auto md:left-2 md:inset-y-20 text-center inline-block overflow-auto md:overflow-x-hidden md:block">
+            <ul class="inline-block whitespace-nowrap md:flex md:flex-col md:p-1">
+              <li>
+                <button 
+                  name="toggle menu"
+                  data-toggletab="menu" 
+                  class="py-0 mt-2 md:m-0 border-none bg-transparent text-current text-blue-500">
+                  <i class="text-xl fa fa-bars"></i>
+                </button>
+              </li>
+              <li class="hidden">
+                <button 
+                  name="Toggle auto run"
+                  id="run" 
+                  class="py-0 my-0 border-none bg-transparent text-current">
+                  <i class="text-xl fa fa-play"></i>
+                </button>
+              </li>
+              <li>
+                <button 
+                  name="toggle zooming and panning"
+                  data-zoom="true" 
+                  class="py-0 mt-2 md:m-0 border-none bg-transparent text-current">
+                  <i class="text-xl fa ga-light fa-magnifying-glass-plus"></i>
+                </button>
+              </li>
+              <li>
+                <button 
+                  name="toggle html tab"
+                  data-toggletab="html" 
+                  class="py-0 mt-2 border-none bg-transparent text-current">
+                  <i class="text-xl fa fa-brands fa-html5"></i>
+                </button>
+              </li>
+              <li>
+                <button 
+                  name="toggle css tab"
+                  data-toggletab="css" 
+                  class="py-0 mt-2 border-none bg-transparent text-current">
+                  <i class="text-xl fa fa-brands fa-css3"></i>
+                </button>
+              </li>
+              <li>
+                <button 
+                  name="toggle javascript tab"
+                  data-toggletab="js" 
+                  class="py-0 mt-2 border-none bg-transparent text-current">
+                  <i class="text-xl fa fa-brands fa-js"></i>
+                </button>
+              </li>
+              <li>
+                <button 
+                  name="toggle pages tab"
+                  data-toggletab="pages" 
+                  class="py-0 mt-2 border-none bg-transparent text-current">
+                  <i class="text-xl fa fa-book"></i>
+                </button>
+              </li>
+              <li>
+                <button 
+                  name="toggle metadata tab"
+                  data-toggletab="metadata" 
+                  class="py-0 mt-2 border-none bg-transparent text-current">
+                  <i class="text-xl fa fa-solid fa-tachograph-digital"></i>
+                </button>
+              </li>
+            </ul>
+          </nav>
+            
+            <button 
+              name="toggle settings tab"
+              data-toggletab="settings" 
+              class="py-0 md:pb-4 md:pl-3 my-0 border-none bg-transparent text-current w-auto absolute bottom-3 md:bottom-0 right-0 md:right-auto md:left-3">
+            <i class="text-3xl fa fa-cog"></i>
+          </button>
+        </div>
       </div>
     </div>
 
