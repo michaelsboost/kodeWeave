@@ -27,7 +27,7 @@
     <script src="app.js" defer></script>
   </head>
   <body>
-    <div class="relative flex flex-col h-screen">
+    <div class="relative flex flex-col md:flex-row-reverse h-screen">
       <!-- canvas container -->
       <div id="canvasContainer" class="relative flex-grow bg-repeat overflow-hidden" style="background-image: url('imgs/bg.svg');">
   
@@ -218,121 +218,86 @@
             </nav>
           </div>
         </div>
-          
-        <!-- navbar -->
-        <div>
-          <button 
-            name="Toggle about dialog"
-            onclick="about.setAttribute('open', true)" 
-            class="cursor-pointer py-0 md:pt-4 md:pl-3 my-0 border-none bg-transparent w-auto absolute bottom-3 left-0 md:top-0 md:bottom-auto md:left-2">
-          <img class="h-10" src="imgs/logo.svg">
-          </button>
-          
-          <nav class="absolute bottom-0 inset-x-20 md:inset-x-auto md:left-2 md:inset-y-20 text-center inline-block overflow-auto md:overflow-x-hidden md:block">
-            <ul class="inline-block whitespace-nowrap md:flex md:flex-col md:p-1">
-              <li>
-                <button 
-                  name="toggle menu"
-                  data-toggletab="menu" 
-                  class="py-0 mt-2 md:m-0 border-none bg-transparent text-current text-blue-500">
-                  <i class="text-xl fa fa-bars"></i>
-                </button>
-              </li>
-              <li class="hidden">
-                <button 
-                  name="Toggle auto run"
-                  id="run" 
-                  class="py-0 my-0 border-none bg-transparent text-current">
-                  <i class="text-xl fa fa-play"></i>
-                </button>
-              </li>
-              <li>
-                <button 
-                  name="toggle zooming and panning"
-                  data-zoom="true" 
-                  class="py-0 mt-2 md:m-0 border-none bg-transparent text-current">
-                  <i class="text-xl fa ga-light fa-magnifying-glass-plus"></i>
-                </button>
-              </li>
-              <li>
-                <button 
-                  name="toggle html tab"
-                  data-toggletab="html" 
-                  class="py-0 mt-2 border-none bg-transparent text-current">
-                  <i class="text-xl fa fa-brands fa-html5"></i>
-                </button>
-              </li>
-              <li>
-                <button 
-                  name="toggle css tab"
-                  data-toggletab="css" 
-                  class="py-0 mt-2 border-none bg-transparent text-current">
-                  <i class="text-xl fa fa-brands fa-css3"></i>
-                </button>
-              </li>
-              <li>
-                <button 
-                  name="toggle javascript tab"
-                  data-toggletab="js" 
-                  class="py-0 mt-2 border-none bg-transparent text-current">
-                  <i class="text-xl fa fa-brands fa-js"></i>
-                </button>
-              </li>
-              <li>
-                <button 
-                  name="toggle pages tab"
-                  data-toggletab="pages" 
-                  class="py-0 mt-2 border-none bg-transparent text-current">
-                  <i class="text-xl fa fa-book"></i>
-                </button>
-              </li>
-              <li>
-                <button 
-                  name="toggle metadata tab"
-                  data-toggletab="metadata" 
-                  class="py-0 mt-2 border-none bg-transparent text-current">
-                  <i class="text-xl fa fa-solid fa-tachograph-digital"></i>
-                </button>
-              </li>
-            </ul>
-          </nav>
-            
-            <button 
-              name="toggle settings tab"
-              data-toggletab="settings" 
-              class="py-0 md:pb-4 md:pl-3 my-0 border-none bg-transparent text-current w-auto absolute bottom-3 md:bottom-0 right-0 md:right-auto md:left-3">
-            <i class="text-3xl fa fa-cog"></i>
-          </button>
-        </div>
       </div>
     </div>
-
-    <!-- modals -->
-    <dialog id="about" class="cursor-pointer" onclick="this.removeAttribute('open')">
-      <article class="w-2/3 text-center cursor-default">
-        <div class="mb-2">
-          <a href="https://michaelsboost.com/donate/" target="_blank" role="button" class="border-none bg-transparent text-red-500">
-            <i class="fa fa-heart text-3xl"></i>
-          </a>
-        </div>
-        <p>
-          <a href="https://github.com/michaelsboost/kodeWeave" target="_blank">
-            <img class="w-52" src="imgs/logo.svg">
-          </a>
-        </p>
-        <div class="mt-8 text-2xl">
-          About kodeWeave
-        </div>
-        <div class="my-2">
-          <small>Version 1.1.42</small>
-        </div>
-        <div>
-          <a href="https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE" target="_blank">
-            Open Source License
-          </a>
-        </div>
-      </article>
-    </dialog>
+      
+    <!-- navbar -->
+    <nav class="z-10 absolute bottom-0 inset-x-0 md:inset-x-auto md:left-2 md:inset-y-0 justify-between overflow-auto">
+      <ul class="md:flex-col md:overflow-y-auto md:overflow-x-hidden">
+        <li>
+          <button 
+            name="toggle menu"
+            data-toggletab="menu" 
+            class="py-0 mt-2 md:m-0 border-none bg-transparent text-current text-blue-500">
+            <i class="text-xl fa fa-bars"></i>
+          </button>
+        </li>
+        <li class="hidden">
+          <button 
+            name="Toggle auto run"
+            id="run" 
+            class="py-0 my-0 border-none bg-transparent text-current">
+            <i class="text-xl fa fa-play"></i>
+          </button>
+        </li>
+        <li>
+          <button 
+            name="toggle zooming and panning"
+            data-zoom="true" 
+            class="py-0 mt-2 md:m-0 border-none bg-transparent text-current">
+            <i class="text-xl fa ga-light fa-magnifying-glass-plus"></i>
+          </button>
+        </li>
+        <li>
+          <button 
+            name="toggle html tab"
+            data-toggletab="html" 
+            class="py-0 mt-2 border-none bg-transparent text-current">
+            <i class="text-xl fa fa-brands fa-html5"></i>
+          </button>
+        </li>
+        <li>
+          <button 
+            name="toggle css tab"
+            data-toggletab="css" 
+            class="py-0 mt-2 border-none bg-transparent text-current">
+            <i class="text-xl fa fa-brands fa-css3"></i>
+          </button>
+        </li>
+        <li>
+          <button 
+            name="toggle javascript tab"
+            data-toggletab="js" 
+            class="py-0 mt-2 border-none bg-transparent text-current">
+            <i class="text-xl fa fa-brands fa-js"></i>
+          </button>
+        </li>
+        <li>
+          <button 
+            name="toggle pages tab"
+            data-toggletab="pages" 
+            class="py-0 mt-2 border-none bg-transparent text-current">
+            <i class="text-xl fa fa-book"></i>
+          </button>
+        </li>
+        <li>
+          <button 
+            name="toggle metadata tab"
+            data-toggletab="metadata" 
+            class="py-0 mt-2 border-none bg-transparent text-current">
+            <i class="text-xl fa fa-solid fa-tachograph-digital"></i>
+          </button>
+        </li>
+        <li>
+          <button 
+            name="toggle settings tab"
+            data-toggletab="settings" 
+            class="py-0 mt-2 border-none bg-transparent text-current">
+            <i class="text-xl fa fa-cog"></i>
+          </button>
+          </li>
+      </ul>
+    </nav>
 
     <script>
       // service worker for progressive web app
