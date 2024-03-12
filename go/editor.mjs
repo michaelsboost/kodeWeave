@@ -64,6 +64,7 @@ const htmlEditor = new EditorView({
           key: "Enter",
           run: expandAbbreviation
         },
+          indentWithTab,
           ...closeBracketsKeymap,
           ...defaultKeymap,
           ...searchKeymap,
@@ -96,6 +97,7 @@ const cssEditor = new EditorView({
           key: "Enter",
           run: expandAbbreviation
         },
+          indentWithTab,
           ...closeBracketsKeymap,
           ...defaultKeymap,
           ...searchKeymap,
@@ -124,6 +126,7 @@ const jsEditor = new EditorView({
       basicSetup, 
       EditorView.lineWrapping,
       keymap.of([
+          indentWithTab,
           ...closeBracketsKeymap,
           ...defaultKeymap,
           ...searchKeymap,
@@ -1147,18 +1150,16 @@ SOFTWARE.`;
     const sortLibrariesContainer = document.getElementById('sortLibraries');
 		const searchBox = document.getElementById('searchBox');
     const suggestionsList = document.getElementById('suggestions');
-    searchBox.addEventListener('keyup', function() {
-      const searchText = this.value.trim();
-      suggestionsList.innerHTML = '';
-      if (!searchBox.value) {
-        suggestionsList.innerHTML = '';
-        return false
-      }
-    
-      if (searchText.length > 0) {
+    searchBox.onkeyup = () => {
+      const searchText = searchBox.value.trim();
+      suggestionsList.innerHTML = "";
+      if (searchText.length <= 0) {
+        suggestionsList.innerHTML = "";
+        return false;
+      } else {
         app.fetchSuggestions(searchText);
       }
-    });
+    };
     addanother.onclick = () => app.displayLibrariesArray()
     logit.onclick = () => console.log(JSON.stringify(project.pages[app.activePage]))
 	  
