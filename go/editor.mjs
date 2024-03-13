@@ -32,7 +32,7 @@ let defaultProject = {
   css: ``,
   javascript: ``
 };
-let project = savedProject ? JSON.parse(savedProject) : defaultProject;
+let project = savedProject ? JSON.parse(savedProject) : JSON.parse(JSON.stringify(defaultProject));
 
 const config = {
   // eslint configuration
@@ -72,10 +72,11 @@ const basicSetup = [
       key: "Tab",
       run: indentMore
     },
-    // Other key bindings...
   ])
 ];
 let activeEditor;
+
+// init editors
 const mdEditor = new EditorView({
   state: EditorState.create({
     doc: project.markdown,
@@ -214,24 +215,22 @@ const jsEditor = new EditorView({
 mdEditor.state.update({
   changes: { from: 0, to: mdEditor.state.doc.length, insert: project.markdown }
 });
-
 htmlEditor.state.update({
   changes: { from: 0, to: htmlEditor.state.doc.length, insert: project.html }
 });
-
 cssEditor.state.update({
   changes: { from: 0, to: cssEditor.state.doc.length, insert: project.css }
 });
-
 jsEditor.state.update({
   changes: { from: 0, to: jsEditor.state.doc.length, insert: project.javascript }
 });
+
 activeEditor = htmlEditor;
 let sortable;
 
 const app = {
   appName: "kodeWeave",
-  appVersion: "1.1.50",
+  appVersion: defaultProject.version,
   appUrl: "https://github.com/michaelsboost/kodeWeave/tree/main",
   appLicense: "https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE",
 

@@ -94,29 +94,29 @@
           </div>
           
           <div id="tabsNav" class="overflow-auto flex flex-col">
-            <div data-tabcontent="markdown" class="hidden relative flex flex-col" style="height: 40vh;">
-              <div class="flex-grow absolute top-0 inset-x-0 bottom-16 overflow-auto">
+            <div data-tabcontent="markdown" class="hidden relative flex flex-col h-[40vh]">
+              <div class="flex-grow overflow-auto">
                 <div id="mdEditor"></div>
               </div>
-              <div data-editorMDNavbar class="absolute bottom-0 inset-x-0 px-4 text-center inline-block overflow-auto"></div>
+              <div data-editorMDNavbar class="flex-none px-4 text-center overflow-auto"></div>
             </div>
-            <div data-tabcontent="html" class="hidden relative flex flex-col" style="height: 40vh;">
-              <div class="flex-grow absolute top-0 inset-x-0 bottom-16 overflow-auto">
+            <div data-tabcontent="html" class="hidden relative flex flex-col h-[40vh]">
+              <div class="flex-grow overflow-auto">
                 <div id="htmlEditor"></div>
               </div>
-              <div data-editorHTMLNavbar class="absolute bottom-0 inset-x-0 px-4 text-center inline-block overflow-auto"></div>
+              <div data-editorHTMLNavbar class="flex-none px-4 text-center overflow-auto"></div>
             </div>
-            <div data-tabcontent="css" class="hidden relative flex flex-col" style="height: 40vh;">
-              <div class="flex-grow absolute top-0 inset-x-0 bottom-16 overflow-auto">
+            <div data-tabcontent="css" class="hidden relative flex flex-col h-[40vh]">
+              <div class="flex-grow overflow-auto">
                 <div id="cssEditor"></div>
               </div>
-              <div data-editorCSSNavbar class="absolute bottom-0 inset-x-0 px-4 text-center inline-block overflow-auto"></div>
+              <div data-editorCSSNavbar class="flex-none px-4 text-center overflow-auto"></div>
             </div>
-            <div data-tabcontent="javascript" class="hidden relative flex flex-col" style="height: 40vh;">
-              <div class="flex-grow absolute top-0 inset-x-0 bottom-16 overflow-auto">
+            <div data-tabcontent="javascript" class="hidden relative flex flex-col h-[40vh]">
+              <div class="flex-grow overflow-auto">
                 <div id="jsEditor"></div>
               </div>
-              <div data-editorJSNavbar class="absolute bottom-0 inset-x-0 px-4 text-center inline-block overflow-auto"></div>
+              <div data-editorJSNavbar class="flex-none px-4 text-center overflow-auto"></div>
             </div>
           </div>
         </div>
@@ -394,7 +394,7 @@
         </ul>
       </nav>
     </div>
-
+<!-- 
     <script>
       // service worker for progressive web app
       if ('serviceWorker' in navigator) {
@@ -402,7 +402,6 @@
           navigator.serviceWorker.register('./sw.js')
         })
       }
-    </script>
-  </body>
+    </script> -->
   </body>
 </html>
