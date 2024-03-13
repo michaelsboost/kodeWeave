@@ -10,7 +10,7 @@ If you've ever used jsfiddle, jsbin, dabblet, liveweave, codepen, cssdeck, cssde
 Version
 -------------
 
-1.1.42
+1.1.50
 
 License
 -------------
@@ -25,7 +25,7 @@ kodeWeave uses a number of open source projects to work properly:
 * [Codemirror v6](http://codemirror.net/) - Awesome web-based text editor
 * [Emmet](http://emmet.io/) - Codemirror Plugin for Zen Coding
 * [Font Awesome v5](https://fontawesome.com/) - Beautiful icon library and toolkit
-* [Pico.css](https://picocss.com/) - Pico.css is a minimal css framework for semantic html
+* [daisyUI](https://daisyui.com/) - A Tailwind CSS Component Library (used for the toggle switch)
 * [Tailwind CSS](https://tailwindcss.com/) - A low-level CSS framework that's entirely utility-first and provides users with low-level CSS classes in PostCSS that can be used to define components and designs independently.
 * [JSZip](https://stuk.github.io/jszip/) - Package zip files locally in javascript
 * [FileSaver.js](https://github.com/eligrey/FileSaver.js/) - JSZip comes prebuilt with this. Allows us to save files locally in Javascript
