@@ -601,6 +601,27 @@ const app = {
   // Function to update previews
   updatePreview: (runManually = false) => {
     app.updateStorage();
+    const generateMarkdownCode = () => {
+      // Convert Markdown to HTML using Marked.js
+      const htmlContent = marked.parse(project.markdown);
+
+      // render html
+      return `<!DOCTYPE html data-theme="dark">
+<html>
+  <head>
+    <title>${project.title}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="${project.description}">
+    <link rel="stylesheet"    href="libraries/pico/pico.classless.min.css">
+  </head>
+  <body>
+    <main>
+      ${htmlContent}
+    </main>
+  </body>
+</html>`;
+    };
     const generateHtmlCode = () => {
       const tailwindStyle =
         ".wrapper_yOR7u {left: 0!important; width: 100%!important; border-radius: 15px 15px 0 0!important; z-index: 99999999;} .btn_yOR7u { cursor: pointer; background: inherit; padding: 0 0.5rem; margin: inherit; margin-right: 0px; border: inherit; color: #fff!important; } .nav_yOR7u {padding-bottom: 14px!important;} .line_yOR7u {background: inherit!important;}";
@@ -662,7 +683,11 @@ const app = {
 
     // Open, write HTML code, and close the content document
     previewDoc.open();
-    previewDoc.write(generateHtmlCode());
+    if (document.querySelector("[data-toggletab=markdown]").classList.contains("text-blue-500")) {
+      previewDoc.write(generateMarkdownCode());
+    } else {
+      previewDoc.write(generateHtmlCode());
+    }
     previewDoc.close();
   },
 
