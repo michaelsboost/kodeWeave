@@ -39,7 +39,6 @@
     "@codemirror/lint": "^6.2.0",
     "@codemirror/search": "^6.2.3",
     "@codemirror/state": "^6.2.0",
-    "@codemirror/theme-one-dark": "^6.1.2",
     "@codemirror/view": "^6.9.1",
     "@emmetio/codemirror6-plugin": "^0.2.0",
     "@replit/codemirror-css-color-picker": "^6.1.0",

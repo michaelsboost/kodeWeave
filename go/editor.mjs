@@ -1,6 +1,6 @@
 import { EditorView, lineNumbers, highlightActiveLineGutter, highlightSpecialChars, drawSelection, dropCursor, rectangularSelection, crosshairCursor, highlightActiveLine, keymap } from '@codemirror/view';
-import { EditorState, StateField, EditorSelection, StateEffect } from '@codemirror/state';
-import { foldGutter, indentOnInput, syntaxHighlighting, defaultHighlightStyle, bracketMatching, foldKeymap, foldAll, unfoldAll, syntaxTree, syntaxTreeAvailable } from '@codemirror/language';
+import { EditorState } from '@codemirror/state';
+import { foldGutter, indentOnInput, syntaxHighlighting, defaultHighlightStyle, bracketMatching, foldKeymap, foldAll, unfoldAll} from '@codemirror/language';
 import { history, undo, redo, indentWithTab, indentMore, indentLess, defaultKeymap, historyKeymap, toggleComment} from '@codemirror/commands';
 import { openSearchPanel, gotoLine, highlightSelectionMatches, searchKeymap } from '@codemirror/search';
 import { closeBrackets, autocompletion, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
@@ -26,7 +26,7 @@ let defaultProject = {
   title: "An attractive title",
   description: "The most attractive description ever!",
   meta: ``,
-  libraries: ['https://cdnjs.cloudflare.com/ajax/libs/picocss/1.5.7/pico.classless.min.css', 'https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css', 'https://michaelsboost.github.io/kodeWeave/go/libraries/tailwind/tailwind.min.js'],
+  libraries: ['https://cdnjs.cloudflare.com/ajax/libs/picocss/1.5.7/pico.classless.min.css', 'https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css'],
   markdown: ``,
   html: ``,
   css: ``,
