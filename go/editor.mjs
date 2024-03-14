@@ -536,6 +536,7 @@ const app = {
 		viewy.onkeyup = () => {
 			resetCanvas(viewx.value, viewy.value);
 		};
+		mobilep.onclick();
 	},
 
   // toggle side nav
