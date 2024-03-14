@@ -4,9 +4,6 @@
 @import url("../libraries/tailwind/tailwind.min.css");
 
 /* editor */
-.cm-editor, .cm-wrap, .cm-content {
-  height: 35vh;
-}
 .cm-editor, .ͼg, .ͼl, .ͼ5 {color: #9cdcfe;}
 .ͼ1.cm-focused {outline: 1px dotted #212121;}
 .ͼ1 {position: relative !important; box-sizing: border-box; display: flex !important; flex-direction: column;}
