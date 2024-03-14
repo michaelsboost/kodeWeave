@@ -31,6 +31,7 @@ kodeWeave uses a number of open source projects to work properly:
 * [FileSaver.js](https://github.com/eligrey/FileSaver.js/) - JSZip comes prebuilt with this. Allows us to save files locally in Javascript
 * [panzoom](https://github.com/anvaka/panzoom/) - Used to pan and zoom the canvas
 * [cdnjs](https://cdnjs.com/api) - Used to easily add the latest libraries and frameworks in the app by a single search
+* [marked](https://marked.js.org/) - Used to convert markdown to html
 
 Development
 -------------
