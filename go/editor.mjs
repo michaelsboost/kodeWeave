@@ -594,6 +594,12 @@ const app = {
     project.meta              = projectMeta.value;
     fz.onkeyup = () => {
       project.settings.fontSize = fz.value;
+
+      let cmEditor = document.querySelectorAll('.cm-editor');
+      cmEditor.forEach((child) => {
+        child.style.fontSize = `${fz.value}px`
+      });
+
       localStorage.setItem('kodeWeave', JSON.stringify(project));
     };
 },
@@ -663,9 +669,7 @@ const app = {
   <body>
     ${project.html}
     
-    <script>
-      ${project.javascript}
-    </script>
+    <script>${project.javascript}</script>
   </body>
 </html>`;
     };
@@ -1112,6 +1116,9 @@ kWExportJSFiles.init();`);
 					  document.querySelector('[data-editorJSNavbar]').innerHTML = '';
             activeEditor = mdEditor;
 		        createNavbar("editorMDNavbar");
+
+            // run the editor
+            app.updatePreview(autoupdate.checked);
 					}
 					if (tabName === 'html') {
 					  document.querySelector('[data-editorMDNavbar]').innerHTML = '';
@@ -1119,6 +1126,9 @@ kWExportJSFiles.init();`);
 					  document.querySelector('[data-editorJSNavbar]').innerHTML = '';
             activeEditor = htmlEditor;
 		        createNavbar("editorHTMLNavbar");
+
+            // run the editor
+            app.updatePreview(autoupdate.checked);
 					}
 					if (tabName === 'css') {
 					  document.querySelector('[data-editorMDNavbar]').innerHTML = '';
@@ -1126,6 +1136,13 @@ kWExportJSFiles.init();`);
 					  document.querySelector('[data-editorJSNavbar]').innerHTML = '';
             activeEditor = cssEditor;
 		        createNavbar("editorCSSNavbar");
+
+            // run the editor
+            const iframe = document.getElementById('preview');
+            const idoc = iframe.contentDocument || iframe.contentWindow.document;
+            if (!idoc.getElementById("kodeWeaveCSSID")) {
+              app.updatePreview(autoupdate.checked);
+            }
 					}
 					if (tabName === 'javascript') {
 					  document.querySelector('[data-editorMDNavbar]').innerHTML = '';
@@ -1133,6 +1150,9 @@ kWExportJSFiles.init();`);
 					  document.querySelector('[data-editorCSSNavbar]').innerHTML = '';
             activeEditor = jsEditor;
 		        createNavbar("editorJSNavbar");
+
+            // run the editor
+            app.updatePreview(autoupdate.checked);
 					}
         } else {
           // If the clicked button was already active, hide it's content
@@ -1143,6 +1163,9 @@ kWExportJSFiles.init();`);
             `[data-tabcontent="${tabName}"]`);
           selectedTab.classList.remove("text-blue-500", "border-b", "border-blue-500");
           selectedTabContent.classList.add("hidden");
+
+          // run the editor
+          app.updatePreview(autoupdate.checked);
         }
       });
     });
