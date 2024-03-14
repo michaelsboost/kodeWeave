@@ -637,21 +637,19 @@ const app = {
         ? `<script type="module" src="js/dom-console.js" defer></script>`
         : "";
 
-        let libraryTags = '';
-        const libraries = project.libraries;
-        libraries.forEach(library => {
-          if (library.endsWith('.js')) {
-            libraryTags += `<script src="${library}" defer></script>
-  `;
-          } else if (library.endsWith('.css')) {
-            libraryTags += `<link rel="stylesheet" href="${library}">
-  `;
-          } else {
-            // Assuming it's a Google font
-            libraryTags += `<link href="${library}" rel="stylesheet">
-  `;
-          }
-        });
+    // Iterate over each library
+    let scriptTags = '';
+    let cssTags = '';
+    project.libraries.forEach(library => {
+      if (library.endsWith('.js')) {
+        scriptTags += `<script src="${library}" defer></script>\n    `;
+      } else if (library.endsWith('.css')) {
+        cssTags += `<link rel="stylesheet" href="${library}">\n`;
+      } else {
+        // Assuming it's a Google font
+        cssTags += `<link href="${library}" rel="stylesheet">\n`;
+      }
+    });
 
       // render html
       return `<!DOCTYPE html>
@@ -661,7 +659,7 @@ const app = {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="${project.description}">
-    ${libraryTags}
+    ${cssTags}
     ${addConsoleCSS}
     ${showConsole}
     <style id="kodeWeaveCSSID">${project.css}</style>
@@ -669,7 +667,7 @@ const app = {
   <body>
     ${project.html}
     
-    <script>${project.javascript}</script>
+    ${scriptTags}<script>${project.javascript}</script>
   </body>
 </html>`;
     };
@@ -781,44 +779,25 @@ SOFTWARE.`;
     zip.file("LICENSE.md", licenseStr);
 
     // Iterate over each library
-    let libraryTags = '';
-    let cssBundle = '/* imports */\n';
-    let jsBundleFiles = "";
+    let scriptTags = '';
+    let styleCSS = '/* imports */\n';
     project.libraries.forEach(library => {
       if (library.endsWith('.js')) {
-        libraryTags += `<script src="${library}" defer></script>\n`;
-        jsBundleFiles += `kWExportJSFiles.importJS("${library}");\n    `;
+        scriptTags += `<script src="${library}" defer></script>\n    `;
       } else if (library.endsWith('.css')) {
-        libraryTags += `<link rel="stylesheet" href="${library}">\n`;
-        cssBundle += `@import url('${library}');\n`;
+        styleCSS += `@import url('${library}');\n`;
       } else {
         // Assuming it's a Google font
-        libraryTags += `<link href="${library}" rel="stylesheet">\n`;
-        cssBundle += `@import url('${library}');\n`;
+        styleCSS += `@import url('${library}');\n`;
       }
     });
 
     // add project css after libraries have been added in a single css file
-    cssBundle += project.css;
+    styleCSS += project.css;
 
     zip.file("css/index.css", project.css);
-    zip.file("css/bundle.css", cssBundle);
+    zip.file("css/style.css", styleCSS);
     zip.file("js/index.js", project.javascript);
-    zip.file("js/bundle.js", `const kWExportJSFiles = {
-  importJS: url => {
-    let script = document.createElement("script");
-    script.src = url;
-    script.setAttribute("defer", "");
-    document.head.appendChild(script);
-  },
-
-  init: () => {
-    ${jsBundleFiles}
-    setTimeout(() => kWExportJSFiles.importJS("js/index.js"), 100);
-  }
-};
-
-kWExportJSFiles.init();`);
     zip.file("index.html", `<!DOCTYPE html>
 <html lang="en-US">
   <head>
@@ -839,12 +818,12 @@ kWExportJSFiles.init();`);
     <meta property="og:type"        content="website" />
     <meta property="og:title"       content="${project.title}" />
     <meta property="og:description" content="${project.description}" />
-    <link rel="stylesheet" href="css/bundle.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     ${project.html}
   
-    <script src="js/bundle.js"></script>
+    ${scriptTags}<script src="js/index.js"></script>
   </body>
 </html>`);
 
@@ -1230,7 +1209,10 @@ kWExportJSFiles.init();`);
         }
         
         // Update settings
-        autoupdate.checked    = (project.settings.autoupdate) ? false : false;
+        if (autoupdate.checked) {
+          autoupdate.checked = false;
+          run.classList.toggle('hidden', autoupdate.checked);
+        }
         toggleconsole.checked = (project.settings.console) ? true : false;
         document.getElementById("fz").value           = project.settings.fontSize;
         document.getElementById("projectTitle").value = project.title;
