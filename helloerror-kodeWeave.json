@@ -1,0 +1,20 @@
+{
+  "version": "1.1.50",
+  "settings": {
+    "autoupdate": true,
+    "console": true,
+    "fontSize": "16"
+  },
+  "title": "Hello error",
+  "description": "",
+  "meta": "",
+  "libraries": [
+    "https://cdnjs.cloudflare.com/ajax/libs/picocss/1.5.7/pico.classless.min.css",
+    "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  ],
+  "markdown": "kodeWeave\n===================\n\nkodeWeave is your on the go coding playground! Design with TailwindCSS, Pico.css or any library or framework of your choosing. See how your app or website will look and behave on a desktop.\n\nIf you've ever used jsfiddle, jsbin, dabblet, liveweave, codepen, cssdeck, cssdesk, tinkerbin, d3 playground, plunker and/or pastebin kodeWeave is the tool for you when you're away from a computer!\n\n![](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/screenshots/kodeweave.png)\n\nVersion\n-------------\n\n1.1.50\n\nLicense\n-------------\n\nMIT\n\nTech\n-------------\n\nkodeWeave uses a number of open source projects to work properly:\n\n* [Codemirror v6](http://codemirror.net/) - Awesome web-based text editor\n* [Emmet](http://emmet.io/) - Codemirror Plugin for Zen Coding\n* [Font Awesome v5](https://fontawesome.com/) - Beautiful icon library and toolkit\n* [daisyUI](https://daisyui.com/) - A Tailwind CSS Component Library (used for the toggle switch)\n* [Tailwind CSS](https://tailwindcss.com/) - A low-level CSS framework that's entirely utility-first and provides users with low-level CSS classes in PostCSS that can be used to define components and designs independently.\n* [JSZip](https://stuk.github.io/jszip/) - Package zip files locally in javascript\n* [FileSaver.js](https://github.com/eligrey/FileSaver.js/) - JSZip comes prebuilt with this. Allows us to save files locally in Javascript\n* [panzoom](https://github.com/anvaka/panzoom/) - Used to pan and zoom the canvas\n* [cdnjs](https://cdnjs.com/api) - Used to easily add the latest libraries and frameworks in the app by a single search\n* [marked](https://marked.js.org/) - Used to convert markdown to html\n\nDevelopment\n-------------\n\nWant to contribute? Great!  \n\nYou can submit a pull request or simply share the project :)\n\nOf course, kodeWeave is free and open source, so you can always fork the project and have fun :)\n\n[![ko-fi](https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0)](https://ko-fi.com/michaelsboost)\n\nIf kodeWeave was at all helpful for you. You can show your appreciation a few ways...\n\n1) Check out my Graphic Design Course: https://michaelsboost.com/graphicdesign  \n2) Registering on my store as a customer: https://michaelsboost.com/store  \n3) Buying me a coffee! http://ko-fi.com/michaelsboost  \n4) Purchasing one of my t-shirts: https://michaelsboost.com/gear  \n5) Purchasing any of my art: https://deviantart.com/michaelsboost/prints  \n6) Donating via PayPal: https://michaelsboost.com/donate  \n7) Donating via SquareCash: https://cash.me/$michaelsboost  ",
+  "html": "<main>\n  <article>\n    <button id=\"sayhi\">\n      say 👋\n    </button>\n  </article>\n</main>",
+  "css": "",
+  "javascript": "sayhi.onclick = () => {\n  elm.textContent = \"hello 👋\";\n};"
+}
