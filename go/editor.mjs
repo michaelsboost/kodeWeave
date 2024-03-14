@@ -679,6 +679,7 @@ const app = {
     localStorage.setItem('kodeWeave', JSON.stringify(project));
   },
 
+  // init new project
   newProject: () => {
     projectTitle.value = "";
     projectDesc.value = "";
@@ -714,10 +715,16 @@ const app = {
 			type: "application/json"
 		});
 		saveAs(blob, `${project.title.toString().toLowerCase().replace(/ /g,"")}-kodeWeave.json`);
+    
+    // check if menu is checked and if so uncheck
+    if (menu.checked) menu.onchange();
 	},
   
   // Exports zip file
   exportZip: () => {
+    // check if menu is checked and if so uncheck
+    if (menu.checked) menu.onchange();
+    
     let zip = new JSZip();
     let licenseStr = `The MIT License (MIT)
 Copyright (c) ${new Date().getFullYear()} John Doe
@@ -1197,6 +1204,10 @@ kWExportJSFiles.init();`);
       
         // render previews
         app.displayLibrariesArray();
+    
+        // check if menu is checked and if so uncheck
+        if (menu.checked) menu.onchange();
+        
         app.updatePreview(autoupdate.checked);
       }
       reader.readAsText(document.getElementById('importProject').files[0]);
