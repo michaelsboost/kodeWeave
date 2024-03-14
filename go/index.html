@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="description" content="kodeWeave is your on the go coding playground! Design with TailwindCSS or Pico.css, see how your app or website will look and behave on a desktop.">
     <meta name="author" content="Michael Schwartz">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, interactive-widget=resizes-content">
     <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -29,17 +29,12 @@
   <body>
     <div class="absolute inset-0">
       <!-- canvas container -->
-      <div id="canvasContainer" class="absolute inset-0 overflow-hidden bg-gray-800 md:left-80">
-        <div class="absolute inset-0 bg-transparent">
-          <div id="iframeCanvas" data-topNavContent="iframe" class="absolute inset-0 overflow-hidden">
-            <div id="previewElm" style="width: 360px; height: 740px;">
-              <iframe 
-                id="preview"
-                class="w-full h-full"
-                sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups"></iframe>
-            </div>
-            <div id="fill" class="absolute inset-0"></div>
+      <div id="canvasContainer" class="absolute inset-0 overflow-hidden bg-gray-800 md:left-80 flex flex-col">
+        <div id="iframeCanvas" data-topNavContent="iframe" class="flex-grow relative">
+          <div id="previewElm" class="w-full h-full">
+            <iframe id="preview" class="w-full h-full" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups"></iframe>
           </div>
+          <div id="fill" class="absolute inset-0"></div>
         </div>
       
         <!-- Bottom canvas navigation -->
@@ -181,17 +176,15 @@
     
       <!-- top navbar -->
       <nav class="absolute top-0 inset-x-0 flex align-center place-items-center justify-between p-2 text-white bg-gray-900 z-20">
-        <ul class="p-0 m-0 block md:hidden">
+        <ul id="topnav" class="p-0 m-0">
           <button 
             name="toggle menu"
-            class="m-0 bg-transparent border-0 px-4 py-2 rounded-md">
+            class="m-0 border-0 mx-2 px-2 py-2 bg-transparent inline-block md:hidden">
             <label for="menu" class="cursor-pointer">
               <input type="checkbox" id="menu" class="hidden">
               <i class="fa fa-bars cursor-pointer"></i>
             </label>
           </button>
-        </ul>
-        <ul id="topnav" class="p-0 m-0">
           <button 
             id="run"
             name="run preview"
@@ -394,7 +387,7 @@
         </ul>
       </nav>
     </div>
-<!-- 
+
     <script>
       // service worker for progressive web app
       if ('serviceWorker' in navigator) {
@@ -402,6 +395,6 @@
           navigator.serviceWorker.register('./sw.js')
         })
       }
-    </script> -->
+    </script>
   </body>
 </html>

@@ -497,7 +497,7 @@ const app = {
 		let resetCanvas = (w, h) => {
 			canvas.style.width = w + 'px';
 			canvas.style.height = h + 'px';
-			centerCanvas();
+		  centerCanvas();
 		};
 
 		// reset canvas dimensions and center it
@@ -700,7 +700,10 @@ const app = {
     clearEditor(mdEditor);
     clearEditor(htmlEditor);
     clearEditor(cssEditor);
-    clearEditor(jsEditor);    
+    clearEditor(jsEditor);
+    
+    // check if menu is checked and if so uncheck
+    if (menu.checked) menu.onchange();
 
     app.updatePreview(autoupdate.checked);
   },
