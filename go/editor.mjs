@@ -1173,6 +1173,11 @@ kWExportJSFiles.init();`);
     // init zooming and panning
     app.initZoomPan();
 
+    // run preview
+    run.onclick = () => {
+      app.updatePreview(autoupdate.checked);
+    };
+
     // toggle auto update
     autoupdate.onchange = () => {
       run.classList.toggle('hidden', autoupdate.checked);
