@@ -642,7 +642,7 @@ const app = {
     let cssTags = '';
     project.libraries.forEach(library => {
       if (library.endsWith('.js')) {
-        scriptTags += `<script src="${library}" defer></script>\n    `;
+        scriptTags += `<script src="${library}"></script>\n    `;
       } else if (library.endsWith('.css')) {
         cssTags += `<link rel="stylesheet" href="${library}">\n`;
       } else {
