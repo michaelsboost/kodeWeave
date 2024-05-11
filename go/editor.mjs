@@ -783,7 +783,7 @@ SOFTWARE.`;
     let styleCSS = '/* imports */\n';
     project.libraries.forEach(library => {
       if (library.endsWith('.js')) {
-        scriptTags += `<script src="${library}" defer></script>\n    `;
+        scriptTags += `<script src="${library}"></script>\n    `;
       } else if (library.endsWith('.css')) {
         styleCSS += `@import url('${library}');\n`;
       } else {
