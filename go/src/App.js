@@ -2896,25 +2896,55 @@ ${project.description}`;
       }
     }
 
+    function minifyCSS(cssCode) {
+      let input = cssCode;
+      const output = input
+        .replace(/\/\*.*\*\/|\/\*[\s\S]*?\*\/|\n|\t|\v|\s{2,}/g, '')
+        .replace(/\s*\{\s*/g, '{')
+        .replace(/\s*\}\s*/g, '}')
+        .replace(/\s*\:\s*/g, ':')
+        .replace(/\s*\;\s*/g, ';')
+        .replace(/\s*\,\s*/g, ',')
+        .replace(/\s*\~\s*/g, '~')
+        .replace(/\s*\>\s*/g, '>')
+        .replace(/\s*\+\s*/g, '+')
+        .replace(/\s*\!\s*/g, ' !');
+      return output;
+  }
+
+    // let minifiedLESS = minifyCSS(iframe.contentDocument.getElementById('aeoibrfa1').textContent);
+    let minifiedCSS = minifyCSS(await compileCode('css'));
+
     // Add style.css
     if (project.css_pre_processor === 'css') zip.file('src/style.css', project.css);
     if (project.css_pre_processor === 'css') zip.file('dist/style.css', project.css);
     if (project.css_pre_processor === 'stylus') zip.file('src/style.styl', project.css);
-    if (project.css_pre_processor === 'stylus') zip.file('dist/style.css', await compileCode('css'));
+    if (project.css_pre_processor === 'stylus') zip.file('dist/style.css', minifiedCSS);
     if (project.css_pre_processor === 'less') zip.file('src/style.less', project.css);
     if (project.css_pre_processor === 'less') zip.file('dist/style.css', iframe.contentDocument.getElementById('aeoibrfa1').textContent);
     if (project.css_pre_processor === 'sass') zip.file('src/style.scss', project.css);
-    if (project.css_pre_processor === 'sass') zip.file('dist/style.css', await compileCode('css'));
+    if (project.css_pre_processor === 'sass') zip.file('dist/style.css', minifiedCSS);
+
+    async function minifyJS(jsCode) {
+      // detect if terser exists
+      if (!document.querySelector("script[src='libraries/terser/bundle.min.js']")) {
+        await loadScript("libraries/terser/bundle.min.js");
+      }
+      return Terser.minify(jsCode);
+    }
+
+    let minifiedJS = await minifyJS(await compileCode('javascript'));
+    minifiedJS = minifiedJS.code;
 
     // Add script.js
     if (project.javascript_pre_processor === 'javascript') zip.file('src/script.js', project.javascript);
     if (project.javascript_pre_processor === 'javascript') zip.file('dist/script.js', project.javascript);
     if (project.javascript_pre_processor === 'babel') zip.file('src/script.js', project.javascript);
-    if (project.javascript_pre_processor === 'babel') zip.file('dist/script.js', await compileCode('javascript'));
+    if (project.javascript_pre_processor === 'babel') zip.file('dist/script.js', minifiedJS);
     if (project.javascript_pre_processor === 'typescript') zip.file('src/script.ts', project.javascript);
-    if (project.javascript_pre_processor === 'typescript') zip.file('dist/script.js', await compileCode('javascript'));
+    if (project.javascript_pre_processor === 'typescript') zip.file('dist/script.js', minifiedJS);
     if (project.javascript_pre_processor === 'jsxtypescript') zip.file('src/script.ts', project.javascript);
-    if (project.javascript_pre_processor === 'jsxtypescript') zip.file('dist/script.js', await compileCode('javascript'));
+    if (project.javascript_pre_processor === 'jsxtypescript') zip.file('dist/script.js', minifiedJS);
 
     // if pwa is enabled
     let swinit = '';
