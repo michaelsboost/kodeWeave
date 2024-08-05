@@ -39,7 +39,7 @@ let app = {
     src: 'imgs/author.jpg'
   },
   version: '1.2',
-  url: 'https://michaelsboost.com/kodeWeave/',
+  url: 'https://github.com/michaelsboost/kodeWeave/',
   license: 'https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE'
 }
 let p = {
@@ -1014,7 +1014,6 @@ const App = {
         <option value="javascript" ${project.javascript_pre_processor === 'javascript' ? 'selected' : ''}>Javascript</option>
         <option value="babel" ${project.javascript_pre_processor === 'babel' ? 'selected' : ''}>Babel (JSX / ES6)</option>
         <option value="typescript" ${project.javascript_pre_processor === 'typescript' ? 'selected' : ''}>Typescript</option>
-        <option value="jsxtypescript" ${project.javascript_pre_processor === 'jsxtypescript' ? 'selected' : ''}>JSX + Typescript</option>
       </select>
     </nav>
   </li>
