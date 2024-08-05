@@ -1,4 +1,4 @@
-(()=>{var q=(t=>typeof require<"u"?require:typeof Proxy<"u"?new Proxy(t,{get:(s,r)=>(typeof require<"u"?require:s)[r]}):t)(function(t){if(typeof require<"u")return require.apply(this,arguments);throw Error('Dynamic require of "'+t+'" is not supported')});function U(t,s,r=[]){function i(o,n){return typeof o!="object"||o===null?o:new Proxy(o,{set(a,c,l){let k=[...n,c],y=a[c],x=Reflect.set(a,c,i(l,k));return y!==l&&s(k,y,l),x},get(a,c){let l=a[c];return typeof l=="object"&&l!==null?i(l,[...n,c]):l}})}return i(t,r)}var E={name:"kodeWeave",author:{name:"Michael Schwartz",href:"https://michaelsboost.com/",src:"imgs/author.jpg"},version:"1.2",url:"https://michaelsboost.com/kodeWeave/",license:"https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE"},K={name:"App name",version:.01,title:"An attractive title",description:"The most attractive description ever!",author:"kodeWeave",url:"https://michaelsboost.com/",meta:"",libraries:[],html_pre_processor:"html",css_pre_processor:"css",javascript_pre_processor:"javascript",html:"",css:"",javascript:"",logo:"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiCiAgIHZpZXdCb3g9IjAgMCA1MTEuOTk5OTkgNTExLjk5OTk5IgogICBoZWlnaHQ9IjUxMiIKICAgd2lkdGg9IjUxMiIKICAgdmVyc2lvbj0iMS4xIgogICBpZD0ic3ZnNDE5MCI+CiAgPG1ldGFkYXRhCiAgICAgaWQ9Im1ldGFkYXRhNDE5NiI+CiAgICA8cmRmOlJERj4KICAgICAgPGNjOldvcmsKICAgICAgICAgcmRmOmFib3V0PSIiPgogICAgICAgIDxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PgogICAgICAgIDxkYzp0eXBlCiAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4KICAgICAgICA8ZGM6dGl0bGU+PC9kYzp0aXRsZT4KICAgICAgPC9jYzpXb3JrPgogICAgPC9yZGY6UkRGPgogIDwvbWV0YWRhdGE+CiAgPGRlZnMKICAgICBpZD0iZGVmczQxOTQiPgogICAgPGxpbmVhckdyYWRpZW50CiAgICAgICBpZD0ibGluZWFyR3JhZGllbnQ0Mjc2Ij4KICAgICAgPHN0b3AKICAgICAgICAgaWQ9InN0b3A0Mjc4IgogICAgICAgICBvZmZzZXQ9IjAiCiAgICAgICAgIHN0eWxlPSJzdG9wLWNvbG9yOiNmZDVkOTI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wCiAgICAgICAgIGlkPSJzdG9wNDI4MCIKICAgICAgICAgb2Zmc2V0PSIxIgogICAgICAgICBzdHlsZT0ic3RvcC1jb2xvcjojZmYwMDAwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudAogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiCiAgICAgICB5Mj0iMjU3LjMxMjUiCiAgICAgICB4Mj0iMC4xMzQwNDE2NSIKICAgICAgIHkxPSIyNTcuMzEyNSIKICAgICAgIHgxPSI1MTEuNzE4NzUiCiAgICAgICBpZD0ibGluZWFyR3JhZGllbnQ0MjgyIgogICAgICAgeGxpbms6aHJlZj0iI2xpbmVhckdyYWRpZW50NDI3NiIgLz4KICA8L2RlZnM+CiAgPGcKICAgICBpZD0iZzQyODQiPgogICAgPGNpcmNsZQogICAgICAgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOnVybCgjbGluZWFyR3JhZGllbnQ0MjgyKTtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZTtzdHJva2Utd2lkdGg6MTI7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTo3MiwgNzI7c3Ryb2tlLWRhc2hvZmZzZXQ6MDtzdHJva2Utb3BhY2l0eToxIgogICAgICAgaWQ9InBhdGg0MjcwIgogICAgICAgY3g9IjI1NiIKICAgICAgIGN5PSIyNTYiCiAgICAgICByPSIyNTYiIC8+CiAgICA8cGF0aAogICAgICAgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmU7c3Ryb2tlLXdpZHRoOjEyO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6NzIsIDcyO3N0cm9rZS1kYXNob2Zmc2V0OjA7c3Ryb2tlLW9wYWNpdHk6MSIKICAgICAgIGQ9Im0gMjUxLjA2MDY4LDU4LjY3ODI3MiBjIC00LjU2MDMyLDAuMDcwMzUgLTIwLjc2MDYxLDIuMDQxOTQ1IC0yOS4yOTc5MiwzLjY1NTk4NCAtMjguMzQzOTEsNS4zNTg2MiAtNjYuODgwODEsMjIuNjE5ODE0IC03My4wMzY5OSwzMi43MTkwNjEgLTEuODk3NTUsMy4xMTI5MzUgLTEuOTQ2MTYsNy4xNDcwMTMgLTEuOTQ2MTYsMTYwLjgxNzAyMyAwLDE1Mi4yNTg4IDAuMDY3MSwxNTcuNzI0NjQgMS44OTk5OCwxNjAuNzMxMjEgNS4yMDU5OSw4LjUzOTg5IDM2LjcyMDAzLDIzLjcwOTM0IDYzLjQ1MTMzLDMwLjU0MTM0IDkuNzY1NzIsMi40OTU5MyAzNC4zMzUwOSw2LjM0NDggMzguNTA3NTQsNi4wMzE2OSAyLjAwMzg4LC0wLjE1MDM2IDIuMDMyMDMsLTAuOTc0NjkgMi4yODkyMSwtNzMuMDkzMjQgMC4xNDU1OCwtNDAuODM3NTkgMC42NTY0MywtNzMuMzM0MTQgMS4xNjEwOSwtNzMuODM4OTYgMS4zNzc1MSwtMS4zNzc5NSA3LjM0NzM5LDEuODg0NzMgMTAuMzU3NTIsNS42NjIxNSAxLjQ2MjAyLDEuODM0NjggMTMuNzk3NTUsMjAuNjU1MjggMjcuNDE3NzQsNDEuODE5NDMgNTEuNDQ0NTIsNzkuOTM4NDcgNTAuNDY1MTEsNzguNDc3OTggNTMuMzA0OTQsNzkuMTkwOTQgMy4zMjQ3OCwwLjgzNDc0IDEyLjU2NzA4LC0zLjc4OTQ3IDI3LjU3NjA2LC0xMy43ODU4MyAxNC4yNDMzOCwtOS40ODY0NiAyMy44ODU1LC0xNy43ODMxIDM0LjgxOTcyLC0yOS45NjcxNyAxMS4yOTUwMiwtMTIuNTg2MTUgMTQuODMwMzksLTE3LjQxNzg1IDE0LjgzMDM5LC0yMC4yNTMwOCAwLC0xLjIyMDA5IC0xNC45NzA2LC0yNC41NDAzMyAtMzMuNDAxMzMsLTUyLjAyODQ2IC0xOC4zNzA1NywtMjcuMzk4MzcgLTM0LjEwMTA3LC01MS4xNjg3NiAtMzQuOTU4MjgsLTUyLjgyNjk2IC0wLjg1NzIzLC0xLjY1ODIgLTEuNTU2OTMsLTQuMDczMzUgLTEuNTU2OTMsLTUuMzY1MTkgMCwtMS4zMjEyMyAxMi40ODk1OSwtMjIuMjk0ODcgMjguNTQ1ODQsLTQ3Ljk0MzUyIDQ0LjQ4MzE1LC03MS4wNTg1NiA0MS45MzgzMywtNjYuMjkxNzggMzguODMwODEsLTcyLjg0MjQ3IC0yLjU1NzU1LC01LjM5MTM2IC0xNS4zNjI2MiwtMTkuNjU4MDkgLTI2LjEzMTI5LC0yOS4xMTU4NyAtMTEuNDU0NTksLTEwLjA2MDE5MSAtMzUuMDY0MTMsLTI1Ljk1MDI3NiAtMzkuOTA2MTIsLTI2Ljg1ODkzNCAtMi45NDE1NCwtMC41NTIwMSAtMy45NzUxOSwtMC4yNDY3ODggLTUuOTE3NjYsMS43NDIyMDEgLTEuMjk1NjQsMS4zMjY2NDggLTIwLjM1MDEyLDMyLjM0ODMwMyAtNDIuMzQwNDgsNjguOTM1NzIzIC0yMS45OTAzNiwzNi41ODc0IC00MS4wNjUzOSw2Ny45OTE2NyAtNDIuMzg2NjUsNjkuNzg3MDIgLTIuNjE5NTQsMy41NTkzNyAtNi43MzI4MSw2LjA5MzA2IC04LjczNDYzLDUuMzc4MzggLTAuOTk5NDcsLTAuMzU2ODMgLTEuMjY2NjUsLTE4LjE3MDM1IC0xLjI2NjY1LC04NC40NDM5NCAwLC00OS41MTMxOTYgLTAuMzc4NjQsLTg0LjIxOTIyNiAtMC45MjM2LC04NC41NTYxMzggLTAuMTE5ODQsLTAuMDc0MSAtMC41MzYwMSwtMC4xMDI0NDYgLTEuMTg3NDgsLTAuMDkyMzggeiIKICAgICAgIGlkPSJwYXRoNDI2MCIgLz4KICA8L2c+Cjwvc3ZnPgo=",console:!1,dark:!0,diffing:!1,module:!0,autorun:!0,pwa:!1,activePanel:"html",columns:!0,columnsRight:!0},ee={colors:{text:"text-[#fff]",border:"border-gray-800"},searchLibKey:null,librarySuggestions:null,iframeSize:null,activePanel:"html",selectedSize:"none",compiledJSX:null,menuDialog:null,settings:null,libraries:null,safeRender:null,demos:null},p=function(){let t="h-4 w-4",s="h-3 w-3",r="h-4 w-4",i="h-3 w-3",o="h-3 -mt-1";return{logo:`<svg
+(()=>{var q=(t=>typeof require<"u"?require:typeof Proxy<"u"?new Proxy(t,{get:(s,o)=>(typeof require<"u"?require:s)[o]}):t)(function(t){if(typeof require<"u")return require.apply(this,arguments);throw Error('Dynamic require of "'+t+'" is not supported')});function U(t,s,o=[]){function i(r,n){return typeof r!="object"||r===null?r:new Proxy(r,{set(a,c,l){let C=[...n,c],y=a[c],x=Reflect.set(a,c,i(l,C));return y!==l&&s(C,y,l),x},get(a,c){let l=a[c];return typeof l=="object"&&l!==null?i(l,[...n,c]):l}})}return i(t,o)}var E={name:"kodeWeave",author:{name:"Michael Schwartz",href:"https://michaelsboost.com/",src:"imgs/author.jpg"},version:"1.2",url:"https://michaelsboost.com/kodeWeave/",license:"https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE"},K={name:"App name",version:.01,title:"An attractive title",description:"The most attractive description ever!",author:"kodeWeave",url:"https://michaelsboost.com/",meta:"",libraries:[],html_pre_processor:"html",css_pre_processor:"css",javascript_pre_processor:"javascript",html:"",css:"",javascript:"",logo:"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiCiAgIHZpZXdCb3g9IjAgMCA1MTEuOTk5OTkgNTExLjk5OTk5IgogICBoZWlnaHQ9IjUxMiIKICAgd2lkdGg9IjUxMiIKICAgdmVyc2lvbj0iMS4xIgogICBpZD0ic3ZnNDE5MCI+CiAgPG1ldGFkYXRhCiAgICAgaWQ9Im1ldGFkYXRhNDE5NiI+CiAgICA8cmRmOlJERj4KICAgICAgPGNjOldvcmsKICAgICAgICAgcmRmOmFib3V0PSIiPgogICAgICAgIDxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PgogICAgICAgIDxkYzp0eXBlCiAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4KICAgICAgICA8ZGM6dGl0bGU+PC9kYzp0aXRsZT4KICAgICAgPC9jYzpXb3JrPgogICAgPC9yZGY6UkRGPgogIDwvbWV0YWRhdGE+CiAgPGRlZnMKICAgICBpZD0iZGVmczQxOTQiPgogICAgPGxpbmVhckdyYWRpZW50CiAgICAgICBpZD0ibGluZWFyR3JhZGllbnQ0Mjc2Ij4KICAgICAgPHN0b3AKICAgICAgICAgaWQ9InN0b3A0Mjc4IgogICAgICAgICBvZmZzZXQ9IjAiCiAgICAgICAgIHN0eWxlPSJzdG9wLWNvbG9yOiNmZDVkOTI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wCiAgICAgICAgIGlkPSJzdG9wNDI4MCIKICAgICAgICAgb2Zmc2V0PSIxIgogICAgICAgICBzdHlsZT0ic3RvcC1jb2xvcjojZmYwMDAwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudAogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiCiAgICAgICB5Mj0iMjU3LjMxMjUiCiAgICAgICB4Mj0iMC4xMzQwNDE2NSIKICAgICAgIHkxPSIyNTcuMzEyNSIKICAgICAgIHgxPSI1MTEuNzE4NzUiCiAgICAgICBpZD0ibGluZWFyR3JhZGllbnQ0MjgyIgogICAgICAgeGxpbms6aHJlZj0iI2xpbmVhckdyYWRpZW50NDI3NiIgLz4KICA8L2RlZnM+CiAgPGcKICAgICBpZD0iZzQyODQiPgogICAgPGNpcmNsZQogICAgICAgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOnVybCgjbGluZWFyR3JhZGllbnQ0MjgyKTtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZTtzdHJva2Utd2lkdGg6MTI7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTo3MiwgNzI7c3Ryb2tlLWRhc2hvZmZzZXQ6MDtzdHJva2Utb3BhY2l0eToxIgogICAgICAgaWQ9InBhdGg0MjcwIgogICAgICAgY3g9IjI1NiIKICAgICAgIGN5PSIyNTYiCiAgICAgICByPSIyNTYiIC8+CiAgICA8cGF0aAogICAgICAgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmU7c3Ryb2tlLXdpZHRoOjEyO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6NzIsIDcyO3N0cm9rZS1kYXNob2Zmc2V0OjA7c3Ryb2tlLW9wYWNpdHk6MSIKICAgICAgIGQ9Im0gMjUxLjA2MDY4LDU4LjY3ODI3MiBjIC00LjU2MDMyLDAuMDcwMzUgLTIwLjc2MDYxLDIuMDQxOTQ1IC0yOS4yOTc5MiwzLjY1NTk4NCAtMjguMzQzOTEsNS4zNTg2MiAtNjYuODgwODEsMjIuNjE5ODE0IC03My4wMzY5OSwzMi43MTkwNjEgLTEuODk3NTUsMy4xMTI5MzUgLTEuOTQ2MTYsNy4xNDcwMTMgLTEuOTQ2MTYsMTYwLjgxNzAyMyAwLDE1Mi4yNTg4IDAuMDY3MSwxNTcuNzI0NjQgMS44OTk5OCwxNjAuNzMxMjEgNS4yMDU5OSw4LjUzOTg5IDM2LjcyMDAzLDIzLjcwOTM0IDYzLjQ1MTMzLDMwLjU0MTM0IDkuNzY1NzIsMi40OTU5MyAzNC4zMzUwOSw2LjM0NDggMzguNTA3NTQsNi4wMzE2OSAyLjAwMzg4LC0wLjE1MDM2IDIuMDMyMDMsLTAuOTc0NjkgMi4yODkyMSwtNzMuMDkzMjQgMC4xNDU1OCwtNDAuODM3NTkgMC42NTY0MywtNzMuMzM0MTQgMS4xNjEwOSwtNzMuODM4OTYgMS4zNzc1MSwtMS4zNzc5NSA3LjM0NzM5LDEuODg0NzMgMTAuMzU3NTIsNS42NjIxNSAxLjQ2MjAyLDEuODM0NjggMTMuNzk3NTUsMjAuNjU1MjggMjcuNDE3NzQsNDEuODE5NDMgNTEuNDQ0NTIsNzkuOTM4NDcgNTAuNDY1MTEsNzguNDc3OTggNTMuMzA0OTQsNzkuMTkwOTQgMy4zMjQ3OCwwLjgzNDc0IDEyLjU2NzA4LC0zLjc4OTQ3IDI3LjU3NjA2LC0xMy43ODU4MyAxNC4yNDMzOCwtOS40ODY0NiAyMy44ODU1LC0xNy43ODMxIDM0LjgxOTcyLC0yOS45NjcxNyAxMS4yOTUwMiwtMTIuNTg2MTUgMTQuODMwMzksLTE3LjQxNzg1IDE0LjgzMDM5LC0yMC4yNTMwOCAwLC0xLjIyMDA5IC0xNC45NzA2LC0yNC41NDAzMyAtMzMuNDAxMzMsLTUyLjAyODQ2IC0xOC4zNzA1NywtMjcuMzk4MzcgLTM0LjEwMTA3LC01MS4xNjg3NiAtMzQuOTU4MjgsLTUyLjgyNjk2IC0wLjg1NzIzLC0xLjY1ODIgLTEuNTU2OTMsLTQuMDczMzUgLTEuNTU2OTMsLTUuMzY1MTkgMCwtMS4zMjEyMyAxMi40ODk1OSwtMjIuMjk0ODcgMjguNTQ1ODQsLTQ3Ljk0MzUyIDQ0LjQ4MzE1LC03MS4wNTg1NiA0MS45MzgzMywtNjYuMjkxNzggMzguODMwODEsLTcyLjg0MjQ3IC0yLjU1NzU1LC01LjM5MTM2IC0xNS4zNjI2MiwtMTkuNjU4MDkgLTI2LjEzMTI5LC0yOS4xMTU4NyAtMTEuNDU0NTksLTEwLjA2MDE5MSAtMzUuMDY0MTMsLTI1Ljk1MDI3NiAtMzkuOTA2MTIsLTI2Ljg1ODkzNCAtMi45NDE1NCwtMC41NTIwMSAtMy45NzUxOSwtMC4yNDY3ODggLTUuOTE3NjYsMS43NDIyMDEgLTEuMjk1NjQsMS4zMjY2NDggLTIwLjM1MDEyLDMyLjM0ODMwMyAtNDIuMzQwNDgsNjguOTM1NzIzIC0yMS45OTAzNiwzNi41ODc0IC00MS4wNjUzOSw2Ny45OTE2NyAtNDIuMzg2NjUsNjkuNzg3MDIgLTIuNjE5NTQsMy41NTkzNyAtNi43MzI4MSw2LjA5MzA2IC04LjczNDYzLDUuMzc4MzggLTAuOTk5NDcsLTAuMzU2ODMgLTEuMjY2NjUsLTE4LjE3MDM1IC0xLjI2NjY1LC04NC40NDM5NCAwLC00OS41MTMxOTYgLTAuMzc4NjQsLTg0LjIxOTIyNiAtMC45MjM2LC04NC41NTYxMzggLTAuMTE5ODQsLTAuMDc0MSAtMC41MzYwMSwtMC4xMDI0NDYgLTEuMTg3NDgsLTAuMDkyMzggeiIKICAgICAgIGlkPSJwYXRoNDI2MCIgLz4KICA8L2c+Cjwvc3ZnPgo=",console:!1,dark:!0,diffing:!1,module:!0,autorun:!0,pwa:!1,activePanel:"html",columns:!0,columnsRight:!0},ee={searchLibKey:null,librarySuggestions:null,iframeSize:null,activePanel:"html",selectedSize:"none",compiledJSX:null,menuDialog:null,settings:null,libraries:null,safeRender:null,demos:null},p=function(){let t="h-4 w-4",s="h-3 w-3",o="h-4 w-4",i="h-3 w-3",r="h-3 -mt-1";return{logo:`<svg
       class="${t}" 
       xmlns:dc="http://purl.org/dc/elements/1.1/"
       xmlns:cc="http://creativecommons.org/ns#"
@@ -118,11 +118,11 @@
     </svg>`,cog:`<svg class="${t}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
       <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-    </svg>`,tidy:`<svg class="${o}" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+    </svg>`,tidy:`<svg class="${r}" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
       <path d="M566.6 54.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192-34.7-34.7c-4.2-4.2-10-6.6-16-6.6c-12.5 0-22.6 10.1-22.6 22.6l0 29.1L364.3 320l29.1 0c12.5 0 22.6-10.1 22.6-22.6c0-6-2.4-11.8-6.6-16l-34.7-34.7 192-192zM341.1 353.4L222.6 234.9c-42.7-3.7-85.2 11.7-115.8 42.3l-8 8C76.5 307.5 64 337.7 64 369.2c0 6.8 7.1 11.2 13.2 8.2l51.1-25.5c5-2.5 9.5 4.1 5.4 7.9L7.3 473.4C2.7 477.6 0 483.6 0 489.9C0 502.1 9.9 512 22.1 512l173.3 0c38.8 0 75.9-15.4 103.4-42.8c30.6-30.6 45.9-73.1 42.3-115.8z"/>
-    </svg>`,rotate:`<svg class="${o}" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    </svg>`,rotate:`<svg class="${r}" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
       <path d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z" />
-    </svg>`,times:`<svg class="${r}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+    </svg>`,times:`<svg class="${o}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
     </svg>`,file:`<svg class="h-3 -mt-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
       <path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z" />
@@ -160,7 +160,7 @@
       <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
     </svg>`,cursor:`<svg class="${t}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
-    </svg>`}}(),e=U(K,(t,s,r)=>{if(s!==r&&(localStorage.setItem("kodeWeave",JSON.stringify(e)),A.render("#app"),t.toString()==="activePanel"&&(e.activePanel==="html"&&setActiveEditor(editorManager.htmlEditor),e.activePanel==="css"&&setActiveEditor(editorManager.cssEditor),e.activePanel==="javascript"&&setActiveEditor(editorManager.javascriptEditor)),!A.initialRender)){let i=["title","description","author","meta","libraries","html","css","dark"],o=["html_pre_processor","css_pre_processor","javascript_pre_processor","javascript","console"],n=t.toString();if(i.includes(n)&&(e.autorun&&(e.diffing?w():n!=="css"&&w(!0)),n==="html"&&editorManager.htmlEditor.state.doc.toString()!==e.html&&dispatchChanges(editorManager.htmlEditor,e.html),n==="css")){let c=document.getElementById("iframe").contentWindow.document;c.getElementById("cuxjju3ew").textContent=e.css,editorManager.cssEditor.state.doc.toString()!==e.css&&dispatchChanges(editorManager.cssEditor,e.css)}if(o.includes(n)){if(n==="console"){let a=`
+    </svg>`}}(),e=U(K,(t,s,o)=>{if(s!==o&&(localStorage.setItem("kodeWeave",JSON.stringify(e)),k.render("#app"),t.toString()==="activePanel"&&(e.activePanel==="html"&&setActiveEditor(editorManager.htmlEditor),e.activePanel==="css"&&setActiveEditor(editorManager.cssEditor),e.activePanel==="javascript"&&setActiveEditor(editorManager.javascriptEditor)),!k.initialRender)){let i=["title","description","author","meta","libraries","html","css","dark"],r=["html_pre_processor","css_pre_processor","javascript_pre_processor","javascript","console"],n=t.toString();if(i.includes(n)&&(e.autorun&&(e.diffing?w():n!=="css"&&w(!0)),n==="html"&&editorManager.htmlEditor.state.doc.toString()!==e.html&&dispatchChanges(editorManager.htmlEditor,e.html),n==="css")){let c=document.getElementById("iframe").contentWindow.document;c.getElementById("cuxjju3ew").textContent=e.css,editorManager.cssEditor.state.doc.toString()!==e.css&&dispatchChanges(editorManager.cssEditor,e.css)}if(r.includes(n)){if(n==="console"){let a=`
         .wrapper_yOR7u {
           ${e.console?"":"display: none!important;"}
           left: 0!important; width: 100%!important; 
@@ -183,7 +183,7 @@
           background: inherit!important;
         }
           
-        ${e.css}`,l=document.getElementById("iframe").contentWindow.document;l.getElementById("cuxjju3ew").textContent=a}if(n==="javascript"&&(w(!0),editorManager.jsEditor.state.doc.toString()!==e.javascript))return dispatchChanges(editorManager.jsEditor,e.javascript),!1;(n==="html_pre_processor"||n==="css_pre_processor"||n==="javascript_pre_processor")&&w(!0)}n==="dark"&&(d.colors.border=e.dark?"border-gray-800":"border-gray-200",document.documentElement.setAttribute("data-theme",e.dark?"dark":"light"),document.querySelector("meta[name=apple-mobile-web-app-status-bar-style]").setAttribute("content",e.dark?"black-translucent":"default"),document.querySelector("meta[name=theme-color]").setAttribute("content",e.dark?"#13171f":"#ffffff"),document.querySelector("meta[name=msapplication-navbutton-color]").setAttribute("content",e.dark?"#13171f":"#ffffff"))}}),d=U(ee,(t,s,r)=>{s!==r&&A.render("#app")});window.project=e;window.data=d;function te(){let t="w-full";return`<ul class="p-0 m-0">
+        ${e.css}`,l=document.getElementById("iframe").contentWindow.document;l.getElementById("cuxjju3ew").textContent=a}if(n==="javascript"&&(w(!0),editorManager.jsEditor.state.doc.toString()!==e.javascript))return dispatchChanges(editorManager.jsEditor,e.javascript),!1;(n==="html_pre_processor"||n==="css_pre_processor"||n==="javascript_pre_processor")&&w(!0)}n==="dark"&&(k.render("#app"),document.documentElement.setAttribute("data-theme",e.dark?"dark":"light"),document.querySelector("meta[name=apple-mobile-web-app-status-bar-style]").setAttribute("content",e.dark?"black-translucent":"default"),document.querySelector("meta[name=theme-color]").setAttribute("content",e.dark?"#13171f":"#ffffff"),document.querySelector("meta[name=msapplication-navbutton-color]").setAttribute("content",e.dark?"#13171f":"#ffffff"))}}),g=U(ee,(t,s,o)=>{s!==o&&k.render("#app")});window.project=e;window.data=g;function te(){let t="w-full";return`<ul class="p-0 m-0">
   <li class="list-none m-0">
     <button
       aria-label="toggle menu"
@@ -293,8 +293,8 @@
       ${p.cog}
     </button>
   </li>
-</ul>`}function se(){let t="border-0 bg-transparent text-sm",s="mx-0 my-2 w-auto rounded-md capitalize text-[.6rem]",r="padding: 0.5rem;",i={Phones:{"320x480":"iPhone 3GS","375x667":"iPhone 6/7/8","414x736":"iPhone 6/7/8 Plus","375x812":"iPhone X/XS/11 Pro","414x896":"iPhone XR/XS Max/11/11 Pro Max","360x640":"Samsung Galaxy S5","360x740":"Samsung Galaxy S8+","1440x3200":"Samsung Galaxy S21 Ultra","1080x2340":"Google Pixel 5","1080x2400":"OnePlus 8 Pro","1440x3200":"Xiaomi Mi 11 Ultra","1644x3840":"Sony Xperia 1 III"},Tablets:{"2048x2732":'iPad Pro 12.9" (3rd/4th Gen)',"2388x1668":'iPad Pro 11" (1st/2nd/3rd Gen)',"2736x1824":"Microsoft Surface Pro 7","2800x1752":"Samsung Galaxy Tab S7+","2560x1600":"Huawei MatePad Pro","2000x1200":"Lenovo Tab P11 Pro","1920x1200":"Amazon Fire HD 10","1536x2048":"iPad Air (3rd Gen)","1620x2160":"iPad Air (4th Gen)","1620x2160":'iPad 10.2" (8th Gen)',"1668x2224":'iPad Pro 11" (2021)'},Desktops:{"3840x2160":"4K UHD (3840x2160)","2560x1440":"WQHD (2560x1440)","1920x1080":"Full HD (1920x1080)","1366x768":"Laptop (1366x768)","3440x1440":"UltraWide QHD (3440x1440)","5120x2880":"5K Retina (5120x2880)","1280x800":"MacBook (1280x800)","2560x1600":"MacBook Pro (2560x1600)","2880x1800":"MacBook Pro Retina (2880x1800)"}},o=`<label for="selectedSize" aria-label="resize canvas" class="mx-2">
-    <select id="selectedSize" onchange="resizeCanvas(this.value)" class="${s}" style="${r}">
+</ul>`}function se(){let t="border-0 bg-transparent text-sm",s="mx-0 my-2 w-auto rounded-md capitalize text-[.6rem]",o="padding: 0.5rem;",i={Phones:{"320x480":"iPhone 3GS","375x667":"iPhone 6/7/8","414x736":"iPhone 6/7/8 Plus","375x812":"iPhone X/XS/11 Pro","414x896":"iPhone XR/XS Max/11/11 Pro Max","360x640":"Samsung Galaxy S5","360x740":"Samsung Galaxy S8+","1440x3200":"Samsung Galaxy S21 Ultra","1080x2340":"Google Pixel 5","1080x2400":"OnePlus 8 Pro","1440x3200":"Xiaomi Mi 11 Ultra","1644x3840":"Sony Xperia 1 III"},Tablets:{"2048x2732":'iPad Pro 12.9" (3rd/4th Gen)',"2388x1668":'iPad Pro 11" (1st/2nd/3rd Gen)',"2736x1824":"Microsoft Surface Pro 7","2800x1752":"Samsung Galaxy Tab S7+","2560x1600":"Huawei MatePad Pro","2000x1200":"Lenovo Tab P11 Pro","1920x1200":"Amazon Fire HD 10","1536x2048":"iPad Air (3rd Gen)","1620x2160":"iPad Air (4th Gen)","1620x2160":'iPad 10.2" (8th Gen)',"1668x2224":'iPad Pro 11" (2021)'},Desktops:{"3840x2160":"4K UHD (3840x2160)","2560x1440":"WQHD (2560x1440)","1920x1080":"Full HD (1920x1080)","1366x768":"Laptop (1366x768)","3440x1440":"UltraWide QHD (3440x1440)","5120x2880":"5K Retina (5120x2880)","1280x800":"MacBook (1280x800)","2560x1600":"MacBook Pro (2560x1600)","2880x1800":"MacBook Pro Retina (2880x1800)"}},r=`<label for="selectedSize" aria-label="resize canvas" class="mx-2">
+    <select id="selectedSize" onchange="resizeCanvas(this.value)" class="${s}" style="${o}">
       <option value="none">Select Size</option>
       ${Object.keys(i).map(a=>`
         <optgroup label="${a}">
@@ -305,13 +305,13 @@
       `).join("")}
     </select>
   </label>`;function n(){if(!e.activePanel||e.activePanel&&(e.activePanel==="html"&&e.html_pre_processor!=="html"||e.activePanel==="css"&&e.css_pre_processor!=="css"||e.activePanel==="javascript"&&e.javascript_pre_processor!=="javascript"))return"hidden"}return`<div class="flex justify-between items-center overflow-auto">
-  ${o}
+  ${r}
 
   <span>
     <button 
       aria-label="rotate canvas"
       name="rotate canvas" 
-      class="${t} ${d.selectedSize==="none"?"hidden":""}"
+      class="${t} ${g.selectedSize==="none"?"hidden":""}"
       style="color: unset;"
       onclick="rotateCanvas()">
       ${p.rotate}
@@ -357,7 +357,7 @@
       ${p.play}
     </button>
   </span>
-</div>`}var A={initialRender:!0,render(t){let s=d.selectedSize,r,i,o=document.getElementById("previewElm");document.getElementById("previewElm")&&(r=o.clientWidth,i=o.clientHeight);let[n,a]=s.split("x").map(Number),c=`<ul class="py-4 px-0">
+</div>`}var k={initialRender:!0,render(t){let s=g.selectedSize,o,i,r=document.getElementById("previewElm");document.getElementById("previewElm")&&(o=r.clientWidth,i=r.clientHeight);let[n,a]=s.split("x").map(Number),c=`<ul class="py-4 px-0">
                 <li class="list-none">
                   <div class="items-center text-center">
                     <div>
@@ -458,7 +458,7 @@
                     <span>empty storage</span>
                   </button>
                 </li>
-              </ul>`;c=`<dialog ${d.menuDialog?"open":""}>
+              </ul>`;c=`<dialog ${g.menuDialog?"open":""}>
           <article class="rounded-md">
             <header class="flex justify-between items-center">
               <h1 class="text-lg font-thin m-0 capitalize">
@@ -829,7 +829,7 @@
       oninput="project.meta = this.value;"
     >${e.meta}</textarea>
   </li>
-</ul>`;l=`<dialog ${d.settings?"open":""}>
+</ul>`;l=`<dialog ${g.settings?"open":""}>
           <article class="rounded-md">
             <header class="flex justify-between items-center">
               <h1 class="text-lg font-thin m-0 capitalize">
@@ -856,7 +856,7 @@
               </button>
             </footer>
           </article>
-        </dialog>`;let k=`<dialog ${d.libraries?"open":""}>
+        </dialog>`;let C=`<dialog ${g.libraries?"open":""}>
           <article class="rounded-md">
             <header class="flex justify-between items-center">
               <h1 class="text-lg font-thin m-0">
@@ -880,7 +880,7 @@
                   oninput="this.value ? data.searchLibKey = this.value : data.searchLibKey = null; data.searchLibKey ? fetchSuggestions(data.searchLibKey) : ''" />
                   
                 <div class="relative px-4 capitalize h-auto max-h-64 overflow-auto">
-                  ${d.librarySuggestions&&d.searchLibKey?d.librarySuggestions:""}
+                  ${g.librarySuggestions&&g.searchLibKey?g.librarySuggestions:""}
                 </div>
               </div>
             </main>
@@ -894,21 +894,21 @@
               </button>
             </footer>
           </article>
-        </dialog>`,y="grid grid-rows-1 items-center bg-transparent border-0 focus-within:shadow-none",x="flex flex-col justify-between h-full",g="grid h-full items-center",f="capitalize text-center mt-4",I=["javascript","typescript","react","vue","preact","angular","alpine","solid","stimulus","mithril","hyperapp","aurelia","lit"],j="";for(let h of I)j+=`<button
+        </dialog>`,y="grid grid-rows-1 items-center bg-transparent border-0 focus-within:shadow-none",x="flex flex-col justify-between h-full",m="grid h-full items-center",f="capitalize text-center mt-4",I=["javascript","typescript","react","vue","preact","angular","alpine","solid","stimulus","mithril","hyperapp","aurelia","lit"],j="";for(let h of I)j+=`<button
             aria-label="new ${h} project"
             name="new ${h} project"
             class="${y}"
             style="color: unset;"
             onclick="newProject('${h}')">
             <div class="${x}">
-              <div class="${g}">
+              <div class="${m}">
                 <img width="256" height="256" src="imgs/frameworks/${h}.svg" alt="${h}" />
               </div>
               <div class="${f}">
                 ${h}
               </div>
             </div>
-          </button>`;let D=`<dialog ${d.demos?"open":""}>
+          </button>`;let D=`<dialog ${g.demos?"open":""}>
           <article class="rounded-md">
             <header class="flex justify-between items-center">
               <h1 class="text-lg font-thin m-0">
@@ -940,7 +940,7 @@
               </button>
             </footer>
           </article>
-        </dialog>`,u=`
+        </dialog>`,d=`
       <div>
         <div class="absolute inset-y-0 left-0 flex flex-col text-center justify-between px-2 py-4 overflow-auto no-scrollbar">
           ${te()}
@@ -948,10 +948,10 @@
         
         <!-- flexbox for panels and preview -->
         <div class="flex flex-col flex-col-reverse sm:flex-row absolute inset-y-0 right-0 left-16 bottom-0 overflow-hidden">
-          <div class="relative w-full h-full border-0 border-x border-solid overflow-auto p-4 ${d.colors.border}">
+          <div class="relative w-full h-full border-0 border-x border-solid overflow-auto p-4 ${e.dark?"border-gray-800":"border-gray-200"}">
             <nav class="absolute inset-0 flex flex-col ${e.columns?"flex-col":`sm:flex-row ${e.columnsRight?"sm:flex-row-reverse":""}`}">
               <div class="flex-grow w-full flex flex-col">
-                <div class="flex-none border-0 border-b border-solid ${d.colors.border}">
+                <div class="flex-none border-0 border-b border-solid ${e.dark?"border-gray-800":"border-gray-200"}">
                   ${se()}
                 </div>
                 <div class="flex-grow overflow-hidden">
@@ -959,11 +959,11 @@
                     <iframe
                       id="iframe"
                       title="${e.title}"
-                      class="bg-white ${d.selectedSize!=="none"?`border border-solid ${d.colors.border} shadow-2xl shadow-blue-500`:""}"
-                      style="${d.selectedSize==="none"?"width: 100%; height: 100%":`
+                      class="bg-white ${g.selectedSize!=="none"?`border border-solid ${e.dark?"border-gray-800":"border-gray-200"} shadow-2xl shadow-blue-500`:""}"
+                      style="${g.selectedSize==="none"?"width: 100%; height: 100%":`
       width: ${n}px;
       height: ${a}px;
-      transform: scale(${Math.min(r/n,i/a)});
+      transform: scale(${Math.min(o/n,i/a)});
       position: absolute;
       top: 50%;
       left: 50%;
@@ -980,14 +980,14 @@
                     <span 
                       id="iframeClientSize" 
                       class="hidden opacity-0 transition-opacity duration-300 absolute top-0 right-0 ${e.dark?"bg-gray-800":"bg-gray-200"} p-1 text-xs">
-                        ${d.iframeSize}
+                        ${g.iframeSize}
                     </span>
                   </div>
                 </div>
               </div>
-              <div class="relative flex-grow w-full ${e.columns?"h-1/4":"2xl:w-1/2 h-1/4 sm:h-full sm:border-solid sm:border-0 lg:border-r "+d.colors.border} ${e.activePanel?"":"hidden"}">
+              <div class="relative flex-grow w-full ${e.columns?"h-1/4":"2xl:w-1/2 h-1/4 sm:h-full sm:border-solid sm:border-0 lg:border-r "+e.dark?"border-gray-800":"border-gray-200"} ${e.activePanel?"":"hidden"}">
                 <div class="absolute inset-0 flex flex-col justify-between">
-                  <div class="flex-grow overflow-auto ${e.columns?`border-0 border-t border-solid ${d.colors.border}`:""}">
+                  <div class="flex-grow overflow-auto ${e.columns?`border-0 border-t border-solid ${e.dark?"border-gray-800":"border-gray-200"}`:""}">
                     <div class="h-full ${e.activePanel==="html"?"":"hidden"}">
                       <div 
                         data-ignore
@@ -1013,8 +1013,8 @@
                         id="jsEditor"></div>
                     </div>
                   </div>
-                  <div class="flex-none overflow-auto border-0 border-t border-solid ${d.colors.border}">
-                    ${oe()}
+                  <div class="flex-none overflow-auto border-0 border-t border-solid ${e.dark?"border-gray-800":"border-gray-200"}">
+                    ${re()}
                   </div>
                 </div>
               </div>
@@ -1024,9 +1024,9 @@
 
         ${c}
         ${l}
-        ${k}
+        ${C}
         ${D}
-      </div>`,m=document.querySelector(t);if(!m)return;let $=new DOMParser().parseFromString(u,"text/html");if($.body.innerHTML.trim()===u.trim())return;if(A.initialRender)return m.innerHTML=u,w(!0),A.initialRender=!1,!1;let O=m.firstElementChild,C=$.body.firstElementChild;W(O,C)}},G={render({large:t,title:s="Are you sure you want to proceed?",content:r,CloseLabel:i,ConfirmLabel:o,onLoad:n,onConfirm:a}){let c="text-lg font-thin m-0",l="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md",x=`<article class="${t?"flex flex-col h-3/4":""} rounded-md">
+      </div>`,u=document.querySelector(t);if(!u)return;let $=new DOMParser().parseFromString(d,"text/html");if($.body.innerHTML.trim()===d.trim())return;if(k.initialRender)return u.innerHTML=d,w(!0),k.initialRender=!1,!1;let O=u.firstElementChild,A=$.body.firstElementChild;W(O,A)}},G={render({large:t,title:s="Are you sure you want to proceed?",content:o,CloseLabel:i,ConfirmLabel:r,onLoad:n,onConfirm:a}){let c="text-lg font-thin m-0",l="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md",x=`<article class="${t?"flex flex-col h-3/4":""} rounded-md">
       <header class="${t?"flex-none":""} flex justify-between items-center">
         <h1 class="${c}">${s}</h1>
         <button class="${l} bg-transparent border-0" style="color: unset;" aria-label="Close">
@@ -1038,13 +1038,13 @@
         </button>
       </header>
       <main class="font-thin ${t?"flex-grow":""}">
-        ${r||""}
+        ${o||""}
       </main>
       <footer ${t?'class="flex-none"':""}>
         <button class="${l} bg-transparent border ${e.dark?"border-gray-600":"border-gray-200"}" style="color: unset;" aria-label="Close" onclick="this.closest('dialog').close()">${i||"close"}</button>
-        ${a?`<button class="${l}" aria-label="Confirm">${o||"confirm"}</button>`:""}
+        ${a?`<button class="${l}" aria-label="Confirm">${r||"confirm"}</button>`:""}
       </footer>
-    </article>`,g=document.createElement("dialog");g.open=!0,g.innerHTML=x,document.body.appendChild(g),n&&typeof n=="function"&&n();let f=g.querySelector("header button"),I=g.querySelector("footer button:first-child"),j=g.querySelector("footer button:last-child");f.onclick=()=>document.body.removeChild(g),I.onclick=()=>document.body.removeChild(g),j.onclick=function(){a&&typeof a=="function"&&a(),document.body.removeChild(g)}}};function oe(){let t="border-0 bg-transparent py-1";return`<div class="flex justify-between">
+    </article>`,m=document.createElement("dialog");m.open=!0,m.innerHTML=x,document.body.appendChild(m),n&&typeof n=="function"&&n();let f=m.querySelector("header button"),I=m.querySelector("footer button:first-child"),j=m.querySelector("footer button:last-child");f.onclick=()=>document.body.removeChild(m),I.onclick=()=>document.body.removeChild(m),j.onclick=function(){a&&typeof a=="function"&&a(),document.body.removeChild(m)}}};function re(){let t="border-0 bg-transparent py-1";return`<div class="flex justify-between">
     <button
       aria-label="indent"
       name="indent"
@@ -1152,7 +1152,7 @@
       onclick="editorCommand('selectAll', getActiveEditor())">
       ${p.cursor}
     </button>
-  </div>`}function re(){localStorage.removeItem("kodeWeave"),sessionStorage.clear(),document.cookie.split(";").forEach(function(t){document.cookie=t.trim().split("=")[0]+"=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/"}),"caches"in window&&caches.keys().then(function(t){for(let s of t)caches.delete(s)}),"serviceWorker"in navigator&&navigator.serviceWorker.getRegistrations().then(function(t){for(let s of t)s.unregister()}),console.log("All saved data, cookies, and service worker caches have been cleared."),location.reload()}var ie=t=>{if(!t)return e.libraries.push(""),document.getElementById("librariesBox").innerHTML=Z(),!1;e.libraries.includes(t)?console.error(`Library already exists: ${t}`):e.libraries.push(t),document.getElementById("librariesBox")&&(document.getElementById("librariesBox").innerHTML=Z())};function Z(){return e.libraries.map((t,s)=>`
+  </div>`}function oe(){localStorage.removeItem("kodeWeave"),sessionStorage.clear(),document.cookie.split(";").forEach(function(t){document.cookie=t.trim().split("=")[0]+"=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/"}),"caches"in window&&caches.keys().then(function(t){for(let s of t)caches.delete(s)}),"serviceWorker"in navigator&&navigator.serviceWorker.getRegistrations().then(function(t){for(let s of t)s.unregister()}),console.log("All saved data, cookies, and service worker caches have been cleared."),location.reload()}var ie=t=>{if(!t)return e.libraries.push(""),document.getElementById("librariesBox").innerHTML=Z(),!1;e.libraries.includes(t)?console.error(`Library already exists: ${t}`):e.libraries.push(t),document.getElementById("librariesBox")&&(document.getElementById("librariesBox").innerHTML=Z())};function Z(){return e.libraries.map((t,s)=>`
     <nav class="flex justify-between py-2" data-index="${s}">
       <input 
         type="text" 
@@ -1170,7 +1170,7 @@
         ${p.trash}
       </button>
     </nav>
-  `).join("")}function ne(t){fetch(`https://api.cdnjs.com/libraries?search=${t}&fields=filename,description,version`).then(s=>{if(!s.ok)throw new Error("Network response was not ok");return s.json()}).then(s=>{if(s&&s.results&&s.results.length>0){let r=s.results.map(i=>i);d.librarySuggestions=r.map(i=>`
+  `).join("")}function ne(t){fetch(`https://api.cdnjs.com/libraries?search=${t}&fields=filename,description,version`).then(s=>{if(!s.ok)throw new Error("Network response was not ok");return s.json()}).then(s=>{if(s&&s.results&&s.results.length>0){let o=s.results.map(i=>i);g.librarySuggestions=o.map(i=>`
             <section 
               class="cursor-pointer"
               onclick="
@@ -1185,8 +1185,8 @@
                 <span class="font-bold">${i.version}</span>
               </div>
               <div class="text-sm font-thin">${i.description}<br><hr></div>
-            </section>`).join("")}}).catch(s=>{console.error("Error fetching data:",s)})}function T(t){let s=document.querySelector(`script[src="${t}"]`);s&&s.remove()}function R(t){t.forEach(s=>{let r=document.querySelector(`script[src="${s}"]`);r&&r.remove()})}async function N(t){return new Promise((s,r)=>{if(document.querySelector(`script[src="${t}"]`)){s();return}let o=document.createElement("script");o.src=t,o.onload=s,o.onerror=()=>r(new Error(`Failed to load script: ${t}`)),document.body.appendChild(o)})}async function _(t){return Promise.all(t.map(N))}async function b(t,s){let r={html:{markdown:"libraries/preprocessors/marked.min.js",jade:"libraries/preprocessors/jade.js",pug:"libraries/preprocessors/pug.js"},css:{sass:"libraries/preprocessors/sass.sync.min.js",less:"libraries/preprocessors/less.min.js",stylus:"libraries/preprocessors/stylus.min.js"},javascript:{typescript:"libraries/preprocessors/typescript.min.js",babel:"libraries/preprocessors/babel.min.js",jsxtypescript:["libraries/preprocessors/typescript.min.js","libraries/preprocessors/babel.min.js"]}},i={html:e.html_pre_processor,css:e.css_pre_processor,javascript:e.javascript_pre_processor};try{let o=s!=="html"||s!=="css"||s!=="javascript",n=o?r[t][s]:null;if(i[t]&&o){let a=r[t][i[t]];Array.isArray(a)?R(a):T(a),Array.isArray(n)?await _(n):n&&await N(n)}t==="html"?(e.html_pre_processor=s,window.editorManager.setMode(e.html_pre_processor==="html"?"html":s,editorManager.htmlEditor)):t==="css"?(e.css_pre_processor=s,window.editorManager.setMode(e.css_pre_processor==="css"?"css":s,editorManager.cssEditor)):t==="javascript"&&(e.javascript_pre_processor=s,window.editorManager.setMode(e.javascript_pre_processor==="javascript"?"javascript":s,editorManager.jsEditor))}catch(o){console.error("Error setting preprocessor:",o)}}async function Y(){await Promise.all([b("html",e.html_pre_processor),b("css",e.css_pre_processor),b("javascript",e.javascript_pre_processor)]),dispatchChanges(editorManager.htmlEditor,e.html),dispatchChanges(editorManager.cssEditor,e.css),dispatchChanges(editorManager.jsEditor,e.javascript),w(!0)}async function V(){await _(["libraries/js-beautify/beautify.min.js","libraries/js-beautify/beautify-css.min.js","libraries/js-beautify/beautify-html.min.js"])}async function J(){R(["libraries/js-beautify/beautify.min.js","libraries/js-beautify/beautify-css.min.js","libraries/js-beautify/beautify-html.min.js"])}async function ae(){await V();let t;switch(e.activePanel){case"html":t=html_beautify(e.html,{indent_size:2,max_preserve_newlines:1}),dispatchChanges(editorManager.htmlEditor,t);break;case"css":t=css_beautify(e.css,{indent_size:2,max_preserve_newlines:1}),e.css=t,dispatchChanges(editorManager.cssEditor,t);break;case"javascript":t=beautify(e.javascript,{indent_size:2,max_preserve_newlines:1}),e.javascript=t,dispatchChanges(editorManager.jsEditor,t);break;default:t="Unknown editor panel."}await J()}function le(){let t="";for(;!/^[a-zA-Z]/.test(t);)t=Math.random().toString(36).substr(2,9);return t}function ce(t){d.selectedSize=t,z()}function pe(){let t=document.getElementById("previewElm").firstElementChild;if(t.style.width==="100%")return!1;let s=parseInt(t.style.width),r=parseInt(t.style.height);[s,r]=[r,s];let i=previewElm.clientWidth,o=previewElm.clientHeight,n=Math.min(i/s,o/r);t.style.width=`${s}px`,t.style.height=`${r}px`,t.style.transform=`scale(${n})`,t.style.marginTop=`-${r/2}px`,t.style.marginLeft=`-${s/2}px`,d.selectedSize=s+"x"+r}function F(){let t=document.getElementById("previewElm").firstElementChild;if(t.style.width==="100%")return!1;let s=parseInt(t.style.width),r=parseInt(t.style.height),i=previewElm.clientWidth,o=previewElm.clientHeight,n=Math.min(i/s,o/r);t.style.width=`${s}px`,t.style.height=`${r}px`,t.style.transform=`scale(${n})`,t.style.marginTop=`-${r/2}px`,t.style.marginLeft=`-${s/2}px`}var H;function z(){if(d.selectedSize==="none"){let t=document.getElementById("iframe");d.iframeSize=`${t.clientWidth}px x ${t.clientHeight}px`;let s=document.getElementById("iframeClientSize");s.classList.contains("hidden")&&(H&&clearTimeout(H),s.classList.remove("hidden","opacity-0"),s.classList.add("opacity-100"),H=setTimeout(()=>{s.classList.remove("opacity-100"),s.classList.add("opacity-0"),setTimeout(()=>{s.classList.add("hidden")},300)},2e3))}else F()}async function M(t){try{if(t==="html")switch(e.html_pre_processor){case"markdown":return marked.parse(e.html);case"jade":return jade.render(e.html,{pretty:!0});case"pug":let s=document.getElementById("appScript");return s.hasAttribute("type")&&s.getAttribute("type")==="module"?(console.error("Cannot import pug as script is a module!"),!1):q("pug").compile(e.html)({name:this.name});default:return e.html}if(t==="css")switch(e.css_pre_processor){case"stylus":return stylus.render(e.css);case"less":return new Promise((s,r)=>{less.render(e.css,(i,o)=>i?r(i):s(o.css))});case"sass":return new Promise((s,r)=>{Sass.compile(e.css,i=>i.status===0?s(i.text):r(new Error(i.message)))});default:return e.css}if(t==="javascript")switch(e.javascript_pre_processor){case"babel":return typeof Babel>"u"&&await N("libraries/preprocessors/babel.min.js"),Babel.transform(e.javascript,{presets:["env","react"]}).code;case"typescript":return ts.transpileModule(e.javascript,{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;case"jsxtypescript":let s=ts.transpileModule(e.javascript,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES5,jsx:ts.JsxEmit.React}}).outputText;return d.compiledJSX=Babel.transform(s,{presets:["env","react"]}).code,d.compiledJSX;default:return e.javascript}}catch(s){console.error("Error compiling code:",s)}}async function de(t){let s=t.target.files[0];if(s)try{let r=await ue(s);e.logo=r}catch(r){console.error("Error converting image to base64:",r)}}function ue(t){return new Promise((s,r)=>{let i=new FileReader;i.readAsDataURL(t),i.onload=()=>s(i.result),i.onerror=o=>r(o)})}function me(t){function s(i){return i.charAt(0).toUpperCase()+i.slice(1)}let r=s(t);b("html","html"),b("css","css"),t!=="typescript"&&b("javascript","javascript"),(t==="typescript"||t==="angular")&&b("javascript","typescript"),e.name=`${r} name`,e.version=.01,e.title=`A Cool ${r} App`,e.description=`A modern ${r} application!`,e.author="kodeWeave",e.url="https://michaelsboost.com/",e.diffing=!1,e.module=!0,t==="angular"&&(e.module=!1),e.pwa=!1,t==="javascript"&&(e.meta="",e.libraries=["https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css","https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"],e.html=`<div class="flex flex-col items-center justify-center absolute inset-0">
-  <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${r}! \u{1F30E}</h1>
+            </section>`).join("")}}).catch(s=>{console.error("Error fetching data:",s)})}function T(t){let s=document.querySelector(`script[src="${t}"]`);s&&s.remove()}function R(t){t.forEach(s=>{let o=document.querySelector(`script[src="${s}"]`);o&&o.remove()})}async function N(t){return new Promise((s,o)=>{if(document.querySelector(`script[src="${t}"]`)){s();return}let r=document.createElement("script");r.src=t,r.onload=s,r.onerror=()=>o(new Error(`Failed to load script: ${t}`)),document.body.appendChild(r)})}async function _(t){return Promise.all(t.map(N))}async function b(t,s){let o={html:{markdown:"libraries/preprocessors/marked.min.js",jade:"libraries/preprocessors/jade.js",pug:"libraries/preprocessors/pug.js"},css:{sass:"libraries/preprocessors/sass.sync.min.js",less:"libraries/preprocessors/less.min.js",stylus:"libraries/preprocessors/stylus.min.js"},javascript:{typescript:"libraries/preprocessors/typescript.min.js",babel:"libraries/preprocessors/babel.min.js",jsxtypescript:["libraries/preprocessors/typescript.min.js","libraries/preprocessors/babel.min.js"]}},i={html:e.html_pre_processor,css:e.css_pre_processor,javascript:e.javascript_pre_processor};try{let r=s!=="html"||s!=="css"||s!=="javascript",n=r?o[t][s]:null;if(i[t]&&r){let a=o[t][i[t]];Array.isArray(a)?R(a):T(a),Array.isArray(n)?await _(n):n&&await N(n)}t==="html"?(e.html_pre_processor=s,window.editorManager.setMode(e.html_pre_processor==="html"?"html":s,editorManager.htmlEditor)):t==="css"?(e.css_pre_processor=s,window.editorManager.setMode(e.css_pre_processor==="css"?"css":s,editorManager.cssEditor)):t==="javascript"&&(e.javascript_pre_processor=s,window.editorManager.setMode(e.javascript_pre_processor==="javascript"?"javascript":s,editorManager.jsEditor))}catch(r){console.error("Error setting preprocessor:",r)}}async function Y(){await Promise.all([b("html",e.html_pre_processor),b("css",e.css_pre_processor),b("javascript",e.javascript_pre_processor)]),dispatchChanges(editorManager.htmlEditor,e.html),dispatchChanges(editorManager.cssEditor,e.css),dispatchChanges(editorManager.jsEditor,e.javascript),w(!0)}async function V(){await _(["libraries/js-beautify/beautify.min.js","libraries/js-beautify/beautify-css.min.js","libraries/js-beautify/beautify-html.min.js"])}async function J(){R(["libraries/js-beautify/beautify.min.js","libraries/js-beautify/beautify-css.min.js","libraries/js-beautify/beautify-html.min.js"])}async function ae(){await V();let t;switch(e.activePanel){case"html":t=html_beautify(e.html,{indent_size:2,max_preserve_newlines:1}),dispatchChanges(editorManager.htmlEditor,t);break;case"css":t=css_beautify(e.css,{indent_size:2,max_preserve_newlines:1}),e.css=t,dispatchChanges(editorManager.cssEditor,t);break;case"javascript":t=beautify(e.javascript,{indent_size:2,max_preserve_newlines:1}),e.javascript=t,dispatchChanges(editorManager.jsEditor,t);break;default:t="Unknown editor panel."}await J()}function le(){let t="";for(;!/^[a-zA-Z]/.test(t);)t=Math.random().toString(36).substr(2,9);return t}function ce(t){g.selectedSize=t,z()}function pe(){let t=document.getElementById("previewElm").firstElementChild;if(t.style.width==="100%")return!1;let s=parseInt(t.style.width),o=parseInt(t.style.height);[s,o]=[o,s];let i=previewElm.clientWidth,r=previewElm.clientHeight,n=Math.min(i/s,r/o);t.style.width=`${s}px`,t.style.height=`${o}px`,t.style.transform=`scale(${n})`,t.style.marginTop=`-${o/2}px`,t.style.marginLeft=`-${s/2}px`,g.selectedSize=s+"x"+o}function F(){let t=document.getElementById("previewElm").firstElementChild;if(t.style.width==="100%")return!1;let s=parseInt(t.style.width),o=parseInt(t.style.height),i=previewElm.clientWidth,r=previewElm.clientHeight,n=Math.min(i/s,r/o);t.style.width=`${s}px`,t.style.height=`${o}px`,t.style.transform=`scale(${n})`,t.style.marginTop=`-${o/2}px`,t.style.marginLeft=`-${s/2}px`}var H;function z(){if(g.selectedSize==="none"){let t=document.getElementById("iframe");g.iframeSize=`${t.clientWidth}px x ${t.clientHeight}px`;let s=document.getElementById("iframeClientSize");s.classList.contains("hidden")&&(H&&clearTimeout(H),s.classList.remove("hidden","opacity-0"),s.classList.add("opacity-100"),H=setTimeout(()=>{s.classList.remove("opacity-100"),s.classList.add("opacity-0"),setTimeout(()=>{s.classList.add("hidden")},300)},2e3))}else F()}async function M(t){try{if(t==="html")switch(e.html_pre_processor){case"markdown":return marked.parse(e.html);case"jade":return jade.render(e.html,{pretty:!0});case"pug":let s=document.getElementById("appScript");return s.hasAttribute("type")&&s.getAttribute("type")==="module"?(console.error("Cannot import pug as script is a module!"),!1):q("pug").compile(e.html)({name:this.name});default:return e.html}if(t==="css")switch(e.css_pre_processor){case"stylus":return stylus.render(e.css);case"less":return new Promise((s,o)=>{less.render(e.css,(i,r)=>i?o(i):s(r.css))});case"sass":return new Promise((s,o)=>{Sass.compile(e.css,i=>i.status===0?s(i.text):o(new Error(i.message)))});default:return e.css}if(t==="javascript")switch(e.javascript_pre_processor){case"babel":return typeof Babel>"u"&&await N("libraries/preprocessors/babel.min.js"),Babel.transform(e.javascript,{presets:["env","react"]}).code;case"typescript":return ts.transpileModule(e.javascript,{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;case"jsxtypescript":let s=ts.transpileModule(e.javascript,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES5,jsx:ts.JsxEmit.React}}).outputText;return g.compiledJSX=Babel.transform(s,{presets:["env","react"]}).code,g.compiledJSX;default:return e.javascript}}catch(s){console.error("Error compiling code:",s)}}async function de(t){let s=t.target.files[0];if(s)try{let o=await ue(s);e.logo=o}catch(o){console.error("Error converting image to base64:",o)}}function ue(t){return new Promise((s,o)=>{let i=new FileReader;i.readAsDataURL(t),i.onload=()=>s(i.result),i.onerror=r=>o(r)})}function me(t){function s(i){return i.charAt(0).toUpperCase()+i.slice(1)}let o=s(t);b("html","html"),b("css","css"),t!=="typescript"&&b("javascript","javascript"),(t==="typescript"||t==="angular")&&b("javascript","typescript"),e.name=`${o} name`,e.version=.01,e.title=`A Cool ${o} App`,e.description=`A modern ${o} application!`,e.author="kodeWeave",e.url="https://michaelsboost.com/",e.diffing=!1,e.module=!0,t==="angular"&&(e.module=!1),e.pwa=!1,t==="javascript"&&(e.meta="",e.libraries=["https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css","https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"],e.html=`<div class="flex flex-col items-center justify-center absolute inset-0">
+  <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${o}! \u{1F30E}</h1>
   <p class="text-xl mb-4">Counter: <span id="counter" class="font-mono">0</span></p>
   <button id="incrementButton" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition">
     +
@@ -1199,7 +1199,7 @@ incrementButton.addEventListener('click', function() {
   counter++;
   counterElement.textContent = counter;
 });`),t==="typescript"&&(e.meta="",e.libraries=["https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css","https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"],e.html=`<div class="flex flex-col items-center justify-center absolute inset-0">
-  <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${r}! \u{1F30E}</h1>
+  <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${o}! \u{1F30E}</h1>
   <p class="text-xl mb-4">Counter: <span id="counter" class="font-mono">0</span></p>
   <button id="incrementButton" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition">
     +
@@ -1222,7 +1222,7 @@ function App() {
 
   return (
     <div className="flex flex-col items-center justify-center absolute inset-0">
-      <h1 className="text-3xl font-thin mb-4">\u{1F44B} Hello, ${r}! \u{1F30E}</h1>
+      <h1 className="text-3xl font-thin mb-4">\u{1F44B} Hello, ${o}! \u{1F30E}</h1>
       <p className="text-xl mb-4">Counter: <span id="counter" className="font-mono">{counter}</span></p>
       <button
         id="incrementButton"
@@ -1240,7 +1240,7 @@ root.render(<App />);`),t==="vue"&&(e.meta="",e.libraries=["https://cdnjs.cloudf
     data() {
       return {
         counter: 0,
-        message: '\u{1F44B} Hello, ${r}! \u{1F30E}'
+        message: '\u{1F44B} Hello, ${o}! \u{1F30E}'
       };
     },
     methods: {
@@ -1272,7 +1272,7 @@ function App() {
 
   return html\`
     <div class="flex flex-col items-center justify-center absolute inset-0">
-      <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${r}! \u{1F30E}</h1>
+      <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${o}! \u{1F30E}</h1>
       <p class="text-xl mb-4">Counter: <span id="counter" class="font-mono">\${counter}</span></p>
       <button
         id="incrementButton"
@@ -1286,7 +1286,7 @@ function App() {
 }
 
 render(html\`<\${App} />\`, document.getElementById('root'));`),t==="angularold"&&(e.meta="",e.libraries=["https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js","https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css","https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"],e.html=`<div ng-app="myApp" ng-controller="MainController" class="flex flex-col items-center justify-center absolute inset-0">
-    <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${r}! \u{1F30E}</h1>
+    <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${o}! \u{1F30E}</h1>
     <p class="text-xl mb-4">Counter: <span id="counter" class="font-mono">{{counter}}</span></p>
     <button
       id="incrementButton"
@@ -1311,7 +1311,7 @@ enableProdMode();
   selector: 'app-root',
   template: \`
     <div class="flex flex-col items-center justify-center absolute inset-0">
-      <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${r}! \u{1F30E}</h1>
+      <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${o}! \u{1F30E}</h1>
       <p class="text-xl mb-4">Counter: <span id="counter" class="font-mono">{{ counter }}</span></p>
       <button
         id="incrementButton"
@@ -1340,7 +1340,7 @@ class AppModule {}
 
 platformBrowserDynamic().bootstrapModule(AppModule);`),t==="alpine"&&(e.meta='<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js" defer><\/script>',e.libraries=["https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css","https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"],e.html=`<div x-data="{ counter: 0 }" class="flex flex-col items-center justify-center absolute inset-0">
   <div class="flex flex-col items-center justify-center absolute inset-0">
-    <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${r}! \u{1F30E}</h1>
+    <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${o}! \u{1F30E}</h1>
     <p class="text-xl mb-4">Counter: <span class="font-mono" x-text="counter"></span></p>
     <button
       class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition"
@@ -1359,7 +1359,7 @@ function Counter() {
 
   return html\`
     <div class="flex flex-col items-center justify-center absolute inset-0">
-      <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${r}! \u{1F30E}</h1>
+      <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${o}! \u{1F30E}</h1>
       <p class="text-xl mb-4">Counter: <span class="font-mono">\${count}</span></p>
       <button type="button" onClick=\${increment}>
         +
@@ -1369,7 +1369,7 @@ function Counter() {
 }
 
 render(Counter, document.getElementById("root"));`),t==="stimulus"&&(e.meta="",e.libraries=["https://cdn.jsdelivr.net/npm/@hotwired/stimulus@3.1.0/dist/stimulus.umd.js","https://cdn.jsdelivr.net/npm/@hotwired/stimulus-loading@1.0.0/dist/stimulus-loading.umd.js","https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css","https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"],e.html=`<div data-controller="counter" class="flex flex-col items-center justify-center absolute inset-0">
-  <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${r}! \u{1F30E}</h1>
+  <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${o}! \u{1F30E}</h1>
   <p class="text-xl mb-4">Counter: <span data-counter-target="output" class="font-mono">0</span></p>
   <button
     data-action="click->counter#increment"
@@ -1397,7 +1397,7 @@ application.register('counter', class extends Stimulus.Controller {
     },
     view: () => (
       m("div", { class: "flex flex-col items-center justify-center absolute inset-0" },
-        m("h1", { class: "text-3xl font-thin mb-4" }, "\u{1F44B} Hello, ${r}! \u{1F30E}"),
+        m("h1", { class: "text-3xl font-thin mb-4" }, "\u{1F44B} Hello, ${o}! \u{1F30E}"),
         m("p", { class: "text-xl mb-4" }, "Counter: ", m("span", { class: "font-mono" }, App.count)),
         m("div", { class: "flex gap-2" },
           m("button", {
@@ -1423,7 +1423,7 @@ app({
   node: document.getElementById('root')
 })`),t==="aurelia"&&(e.meta='<script src="https://cdn.jsdelivr.net/npm/aurelia-script@1.4.0"><\/script>',e.libraries=["https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css","https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"],e.html=`<template id="root">
   <div class="flex flex-col items-center justify-center absolute inset-0">
-    <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${r}! \u{1F30E}</h1>
+    <h1 class="text-3xl font-thin mb-4">\u{1F44B} Hello, ${o}! \u{1F30E}</h1>
     <p class="text-xl mb-4">Counter: <span id="counter" class="font-mono">0</span></p>
     <button 
       class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition"
@@ -1436,7 +1436,7 @@ app({
     return document.querySelector('#root');
   }
   constructor() {
-    this.message = '${r}';
+    this.message = '${o}';
     this.counter = 0;
   }
   incrementCounter() {
@@ -1464,7 +1464,7 @@ class MyElement extends LitElement {
   render() {
     return html\`
       <main>
-        <h1>\u{1F44B} Hello, ${r}! \u{1F30E}</h1>
+        <h1>\u{1F44B} Hello, ${o}! \u{1F30E}</h1>
         <p>Counter: \${this.counter}</p>
         <button @click="\${this.incrementCounter}">
           +
@@ -1473,7 +1473,7 @@ class MyElement extends LitElement {
     \`;
   }
 }
-customElements.define('my-element', MyElement);`),dispatchChanges(editorManager.htmlEditor,e.html),dispatchChanges(editorManager.cssEditor,e.css),dispatchChanges(editorManager.jsEditor,e.javascript),t==="react"&&b("javascript","babel"),d.demos=!1,w(!0)}function Q(t){t!==null&&(e.obj={},d.safeRender=null,b("html",t.html_pre_processor),b("css",t.css_pre_processor),b("javascript",t.javascript_pre_processor),e.name=t.name,e.version=t.version,e.title=t.title,e.description=t.description,e.author=t.author,e.url=t.url,e.logo=t.logo,e.console=t.console,e.dark=t.dark,e.diffing=t.diffing,e.module=t.module,e.autorun=t.autorun,e.pwa=t.pwa,e.activePanel=t.activePanel,e.columns=t.columns,e.columnsRight=t.columnsRight,e.meta=t.meta,e.libraries=t.libraries,e.html=t.html,e.css=t.css,e.javascript=t.javascript,d.safeRender=!0,dispatchChanges(editorManager.htmlEditor,e.html),dispatchChanges(editorManager.cssEditor,e.css),dispatchChanges(editorManager.jsEditor,e.javascript),w(!0))}function ge(){G.render({title:"Are you sure you want to load a new project?",content:'<div class="p-4 text-center">All current data will be lost.</div>',onConfirm:function(){let t=document.createElement("input");t.type="file",t.accept=".json",t.addEventListener("change",s=>{let r=s.target.files[0];if(!r){console.error("No file selected.");return}let i=new FileReader;i.onload=o=>{try{Q(JSON.parse(o.target.result))}catch(n){console.error("Error parsing JSON file:",n)}},i.readAsText(r),t.remove()}),t.click()}})}function B(t){let s=t.substring(t.lastIndexOf("/")+1),r=s.split(".").pop().toLowerCase(),o={jpeg:"image/jpeg",jpg:"image/jpeg",png:"image/png",gif:"image/gif",bmp:"image/bmp",webp:"image/webp",svg:"image/svg+xml",mp3:"audio/mpeg",wav:"audio/wav",ogg:"audio/ogg",mp4:"video/mp4",webm:"video/webm",ogv:"video/ogg"}[r]||"application/octet-stream";return{fileName:s,fileType:o}}function he(t){try{let r=new DOMParser().parseFromString(t.html,"text/html").body,i=[],o=[],n=[],a=[];return r.querySelectorAll("img").forEach(c=>{c.hasAttribute("src")&&(i.push(c.getAttribute("src")),c.src=`imgs/${B(c.getAttribute("src")).fileName}`)}),r.querySelectorAll("audio").forEach(c=>{c.querySelectorAll("source").forEach(l=>{l.hasAttribute("src")&&(o.push(l.getAttribute("src")),l.src=`audios/${B(l.getAttribute("src")).fileName}`)})}),r.querySelectorAll("svg").forEach(c=>{n.push(c.outerHTML)}),r.querySelectorAll("video").forEach(c=>{c.querySelectorAll("source").forEach(l=>{l.hasAttribute("src")&&(a.push(l.getAttribute("src")),l.src=`vids/${B(l.getAttribute("src")).fileName}`)})}),{imageUrls:i,audioUrls:o,vectors:n,videoUrls:a}}catch(s){return console.error("Error fetching resources:",s),null}}async function L(t){let r=await(await fetch(t)).blob();return new Promise((i,o)=>{let n=new FileReader;n.onloadend=()=>i(n.result.split(",")[1]),n.onerror=o,n.readAsDataURL(r)})}async function fe(){try{await N("libraries/jszip/FileSaver.min.js");let t=new Blob([JSON.stringify(e,null,2)],{type:"application/json"});saveAs(t,`${e.name.split(" ").join("").toLowerCase()}-kodeWeave.json`)}catch(t){console.error("Error:",t)}finally{T("libraries/jszip/FileSaver.min.js")}}async function be(){try{let n=function(){return e.css.trim()!==""?`
+customElements.define('my-element', MyElement);`),dispatchChanges(editorManager.htmlEditor,e.html),dispatchChanges(editorManager.cssEditor,e.css),dispatchChanges(editorManager.jsEditor,e.javascript),t==="react"&&b("javascript","babel"),g.demos=!1,w(!0)}function Q(t){t!==null&&(e.obj={},g.safeRender=null,b("html",t.html_pre_processor),b("css",t.css_pre_processor),b("javascript",t.javascript_pre_processor),e.name=t.name,e.version=t.version,e.title=t.title,e.description=t.description,e.author=t.author,e.url=t.url,e.logo=t.logo,e.console=t.console,e.dark=t.dark,e.diffing=t.diffing,e.module=t.module,e.autorun=t.autorun,e.pwa=t.pwa,e.activePanel=t.activePanel,e.columns=t.columns,e.columnsRight=t.columnsRight,e.meta=t.meta,e.libraries=t.libraries,e.html=t.html,e.css=t.css,e.javascript=t.javascript,g.safeRender=!0,dispatchChanges(editorManager.htmlEditor,e.html),dispatchChanges(editorManager.cssEditor,e.css),dispatchChanges(editorManager.jsEditor,e.javascript),w(!0))}function ge(){G.render({title:"Are you sure you want to load a new project?",content:'<div class="p-4 text-center">All current data will be lost.</div>',onConfirm:function(){let t=document.createElement("input");t.type="file",t.accept=".json",t.addEventListener("change",s=>{let o=s.target.files[0];if(!o){console.error("No file selected.");return}let i=new FileReader;i.onload=r=>{try{Q(JSON.parse(r.target.result))}catch(n){console.error("Error parsing JSON file:",n)}},i.readAsText(o),t.remove()}),t.click()}})}function B(t){let s=t.substring(t.lastIndexOf("/")+1),o=s.split(".").pop().toLowerCase(),r={jpeg:"image/jpeg",jpg:"image/jpeg",png:"image/png",gif:"image/gif",bmp:"image/bmp",webp:"image/webp",svg:"image/svg+xml",mp3:"audio/mpeg",wav:"audio/wav",ogg:"audio/ogg",mp4:"video/mp4",webm:"video/webm",ogv:"video/ogg"}[o]||"application/octet-stream";return{fileName:s,fileType:r}}function he(t){try{let o=new DOMParser().parseFromString(t.html,"text/html").body,i=[],r=[],n=[],a=[];return o.querySelectorAll("img").forEach(c=>{c.hasAttribute("src")&&(i.push(c.getAttribute("src")),c.src=`imgs/${B(c.getAttribute("src")).fileName}`)}),o.querySelectorAll("audio").forEach(c=>{c.querySelectorAll("source").forEach(l=>{l.hasAttribute("src")&&(r.push(l.getAttribute("src")),l.src=`audios/${B(l.getAttribute("src")).fileName}`)})}),o.querySelectorAll("svg").forEach(c=>{n.push(c.outerHTML)}),o.querySelectorAll("video").forEach(c=>{c.querySelectorAll("source").forEach(l=>{l.hasAttribute("src")&&(a.push(l.getAttribute("src")),l.src=`vids/${B(l.getAttribute("src")).fileName}`)})}),{imageUrls:i,audioUrls:r,vectors:n,videoUrls:a}}catch(s){return console.error("Error fetching resources:",s),null}}async function L(t){let o=await(await fetch(t)).blob();return new Promise((i,r)=>{let n=new FileReader;n.onloadend=()=>i(n.result.split(",")[1]),n.onerror=r,n.readAsDataURL(o)})}async function fe(){try{await N("libraries/jszip/FileSaver.min.js");let t=new Blob([JSON.stringify(e,null,2)],{type:"application/json"});saveAs(t,`${e.name.split(" ").join("").toLowerCase()}-kodeWeave.json`)}catch(t){console.error("Error:",t)}finally{T("libraries/jszip/FileSaver.min.js")}}async function be(){try{let n=function(){return e.css.trim()!==""?`
     "postcss": "^8.4.6",
     "autoprefixer": "^10.4.2",
     "cssnano": "^5.0.12"`:""},a=function(){return e.javascript_pre_processor==="babel"||e.javascript_pre_processor==="jsxtypescript"?`,
@@ -1482,7 +1482,7 @@ customElements.define('my-element', MyElement);`),dispatchChanges(editorManager.
     "@babel/preset-react": "^7.14.5",
     "rollup-plugin-babel": "^4.4.0"`:e.javascript_pre_processor==="typescript"||e.javascript_pre_processor==="jsxtypescript"?`,
     "rollup-plugin-typescript2": "^0.31.1",
-    "typescript": "^4.4.3"`:""};await _(["libraries/jszip/jszip.min.js","libraries/jszip/FileSaver.min.js"]);let{imageUrls:t,audioUrls:s,vectors:r,videoUrls:i}=he(e),o=new JSZip;o.file(`${e.name.split(" ").join("").toLowerCase()}-kodeWeave.json`,JSON.stringify(e,null,2));let c=`{
+    "typescript": "^4.4.3"`:""};await _(["libraries/jszip/jszip.min.js","libraries/jszip/FileSaver.min.js"]);let{imageUrls:t,audioUrls:s,vectors:o,videoUrls:i}=he(e),r=new JSZip;r.file(`${e.name.split(" ").join("").toLowerCase()}-kodeWeave.json`,JSON.stringify(e,null,2));let c=`{
   "name": "${e.name.toLowerCase().split(" ").join("")}",
   "version": "${e.version}",
   "type": "module",
@@ -1498,10 +1498,10 @@ customElements.define('my-element', MyElement);`),dispatchChanges(editorManager.
     "terser": "^5.10.0",
     "http-server": "^14.1.1"${n()}${a()}
   }
-}`;o.file("package.json",c);let l=`import { terser } from 'rollup-plugin-terser';
+}`;r.file("package.json",c);let l=`import { terser } from 'rollup-plugin-terser';
 `;(e.javascript_pre_processor==="babel"||e.javascript_pre_processor==="jsxtypescript")&&(l+=`import babel from 'rollup-plugin-babel';
 `),(e.javascript_pre_processor==="typescript"||e.javascript_pre_processor==="jsxtypescript")&&(l+=`import typescript from 'rollup-plugin-typescript2';
-`);let k=`${l}
+`);let C=`${l}
 export default {
   ${e.javascript_pre_processor==="typescript"||e.javascript_pre_processor==="jsxtypescript"?"input: 'src/script.ts', // entry point for your TypeScript":"input: 'src/script.js', // entry point to your Javascript"}
   output: {
@@ -1514,18 +1514,18 @@ export default {
     ${e.javascript_pre_processor==="babel"||e.javascript_pre_processor==="jsxtypescript"?'babel({ exclude: "node_modules/**" }),':""}
     terser() // minifies the JavaScript
   ]
-};`;if(o.file("rollup.config.js",k),e.css.trim()!==""&&o.file("postcss.config.js",`module.exports = {
+};`;if(r.file("rollup.config.js",C),e.css.trim()!==""&&r.file("postcss.config.js",`module.exports = {
   plugins: [
     require('autoprefixer'), // adds vendor prefixes
     require('cssnano') // minifies the CSS
   ]
-};`),e.javascript_pre_processor==="babel"||e.javascript_pre_processor==="jsxtypescript"){let u=`{
+};`),e.javascript_pre_processor==="babel"||e.javascript_pre_processor==="jsxtypescript"){let d=`{
   "presets": [
     "@babel/preset-env",
     ${e.javascript_pre_processor==="jsxtypescript"?'"@babel/preset-typescript",':""}
     "@babel/preset-react"
   ]
-}`;o.file("babel.config.json",u)}(e.javascript_pre_processor==="typescript"||e.javascript_pre_processor==="jsxtypescript")&&o.file("tsconfig.json",`{
+}`;r.file("babel.config.json",d)}(e.javascript_pre_processor==="typescript"||e.javascript_pre_processor==="jsxtypescript")&&r.file("tsconfig.json",`{
   "compilerOptions": {
     "target": "ES5",
     "module": "ESNext",
@@ -1556,11 +1556,11 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.`;o.file("LICENSE.md",y);let x=`# ${e.name}
+SOFTWARE.`;r.file("LICENSE.md",y);let x=`# ${e.name}
 
 A Weave created on [kodeWeave](https://michaelsboost.com/kodeWeave/go)
 
-${e.description}`;if(o.file("README.md",x),e.logo)try{let u="";e.logo.startsWith("data:")?u=e.logo:u=await L(e.logo);let m;if(e.logo.startsWith("data:image/png"))m="png";else if(e.logo.startsWith("data:image/jpeg"))m="jpeg";else if(e.logo.startsWith("data:image/svg+xml"))m="svg";else{console.error("Unsupported logo MIME type:",e.logo);return}let v=`logo.${m}`;o.folder("imgs").file(v,u.split(",")[1],{base64:!0});let $=["192x192","256x256","384x384","512x512"],O=$.map(C=>({src:`../imgs/logo-${C}.png`,sizes:C,type:"image/png",purpose:"any"}));for(let C of $){let h=document.createElement("canvas");h.width=parseInt(C.split("x")[0]),h.height=parseInt(C.split("x")[1]);let S=h.getContext("2d"),P=new Image;P.src=u,P.onload=function(){S.drawImage(P,0,0,h.width,h.height);let X=h.toDataURL("image/png").replace(/^data:image\/(png|jpg);base64,/,"");o.folder("imgs").file(`logo-${C}.png`,X,{base64:!0})},h.remove()}o.file("dist/manifest.json",JSON.stringify({theme_color:"#13171f",background_color:"#13171f",display:"standalone",start_url:"./index.html",lang:"en-US",name:e.name,short_name:e.name,description:e.description,icons:O},null,2))}catch(u){console.error("Error adding logo to ZIP:",u);return}e.css_pre_processor==="css"&&o.file("src/style.css",e.css),e.css_pre_processor==="css"&&o.file("dist/style.css",e.css),e.css_pre_processor==="stylus"&&o.file("src/style.styl",e.css),e.css_pre_processor==="stylus"&&o.file("dist/style.css",await M("css")),e.css_pre_processor==="less"&&o.file("src/style.less",e.css),e.css_pre_processor==="less"&&o.file("dist/style.css",iframe.contentDocument.getElementById("aeoibrfa1").textContent),e.css_pre_processor==="sass"&&o.file("src/style.scss",e.css),e.css_pre_processor==="sass"&&o.file("dist/style.css",await M("css")),e.javascript_pre_processor==="javascript"&&o.file("src/script.js",e.javascript),e.javascript_pre_processor==="javascript"&&o.file("dist/script.js",e.javascript),e.javascript_pre_processor==="babel"&&o.file("src/script.js",e.javascript),e.javascript_pre_processor==="babel"&&o.file("dist/script.js",await M("javascript")),e.javascript_pre_processor==="typescript"&&o.file("src/script.ts",e.javascript),e.javascript_pre_processor==="typescript"&&o.file("dist/script.js",await M("javascript")),e.javascript_pre_processor==="jsxtypescript"&&o.file("src/script.ts",e.javascript),e.javascript_pre_processor==="jsxtypescript"&&o.file("dist/script.js",await M("javascript"));let g="";if(e.pwa){g=`
+${e.description}`;if(r.file("README.md",x),e.logo)try{let d="";e.logo.startsWith("data:")?d=e.logo:d=await L(e.logo);let u;if(e.logo.startsWith("data:image/png"))u="png";else if(e.logo.startsWith("data:image/jpeg"))u="jpeg";else if(e.logo.startsWith("data:image/svg+xml"))u="svg";else{console.error("Unsupported logo MIME type:",e.logo);return}let v=`logo.${u}`;r.folder("imgs").file(v,d.split(",")[1],{base64:!0});let $=["192x192","256x256","384x384","512x512"],O=$.map(A=>({src:`../imgs/logo-${A}.png`,sizes:A,type:"image/png",purpose:"any"}));for(let A of $){let h=document.createElement("canvas");h.width=parseInt(A.split("x")[0]),h.height=parseInt(A.split("x")[1]);let S=h.getContext("2d"),P=new Image;P.src=d,P.onload=function(){S.drawImage(P,0,0,h.width,h.height);let X=h.toDataURL("image/png").replace(/^data:image\/(png|jpg);base64,/,"");r.folder("imgs").file(`logo-${A}.png`,X,{base64:!0})},h.remove()}r.file("dist/manifest.json",JSON.stringify({theme_color:"#13171f",background_color:"#13171f",display:"standalone",start_url:"./index.html",lang:"en-US",name:e.name,short_name:e.name,description:e.description,icons:O},null,2))}catch(d){console.error("Error adding logo to ZIP:",d);return}e.css_pre_processor==="css"&&r.file("src/style.css",e.css),e.css_pre_processor==="css"&&r.file("dist/style.css",e.css),e.css_pre_processor==="stylus"&&r.file("src/style.styl",e.css),e.css_pre_processor==="stylus"&&r.file("dist/style.css",await M("css")),e.css_pre_processor==="less"&&r.file("src/style.less",e.css),e.css_pre_processor==="less"&&r.file("dist/style.css",iframe.contentDocument.getElementById("aeoibrfa1").textContent),e.css_pre_processor==="sass"&&r.file("src/style.scss",e.css),e.css_pre_processor==="sass"&&r.file("dist/style.css",await M("css")),e.javascript_pre_processor==="javascript"&&r.file("src/script.js",e.javascript),e.javascript_pre_processor==="javascript"&&r.file("dist/script.js",e.javascript),e.javascript_pre_processor==="babel"&&r.file("src/script.js",e.javascript),e.javascript_pre_processor==="babel"&&r.file("dist/script.js",await M("javascript")),e.javascript_pre_processor==="typescript"&&r.file("src/script.ts",e.javascript),e.javascript_pre_processor==="typescript"&&r.file("dist/script.js",await M("javascript")),e.javascript_pre_processor==="jsxtypescript"&&r.file("src/script.ts",e.javascript),e.javascript_pre_processor==="jsxtypescript"&&r.file("dist/script.js",await M("javascript"));let m="";if(e.pwa){m=`
     <script src="https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js"><\/script>
     <script>
       // service worker for progressive web app
@@ -1569,7 +1569,7 @@ ${e.description}`;if(o.file("README.md",x),e.logo)try{let u="";e.logo.startsWith
           navigator.serviceWorker.register('./dist/sw.js')
         })
       }
-    <\/script>`;let u=`// Service worker code
+    <\/script>`;let d=`// Service worker code
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js');
 
 const { registerRoute } = workbox.routing;
@@ -1591,9 +1591,9 @@ plugins: [
 // Any additional plugins can be added here
 ],
 })
-);`;o.file("dist/sw.js",u)}let f="",I="";e.libraries.forEach(u=>{u.endsWith(".js")?f+=`<script src="${u}"><\/script>
-    `:u.endsWith(".css")?I+=`<link rel="stylesheet" href="${u}">
-          `:I+=`<link href="${u}" rel="stylesheet">
+);`;r.file("dist/sw.js",d)}let f="",I="";e.libraries.forEach(d=>{d.endsWith(".js")?f+=`<script src="${d}"><\/script>
+    `:d.endsWith(".css")?I+=`<link rel="stylesheet" href="${d}">
+          `:I+=`<link href="${d}" rel="stylesheet">
           `});let j=`<!DOCTYPE html>
 <html lang="en" data-theme="${e.dark?"dark":"light"}">
   <head>
@@ -1628,16 +1628,16 @@ plugins: [
 ${await M("html")}
 
 ${e.javascript?'<script src="dist/script.js"><\/script>':""}
-${e.pwa?g:""}
+${e.pwa?m:""}
   </body>
-</html>`;if(e.html_pre_processor==="html"&&o.file("src/index.html",e.html),e.html_pre_processor==="html"&&o.file("index.html",j),e.html_pre_processor==="markdown"&&o.file("src/index.md",e.html),e.html_pre_processor==="markdown"&&o.file("index.html",j),e.html_pre_processor==="pug"&&o.file("src/index.pug",e.html),e.html_pre_processor==="pug"&&o.file("index.html",j),e.html_pre_processor==="jade"&&o.file("src/index.jade",e.html),e.html_pre_processor==="jade"&&o.file("index.html",j),s.length>0){let u=o.folder("audios");try{for(let m of s){let v=await L(m);u.file(m.substring(m.lastIndexOf("/")+1),v,{base64:!0})}}catch(m){console.error("Error adding audio to ZIP:",m);return}}if(t.length>0){let u=o.folder("imgs");try{for(let m of t){let v=await L(m);u.file(m.substring(m.lastIndexOf("/")+1),v,{base64:!0})}}catch(m){console.error("Error adding images to ZIP:",m);return}}if(r.length>0){let u=o.folder("svgs");try{r.forEach((m,v)=>{u.file(`vector-${v+1}.svg`,m)})}catch(m){console.error("Error adding images to ZIP:",m);return}}if(i.length>0){let u=o.folder("vids");try{for(let m of i){let v=await L(m);u.file(m.substring(m.lastIndexOf("/")+1),v,{base64:!0})}}catch(m){console.error("Error adding videos to ZIP:",m);return}}let D=await o.generateAsync({type:"blob"});saveAs(D,`${e.name.toLowerCase().split(" ").join("")}.zip`),t.length=s.length=i.length=0}catch(t){console.error("Error:",t)}finally{R(["libraries/jszip/FileSaver.min.js","libraries/jszip/jszip.min.js"])}}async function ve(){try{let t=e.javascript_pre_processor==="jsxtypescript"?d.compiledJSX:e.javascript,s=null;e.javascript_pre_processor==="jsxtypescript"||e.javascript_pre_processor==="javascript"?s="none":s=e.javascript_pre_processor;let r={title:e.title,description:e.description,head:e.meta,html:e.html,html_pre_processor:e.html_pre_processor==="html"?"none":"",css:e.css,css_pre_processor:e.css_pre_processor==="css"?"none":"",css_external:e.libraries.filter(n=>n.endsWith(".css")).join(";"),css_starter:"neither",css_prefix:"neither",js_module:e.module,js:t,js_pre_processor:s,js_external:e.libraries.filter(n=>n.endsWith(".js")).join(";"),editors:"111",layout:"left"},o=`
+</html>`;if(e.html_pre_processor==="html"&&r.file("src/index.html",e.html),e.html_pre_processor==="html"&&r.file("index.html",j),e.html_pre_processor==="markdown"&&r.file("src/index.md",e.html),e.html_pre_processor==="markdown"&&r.file("index.html",j),e.html_pre_processor==="pug"&&r.file("src/index.pug",e.html),e.html_pre_processor==="pug"&&r.file("index.html",j),e.html_pre_processor==="jade"&&r.file("src/index.jade",e.html),e.html_pre_processor==="jade"&&r.file("index.html",j),s.length>0){let d=r.folder("audios");try{for(let u of s){let v=await L(u);d.file(u.substring(u.lastIndexOf("/")+1),v,{base64:!0})}}catch(u){console.error("Error adding audio to ZIP:",u);return}}if(t.length>0){let d=r.folder("imgs");try{for(let u of t){let v=await L(u);d.file(u.substring(u.lastIndexOf("/")+1),v,{base64:!0})}}catch(u){console.error("Error adding images to ZIP:",u);return}}if(o.length>0){let d=r.folder("svgs");try{o.forEach((u,v)=>{d.file(`vector-${v+1}.svg`,u)})}catch(u){console.error("Error adding images to ZIP:",u);return}}if(i.length>0){let d=r.folder("vids");try{for(let u of i){let v=await L(u);d.file(u.substring(u.lastIndexOf("/")+1),v,{base64:!0})}}catch(u){console.error("Error adding videos to ZIP:",u);return}}let D=await r.generateAsync({type:"blob"});saveAs(D,`${e.name.toLowerCase().split(" ").join("")}.zip`),t.length=s.length=i.length=0}catch(t){console.error("Error:",t)}finally{R(["libraries/jszip/FileSaver.min.js","libraries/jszip/jszip.min.js"])}}async function ve(){try{let t=e.javascript_pre_processor==="jsxtypescript"?g.compiledJSX:e.javascript,s=null;e.javascript_pre_processor==="jsxtypescript"||e.javascript_pre_processor==="javascript"?s="none":s=e.javascript_pre_processor;let o={title:e.title,description:e.description,head:e.meta,html:e.html,html_pre_processor:e.html_pre_processor==="html"?"none":"",css:e.css,css_pre_processor:e.css_pre_processor==="css"?"none":"",css_external:e.libraries.filter(n=>n.endsWith(".css")).join(";"),css_starter:"neither",css_prefix:"neither",js_module:e.module,js:t,js_pre_processor:s,js_external:e.libraries.filter(n=>n.endsWith(".js")).join(";"),editors:"111",layout:"left"},r=`
       <form action="https://codepen.io/pen/define" method="POST" target="_blank">
-        <input type="hidden" name="data" value='${JSON.stringify(r).replace(/"/g,"&quot;").replace(/'/g,"&apos;")}'>
+        <input type="hidden" name="data" value='${JSON.stringify(o).replace(/"/g,"&quot;").replace(/'/g,"&apos;")}'>
         <input type="image" src="http://s.cdpn.io/3/cp-arrow-right.svg" width="40" height="40" value="Create New Pen with Prefilled Data" class="codepen-mover-button">
-      </form>`;document.body.insertAdjacentHTML("beforeend",o),document.querySelector("form").submit(),document.querySelector("form").remove()}catch(t){console.error("Error sharing project:",t)}}async function we(){let t=document.getElementById("iframe"),s=t.contentDocument||t.contentWindow.document;try{await _(["libraries/html2canvas/html2canvas.min.js","libraries/jszip/FileSaver.min.js"]),html2canvas(s.documentElement).then(r=>{let i=r.getContext("2d"),o=s.getElementsByTagName("video");Array.from(o).forEach(n=>{let{currentTime:a,paused:c,volume:l}=n;n.volume=0,c||n.pause(),i.drawImage(n,n.offsetLeft,n.offsetTop,n.clientWidth,n.clientHeight),n.volume=l,n.currentTime=a,c||n.play()}),r.toBlob(n=>{saveAs(n,"screenshot.png")},"image/png")}).catch(r=>{console.error("Error taking screenshot:",r)})}catch(r){console.error("Error:",r)}finally{T("../libraries/html2canvas/html2canvas.min.js"),T("../libraries/jszip/FileSaver.min.js")}}async function w(t=!1){if(!t&&!e.autorun||!d.safeRender)return;let s="",r="";e.libraries.forEach(g=>{g.endsWith(".js")?s+=`<script src="${g}"><\/script>
-    `:g.endsWith(".css")?r+=`<link rel="stylesheet" href="${g}">
-          `:r+=`<link href="${g}" rel="stylesheet">
-          `});let i=await M("javascript"),o=await M("css");function n(){return e.javascript_pre_processor==="babel"?`<script src="https://unpkg.com/@babel/standalone/babel.min.js"><\/script>
+      </form>`;document.body.insertAdjacentHTML("beforeend",r),document.querySelector("form").submit(),document.querySelector("form").remove()}catch(t){console.error("Error sharing project:",t)}}async function we(){let t=document.getElementById("iframe"),s=t.contentDocument||t.contentWindow.document;try{await _(["libraries/html2canvas/html2canvas.min.js","libraries/jszip/FileSaver.min.js"]),html2canvas(s.documentElement).then(o=>{let i=o.getContext("2d"),r=s.getElementsByTagName("video");Array.from(r).forEach(n=>{let{currentTime:a,paused:c,volume:l}=n;n.volume=0,c||n.pause(),i.drawImage(n,n.offsetLeft,n.offsetTop,n.clientWidth,n.clientHeight),n.volume=l,n.currentTime=a,c||n.play()}),o.toBlob(n=>{saveAs(n,"screenshot.png")},"image/png")}).catch(o=>{console.error("Error taking screenshot:",o)})}catch(o){console.error("Error:",o)}finally{T("../libraries/html2canvas/html2canvas.min.js"),T("../libraries/jszip/FileSaver.min.js")}}async function w(t=!1){if(!t&&!e.autorun||!g.safeRender)return;let s="",o="";e.libraries.forEach(m=>{m.endsWith(".js")?s+=`<script src="${m}"><\/script>
+    `:m.endsWith(".css")?o+=`<link rel="stylesheet" href="${m}">
+          `:o+=`<link href="${m}" rel="stylesheet">
+          `});let i=await M("javascript"),r=await M("css");function n(){return e.javascript_pre_processor==="babel"?`<script src="https://unpkg.com/@babel/standalone/babel.min.js"><\/script>
     <script type="text/babel" ${e.module?'data-type="module"':""}>${i}<\/script>`:`<script type="${e.module?"module":"text/javascript"}">${i}<\/script>`}let a=`
   .wrapper_yOR7u {
     ${e.console?"":"display: none!important;"}
@@ -1667,9 +1667,9 @@ ${e.pwa?g:""}
       <meta name="description" content="${e.description}">
       <meta name="author" content="${e.author}">
       ${e.meta?e.meta:""}
-      ${r}
+      ${o}
       <style id="cuxjju3ew" type="text/${e.css_pre_processor==="none"||e.css_pre_processor==="stylus"||e.css_pre_processor==="sass"?"css":e.css_pre_processor}">
-        ${a+o}
+        ${a+r}
       </style>
       <script type="module" src="libraries/domconsole/dom-console.js" defer><\/script>
     </head>
@@ -1678,5 +1678,5 @@ ${e.pwa?g:""}
       ${s||""}
       ${e.css_pre_processor==="less"?'<script src="libraries/preprocessors/less.js"><\/script>':""}
     </body>
-  </html>`,l=document.getElementById("iframe");if(!l)return;let y=new DOMParser().parseFromString(c,"text/html"),x=l.contentDocument||l.contentWindow.document;if(A.initialRender)return b("html",e.html_pre_processor),b("css",e.css_pre_processor),b("js",e.javascript_pre_processor),l.setAttribute("srcdoc",c),l.onload=()=>{let g=l.contentDocument||l.contentWindow.document,f=g.createElement("script");f.type=e.module?"module":"text/javascript",f.textContent=i,g.body.appendChild(f)},A.initialRender=!1,previousJavaScriptCode=i,!1;if(e.diffing||!t)return W(x.documentElement,y.documentElement),!1;l.setAttribute("srcdoc",c),l.onload=()=>{let g=l.contentDocument||l.contentWindow.document,f=g.createElement("script");f.type=e.module?"module":"text/javascript",f.textContent=i,g.body.appendChild(f)}}window.Modal=G;window.emptyStorage=re;window.addLibrary=ie;window.fetchSuggestions=ne;window.setPreprocessor=b;window.initializePreprocessors=Y;window.loadBeautifyLibraries=V;window.removeBeautifyLibraries=J;window.tidy=ae;window.generateId=le;window.resizeCanvas=ce;window.rotateCanvas=pe;window.defineScale=F;window.getIFrameClientSize=z;window.handleLogoChange=de;window.newProject=me;window.importProject=ge;window.downloadJSON=fe;window.downloadProject=be;window.share=ve;window.screenshot=we;window.renderPreview=w;function W(t,s){if(!t||!s||t.hasAttribute&&t.hasAttribute("data-ignore")||s.hasAttribute&&s.hasAttribute("data-ignore"))return;if(t.nodeName==="IFRAME"&&s.nodeName==="IFRAME"){["id","title","class","style","sandbox"].forEach(c=>{t.getAttribute(c)!==s.getAttribute(c)&&t.setAttribute(c,s.getAttribute(c))});let n=t.getAttribute("srcdoc"),a=s.getAttribute("srcdoc");return void 0}if(t.nodeName!==s.nodeName){t.replaceWith(s.cloneNode(!0));return}if(t.nodeType===Node.ELEMENT_NODE&&s.nodeType===Node.ELEMENT_NODE){let o=Array.from(t.attributes),n=Array.from(s.attributes);o.forEach(a=>{s.hasAttribute(a.name)||t.removeAttribute(a.name)}),n.forEach(a=>{t.getAttribute(a.name)!==a.value&&t.setAttribute(a.name,a.value)})}let r=Array.from(t.childNodes),i=Array.from(s.childNodes);r.forEach((o,n)=>{let a=i[n];if(!a){t.removeChild(o);return}t.tagName==="TITLE"||t.tagName==="STYLE"&&t.textContent!==s.textContent?t.textContent=s.textContent:o.nodeType===Node.TEXT_NODE&&o.nodeValue!==a.nodeValue&&(o.nodeValue=a.nodeValue),W(o,a)}),i.slice(r.length).forEach(o=>{t.appendChild(o.cloneNode(!0))})}document.addEventListener("DOMContentLoaded",function(){window.onload=()=>{A.render("#app"),initEditors(),Y(),z(),d.safeRender=!0,w(!0),localStorage.getItem("kodeWeave")&&setTimeout(function(){Q(JSON.parse(localStorage.getItem("kodeWeave")))},100)},window.onresize=()=>z()});})();
+  </html>`,l=document.getElementById("iframe");if(!l)return;let y=new DOMParser().parseFromString(c,"text/html"),x=l.contentDocument||l.contentWindow.document;if(k.initialRender)return b("html",e.html_pre_processor),b("css",e.css_pre_processor),b("js",e.javascript_pre_processor),l.setAttribute("srcdoc",c),l.onload=()=>{let m=l.contentDocument||l.contentWindow.document,f=m.createElement("script");f.type=e.module?"module":"text/javascript",f.textContent=i,m.body.appendChild(f)},k.initialRender=!1,previousJavaScriptCode=i,!1;if(e.diffing||!t)return W(x.documentElement,y.documentElement),!1;l.setAttribute("srcdoc",c),l.onload=()=>{let m=l.contentDocument||l.contentWindow.document,f=m.createElement("script");f.type=e.module?"module":"text/javascript",f.textContent=i,m.body.appendChild(f)}}window.Modal=G;window.emptyStorage=oe;window.addLibrary=ie;window.fetchSuggestions=ne;window.setPreprocessor=b;window.initializePreprocessors=Y;window.loadBeautifyLibraries=V;window.removeBeautifyLibraries=J;window.tidy=ae;window.generateId=le;window.resizeCanvas=ce;window.rotateCanvas=pe;window.defineScale=F;window.getIFrameClientSize=z;window.handleLogoChange=de;window.newProject=me;window.importProject=ge;window.downloadJSON=fe;window.downloadProject=be;window.share=ve;window.screenshot=we;window.renderPreview=w;function W(t,s){if(!t||!s||t.hasAttribute&&t.hasAttribute("data-ignore")||s.hasAttribute&&s.hasAttribute("data-ignore"))return;if(t.nodeName==="IFRAME"&&s.nodeName==="IFRAME"){["id","title","class","style","sandbox"].forEach(c=>{t.getAttribute(c)!==s.getAttribute(c)&&t.setAttribute(c,s.getAttribute(c))});let n=t.getAttribute("srcdoc"),a=s.getAttribute("srcdoc");return void 0}if(t.nodeName!==s.nodeName){t.replaceWith(s.cloneNode(!0));return}if(t.nodeType===Node.ELEMENT_NODE&&s.nodeType===Node.ELEMENT_NODE){let r=Array.from(t.attributes),n=Array.from(s.attributes);r.forEach(a=>{s.hasAttribute(a.name)||t.removeAttribute(a.name)}),n.forEach(a=>{t.getAttribute(a.name)!==a.value&&t.setAttribute(a.name,a.value)})}let o=Array.from(t.childNodes),i=Array.from(s.childNodes);o.forEach((r,n)=>{let a=i[n];if(!a){t.removeChild(r);return}t.tagName==="TITLE"||t.tagName==="STYLE"&&t.textContent!==s.textContent?t.textContent=s.textContent:r.nodeType===Node.TEXT_NODE&&r.nodeValue!==a.nodeValue&&(r.nodeValue=a.nodeValue),W(r,a)}),i.slice(o.length).forEach(r=>{t.appendChild(r.cloneNode(!0))})}document.addEventListener("DOMContentLoaded",function(){window.onload=()=>{k.render("#app"),initEditors(),Y(),z(),g.safeRender=!0,w(!0),localStorage.getItem("kodeWeave")&&setTimeout(function(){Q(JSON.parse(localStorage.getItem("kodeWeave")))},100)},window.onresize=()=>z()});})();
 //# sourceMappingURL=App.js.map

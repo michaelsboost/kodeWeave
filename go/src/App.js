@@ -69,10 +69,6 @@ let p = {
   columnsRight: true
 };
 let d = {
-  colors: {
-    text: "text-[#fff]",
-    border: "border-gray-800"
-  },
   searchLibKey: null,
   librarySuggestions: null,
   iframeSize: null,
@@ -305,7 +301,7 @@ const project = onChange(p, (property, oldValue, newValue) => {
     }
     if (!App.initialRender) {
       const diffArr = ['title', 'description', 'author', 'meta', 'libraries', 'html', 'css', 'dark'];
-      const initRun = ['html_pre_processor', 'css_pre_processor', 'javascript_pre_processor', 'javascript', 'console']
+      const initRun = ['html_pre_processor', 'css_pre_processor', 'javascript_pre_processor', 'javascript', 'console'];
       const string = property.toString();
       // diff nodes
       if (diffArr.includes(string)) {
@@ -378,7 +374,7 @@ const project = onChange(p, (property, oldValue, newValue) => {
         }
       }
       if (string === "dark") {
-        data.colors.border = project.dark ? "border-gray-800" : "border-gray-200";
+        App.render('#app');
         document.documentElement.setAttribute('data-theme', project.dark ? 'dark' : 'light');
         document.querySelector('meta[name=apple-mobile-web-app-status-bar-style]').setAttribute('content', project.dark ? 'black-translucent' : 'default');
         document.querySelector('meta[name=theme-color]').setAttribute('content', project.dark ? '#13171f' : '#ffffff');
@@ -1284,10 +1280,10 @@ const App = {
         
         <!-- flexbox for panels and preview -->
         <div class="flex flex-col flex-col-reverse sm:flex-row absolute inset-y-0 right-0 left-16 bottom-0 overflow-hidden">
-          <div class="relative w-full h-full border-0 border-x border-solid overflow-auto p-4 ${data.colors.border}">
+          <div class="relative w-full h-full border-0 border-x border-solid overflow-auto p-4 ${project.dark ? "border-gray-800" : "border-gray-200"}">
             <nav class="absolute inset-0 flex flex-col ${project.columns ? 'flex-col' : `sm:flex-row ${project.columnsRight ? 'sm:flex-row-reverse' : ''}`}">
               <div class="flex-grow w-full flex flex-col">
-                <div class="flex-none border-0 border-b border-solid ${data.colors.border}">
+                <div class="flex-none border-0 border-b border-solid ${project.dark ? "border-gray-800" : "border-gray-200"}">
                   ${PreviewMenu()}
                 </div>
                 <div class="flex-grow overflow-hidden">
@@ -1295,7 +1291,7 @@ const App = {
                     <iframe
                       id="iframe"
                       title="${project.title}"
-                      class="bg-white ${data.selectedSize !== 'none' ? `border border-solid ${data.colors.border} shadow-2xl shadow-blue-500` : ''}"
+                      class="bg-white ${data.selectedSize !== 'none' ? `border border-solid ${project.dark ? "border-gray-800" : "border-gray-200"} shadow-2xl shadow-blue-500` : ''}"
                       style="${data.selectedSize === 'none' ? 'width: 100%; height: 100%' : `
       width: ${width}px;
       height: ${height}px;
@@ -1321,9 +1317,9 @@ const App = {
                   </div>
                 </div>
               </div>
-              <div class="relative flex-grow w-full ${project.columns ? 'h-1/4' : '2xl:w-1/2 h-1/4 sm:h-full sm:border-solid sm:border-0 lg:border-r '+data.colors.border+''} ${project.activePanel ? '' : 'hidden'}">
+              <div class="relative flex-grow w-full ${project.columns ? 'h-1/4' : '2xl:w-1/2 h-1/4 sm:h-full sm:border-solid sm:border-0 lg:border-r '+project.dark ? "border-gray-800" : "border-gray-200"+''} ${project.activePanel ? '' : 'hidden'}">
                 <div class="absolute inset-0 flex flex-col justify-between">
-                  <div class="flex-grow overflow-auto ${project.columns ? `border-0 border-t border-solid ${data.colors.border}` : ''}">
+                  <div class="flex-grow overflow-auto ${project.columns ? `border-0 border-t border-solid ${project.dark ? "border-gray-800" : "border-gray-200"}` : ''}">
                     <div class="h-full ${project.activePanel === 'html' ? '' : 'hidden'}">
                       <div 
                         data-ignore
@@ -1349,7 +1345,7 @@ const App = {
                         id="jsEditor"></div>
                     </div>
                   </div>
-                  <div class="flex-none overflow-auto border-0 border-t border-solid ${data.colors.border}">
+                  <div class="flex-none overflow-auto border-0 border-t border-solid ${project.dark ? "border-gray-800" : "border-gray-200"}">
                     ${editorNav()}
                   </div>
                 </div>
