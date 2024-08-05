@@ -50,10 +50,7 @@ let p = {
   author: "kodeWeave",
   url: "https://michaelsboost.com/",
   meta: "",
-  libraries: [
-    "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-    "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
-  ],
+  libraries: [],
   html_pre_processor: "html",
   css_pre_processor: "css",
   javascript_pre_processor: "javascript",
@@ -382,6 +379,9 @@ const project = onChange(p, (property, oldValue, newValue) => {
       }
       if (string === "dark") {
         document.documentElement.setAttribute('data-theme', project.dark ? 'dark' : 'light');
+        document.querySelector('meta[name=apple-mobile-web-app-status-bar-style]').setAttribute('content', project.dark ? 'black-translucent' : 'default');
+        document.querySelector('meta[name=theme-color]').setAttribute('content', project.dark ? '#13171f' : '#ffffff');
+        document.querySelector('meta[name=msapplication-navbutton-color]').setAttribute('content', project.dark ? '#13171f' : '#ffffff');
       }
     }
   }
