@@ -1279,7 +1279,7 @@ const App = {
         <div class="flex flex-col flex-col-reverse sm:flex-row absolute inset-y-0 right-0 left-16 bottom-0 overflow-hidden">
           <div class="relative w-full h-full border-0 border-x border-solid overflow-auto p-4 ${project.dark ? "border-gray-800" : "border-gray-200"}">
             <nav class="absolute inset-0 flex flex-col ${project.columns ? 'flex-col' : `sm:flex-row ${project.columnsRight ? 'sm:flex-row-reverse' : ''}`}">
-              <div class="flex-grow w-full flex flex-col">
+              <div class="flex-grow w-full flex flex-col ${project.columns ? '' : `border-0 border-x border-solid ${project.dark ? "border-gray-800" : "border-gray-200"}`}">
                 <div class="flex-none border-0 border-b border-solid ${project.dark ? "border-gray-800" : "border-gray-200"}">
                   ${PreviewMenu()}
                 </div>
