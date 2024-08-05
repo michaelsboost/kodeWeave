@@ -410,15 +410,16 @@ function LeftMenubar() {
     </button>
   </li>
   <li class="list-none m-0">
-    <button
+    <a
       aria-label="toggle html"
       name="toggle html"
       class="${buttonSize} text-sm border-0 px-4 py-3 rounded-md bg-transparent"
       style="color: unset;"
-      onclick="openFeed()"
+      role="button"
+      href="https://twitter.com/kodeweave_app"
     >
       ${icons.twitter}
-    </button>
+    </a>
   </li>
   <li class="list-none m-0">
     <a
@@ -1554,16 +1555,6 @@ function editorNav() {
       ${icons.cursor}
     </button>
   </div>`;
-}
-function openFeed() {
-  // Ask user for confirmation
-  Modal.render({
-    large: true,
-    title: "kodeWeave Feed",
-    content: `
-      <iframe class="w-full h-full border-0" src="feed.html" frameborder="0"></iframe>
-    `
-  });
 }
 function emptyStorage() {
   // Clear local storage
@@ -3290,7 +3281,6 @@ async function renderPreview(forceRun = false) {
 
 // Make functions available in global space
 window.Modal = Modal;
-window.openFeed = openFeed;
 window.emptyStorage = emptyStorage;
 window.addLibrary = addLibrary;
 window.fetchSuggestions = fetchSuggestions;

@@ -30,7 +30,6 @@ kodeWeave uses a number of open source projects to work properly:
 * [Emmet](http://emmet.io/) - Codemirror Plugin for Zen Coding
 * [Pico.css](https://picocss.com/) and [Tailwind CSS](https://tailwindcss.com/) - Used to design the Application's interface.
 * [HeroIcons](https://heroicons.com/) and [Font Awesome](https://fontawesome.com/) - Icon library used for the app's ui. (I did have to design the twitter logo icon myself though)
-* [Twitter Widgets](https://publish.twitter.com/) - Used to open the project's twitter feed
 
 Development
 -------------
