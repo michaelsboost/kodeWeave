@@ -24,6 +24,7 @@
   "autorun": true,
   "pwa": false,
   "activePanel": "html",
+  "preview": true,
   "columns": false,
   "columnsRight": true,
   "obj": {}

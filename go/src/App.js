@@ -64,6 +64,7 @@ let p = {
   module: true,
   autorun: true,
   pwa: false,
+  preview: true,
   activePanel: 'html',
   columns: true,
   columnsRight: true
@@ -472,6 +473,16 @@ function LeftMenubar() {
 <ul class="p-0 m-0">
   <li class="list-none m-0">
     <button
+      aria-label="toggle preview"
+      name="toggle preview"
+      class="${buttonSize} text-sm border-0 px-0 py-3 rounded-md bg-transparent ${project.preview ? 'text-blue-500' : ''}"
+      onclick="project.preview = !project.preview"
+    >
+      ${icons.play}
+    </button>
+  </li>
+  <li class="list-none m-0">
+    <button
       aria-label="toggle console"
       name="toggle console"
       class="${buttonSize}  text-sm border-0 px-0 py-3 rounded-md bg-transparent ${project.console ? 'text-green-500' : ''}"
@@ -505,7 +516,7 @@ function LeftMenubar() {
 </ul>`;
 }
 function PreviewMenu() {
-  const buttonClass = 'border-0 bg-transparent text-sm';
+  const buttonClass = 'inline-block border-0 bg-transparent text-sm';
   const selectClass = 'mx-0 my-2 w-auto rounded-md capitalize text-[.6rem]';
   const selectStyle = 'padding: 0.5rem;';
 
@@ -587,7 +598,7 @@ function PreviewMenu() {
   return `<div class="flex justify-between items-center overflow-auto">
   ${previewSize}
 
-  <span>
+  <span class="whitespace-nowrap overflow-x-auto overflow-y-hidden">
     <button 
       aria-label="rotate canvas"
       name="rotate canvas" 
@@ -1279,11 +1290,11 @@ const App = {
         <div class="flex flex-col flex-col-reverse sm:flex-row absolute inset-y-0 right-0 left-16 bottom-0 overflow-hidden">
           <div class="relative w-full h-full border-0 border-x border-solid overflow-auto p-4 ${project.dark ? "border-gray-800" : "border-gray-200"}">
             <nav class="absolute inset-0 flex flex-col ${project.columns ? 'flex-col' : `sm:flex-row ${project.columnsRight ? 'sm:flex-row-reverse' : ''}`}">
-              <div class="flex-grow w-full flex flex-col ${project.columns ? '' : `border-0 border-x border-solid ${project.dark ? "border-gray-800" : "border-gray-200"}`}">
+              <div class="flex-grow w-full h-full flex flex-col ${project.columns ? '' : `border-0 border-x border-solid ${project.dark ? "border-gray-800" : "border-gray-200"}`} ${project.preview ? '' : 'hidden'}">
                 <div class="flex-none border-0 border-b border-solid ${project.dark ? "border-gray-800" : "border-gray-200"}">
                   ${PreviewMenu()}
                 </div>
-                <div class="flex-grow overflow-hidden">
+                <div class="flex-grow overflow-hidden h-full">
                   <div id="previewElm" class="relative grid grid-cols-1 align-center items-center w-full h-full">
                     <iframe
                       id="iframe"
@@ -1314,7 +1325,7 @@ const App = {
                   </div>
                 </div>
               </div>
-              <div class="relative flex-grow w-full ${project.columns ? 'h-1/4' : '2xl:w-1/2 h-1/4 sm:h-full sm:border-solid sm:border-0 lg:border-r '+project.dark ? "border-gray-800" : "border-gray-200"+''} ${project.activePanel ? '' : 'hidden'}">
+              <div class="relative flex-grow w-full h-full ${project.columns ? '' : '2xl:w-1/2 sm:border-solid sm:border-0 lg:border-r '+project.dark ? "border-gray-800" : "border-gray-200"+''} ${project.activePanel ? '' : 'hidden'}">
                 <div class="absolute inset-0 flex flex-col justify-between">
                   <div class="flex-grow overflow-auto ${project.columns ? `border-0 border-t border-solid ${project.dark ? "border-gray-800" : "border-gray-200"}` : ''}">
                     <div class="h-full ${project.activePanel === 'html' ? '' : 'hidden'}">
@@ -2017,6 +2028,7 @@ function newProject(name) {
   project.url = "https://michaelsboost.com/";
   project.diffing = false;
   project.module = true;
+  project.preview = true;
   if (name === 'angular') project.module = false;
   project.pwa = false;
 
@@ -2490,6 +2502,7 @@ function importJSON(obj) {
   project.autorun = obj.autorun;
   project.pwa = obj.pwa;
   project.activePanel = obj.activePanel;
+  project.preview = obj.preview;
   project.columns = obj.columns;
   project.columnsRight = obj.columnsRight;
   
