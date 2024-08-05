@@ -291,6 +291,8 @@ const icons = (function() {
 
 // Reactive objects
 const project = onChange(p, (property, oldValue, newValue) => {
+  const iframe = document.getElementById('iframe');
+  const doc = iframe.contentWindow.document;
   if (oldValue !== newValue) {
     localStorage.setItem('kodeWeave', JSON.stringify(project));
     App.render('#app');
@@ -300,8 +302,8 @@ const project = onChange(p, (property, oldValue, newValue) => {
       if (project.activePanel === 'javascript') setActiveEditor(editorManager.javascriptEditor)
     }
     if (!App.initialRender) {
-      const diffArr = ['title', 'description', 'author', 'meta', 'libraries', 'html', 'css', 'dark'];
-      const initRun = ['html_pre_processor', 'css_pre_processor', 'javascript_pre_processor', 'javascript', 'console'];
+      const diffArr = ['title', 'description', 'author', 'meta', 'libraries', 'html', 'css', 'console', 'dark'];
+      const initRun = ['html_pre_processor', 'css_pre_processor', 'javascript_pre_processor', 'javascript'];
       const string = property.toString();
       // diff nodes
       if (diffArr.includes(string)) {
@@ -319,19 +321,7 @@ const project = onChange(p, (property, oldValue, newValue) => {
             dispatchChanges(editorManager.htmlEditor, project.html);
           }
         }
-        if (string === 'css') {
-          const iframe = document.getElementById('iframe');
-          const doc = iframe.contentWindow.document;
-          doc.getElementById('cuxjju3ew').textContent = project.css;
-  
-          if (editorManager.cssEditor.state.doc.toString() !== project.css) {
-            dispatchChanges(editorManager.cssEditor, project.css);
-          }
-        }
-      }
-      // render right away
-      if (initRun.includes(string)) {
-        if (string === 'console') {
+        if (string === 'css' || string === 'console') {
           let consoleCSS = `
         .wrapper_yOR7u {
           ${project.console ? '' : 'display: none!important;'}
@@ -356,11 +346,15 @@ const project = onChange(p, (property, oldValue, newValue) => {
         }
           
         ${project.css}`
-          const iframe = document.getElementById('iframe');
-          const doc = iframe.contentWindow.document;
           doc.getElementById('cuxjju3ew').textContent = consoleCSS;
+  
+          if (string === 'css' && editorManager.cssEditor.state.doc.toString() !== project.css) {
+            dispatchChanges(editorManager.cssEditor, project.css);
+          }
         }
-
+      }
+      // render right away
+      if (initRun.includes(string)) {
         if (string === 'javascript') {
           renderPreview(true);
           if (editorManager.jsEditor.state.doc.toString() !== project.javascript) {
@@ -2338,26 +2332,23 @@ application.register('counter', class extends Stimulus.Controller {
     ];
     project.html = `<div id="root"></div>`;
     project.css = ``;
-    project.javascript = `const App = {
-    count: 0,
-    increment() {
-      this.count++;
-    },
-    view: () => (
-      m("div", { class: "flex flex-col items-center justify-center absolute inset-0" },
-        m("h1", { class: "text-3xl font-thin mb-4" }, "👋 Hello, ${capitalizedTitle}! 🌎"),
-        m("p", { class: "text-xl mb-4" }, "Counter: ", m("span", { class: "font-mono" }, App.count)),
-        m("div", { class: "flex gap-2" },
-          m("button", {
-            class: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition",
-            onclick: App.increment.bind(App)
-          }, "+")
-        )
-      )
-    )
-  };
+    project.javascript = `import htm from 'https://unpkg.com/htm?module'
+const html = htm.bind(m)
 
-  m.mount(document.getElementById('root'), App);`;
+const app = () => {
+ let count = 0
+ 
+ return {
+  view: () => html\`
+    <div class="flex flex-col items-center justify-center absolute inset-0">
+      <h1 class="text-3xl font-thin mb-4">👋 Hello, Mithril! 🌎</h1>
+      <p class="text-xl mb-4">Counter: <span class="font-mono">\${count}</span></p>
+      <button onclick=\${() => count++}>+</button>
+    </div>\`
+  }
+}
+
+m.mount(document.getElementById('root'), app)`;
   }
   if (name === 'hyperapp') {
     project.meta = `<script src="https://unpkg.com/hyperapp@0.16.0"></script>`;
@@ -2650,7 +2641,36 @@ async function downloadProject() {
     ]);
     
     let { imageUrls, audioUrls, vectors, videoUrls } = fetchResources(project);
+
+    // Extract srcset URLs
+    const iframe = document.getElementById('iframe');
+    if (!iframe) return;
+
+    const idoc = iframe.contentDocument || iframe.contentWindow.document;
+    const srcsetUrls = idoc.querySelectorAll('img[srcset]').forEach(img => {
+      img.srcset.split(',').forEach(srcset => {
+        const url = srcset.trim().split(' ')[0];
+        imageUrls.push(url);
+      });
+    });
+
+    function extractBackgroundImageUrls(css) {
+      const urls = [];
+      const regex = /background-image\s*:\s*url\(([^)]+)\)/g;
+      let match;
+      while ((match = regex.exec(css)) !== null) {
+        let url = match[1].replace(/['"]/g, ""); // Remove quotes around URLs
+        if (!url.startsWith("data:")) {
+          urls.push(url);
+        }
+      }
+      return urls;
+    }
     
+    // Extract background-image URLs from project CSS
+    const backgroundUrls = extractBackgroundImageUrls(await compileCode('css'));
+    imageUrls = imageUrls.concat(backgroundUrls); // Add to image URLs to download
+
     const zip = new JSZip();
 
     // Project file
