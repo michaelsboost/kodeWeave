@@ -297,6 +297,7 @@ const project = onChange(p, (property, oldValue, newValue) => {
     localStorage.setItem('kodeWeave', JSON.stringify(project));
     App.render('#app');
     if (property.toString() === 'activePanel') {
+      if (!window.editorManager) return;
       if (project.activePanel === 'html') setActiveEditor(editorManager.htmlEditor)
       if (project.activePanel === 'css') setActiveEditor(editorManager.cssEditor)
       if (project.activePanel === 'javascript') setActiveEditor(editorManager.javascriptEditor)
@@ -317,7 +318,8 @@ const project = onChange(p, (property, oldValue, newValue) => {
           }
         }
         if (string === 'html') {
-          if (editorManager.htmlEditor.state.doc.toString() !== project.html) {
+          if (!window.editorManager) return;
+          if (window.editorManager.htmlEditor.state.doc.toString() !== project.html) {
             dispatchChanges(editorManager.htmlEditor, project.html);
           }
         }
@@ -348,6 +350,7 @@ const project = onChange(p, (property, oldValue, newValue) => {
         ${project.css}`
           doc.getElementById('cuxjju3ew').textContent = consoleCSS;
   
+          if (!window.editorManager) return;
           if (string === 'css' && editorManager.cssEditor.state.doc.toString() !== project.css) {
             dispatchChanges(editorManager.cssEditor, project.css);
           }
@@ -357,7 +360,8 @@ const project = onChange(p, (property, oldValue, newValue) => {
       if (initRun.includes(string)) {
         if (string === 'javascript') {
           renderPreview(true);
-          if (editorManager.jsEditor.state.doc.toString() !== project.javascript) {
+          if (!window.editorManager) return;
+          if (window.editorManager.jsEditor.state.doc.toString() !== project.javascript) {
             dispatchChanges(editorManager.jsEditor, project.javascript);
             return false;
           }
@@ -1382,6 +1386,7 @@ const Modal = {
     CloseLabel,
     ConfirmLabel,
     onLoad,
+    onClose,
     onConfirm
   }) {
     // if (!options) return false;
@@ -1424,8 +1429,18 @@ const Modal = {
     const confirmBtn = modal.querySelector('footer button:last-child');
 
     // Confirm handler function
-    timesBtn.onclick = () => document.body.removeChild(modal);
-    closeBtn.onclick = () => document.body.removeChild(modal);
+    timesBtn.onclick = function() {
+      if (onClose && typeof onClose === 'function') {
+        onClose();
+      }
+      document.body.removeChild(modal);
+    }
+    closeBtn.onclick = function() {
+      if (onClose && typeof onClose === 'function') {
+        onClose();
+      }
+      document.body.removeChild(modal);
+    }
     confirmBtn.onclick = function() {
       if (onConfirm && typeof onConfirm === 'function') {
         onConfirm();
@@ -1732,12 +1747,15 @@ async function setPreprocessor(editor, value) {
     // Set the new preprocessor
     if (editor === 'html') {
       project.html_pre_processor = value;
-      window.editorManager.setMode(project.html_pre_processor === 'html' ? 'html' : value, editorManager.htmlEditor);
+      // if (!window.editorManager || !window.editorManager.htmlEditor) return;
+      // window.editorManager.setMode(project.html_pre_processor === 'html' ? 'html' : value, editorManager.htmlEditor);
     } else if (editor === 'css') {
       project.css_pre_processor = value;
-      window.editorManager.setMode(project.css_pre_processor === 'css' ? 'css' : value, editorManager.cssEditor);
+      // if (!window.editorManager || !window.editorManager.cssEditor) return;
+      // window.editorManager.setMode(project.css_pre_processor === 'css' ? 'css' : value, editorManager.cssEditor);
     } else if (editor === 'javascript') {
       project.javascript_pre_processor = value;
+      if (!window.editorManager || !window.editorManager.jsEditor) return;
       window.editorManager.setMode(project.javascript_pre_processor === 'javascript' ? 'javascript' : value, editorManager.jsEditor);
     }
   } catch (error) {
@@ -1751,6 +1769,7 @@ async function initializePreprocessors() {
     setPreprocessor('javascript', project.javascript_pre_processor)
   ]);
   
+  if (!window.editorManager) return;
   dispatchChanges(editorManager.htmlEditor, project.html);
   dispatchChanges(editorManager.cssEditor, project.css);
   dispatchChanges(editorManager.jsEditor, project.javascript);
@@ -2483,15 +2502,20 @@ function importJSON(obj) {
   data.safeRender = true;
 
   // Dispatch changes to editors
-  dispatchChanges(editorManager.htmlEditor, project.html);
-  dispatchChanges(editorManager.cssEditor, project.css);
-  dispatchChanges(editorManager.jsEditor, project.javascript);
+  if (window.editorManager) {
+    dispatchChanges(editorManager.htmlEditor, project.html);
+    dispatchChanges(editorManager.cssEditor, project.css);
+    dispatchChanges(editorManager.jsEditor, project.javascript);
+  }
   renderPreview(true);
 }
 function importProject() {
   Modal.render({
     title: "Are you sure you want to load a new project?",
     content: `<div class="p-4 text-center">All current data will be lost.</div>`,
+    onClose: function () {
+      data.menuDialog = true;
+    },
     onConfirm: function() {
       const input = document.createElement('input');
       input.type = 'file';
@@ -3435,8 +3459,8 @@ function diffNodes(oldNode, newNode) {
 document.addEventListener('DOMContentLoaded', function() {
   window.onload = () => {
     App.render('#app');
-    initEditors();
     initializePreprocessors();
+    if (window.initEditors) initEditors();
     getIFrameClientSize();
     data.safeRender = true;
     renderPreview(true);
