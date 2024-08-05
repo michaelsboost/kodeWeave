@@ -378,6 +378,7 @@ const project = onChange(p, (property, oldValue, newValue) => {
         }
       }
       if (string === "dark") {
+        data.colors.border = project.dark ? "border-gray-800" : "border-gray-200";
         document.documentElement.setAttribute('data-theme', project.dark ? 'dark' : 'light');
         document.querySelector('meta[name=apple-mobile-web-app-status-bar-style]').setAttribute('content', project.dark ? 'black-translucent' : 'default');
         document.querySelector('meta[name=theme-color]').setAttribute('content', project.dark ? '#13171f' : '#ffffff');
