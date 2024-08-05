@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <title>kodeWeave: Your on the go code playground!</title>
     <meta charset="utf-8" />
@@ -13,8 +13,8 @@
     <meta name="apple-mobile-web-app-title" content="kodeWeave">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="hsl(207, 31%, 11%)">
-    <meta name="msapplication-navbutton-color" content="hsl(207, 31%, 11%)">
+    <meta name="theme-color" content="hsl(205deg 18.75% 87.45%)">
+    <meta name="msapplication-navbutton-color" content="hsl(205deg 18.75% 87.45%)">
     <meta name="msapplication-starturl" content="./index.html">
     <link rel="apple-touch-icon" href="imgs/logo.png">
     <link rel="icon" href="imgs/logo.svg" type="image/x-icon" />
@@ -23,371 +23,26 @@
     <meta property="og:title"       content="kodeWeave" />
     <meta property="og:description" content="kodeWeave is your on the go coding playground! Design with TailwindCSS or Pico.css, see how your app or website will look and behave on a desktop." />
     <meta property="og:image"       content="https://michaelsboost.com/kodeWeave/imgs/header.png" />
-    <link rel="stylesheet"    href="css/style.css">
-    <script src="app.js" defer></script>
+    <!-- <link rel="stylesheet" href="libraries/pico/pico.classless.css"> -->
+    <!-- <link rel="stylesheet" href="libraries/pico/pico.classless.mod.css">
+    <script src="libraries/tailwind/tailwind-mod-noreset.min.js"></script> -->
+    <link rel="stylesheet" href="dist/style.min.css">
+    <link rel="stylesheet" href="dist/editor.min.css">
   </head>
   <body>
-    <div class="absolute inset-0">
-      <!-- canvas container -->
-      <div id="canvasContainer" class="absolute inset-0 overflow-hidden bg-gray-800 md:left-80 flex flex-col">
-        <div id="iframeCanvas" data-topNavContent="iframe" class="flex-grow relative">
-          <div id="previewElm" class="w-full h-full">
-            <iframe id="preview" class="w-full h-full" sandbox="allow-scripts allow-same-origin allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups"></iframe>
-          </div>
-          <div id="fill" class="absolute inset-0"></div>
-        </div>
-      
-        <!-- Bottom canvas navigation -->
-        <div 
-          id="bottomNav"
-          class="absolute bottom-0 inset-x-0 py-2 pl-2 pr-4 bg-gray-900 text-white">
-          <div 
-            class="flex justify-between">
-            <div>
-              <button 
-                name="Toggle Markdown Panel"
-                data-toggletab="markdown"
-                class="text-xs p-2 capitalize">
-                
-                <i class="pr-2 fa fa-brands fa-markdown"></i>
-                <span>markdown</span>
-              </button>
-              <button 
-                name="Toggle HTML Panel"
-                data-toggletab="html"
-                class="text-xs p-2 uppercase">
-                
-                <i class="pr-2 fa fa-brands fa-html5"></i>
-                <span>html</span>
-              </button>
-              <button 
-                name="Toggle CSS Panel"
-                data-toggletab="css"
-                class="text-xs p-2 uppercase">
-                
-                <i class="pr-2 fa fa-brands fa-css3"></i>
-                <span>css</span>
-              </button>
-              <button 
-                name="Toggle Javascript Panel"
-                data-toggletab="javascript"
-                class="text-xs p-2 capitalize">
-                
-                <i class="pr-2 fa fa-brands fa-js"></i>
-                <span class="inline-block md:hidden">JS</span>
-                <span class="hidden md:inline-block">javascript</span>
-              </button>
-            </div>
-            <div>
-              <button 
-                data-zoom="true"
-                name="Toggle zooming and panning"
-                class="text-xs py-2 pr-2">
-                <i class="fa fa-light fa-magnifying-glass-plus"></i>
-              </button>
-            </div>
-          </div>
-          
-          <div id="tabsNav" class="overflow-auto flex flex-col">
-            <div data-tabcontent="markdown" class="hidden relative flex flex-col h-[40vh]">
-              <div class="flex-grow overflow-auto">
-                <div id="mdEditor"></div>
-              </div>
-              <div data-editorMDNavbar class="flex-none px-4 text-center overflow-auto"></div>
-            </div>
-            <div data-tabcontent="html" class="hidden relative flex flex-col h-[40vh]">
-              <div class="flex-grow overflow-auto">
-                <div id="htmlEditor"></div>
-              </div>
-              <div data-editorHTMLNavbar class="flex-none px-4 text-center overflow-auto"></div>
-            </div>
-            <div data-tabcontent="css" class="hidden relative flex flex-col h-[40vh]">
-              <div class="flex-grow overflow-auto">
-                <div id="cssEditor"></div>
-              </div>
-              <div data-editorCSSNavbar class="flex-none px-4 text-center overflow-auto"></div>
-            </div>
-            <div data-tabcontent="javascript" class="hidden relative flex flex-col h-[40vh]">
-              <div class="flex-grow overflow-auto">
-                <div id="jsEditor"></div>
-              </div>
-              <div data-editorJSNavbar class="flex-none px-4 text-center overflow-auto"></div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- top run preview navigation bar for file name, type as well as changing view sizes -->
-        <div 
-          id="iframenav"
-          class="absolute top-14 inset-x-0 bg-black text-white">
-          <div 
-            class="flex justify-between items-center">
-            <div>
-              <input 
-                id="viewx" min="0"
-                type="number" placeholder="width (in px)"
-                class="p-2 inline-block w-16 md:w-32 lg:w-auto rounded-md bg-gray-800 text-xs">
-              <span class="font-thin">x</span>
-              <input 
-                id="viewy" min="0"
-                type="number" placeholder="height (in px)"
-                class="p-2 inline-block w-16 md:w-32 lg:w-auto rounded-md bg-gray-800 text-xs">
-            </div>
-            <div>
-              <button 
-                id="mobilep"
-                name="preview site for phones in portrait"
-                class="m-0 p-2 border-0 bg-transparent text-current text-sm">
-
-                <i class="fa fa-mobile"></i>
-              </button>
-              <button 
-                id="mobilel"
-                name="preview site for phones in landscape"
-                class="m-0 p-2 border-0 bg-transparent text-current text-sm">
-              
-                <i class="fa fa-mobile transform -rotate-90"></i>
-              </button>
-              <button 
-                name="preview site for tablets in portrait"
-                id="tabletp"
-                class="m-0 p-2 border-0 bg-transparent text-current text-sm">
-              
-                <i class="fa fa-tablet"></i>
-              </button>
-              <button 
-                name="preview site for tablets in landscape"
-                id="tabletl"
-                class="m-0 p-2 border-0 bg-transparent text-current text-sm">
-              
-                <i class="fa fa-tablet transform -rotate-90"></i>
-              </button>
-              <button 
-                name="preview site for desktops"
-                id="desktopsize"
-                class="m-0 p-2 border-0 bg-transparent text-current text-sm">
-                
-                <i class="fa fa-desktop"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <header class="absolute inset-0 text-center grid grid-cols-1 items-center">
+      <hgroup>
+        <h1 class="mb-2 text-[#ffffff00]">kodeWeave: Your on the go code playground!</h1>
+        <h2 class="text-[#ffffff00]">kodeWeave is your on the go coding playground! Design with TailwindCSS or Pico.css, see how your app or website will look and behave on a desktop.</h2>
+      </hgroup>
+    </header>
     
-      <!-- top navbar -->
-      <nav class="absolute top-0 inset-x-0 flex align-center place-items-center justify-between p-2 text-white bg-gray-900 z-20">
-        <ul id="topnav" class="p-0 m-0">
-          <button 
-            name="toggle menu"
-            class="m-0 border-0 mx-2 px-2 py-2 bg-transparent inline-block md:hidden">
-            <label for="menu" class="cursor-pointer">
-              <input type="checkbox" id="menu" class="hidden">
-              <i class="fa fa-bars cursor-pointer"></i>
-            </label>
-          </button>
-          <button 
-            id="run"
-            name="run preview"
-            class="capitalize border-0 mx-2 px-2 py-2 bg-transparent hidden">
-            <i class="fa fa-play"></i>
-          </button>
-          <a href="https://twitter.com/kodeweave_app" target="_blank"
-            class="mx-2 px-2 py-2">
-            <i class="fa fa-brands fa-x-twitter"></i>
-          </a>
-          <a href="https://michaelsboost.com/donate/" target="_blank"
-            class="mx-2 px-2 py-2">
-            <i class="fa fa-heart text-red-400"></i>
-          </a>
-        </ul>
-        <ul class="p-0">
-          <button 
-            id="shareWeave"
-            name="share to codepen"
-            class="capitalize border-0 px-4 py-2 rounded-md bg-blue-500 text-white">
-              <i class="pr-2 fa fa-share"></i> 
-              <span>
-                share &nbsp; <i class="fa fa-brands fa-codepen"></i>
-              </span>
-          </button>
-        </ul>
-      </nav>
-      
-      <!-- Side navigation --> 
-      <nav id="sidenav" class="absolute left-0 top-14 bottom-0 bg-gray-900 text-white w-full md:block md:w-80 p-4 z-10 overflow-y-auto hidden">
-        <ul id="mainsidenav" class="px-2">
-          <li>
-            <div class="text-center">
-              <a id="appUrl" target="_blank">
-                <img id="appLogo" class="my-4 w-24 m-auto" src="imgs/logo.svg">
-              </a>
-              <div class="text-2xl">
-                About <span id="appName"></span>
-              </div>
-              <div class="my-2 text-xs">
-                Version <span id="appVersion"></span>
-              </div>
-              <div>
-                <a id="appLicense" target="_blank" class="text-sm underline mb-2 text-blue-500">
-                  Open Source License
-                </a>
-              </div>
-            </div>
-          </li>
-          <li class="py-4 px-2">
-            <hr>
-          </li>
-          <li class="hidden">
-            <input type="search" name="search" class="bg-gray-900 border border-blue-500 text-white rounded-full px-6 py-4 mb-4 focus:outline-none w-full" placeholder="Search...">
-          </li>
-          <li>
-            <button 
-              id="newProj"
-              name="initialize new project"
-              class="capitalize py-2 block w-full text-left items-center rounded-md">
-              <i class="w-10 px-2 fa fa-file"></i> 
-              <span>
-                new project
-              </span>
-            </button>
-          </li>
-          <li>
-            <label for="importProject"
-              class="cursor-pointer capitalize py-2 block w-full text-left items-center rounded-md">
-              <i class="w-10 px-2 fa fa-file-export"></i> 
-              <span>
-                import project
-              </span>
-            </label>
-          </li>
-          <li>
-            <button 
-              id="exportProj"
-              name="export project file"
-              class="capitalize py-2 block w-full text-left items-center rounded-md">
-              <i class="w-10 px-2 fa fa-file-import"></i> 
-              <span>
-                export project
-              </span>
-            </button>
-          </li>
-          <li>
-            <button 
-              id="exportZip"
-              name="export zip file"
-              class="capitalize py-2 block w-full text-left items-center rounded-md">
-              <i class="w-10 px-2 fa fa-save"></i> 
-              <span>
-                export zip
-              </span>
-            </button>
-          </li>
-          <li>
-            <button 
-              name="toggle settings" data-openSide="settings"
-              class="capitalize py-2 block w-full text-left items-center rounded-md">
-              <i class="w-10 px-2 fa fa-cog"></i> 
-              <span>
-                settings
-              </span>
-            </button>
-            <div class="hidden">
-              <input id="importProject" type="file" accept="application/json">
-            </div>
-          </li>
-          <li class="py-4 px-2">
-            <hr>
-          </li>
-          <li>
-            <input id="searchBox" class="w-full p-3 rounded-md bg-gray-800" type="search" placeholder="Search for resources (JQuery, Bootstrap, Foundation...)">
-            <ul id="suggestions" class="px-4 capitalize"></ul>
-            <div id="sortLibraries"></div>
-            <button 
-              name="add another library or framework" id="addanother"
-              class="capitalize py-2 block w-full text-left items-center rounded-md">
-              <i class="w-10 px-2 fa fa-plus"></i> 
-              <span>
-                Add another
-              </span>
-            </button>
-          </li>
-        </ul>
-        <ul id="settings" class="px-2 hidden">
-          <li>
-            <button 
-              name="back to main menu" data-closeSide="settings"
-              class="capitalize py-2 block w-full text-left items-center rounded-md">
-              <i class="w-10 px-2 fa fa-arrow-left"></i>
-              <span>
-                back
-              </span>
-            </button>
-          </li>
-          <li class="pt-4 pb-2 px-2 opacity-50">
-            <hr>
-          </li>
-          <li class="py-2 flex justify-between align-center border-b border-gray-600">
-            <span class="py-2">
-              Auto Update
-            </span>
+    <div id="app" class="absolute inset-0"></div>
 
-            <div class="form-control">
-              <label class="cursor-pointer label">
-                <input type="checkbox" checked id="autoupdate"
-                  class="toggle toggle-primary" />
-              </label>
-            </div>
-          </li>
-          <li class="py-2 flex justify-between align-center border-b border-gray-600">
-            <span class="py-2">
-              Console
-            </span>
-
-            <div class="form-control">
-              <label class="cursor-pointer label">
-                <input type="checkbox" checked id="toggleconsole"
-                  class="toggle toggle-primary" />
-              </label>
-            </div>
-          </li>
-          <li class="py-2 flex justify-between align-center border-b border-gray-600">
-            <span class="py-2">
-              Font Size
-            </span>
-
-            <input 
-              id="fz" type="number" value="16" min="1" step="1" placeholder="font size (in px)"
-              class="p-2 inline-block text-right w-auto rounded-md bg-gray-800 text-xs">
-          </li>
-          <li class="py-4 border-b border-gray-600">
-            <div class="mb-2">
-              Project title:
-            </div>
-            <input 
-              id="projectTitle"
-              class="p-2 rounded-md bg-gray-800 w-full"
-              type="text" placeholder="Project title">
-          </li>
-          <li class="py-4 border-b border-gray-600">
-            <div class="mb-2">
-              Project description:
-            </div>
-            <textarea name="Project description" id="projectDesc"
-              placeholder="Project description"
-              class="p-2 rounded-md bg-gray-800 w-full resize-vertical h-56"></textarea>
-          </li>
-          <li class="py-4 border-b border-gray-600">
-            <div class="my-2">
-              HTML before closing head tag:
-            </div>
-            <textarea name="HTML before closing head tag" id="projectMeta"
-              placeholder="HTML before closing </head> tag"
-              class="p-2 rounded-md bg-gray-800 w-full resize-vertical h-56"></textarea>
-          </li>
-        </ul>
-      </nav>
-    </div>
-
+    <!-- Load Application Script -->
+    <!-- <script id="appScript" src="src/App.js"></script> -->
+    <script src="dist/editor.js"></script>
+    <script id="appScript" src="dist/App.js"></script>
     <script src="https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js"></script>
     <script>
       // service worker for progressive web app

@@ -1,0 +1,19 @@
+@import '../libraries/pico/pico.classless.mod.css'; 
+@import 'editor.css'; 
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;
+
+/* 
+
+required dependencies for build
+npm install -g tailwindcss postcss-cli autoprefixer
+
+build css
+postcss styles.css -o output.css 
+or 
+npm run build:css
+
+optimize for production
+NODE_ENV=production postcss styles.css -o output.css
+*/

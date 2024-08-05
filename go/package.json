@@ -1,40 +1,20 @@
 {
   "name": "kodeweave",
-  "version": "1.1.5",
-  "description": "Your on the go code playground!",
-  "main": "index.js",
+  "version": "1.1.51",
   "type": "module",
   "scripts": {
+    "build:css": "postcss src/style.css -o dist/style.min.css",
+    "build:js": "esbuild src/App.js src/editor.js --bundle --minify --sourcemap --outdir=dist",
     "build": "rollup -c",
     "serve": "http-server -c-1 -p 8081"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/michaelsboost/kodeWeave.git"
-  },
-  "keywords": [
-    "html",
-    "js",
-    "javascript",
-    "code",
-    "coding",
-    "playground",
-    "realtime",
-    "editor"
-  ],
-  "author": "michael schwartz",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/michaelsboost/kodeWeave/issues"
-  },
-  "homepage": "https://github.com/michaelsboost/kodeWeave#readme",
   "dependencies": {
     "@codemirror/autocomplete": "^6.4.2",
     "@codemirror/commands": "^6.2.1",
     "@codemirror/lang-css": "^6.0.2",
     "@codemirror/lang-html": "^6.4.2",
     "@codemirror/lang-javascript": "^6.1.4",
-    "@codemirror/lang-markdown": "^6.2.4",
+    "@codemirror/lang-markdown": "^6.2.5",
     "@codemirror/language": "^6.6.0",
     "@codemirror/lint": "^6.2.0",
     "@codemirror/search": "^6.2.3",
@@ -43,10 +23,20 @@
     "@emmetio/codemirror6-plugin": "^0.2.0",
     "@replit/codemirror-css-color-picker": "^6.1.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
+    "autoprefixer": "^10.4.19",
     "codemirror": "^6.0.1",
-    "eslint": "^8.35.0",
-    "eslint-linter-browserify": "^8.35.0",
+    "cssnano": "^7.0.2",
+    "eslint": "^8.57.0",
+    "eslint-linter-browserify": "^8.57.0",
     "htmlhint": "^1.1.4",
-    "rollup": "^2.79.1"
+    "postcss": "^8.4.38",
+    "postcss-import": "^16.1.0",
+    "rollup": "^2.79.1",
+    "tailwindcss": "^3.4.4"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.24.7",
+    "@tailwindcss/typography": "^0.5.13",
+    "esbuild": "^0.23.0"
   }
 }

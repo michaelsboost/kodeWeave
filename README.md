@@ -5,12 +5,12 @@ kodeWeave is your on the go coding playground! Design with TailwindCSS, Pico.css
 
 If you've ever used jsfiddle, jsbin, dabblet, liveweave, codepen, cssdeck, cssdesk, tinkerbin, d3 playground, plunker and/or pastebin kodeWeave is the tool for you when you're away from a computer!
 
-![](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/screenshots/kodeweave.png)
+![](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/screenshot.png)
 
 Version
 -------------
 
-1.1.50
+1.2
 
 License
 -------------
@@ -23,15 +23,14 @@ Tech
 kodeWeave uses a number of open source projects to work properly:
 
 * [Codemirror v6](http://codemirror.net/) - Awesome web-based text editor
-* [Emmet](http://emmet.io/) - Codemirror Plugin for Zen Coding
-* [Font Awesome v5](https://fontawesome.com/) - Beautiful icon library and toolkit
-* [daisyUI](https://daisyui.com/) - A Tailwind CSS Component Library (used for the toggle switch)
-* [Tailwind CSS](https://tailwindcss.com/) - A low-level CSS framework that's entirely utility-first and provides users with low-level CSS classes in PostCSS that can be used to define components and designs independently.
+* [html2canvas](https://html2canvas.hertzen.com/) - Screenshots in Javascript
 * [JSZip](https://stuk.github.io/jszip/) - Package zip files locally in javascript
 * [FileSaver.js](https://github.com/eligrey/FileSaver.js/) - JSZip comes prebuilt with this. Allows us to save files locally in Javascript
-* [panzoom](https://github.com/anvaka/panzoom/) - Used to pan and zoom the canvas
 * [cdnjs](https://cdnjs.com/api) - Used to easily add the latest libraries and frameworks in the app by a single search
-* [marked](https://marked.js.org/) - Used to convert markdown to html
+* [Emmet](http://emmet.io/) - Codemirror Plugin for Zen Coding
+* [Pico.css](https://picocss.com/) and [Tailwind CSS](https://tailwindcss.com/) - Used to design the Application's interface.
+* [HeroIcons](https://heroicons.com/) and [Font Awesome](https://fontawesome.com/) - Icon library used for the app's ui. (I did have to design the twitter logo icon myself though)
+* [Twitter Widgets](https://publish.twitter.com/) - Used to open the project's twitter feed
 
 Development
 -------------

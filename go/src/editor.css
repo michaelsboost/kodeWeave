@@ -1,0 +1,193 @@
+/* editor */
+.cm-editor {height: 100%; background-color: var(--pico-background-color);}
+[data-theme=dark] .cm-editor, [data-theme=dark] .ͼg, [data-theme=dark] .ͼl, [data-theme=dark] .ͼ5 {color: #9cdcfe;}
+[data-theme=dark] .ͼ1.cm-focused {outline: 1px dotted #212121;}
+[data-theme=dark] .ͼ2 .cm-content {caret-color: black;}
+[data-theme=dark] .ͼ3 .cm-content {caret-color: white;}
+[data-theme=dark] .ͼ2 .cm-selectionBackground, .ͼ3 .cm-selectionBackground {background: #3a3d41;}
+[data-theme=dark] .ͼ2.cm-focused .cm-selectionBackground, .ͼ3.cm-focused .cm-selectionBackground {background: #264f78;}
+[data-theme=dark] .ͼo.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground, .ͼo .cm-selectionBackground, .ͼo .cm-content ::selection {background: #3E4451;}
+[data-theme=dark] .ͼ1 .cm-cursor, .ͼ1 .cm-dropCursor {border-left: 1.2px solid black;}
+[data-theme=dark] .ͼ3 .cm-cursor {border-left-color: #444;}
+[data-theme=dark] .ͼ1.cm-focused .cm-cursor {display: block;}
+[data-theme=dark] .ͼ2 .cm-activeLine {background-color: #cceeff44;}
+[data-theme=dark] .ͼ3 .cm-activeLine {background-color: #99eeff33;}
+[data-theme=dark] .ͼ2 .cm-specialChar {color: red;}
+[data-theme=dark] .ͼ3 .cm-specialChar {color: #f78;}
+[data-theme=dark] .ͼ2 .cm-gutters {background-color: transparent; color: #6c6c6c; border-right: 1px solid #1f2937;}
+[data-theme=dark] .ͼ3 .cm-gutters {background-color: #333338; color: #ccc;}
+[data-theme=dark] .ͼ2 .cm-activeLineGutter {color: #e2f2ff; background: #ffffff22;}
+[data-theme=dark] .ͼ1 .cm-placeholder {color: #888;}
+[data-theme=dark] .ͼ1 .cm-trailingSpace {background-color: #ff332255;}
+[data-theme=dark] .ͼ3 .cm-button:active {background-image: linear-gradient(#111, #333);}
+[data-theme=dark] .ͼ3 .cm-button {background-image: linear-gradient(#393939, #111); border: 1px solid #888;}
+[data-theme=dark] .ͼ2 .cm-textfield {background-color: white;}
+[data-theme=dark] .ͼ3 .cm-textfield {border: 1px solid #555; background-color: inherit;}
+[data-theme=dark] .ͼ1 .cm-diagnostic-error {border-left: 5px solid #d11;}
+[data-theme=dark] .ͼ1 .cm-diagnostic-warning {border-left: 5px solid orange;}
+[data-theme=dark] .ͼ1 .cm-diagnostic-info {border-left: 5px solid #999;}
+[data-theme=dark] .ͼ1 .cm-diagnosticAction {background-color: #444; color: white;}
+[data-theme=dark] .ͼ1 .cm-lintRange-active {background-color: #ffdd9980;}
+[data-theme=dark] .ͼ1 .cm-lintPoint-warning:after {border-bottom-color: orange;}
+[data-theme=dark] .ͼ1 .cm-lintPoint-info:after {border-bottom-color: #999;}
+[data-theme=dark] .ͼ1 .cm-panel.cm-panel-lint ul [aria-selected] {background-color: #ddd;}
+[data-theme=dark] .ͼ1 .cm-panel.cm-panel-lint ul:focus [aria-selected] {background: #bdf; background-color: Highlight; color: white; color: HighlightText;}
+[data-theme=dark] .ͼ1 .emmet-tracker {text-decoration: underline 1px green;}
+/* [data-theme=dark] .ͼ2 .cm-tooltip-autocomplete-disabled ul li[aria-selected] {background: #777;}
+[data-theme=dark] .ͼ3 .cm-tooltip-autocomplete ul li[aria-selected] {background: #347; color: white;}
+[data-theme=dark] .ͼ3 .cm-tooltip-autocomplete-disabled ul li[aria-selected] {background: #444;} */
+[data-theme=dark] .ͼ2 .cm-tooltip {border: 1px solid #3e5b9f; background-color: #111828;}
+[data-theme=dark] .ͼ2 .cm-tooltip-section:not(:first-child) {border-top: 1px solid #bbb;}
+[data-theme=dark] .ͼ3 .cm-tooltip {background-color: #333338; color: white;}
+[data-theme=dark] .ͼ1 .cm-tooltip-above .cm-tooltip-arrow:before {border-top: 7px solid #bbb;}
+[data-theme=dark] .ͼ1 .cm-tooltip-above .cm-tooltip-arrow:after {border-top: 7px solid #f5f5f5; bottom: 1px;}
+[data-theme=dark] .ͼ1 .cm-tooltip-below .cm-tooltip-arrow:before {border-bottom: 7px solid #bbb;}
+[data-theme=dark] .ͼ1 .cm-tooltip-below .cm-tooltip-arrow:after {border-bottom: 7px solid #f5f5f5; top: 1px;}
+[data-theme=dark] .ͼ3 .cm-tooltip .cm-tooltip-arrow:before {border-top-color: #333338; border-bottom-color: #333338;}
+[data-theme=dark] .ͼ1.cm-focused .cm-matchingBracket {background-color: #328c8252;}
+[data-theme=dark] .ͼ1.cm-focused .cm-nonmatchingBracket {background-color: #bb555544;}
+[data-theme=dark] .ͼ1 .cm-foldPlaceholder {background-color: #eee; border: 1px solid #ddd; color: #888; border-radius: .2em;}
+[data-theme=dark] .ͼp {color: #c678dd;}
+[data-theme=dark] .ͼq {color: #e06c75;}
+[data-theme=dark] .ͼr {color: #61afef;}
+[data-theme=dark] .ͼs {color: #d19a66;}
+[data-theme=dark] .ͼt {color: #abb2bf;}
+[data-theme=dark] .ͼu {color: #e5c07b;}
+[data-theme=dark] .ͼv {color: #56b6c2;}
+[data-theme=dark] .ͼw {color: #7d8799;}
+[data-theme=dark] .ͼ11 {font-weight: bold; color: #e06c75;}
+[data-theme=dark] .ͼ12 {color: #d19a66;}
+[data-theme=dark] .ͼ13 {color: #98c379;}
+[data-theme=dark] .ͼ14 {color: #ffffff;}
+[data-theme=dark] .ͼo {color: #abb2bf; background-color: #282c34;}
+[data-theme=dark] .ͼo .cm-content {caret-color: #528bff;}
+[data-theme=dark] .ͼo .cm-cursor, .ͼo .cm-dropCursor {border-left-color: #528bff;}
+[data-theme=dark] .ͼo .cm-panels {background-color: #21252b; color: #abb2bf;}
+[data-theme=dark] .ͼo .cm-panels.cm-panels-top {border-bottom: 2px solid black;}
+[data-theme=dark] .ͼo .cm-panels.cm-panels-bottom {border-top: 2px solid black;}
+[data-theme=dark] .ͼo .cm-searchMatch {background-color: #72a1ff59; outline: 1px solid #457dff;}
+[data-theme=dark] .ͼo .cm-searchMatch.cm-searchMatch-selected {background-color: #6199ff2f;}
+[data-theme=dark] .ͼo .cm-activeLine {background-color: #6699ff0b;}
+[data-theme=dark] .ͼo .cm-selectionMatch {background-color: #aafe661a;}
+[data-theme=dark] .ͼo.cm-focused .cm-matchingBracket, .ͼo.cm-focused .cm-nonmatchingBracket {background-color: #bad0f847;}
+[data-theme=dark] .ͼo .cm-gutters {background-color: #282c34; color: #7d8799; border: none;}
+[data-theme=dark] .ͼo .cm-activeLineGutter {background-color: #2c313a;}
+[data-theme=dark] .ͼo .cm-foldPlaceholder {background-color: transparent; border: none; color: #ddd;}
+[data-theme=dark] .ͼo .cm-tooltip {border: none; background-color: #353a42;}
+[data-theme=dark] .ͼo .cm-tooltip .cm-tooltip-arrow:before {border-top-color: transparent; border-bottom-color: transparent;}
+[data-theme=dark] .ͼo .cm-tooltip .cm-tooltip-arrow:after {border-top-color: #353a42; border-bottom-color: #353a42;}
+/* [data-theme=dark] .ͼo .cm-tooltip-autocomplete > ul > li[aria-selected] {background-color: #2c313a; color: #abb2bf;} */
+[data-theme=dark] .ͼ7 {color: #cbcbcb;}
+[data-theme=dark] .ͼc {color: #569cd5;}
+[data-theme=dark] .ͼf, .ͼj, .ͼb, .ͼd, .ͼe, .ͼ6 {color: #ce9178;}
+[data-theme=dark] .ͼ6.ͼ5 {color: #9cdcfe;}
+[data-theme=dark] .ͼ6.ͼc {color: #9cdcfe;}
+[data-theme=dark] .ͼh {color: #30a;}
+[data-theme=dark] .ͼi {color: #569bd5;}
+[data-theme=dark] .ͼk {color: #256;}
+[data-theme=dark] .ͼm {color: #699754;}
+[data-theme=dark] .ͼn {color: #f00;}
+.cm-gutterElement {
+  padding: 0 .5rem;
+}
+
+.cm-search.cm-panel button[type=button][aria-label=close] {
+  color: unset;
+  font-size: 2rem;
+  margin-right: .75rem;
+  font-weight: 100;
+}
+.ͼ2 .cm-panels-bottom {
+  border: 0;
+}
+.ͼ2 .cm-panels {
+  background-color: transparent;
+  color: unset;
+}
+.ͼ1 .cm-textfield, .cm-search.cm-panel .cm-textfield, .cm-gotoLine.cm-panel  .cm-textfield {
+  appearance: none;
+  /* padding: var(--pico-form-element-spacing-vertical) var(--pico-form-element-spacing-horizontal); */
+  padding: .75rem;
+  height: auto;
+  font-size: .75rem;
+  /* height: calc(1rem* var(--pico-line-height) + var(--pico-form-element-spacing-vertical)* 2 + var(--pico-border-width)* 2); */
+  /* margin-bottom: var(--pico-spacing); */
+  --pico-outline-width: 0.0625rem;
+  --pico-background-color: var(--pico-form-element-background-color);
+  --pico-border-color: var(--pico-form-element-border-color);
+  --pico-color: var(--pico-form-element-color);
+  --pico-box-shadow: none;
+  border: var(--pico-border-width) solid var(--pico-border-color);
+  border-radius: var(--pico-border-radius);
+  outline: 0;
+  background-color: var(--pico-background-color);
+  box-shadow: var(--pico-box-shadow);
+  color: var(--pico-color);
+  font-weight: var(--pico-font-weight);
+  transition: background-color var(--pico-transition), border-color var(--pico-transition), color var(--pico-transition), box-shadow var(--pico-transition);
+}
+
+.ͼ1 .cm-panel.cm-search button, .cm-button, .cm-gotoLine.cm-panel .cm-button {
+  background-image: none;
+  margin: .5rem .5rem .5rem 0;
+  --pico-background-color: var(--pico-primary-background);
+  --pico-border-color: var(--pico-primary-border);
+  --pico-color: var(--pico-primary-inverse);
+  --pico-box-shadow: var(--pico-button-box-shadow, 0 0 0 rgba(0, 0, 0, 0));
+  /* padding: var(--pico-form-element-spacing-vertical) var(--pico-form-element-spacing-horizontal); */
+  padding: .5rem .75rem;
+  border: var(--pico-border-width) solid var(--pico-border-color);
+  border-radius: var(--pico-border-radius);
+  outline: 0;
+  background-color: var(--pico-background-color);
+  box-shadow: var(--pico-box-shadow);
+  color: var(--pico-color);
+  font-weight: var(--pico-font-weight);
+  font-size: .75rem;
+  line-height: var(--pico-line-height);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  transition: background-color var(--pico-transition), border-color var(--pico-transition), color var(--pico-transition), box-shadow var(--pico-transition);
+}
+.ͼ1 .cm-panel.cm-search button:hover, .cm-button:hover, .cm-gotoLine.cm-panel .cm-button:hover {
+  --pico-background-color: var(--pico-primary-hover-background);
+  --pico-border-color: var(--pico-primary-hover-border);
+  --pico-box-shadow: var(--pico-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0));
+  --pico-color: var(--pico-primary-inverse);
+}
+.ͼ1 .cm-panel.cm-search button:focus, .cm-button:focus, .cm-gotoLine.cm-panel .cm-button:focus {
+  --pico-box-shadow: var(--pico-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)), 0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
+}
+
+/* .cm-tooltip-autocomplete.cm-tooltip.cm-tooltip-below,
+.cm-tooltip-autocomplete.cm-tooltip.cm-tooltip-below * {
+  color: var(--pico-color);
+  background: var(--pico-background);
+  border-color: var(--pico-primary-border);
+}
+.cm-tooltip-autocomplete.cm-tooltip.cm-tooltip-below ul {
+  display: flex;
+  flex-direction: column;
+}
+.cm-tooltip-autocomplete.cm-tooltip.cm-tooltip-below,
+.cm-tooltip-autocomplete.cm-tooltip.cm-tooltip-below ul,
+.cm-tooltip-autocomplete.cm-tooltip.cm-tooltip-below ul li,
+.cm-tooltip-autocomplete.cm-tooltip.cm-tooltip-below ul li * {
+  font-size: 1rem;
+  width: auto;
+  height: auto;
+} */
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
