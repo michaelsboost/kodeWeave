@@ -304,52 +304,50 @@ const project = onChange(p, (property, oldValue, newValue) => {
       if (project.activePanel === 'javascript') setActiveEditor(editorManager.javascriptEditor)
     }
     if (!App.initialRender) {
-      const diffArr = ['title', 'description', 'author', 'meta', 'libraries', 'html', 'css', 'console', 'dark'];
-      const initRun = ['html_pre_processor', 'css_pre_processor', 'javascript_pre_processor', 'javascript'];
+      const diffArr = ['html', 'css', 'console'];
+      const initRun = ['meta', 'libraries', 'html_pre_processor', 'css_pre_processor', 'javascript_pre_processor', 'javascript'];
       const string = property.toString();
       // diff nodes
       if (diffArr.includes(string)) {
         if (project.autorun) {
-          if (string !== 'css') {
-            renderPreview(true);
+          renderPreview();
+          if (string === 'html') {
+            if (!window.editorManager) return;
+            if (window.editorManager.htmlEditor.state.doc.toString() !== project.html) {
+              dispatchChanges(editorManager.htmlEditor, project.html);
+            }
           }
-        }
-        if (string === 'html') {
-          if (!window.editorManager) return;
-          if (window.editorManager.htmlEditor.state.doc.toString() !== project.html) {
-            dispatchChanges(editorManager.htmlEditor, project.html);
+          if (string === 'css' || string === 'console') {
+            let consoleCSS = `
+          .wrapper_yOR7u {
+            ${project.console ? '' : 'display: none!important;'}
+            left: 0!important; width: 100%!important; 
+            border-radius: 15px 15px 0 0!important; 
+            z-index: 99999999;
+          } 
+          .btn_yOR7u {
+            cursor: pointer; 
+            background: inherit; 
+            padding: 0 0.5rem; 
+            margin: inherit; 
+            margin-right: 0px; 
+            border: inherit; 
+            color: #fff!important; 
+          } 
+          .nav_yOR7u {
+            padding-bottom: 14px!important;
+          } 
+          .line_yOR7u {
+            background: inherit!important;
           }
-        }
-        if (string === 'css' || string === 'console') {
-          let consoleCSS = `
-        .wrapper_yOR7u {
-          ${project.console ? '' : 'display: none!important;'}
-          left: 0!important; width: 100%!important; 
-          border-radius: 15px 15px 0 0!important; 
-          z-index: 99999999;
-        } 
-        .btn_yOR7u {
-          cursor: pointer; 
-          background: inherit; 
-          padding: 0 0.5rem; 
-          margin: inherit; 
-          margin-right: 0px; 
-          border: inherit; 
-          color: #fff!important; 
-        } 
-        .nav_yOR7u {
-          padding-bottom: 14px!important;
-        } 
-        .line_yOR7u {
-          background: inherit!important;
-        }
-          
-        ${project.css}`
-          doc.getElementById('cuxjju3ew').textContent = consoleCSS;
-  
-          if (!window.editorManager) return;
-          if (string === 'css' && editorManager.cssEditor.state.doc.toString() !== project.css) {
-            dispatchChanges(editorManager.cssEditor, project.css);
+            
+          ${project.css}`
+            doc.getElementById('cuxjju3ew').textContent = consoleCSS;
+    
+            if (!window.editorManager) return;
+            if (string === 'css' && editorManager.cssEditor.state.doc.toString() !== project.css) {
+              dispatchChanges(editorManager.cssEditor, project.css);
+            }
           }
         }
       }
@@ -368,9 +366,10 @@ const project = onChange(p, (property, oldValue, newValue) => {
           renderPreview(true);
         }
       }
-      if (string === "dark") {
+      if (property.toString() === "dark") {
         App.render('#app');
         document.documentElement.setAttribute('data-theme', project.dark ? 'dark' : 'light');
+        doc.documentElement.setAttribute('data-theme', project.dark ? 'dark' : 'light');
         document.querySelector('meta[name=apple-mobile-web-app-status-bar-style]').setAttribute('content', project.dark ? 'black-translucent' : 'default');
         document.querySelector('meta[name=theme-color]').setAttribute('content', project.dark ? '#13171f' : '#ffffff');
         document.querySelector('meta[name=msapplication-navbutton-color]').setAttribute('content', project.dark ? '#13171f' : '#ffffff');
@@ -483,6 +482,7 @@ function LeftMenubar() {
       name="toggle console"
       class="${buttonSize}  text-sm border-0 px-0 py-3 rounded-md bg-transparent ${project.console ? 'text-green-500' : ''}"
       onclick="project.console = !project.console;"
+      style="${project.dark ? '' : `${project.console ? '' : 'color: unset;'}`}"
     >
       ${icons.console}
     </button>
