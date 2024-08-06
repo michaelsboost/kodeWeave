@@ -2705,24 +2705,24 @@ async function downloadProject() {
 `;
     
     if (project.javascript_pre_processor === 'javascript') {
-      rollupInput = `input: 'src/script.js',`;
+      rollupInput = `src/script.js`;
     }
 
     if (project.javascript_pre_processor === 'babel') {
       rollupPlugins += `import babel from 'rollup-plugin-babel';
 `;
-      rollupInput = `input: 'src/script.jsx',`;
+      rollupInput = `src/script.jsx`;
     }
     
     if (project.javascript_pre_processor === 'typescript') {
       rollupPlugins += `import typescript from 'rollup-plugin-typescript2';
 `;
-      rollupInput = `input: 'src/script.ts',`;
+      rollupInput = `src/script.ts`;
     }
     
     let rollupStr = `${rollupPlugins}
 export default {
-  ${rollupInput} // entry point to your Javascript
+  input: '${rollupInput}', // entry point to your Javascript
   output: {
     file: 'dist/script.js',
     format: ${project.module ? "'es'" : "'iife'"}, // Immediately Invoked Function Expression, suitable for <script> tags
@@ -2920,11 +2920,9 @@ ${project.description}`;
     minifiedJS = minifiedJS.code;
 
     // Add script.js
-    if (project.javascript_pre_processor === 'javascript') zip.file('src/script.js', project.javascript);
+    if (project.javascript_pre_processor === 'javascript') zip.file(rollupInput, project.javascript);
     if (project.javascript_pre_processor === 'javascript') zip.file('dist/script.js', project.javascript);
-    if (project.javascript_pre_processor === 'babel') zip.file('src/script.jsx', project.javascript);
     if (project.javascript_pre_processor === 'babel') zip.file('dist/script.js', minifiedJS);
-    if (project.javascript_pre_processor === 'typescript') zip.file('src/script.ts', project.javascript);
     if (project.javascript_pre_processor === 'typescript') zip.file('dist/script.js', minifiedJS);
 
     // if pwa is enabled
