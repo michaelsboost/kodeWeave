@@ -1822,7 +1822,7 @@ async function tidy() {
       dispatchChanges(editorManager.cssEditor, formattedCode);
       break;
     case 'javascript':
-      formattedCode = beautify(project.javascript, {
+      formattedCode = js_beautify(project.javascript, {
         indent_size: 2,
         max_preserve_newlines: 1
       });
