@@ -1192,7 +1192,7 @@ const App = {
             onclick="newProject('${name}')">
             <div class="${buttonContentClass}">
               <div class="${imageContentClass}">
-                <img width="256" height="256" src="imgs/frameworks/${name}.svg" alt="${name}" />
+                <img loading="lazy" width="256" height="256" src="imgs/frameworks/${name}.svg" alt="${name}" />
               </div>
               <div class="${textContentClass}">
                 ${name}

@@ -880,7 +880,7 @@
             onclick="newProject('${v}')">
             <div class="${h}">
               <div class="${y}">
-                <img width="256" height="256" src="imgs/frameworks/${v}.svg" alt="${v}" />
+                <img loading="lazy" width="256" height="256" src="imgs/frameworks/${v}.svg" alt="${v}" />
               </div>
               <div class="${f}">
                 ${v}
