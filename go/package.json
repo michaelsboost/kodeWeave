@@ -3,9 +3,10 @@
   "version": "1.1.51",
   "type": "module",
   "scripts": {
-    "build:css": "postcss src/style.css -o dist/style.min.css",
-    "build:js": "esbuild src/App.js src/editor.js --bundle --minify --sourcemap --outdir=dist",
-    "build": "rollup -c",
+    "build:css": "postcss src/style.css src/editor.css --dir dist",
+    "build:js": "esbuild src/concat.js --bundle --minify --sourcemap --outfile=dist/App.min.js",
+    "build:c": "rollup -c",
+    "build": "npm-run-all build:css build:c build:js",
     "serve": "http-server -c-1 -p 8081"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
     "eslint": "^8.57.0",
     "eslint-linter-browserify": "^8.57.0",
     "htmlhint": "^1.1.4",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.38",
     "postcss-import": "^16.1.0",
     "rollup": "^2.79.1",
