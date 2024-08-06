@@ -66,7 +66,7 @@ let p = {
   pwa: false,
   preview: true,
   activePanel: 'html',
-  columns: true,
+  columns: false,
   columnsRight: true
 };
 let d = {
@@ -304,69 +304,43 @@ const project = onChange(p, (property, oldValue, newValue) => {
       if (project.activePanel === 'javascript') setActiveEditor(editorManager.javascriptEditor)
     }
     if (!App.initialRender) {
-      const diffArr = ['html', 'css', 'console'];
-      const initRun = ['meta', 'libraries', 'html_pre_processor', 'css_pre_processor', 'javascript_pre_processor', 'javascript'];
-      const string = property.toString();
+      let string = property.toString();
       // diff nodes
-      if (diffArr.includes(string)) {
-        if (project.autorun) {
-          renderPreview();
-          if (string === 'html') {
-            if (!window.editorManager) return;
-            if (window.editorManager.htmlEditor.state.doc.toString() !== project.html) {
-              dispatchChanges(editorManager.htmlEditor, project.html);
-            }
-          }
-          if (string === 'css' || string === 'console') {
-            let consoleCSS = `
-          .wrapper_yOR7u {
-            ${project.console ? '' : 'display: none!important;'}
-            left: 0!important; width: 100%!important; 
-            border-radius: 15px 15px 0 0!important; 
-            z-index: 99999999;
-          } 
-          .btn_yOR7u {
-            cursor: pointer; 
-            background: inherit; 
-            padding: 0 0.5rem; 
-            margin: inherit; 
-            margin-right: 0px; 
-            border: inherit; 
-            color: #fff!important; 
-          } 
-          .nav_yOR7u {
-            padding-bottom: 14px!important;
-          } 
-          .line_yOR7u {
-            background: inherit!important;
-          }
-            
-          ${project.css}`
-            doc.getElementById('cuxjju3ew').textContent = consoleCSS;
-    
-            if (!window.editorManager) return;
-            if (string === 'css' && editorManager.cssEditor.state.doc.toString() !== project.css) {
-              dispatchChanges(editorManager.cssEditor, project.css);
-            }
-          }
+      if (string === 'css' || string === 'console') {
+        let consoleCSS = `
+      [data-zwj=zwjkonsole] {
+        display: ${project.console ? 'flex' : 'none'};
+      }
+        
+      ${project.css}`
+        doc.getElementById('cuxjju3ew').textContent = consoleCSS;
+
+        if (!window.editorManager) return;
+        if (string === 'css' && editorManager.cssEditor.state.doc.toString() !== project.css) {
+          dispatchChanges(editorManager.cssEditor, project.css);
         }
       }
       // render right away
-      if (initRun.includes(string)) {
-        if (string === 'javascript') {
-          if (project.autorun) renderPreview(true);
-          if (!window.editorManager) return;
-          if (window.editorManager.jsEditor.state.doc.toString() !== project.javascript) {
-            dispatchChanges(editorManager.jsEditor, project.javascript);
-            return false;
-          }
-        }
-
-        if (string === 'html_pre_processor' || string === 'css_pre_processor' || string === 'javascript_pre_processor') {
-          renderPreview(true);
+      if (string === 'html') {
+        if (project.autorun) renderPreview(true);
+        if (!window.editorManager) return;
+        if (window.editorManager.htmlEditor.state.doc.toString() !== project.html) {
+          dispatchChanges(editorManager.htmlEditor, project.html);
         }
       }
-      if (property.toString() === "dark") {
+
+      if (string === 'javascript') {
+        if (project.autorun) renderPreview(true);
+        if (!window.editorManager) return;
+        if (window.editorManager.jsEditor.state.doc.toString() !== project.javascript) {
+          dispatchChanges(editorManager.jsEditor, project.javascript);
+        }
+      }
+
+      if (string === 'meta' || string === 'libraries' || string === 'html_pre_processor' || string === 'css_pre_processor' || string === 'javascript_pre_processor') {
+        if (project.autorun) renderPreview(true);
+      }
+      if (string === "dark") {
         App.render('#app');
         document.documentElement.setAttribute('data-theme', project.dark ? 'dark' : 'light');
         doc.documentElement.setAttribute('data-theme', project.dark ? 'dark' : 'light');
@@ -3248,36 +3222,9 @@ async function renderPreview(forceRun = false) {
 
   const javascriptCode = await compileCode('javascript');
   const cssCode = await compileCode('css');
-
-  function jsScript() {
-    if (project.javascript_pre_processor === 'babel') {
-      return `<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="text/babel" ${ project.module ? 'data-type="module"' : ''}>${javascriptCode}</script>`
-    } else {
-      return `<script type="${project.module ? 'module' : 'text/javascript'}">${javascriptCode}</script>`
-    }
-  }
   const consoleCSS = `
-  .wrapper_yOR7u {
-    ${project.console ? '' : 'display: none!important;'}
-    left: 0!important; width: 100%!important; 
-    border-radius: 15px 15px 0 0!important; 
-    z-index: 99999999;
-  } 
-  .btn_yOR7u {
-    cursor: pointer; 
-    background: inherit; 
-    padding: 0 0.5rem; 
-    margin: inherit; 
-    margin-right: 0px; 
-    border: inherit; 
-    color: #fff!important; 
-  } 
-  .nav_yOR7u {
-    padding-bottom: 14px!important;
-  } 
-  .line_yOR7u {
-    background: inherit!important;
+  [data-zwj=zwjkonsole] {
+    display: ${project.console ? 'flex' : 'none'};
   }`
   const iframeSrc = `<html data-theme="${project.dark ? 'dark' : 'light'}">
     <head>
@@ -3288,10 +3235,10 @@ async function renderPreview(forceRun = false) {
       <meta name="author" content="${project.author}">
       ${project.meta ? project.meta : ''}
       ${cssTags}
-      <style id="cuxjju3ew" type="text/${project.css_pre_processor === 'none' || project.css_pre_processor === 'stylus' || project.css_pre_processor === 'sass' ? 'css' : project.css_pre_processor}">
+      <style id="cuxjju3ew" type="text/${project.css_pre_processor === 'css' || project.css_pre_processor === 'stylus' || project.css_pre_processor === 'sass' ? 'css' : project.css_pre_processor}">
         ${consoleCSS + cssCode}
       </style>
-      <script type="module" src="libraries/domconsole/dom-console.js" defer></script>
+      <script type="module" src="libraries/domconsole/dom-console-mod.js" defer></script>
     </head>
     <body>
       ${await compileCode('html')}
@@ -3321,7 +3268,6 @@ async function renderPreview(forceRun = false) {
       idoc.body.appendChild(script);
     };
     App.initialRender = false;
-    previousJavaScriptCode = javascriptCode;
     return false;
   }
 
