@@ -2434,10 +2434,8 @@ customElements.define('my-element', MyElement);`;
 }
 function importJSON(obj) {
   if (obj === null) return;
-  project.autorun = null;
-  setPreprocessor('html', obj.html_pre_processor);
-  setPreprocessor('css', obj.css_pre_processor);
-  setPreprocessor('javascript', obj.javascript_pre_processor);
+  const clone = { ...obj };
+  project.autorun = false;
   project.name = obj.name;
   project.version = obj.version;
   project.title = obj.title;
@@ -2448,7 +2446,6 @@ function importJSON(obj) {
   project.console = obj.console;
   project.dark = obj.dark;
   project.module = obj.module;
-  project.autorun = obj.autorun;
   project.pwa = obj.pwa;
   project.activePanel = obj.activePanel;
   project.preview = obj.preview;
@@ -2467,8 +2464,11 @@ function importJSON(obj) {
     dispatchChanges(editorManager.cssEditor, project.css);
     dispatchChanges(editorManager.jsEditor, project.javascript);
   }
-  project.autorun = obj.autorun;
-  renderPreview(true);
+
+  setPreprocessor('html', obj.html_pre_processor);
+  setPreprocessor('css', obj.css_pre_processor);
+  setPreprocessor('javascript', obj.javascript_pre_processor);
+  project.autorun = clone.autorun;
 }
 function importProject() {
   Modal.render({
@@ -2495,6 +2495,9 @@ function importProject() {
         reader.onload = event => {
           try {
             importJSON(JSON.parse(event.target.result));
+            setTimeout(function() {
+              renderPreview(true);
+            }, 100);
           } catch (error) {
             console.error('Error parsing JSON file:', error);
           }
@@ -3201,7 +3204,6 @@ async function screenshot() {
   }
 }
 async function renderPreview(forceRun = false) {
-  console.log('renderPreview Called')
   const iframe = document.getElementById('iframe');
   if (!iframe) return;
 
@@ -3361,8 +3363,9 @@ document.addEventListener('DOMContentLoaded', function() {
     getIFrameClientSize();
 
     if (localStorage.getItem('kodeWeave')) {
+      importJSON(JSON.parse(localStorage.getItem('kodeWeave')));
       setTimeout(function() {
-        importJSON(JSON.parse(localStorage.getItem('kodeWeave')));
+        renderPreview(true);
       }, 100);
     }
   }
