@@ -2680,26 +2680,6 @@ async function downloadProject() {
 
     let rollupInput = ``;
     
-    // Nodejs Package JSON
-    let nodeStr = `{
-  "name": "${project.name.toLowerCase().split(' ').join('')}",
-  "version": "${project.version}",
-  "type": "module",
-  "scripts": {
-    ${project.css.trim() !== '' ? `"build:css": "postcss src/styles.css -o dist/styles.min.css",
-    ` : ''}"build:js": "rollup -c && terser dist/script.js -o dist/script.min.js",
-    "build": "${project.css.trim() !== '' ? 'npm run build:css && ' : ''}npm run build:js",
-    "serve": "http-server -c-1 -p 8081"
-  },
-  "devDependencies": {
-    "rollup": "^2.79.1",
-    "rollup-plugin-terser": "^7.0.2",
-    "terser": "^5.10.0",
-    "http-server": "^14.1.1"${checkCSSDependencies()}${checkJSDependencies()}
-  }
-}`;
-    zip.file("package.json", nodeStr);
-    
     // Rollup Configuration
     let rollupPlugins = `import { terser } from 'rollup-plugin-terser';
 `;
@@ -2774,9 +2754,29 @@ export default {
   "include": ["src/**/*"]
 }`;
       zip.file("tsconfig.json", tsconfig);
-    }    
+    }
 
-  let licenseStr = `The MIT License (MIT)
+    // Nodejs Package JSON
+    let nodeStr = `{
+  "name": "${project.name.toLowerCase().split(' ').join('')}",
+  "version": "${project.version}",
+  "type": "module",
+  "scripts": {
+    ${project.css.trim() !== '' ? `"build:css": "postcss src/styles.css -o dist/styles.min.css",
+    ` : ''}"build:js": "rollup -c && terser ${rollupInput} -o dist/script.min.js",
+    "build": "${project.css.trim() !== '' ? 'npm run build:css && ' : ''}npm run build:js",
+    "serve": "http-server -c-1 -p 8081"
+  },
+  "devDependencies": {
+    "rollup": "^2.79.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "terser": "^5.10.0",
+    "http-server": "^14.1.1"${checkCSSDependencies()}${checkJSDependencies()}
+  }
+}`;
+    zip.file("package.json", nodeStr);
+
+    let licenseStr = `The MIT License (MIT)
 Copyright (c) ${new Date().getFullYear()} ${project.author}
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -2920,7 +2920,7 @@ ${project.description}`;
     minifiedJS = minifiedJS.code;
 
     // Add script.js
-    if (project.javascript_pre_processor === 'javascript') zip.file(rollupInput, project.javascript);
+    zip.file(`${rollupInput}`, project.javascript);
     if (project.javascript_pre_processor === 'javascript') zip.file('dist/script.js', project.javascript);
     if (project.javascript_pre_processor === 'babel') zip.file('dist/script.js', minifiedJS);
     if (project.javascript_pre_processor === 'typescript') zip.file('dist/script.js', minifiedJS);
