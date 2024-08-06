@@ -310,12 +310,8 @@ const project = onChange(p, (property, oldValue, newValue) => {
       // diff nodes
       if (diffArr.includes(string)) {
         if (project.autorun) {
-          if (project.diffing) {
-            renderPreview();
-          } else {
-            if (string !== 'css') {
-              renderPreview(true);
-            }
+          if (string !== 'css') {
+            renderPreview(true);
           }
         }
         if (string === 'html') {
@@ -839,25 +835,6 @@ const App = {
         name="toggle css reset"
         onchange="project.dark = this.checked;"
         ${project.dark ? 'checked' : ''}
-      />
-    </nav>
-  </li>
-  <li class="list-none">
-    <nav class="flex justify-between mt-5 items-center">
-      <label 
-        for="k6tw02ec9"
-        class="mb-2 flex justify-between items-center cursor-pointer">
-        <span>Diffing:</span>
-      </label>
-
-      <input 
-        id="k6tw02ec9"
-        class="m-0"
-        type="checkbox" 
-        role="switch"
-        name="toggle module"
-        onchange="project.diffing = this.checked;"
-        ${project.diffing ? 'checked' : ''}
       />
     </nav>
   </li>
@@ -2031,7 +2008,6 @@ function newProject(name) {
   project.description = `A modern ${capitalizedTitle} application!`;
   project.author = "kodeWeave";
   project.url = "https://michaelsboost.com/";
-  project.diffing = false;
   project.module = true;
   project.preview = true;
   if (name === 'angular') project.module = false;
@@ -2293,7 +2269,6 @@ platformBrowserDynamic().bootstrapModule(AppModule);`;
 </div>`;
     project.css = ``;
     project.javascript = ``;
-    project.diffing = true;
   }
   if (name === 'solid') {
     project.meta = ``;
@@ -2502,7 +2477,6 @@ function importJSON(obj) {
   project.logo = obj.logo;
   project.console = obj.console;
   project.dark = obj.dark;
-  project.diffing = obj.diffing;
   project.module = obj.module;
   project.autorun = obj.autorun;
   project.pwa = obj.pwa;
@@ -3351,7 +3325,7 @@ async function renderPreview(forceRun = false) {
     return false;
   }
 
-  if (project.diffing || !forceRun) {
+  if (!forceRun) {
     diffNodes(idoc.documentElement, doc.documentElement);
     return false;
   }
