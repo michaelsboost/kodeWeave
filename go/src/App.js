@@ -3243,11 +3243,19 @@ async function renderPreview(forceRun = false) {
     ${await compileCode('html')}
     ${scriptTags ? scriptTags : ''}
     ${project.css_pre_processor === 'less' ? '<script src="libraries/preprocessors/less.js"></script>' : ''}
-    <script type="${project.module ? 'module' : 'text/javascript'}">${javascriptCode}</script>
   </body>
 </html>`;
 
-  if (forceRun) iframe.setAttribute('srcdoc', iframeSrc);
+  if (forceRun) {
+    iframe.setAttribute('srcdoc', iframeSrc);
+    iframe.onload = () => {
+      const doc = iframe.contentWindow.document;
+      const script = doc.createElement('script');
+      script.type = project.module ? 'module' : 'text/javascript';
+      script.textContent = javascriptCode;
+      doc.body.appendChild(script);
+    }
+  }
 }
 
 // Make functions available in global space
