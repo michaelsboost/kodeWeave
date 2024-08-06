@@ -72,13 +72,11 @@ let d = {
   searchLibKey: null,
   librarySuggestions: null,
   iframeSize: null,
-  activePanel: 'html',
   selectedSize: 'none',
   compiledJSX: null,
   menuDialog: null,
   settings: null,
   libraries: null,
-  safeRender: null,
   demos: null
 };
 const icons = (function() {
@@ -312,16 +310,16 @@ const project = onChange(p, (property, oldValue, newValue) => {
       }
         
       ${project.css}`
-        doc.getElementById('cuxjju3ew').textContent = consoleCSS;
 
         if (!window.editorManager) return;
         if (string === 'css' && editorManager.cssEditor.state.doc.toString() !== project.css) {
           dispatchChanges(editorManager.cssEditor, project.css);
         }
+        doc.getElementById('cuxjju3ew').textContent = consoleCSS;
       }
       // render right away
       if (string === 'html') {
-        if (project.autorun) renderPreview(true);
+        renderPreview(project.autorun);
         if (!window.editorManager) return;
         if (window.editorManager.htmlEditor.state.doc.toString() !== project.html) {
           dispatchChanges(editorManager.htmlEditor, project.html);
@@ -329,15 +327,15 @@ const project = onChange(p, (property, oldValue, newValue) => {
       }
 
       if (string === 'javascript') {
-        if (project.autorun) renderPreview(true);
+        renderPreview(project.autorun);
         if (!window.editorManager) return;
         if (window.editorManager.jsEditor.state.doc.toString() !== project.javascript) {
           dispatchChanges(editorManager.jsEditor, project.javascript);
         }
       }
 
-      if (string === 'meta' || string === 'libraries' || string === 'html_pre_processor' || string === 'css_pre_processor' || string === 'javascript_pre_processor') {
-        if (project.autorun) renderPreview(true);
+      if (string === 'module' || string === 'meta' || string === 'libraries' || string === 'html_pre_processor' || string === 'css_pre_processor' || string === 'javascript_pre_processor') {
+        renderPreview(project.autorun);
       }
       if (string === "dark") {
         App.render('#app');
@@ -2436,8 +2434,7 @@ customElements.define('my-element', MyElement);`;
 }
 function importJSON(obj) {
   if (obj === null) return;
-  project.obj = {};
-  if (data.safeRender) data.safeRender = null;
+  project.autorun = null;
   setPreprocessor('html', obj.html_pre_processor);
   setPreprocessor('css', obj.css_pre_processor);
   setPreprocessor('javascript', obj.javascript_pre_processor);
@@ -2470,8 +2467,7 @@ function importJSON(obj) {
     dispatchChanges(editorManager.cssEditor, project.css);
     dispatchChanges(editorManager.jsEditor, project.javascript);
   }
-
-  data.safeRender = true;
+  project.autorun = obj.autorun;
   renderPreview(true);
 }
 function importProject() {
@@ -3205,28 +3201,29 @@ async function screenshot() {
   }
 }
 async function renderPreview(forceRun = false) {
-  if (!forceRun || !project.autorun || !data.safeRender) return;
+  console.log('renderPreview Called')
+  const iframe = document.getElementById('iframe');
+  if (!iframe) return;
 
-  if (data.safeRender) {
-    let scriptTags = '';
-    let cssTags = '';
-    project.libraries.forEach(library => {
-      if (library.endsWith('.js')) {
-        scriptTags += `<script src="${library}"></script>\n    `;
-      } else if (library.endsWith('.css')) {
-        cssTags += `<link rel="stylesheet" href="${library}">\n          `;
-      } else {
-        cssTags += `<link href="${library}" rel="stylesheet">\n          `;
-      }
-    });
+  let scriptTags = '';
+  let cssTags = '';
+  project.libraries.forEach(library => {
+    if (library.endsWith('.js')) {
+      scriptTags += `<script src="${library}"></script>\n    `;
+    } else if (library.endsWith('.css')) {
+      cssTags += `<link rel="stylesheet" href="${library}">\n          `;
+    } else {
+      cssTags += `<link href="${library}" rel="stylesheet">\n          `;
+    }
+  });
 
-    const javascriptCode = await compileCode('javascript');
-    const cssCode = await compileCode('css');
-    const consoleCSS = `
-      [data-zwj=zwjkonsole] {
-        display: ${project.console ? 'flex' : 'none'};
-      }`
-    const iframeSrc = `<html data-theme="${project.dark ? 'dark' : 'light'}">
+  const javascriptCode = await compileCode('javascript');
+  const cssCode = await compileCode('css');
+  const consoleCSS = `
+    [data-zwj=zwjkonsole] {
+      display: ${project.console ? 'flex' : 'none'};
+    }`
+  const iframeSrc = `<html data-theme="${project.dark ? 'dark' : 'light'}">
   <head>
     <title>${project.title}</title>
     <meta charset="utf-8">
@@ -3238,38 +3235,17 @@ async function renderPreview(forceRun = false) {
     <style id="cuxjju3ew" type="text/${project.css_pre_processor === 'css' || project.css_pre_processor === 'stylus' || project.css_pre_processor === 'sass' ? 'css' : project.css_pre_processor}">
       ${consoleCSS + cssCode}
     </style>
-    <script type="module" src="libraries/domconsole/dom-console-mod.js" defer></script>
+    <script type="module" src="libraries/domconsole/dom-console-mod.min.js" defer></script>
   </head>
   <body>
     ${await compileCode('html')}
     ${scriptTags ? scriptTags : ''}
     ${project.css_pre_processor === 'less' ? '<script src="libraries/preprocessors/less.js"></script>' : ''}
+    <script type="${project.module ? 'module' : 'text/javascript'}">${javascriptCode}</script>
   </body>
 </html>`;
 
-    const iframe = document.getElementById('iframe');
-    if (!iframe) return;
-
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(iframeSrc, 'text/html');
-    const idoc = iframe.contentDocument || iframe.contentWindow.document;
-
-    if (!forceRun && !App.initialRender) {
-      diffNodes(idoc.documentElement, doc.documentElement);
-      return false;
-    } else {
-      iframe.setAttribute('srcdoc', iframeSrc);
-      iframe.onload = () => {
-        // Initialize script within the iframe
-        const idoc = iframe.contentDocument || iframe.contentWindow.document;
-        const script = idoc.createElement('script');
-        script.id = "zzkiapxab";
-        script.type = project.module ? 'module' : 'text/javascript';
-        script.textContent = javascriptCode;
-        idoc.body.appendChild(script);
-      };
-    }
-  }
+  if (forceRun) iframe.setAttribute('srcdoc', iframeSrc);
 }
 
 // Make functions available in global space
@@ -3388,8 +3364,6 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(function() {
         importJSON(JSON.parse(localStorage.getItem('kodeWeave')));
       }, 100);
-    } else {
-      data.safeRender = true;
     }
   }
   window.onresize = () => getIFrameClientSize();
