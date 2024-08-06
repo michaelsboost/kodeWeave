@@ -183,7 +183,7 @@
           background: inherit!important;
         }
           
-        ${e.css}`;if(i.getElementById("cuxjju3ew").textContent=p,!window.editorManager)return;a==="css"&&editorManager.cssEditor.state.doc.toString()!==e.css&&dispatchChanges(editorManager.cssEditor,e.css)}}if(c.includes(a)){if(a==="javascript"){if(j(!0),!window.editorManager)return;if(window.editorManager.jsEditor.state.doc.toString()!==e.javascript)return dispatchChanges(editorManager.jsEditor,e.javascript),!1}(a==="html_pre_processor"||a==="css_pre_processor"||a==="javascript_pre_processor")&&j(!0)}a==="dark"&&(x.render("#app"),document.documentElement.setAttribute("data-theme",e.dark?"dark":"light"),document.querySelector("meta[name=apple-mobile-web-app-status-bar-style]").setAttribute("content",e.dark?"black-translucent":"default"),document.querySelector("meta[name=theme-color]").setAttribute("content",e.dark?"#13171f":"#ffffff"),document.querySelector("meta[name=msapplication-navbutton-color]").setAttribute("content",e.dark?"#13171f":"#ffffff"))}}}),g=q(ce,(t,s,r)=>{s!==r&&x.render("#app")});window.project=e;window.data=g;function pe(){let t="w-full";return`<ul class="p-0 m-0">
+        ${e.css}`;if(i.getElementById("cuxjju3ew").textContent=p,!window.editorManager)return;a==="css"&&editorManager.cssEditor.state.doc.toString()!==e.css&&dispatchChanges(editorManager.cssEditor,e.css)}}if(c.includes(a)){if(a==="javascript"){if(e.autorun&&j(!0),!window.editorManager)return;if(window.editorManager.jsEditor.state.doc.toString()!==e.javascript)return dispatchChanges(editorManager.jsEditor,e.javascript),!1}(a==="html_pre_processor"||a==="css_pre_processor"||a==="javascript_pre_processor")&&j(!0)}a==="dark"&&(x.render("#app"),document.documentElement.setAttribute("data-theme",e.dark?"dark":"light"),document.querySelector("meta[name=apple-mobile-web-app-status-bar-style]").setAttribute("content",e.dark?"black-translucent":"default"),document.querySelector("meta[name=theme-color]").setAttribute("content",e.dark?"#13171f":"#ffffff"),document.querySelector("meta[name=msapplication-navbutton-color]").setAttribute("content",e.dark?"#13171f":"#ffffff"))}}}),g=q(ce,(t,s,r)=>{s!==r&&x.render("#app")});window.project=e;window.data=g;function pe(){let t="w-full";return`<ul class="p-0 m-0">
   <li class="list-none m-0">
     <button
       aria-label="toggle menu"
@@ -1232,34 +1232,34 @@ function App() {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);`),t==="vue"&&(e.meta="",e.libraries=["https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.37/vue.global.prod.min.js","https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css","https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"],e.html='<div id="root"></div>',e.css="",e.javascript=`const App = {
-    data() {
-      return {
-        counter: 0,
-        message: '\u{1F44B} Hello, ${r}! \u{1F30E}'
-      };
-    },
-    methods: {
-      incrementCounter() {
-        this.counter++;
-      }
-    },
-    template: \`
-      <div class="flex flex-col items-center justify-center absolute inset-0">
-        <h1 class="text-3xl font-thin mb-4">{{ message }}</h1>
-        <p class="text-xl mb-4">Counter: <span id="counter" class="font-mono">{{ counter }}</span></p>
-        <button
-          id="incrementButton"
-          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition"
-          @click="incrementCounter"
-        >
-          +
-        </button>
-      </div>
-    \`
-  };
-  
-  const app = Vue.createApp(App);
-  app.mount('#root');`),t==="preact"&&(e.meta='<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js" defer><\/script>',e.libraries=["https://unpkg.com/preact@latest/dist/preact.min.js","https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css","https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"],e.html='<div id="root"></div>',e.css="",e.javascript=`/** @jsx h */
+  data() {
+    return {
+      counter: 0,
+      message: '\u{1F44B} Hello, ${r}! \u{1F30E}'
+    };
+  },
+  methods: {
+    incrementCounter() {
+      this.counter++;
+    }
+  },
+  template: \`
+    <div class="flex flex-col items-center justify-center absolute inset-0">
+      <h1 class="text-3xl font-thin mb-4">{{ message }}</h1>
+      <p class="text-xl mb-4">Counter: <span id="counter" class="font-mono">{{ counter }}</span></p>
+      <button
+        id="incrementButton"
+        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition"
+        @click="incrementCounter"
+      >
+        +
+      </button>
+    </div>
+  \`
+};
+
+const app = Vue.createApp(App);
+app.mount('#root');`),t==="preact"&&(e.meta='<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js" defer><\/script>',e.libraries=["https://unpkg.com/preact@latest/dist/preact.min.js","https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css","https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"],e.html='<div id="root"></div>',e.css="",e.javascript=`/** @jsx h */
 import { html, render, useState, useEffect } from 'https://unpkg.com/htm@3.1.1/preact/standalone.module.js';
 
 function App() {

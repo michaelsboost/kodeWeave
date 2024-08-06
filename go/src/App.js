@@ -356,7 +356,7 @@ const project = onChange(p, (property, oldValue, newValue) => {
       // render right away
       if (initRun.includes(string)) {
         if (string === 'javascript') {
-          renderPreview(true);
+          if (project.autorun) renderPreview(true);
           if (!window.editorManager) return;
           if (window.editorManager.jsEditor.state.doc.toString() !== project.javascript) {
             dispatchChanges(editorManager.jsEditor, project.javascript);
@@ -2106,34 +2106,34 @@ root.render(<App />);`;
     project.html = `<div id="root"></div>`;
     project.css = ``;
     project.javascript = `const App = {
-    data() {
-      return {
-        counter: 0,
-        message: '👋 Hello, ${capitalizedTitle}! 🌎'
-      };
-    },
-    methods: {
-      incrementCounter() {
-        this.counter++;
-      }
-    },
-    template: \`
-      <div class="flex flex-col items-center justify-center absolute inset-0">
-        <h1 class="text-3xl font-thin mb-4">{{ message }}</h1>
-        <p class="text-xl mb-4">Counter: <span id="counter" class="font-mono">{{ counter }}</span></p>
-        <button
-          id="incrementButton"
-          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition"
-          @click="incrementCounter"
-        >
-          +
-        </button>
-      </div>
-    \`
-  };
-  
-  const app = Vue.createApp(App);
-  app.mount('#root');`;
+  data() {
+    return {
+      counter: 0,
+      message: '👋 Hello, ${capitalizedTitle}! 🌎'
+    };
+  },
+  methods: {
+    incrementCounter() {
+      this.counter++;
+    }
+  },
+  template: \`
+    <div class="flex flex-col items-center justify-center absolute inset-0">
+      <h1 class="text-3xl font-thin mb-4">{{ message }}</h1>
+      <p class="text-xl mb-4">Counter: <span id="counter" class="font-mono">{{ counter }}</span></p>
+      <button
+        id="incrementButton"
+        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition"
+        @click="incrementCounter"
+      >
+        +
+      </button>
+    </div>
+  \`
+};
+
+const app = Vue.createApp(App);
+app.mount('#root');`;
   }
   if (name === 'preact') {
     project.meta = `<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js" defer></script>`;
