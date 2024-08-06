@@ -1676,11 +1676,7 @@ async function setPreprocessor(editor, value) {
     },
     javascript: {
       typescript: "libraries/preprocessors/typescript.min.js",
-      babel: "libraries/preprocessors/babel.min.js",
-      jsxtypescript: [
-        "libraries/preprocessors/typescript.min.js",
-        "libraries/preprocessors/babel.min.js"
-      ]
+      babel: "libraries/preprocessors/babel.min.js"
     }
   };
 
@@ -1924,14 +1920,6 @@ async function compileCode(detect) {
           return Babel.transform(project.javascript, { presets: ['env', 'react'] }).code;
         case 'typescript':
           return ts.transpileModule(project.javascript, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
-        case 'jsxtypescript':
-          const result = ts.transpileModule(project.javascript, {
-            compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES5, jsx: ts.JsxEmit.React }
-          }).outputText;
-          data.compiledJSX = Babel.transform(result, {
-            presets: ['env', 'react']
-          }).code;
-          return data.compiledJSX;
         default:
           return project.javascript;
       }
@@ -2635,7 +2623,7 @@ async function downloadProject() {
     if (!iframe) return;
 
     const idoc = iframe.contentDocument || iframe.contentWindow.document;
-    const srcsetUrls = idoc.querySelectorAll('img[srcset]').forEach(img => {
+    idoc.querySelectorAll('img[srcset]').forEach(img => {
       img.srcset.split(',').forEach(srcset => {
         const url = srcset.trim().split(' ')[0];
         imageUrls.push(url);
@@ -2675,20 +2663,22 @@ async function downloadProject() {
     }
     
     function checkJSDependencies() {
-      if (project.javascript_pre_processor === 'babel' || project.javascript_pre_processor === 'jsxtypescript') {
+      if (project.javascript_pre_processor === 'babel') {
         return `,
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",
     "@babel/preset-react": "^7.14.5",
     "rollup-plugin-babel": "^4.4.0"`;
       }
-      if (project.javascript_pre_processor === 'typescript' || project.javascript_pre_processor === 'jsxtypescript') {
+      if (project.javascript_pre_processor === 'typescript') {
         return `,
     "rollup-plugin-typescript2": "^0.31.1",
     "typescript": "^4.4.3"`;
       }
       return '';
     }
+
+    let rollupInput = ``;
     
     // Nodejs Package JSON
     let nodeStr = `{
@@ -2714,27 +2704,33 @@ async function downloadProject() {
     let rollupPlugins = `import { terser } from 'rollup-plugin-terser';
 `;
     
-    if (project.javascript_pre_processor === 'babel' || project.javascript_pre_processor === 'jsxtypescript') {
+    if (project.javascript_pre_processor === 'javascript') {
+      rollupInput = `input: 'src/script.js',`;
+    }
+
+    if (project.javascript_pre_processor === 'babel') {
       rollupPlugins += `import babel from 'rollup-plugin-babel';
 `;
+      rollupInput = `input: 'src/script.jsx',`;
     }
     
-    if (project.javascript_pre_processor === 'typescript' || project.javascript_pre_processor === 'jsxtypescript') {
+    if (project.javascript_pre_processor === 'typescript') {
       rollupPlugins += `import typescript from 'rollup-plugin-typescript2';
 `;
+      rollupInput = `input: 'src/script.ts',`;
     }
     
     let rollupStr = `${rollupPlugins}
 export default {
-  ${project.javascript_pre_processor === 'typescript' || project.javascript_pre_processor === 'jsxtypescript' ? "input: 'src/script.ts', // entry point for your TypeScript" : "input: 'src/script.js', // entry point to your Javascript"}
+  ${rollupInput} // entry point to your Javascript
   output: {
     file: 'dist/script.js',
     format: ${project.module ? "'es'" : "'iife'"}, // Immediately Invoked Function Expression, suitable for <script> tags
     name: '${project.name.toLowerCase().split(' ').join('')}'
   },
   plugins: [
-    ${project.javascript_pre_processor === 'typescript' || project.javascript_pre_processor === 'jsxtypescript' ? 'typescript(),' : ''}
-    ${project.javascript_pre_processor === 'babel' || project.javascript_pre_processor === 'jsxtypescript' ? 'babel({ exclude: "node_modules/**" }),' : ''}
+    ${project.javascript_pre_processor === 'typescript' ? 'typescript(),' : ''}
+    ${project.javascript_pre_processor === 'babel' ? 'babel({ exclude: "node_modules/**" }),' : ''}
     terser() // minifies the JavaScript
   ]
 };`;
@@ -2752,11 +2748,10 @@ export default {
     }
     
     // Babel Configuration
-    if (project.javascript_pre_processor === 'babel' || project.javascript_pre_processor === 'jsxtypescript') {
+    if (project.javascript_pre_processor === 'babel') {
       let babelStr = `{
   "presets": [
     "@babel/preset-env",
-    ${project.javascript_pre_processor === 'jsxtypescript' ? `"@babel/preset-typescript",` : ''}
     "@babel/preset-react"
   ]
 }`;
@@ -2764,7 +2759,7 @@ export default {
     }
     
     // TypeScript Configuration
-    if (project.javascript_pre_processor === 'typescript' || project.javascript_pre_processor === 'jsxtypescript') {
+    if (project.javascript_pre_processor === 'typescript') {
       let tsconfig = `{
   "compilerOptions": {
     "target": "ES5",
@@ -2927,12 +2922,10 @@ ${project.description}`;
     // Add script.js
     if (project.javascript_pre_processor === 'javascript') zip.file('src/script.js', project.javascript);
     if (project.javascript_pre_processor === 'javascript') zip.file('dist/script.js', project.javascript);
-    if (project.javascript_pre_processor === 'babel') zip.file('src/script.js', project.javascript);
+    if (project.javascript_pre_processor === 'babel') zip.file('src/script.jsx', project.javascript);
     if (project.javascript_pre_processor === 'babel') zip.file('dist/script.js', minifiedJS);
     if (project.javascript_pre_processor === 'typescript') zip.file('src/script.ts', project.javascript);
     if (project.javascript_pre_processor === 'typescript') zip.file('dist/script.js', minifiedJS);
-    if (project.javascript_pre_processor === 'jsxtypescript') zip.file('src/script.ts', project.javascript);
-    if (project.javascript_pre_processor === 'jsxtypescript') zip.file('dist/script.js', minifiedJS);
 
     // if pwa is enabled
     let swinit = '';
@@ -3104,13 +3097,8 @@ ${(project.pwa ? swinit : '')}
 }
 async function share() {
   try {
-    // Compile code if necessary
-    const javascriptCode = project.javascript_pre_processor === 'jsxtypescript'
-      ? data.compiledJSX
-      : project.javascript;
-
     let jsPreprocessor = null;
-    if (project.javascript_pre_processor === 'jsxtypescript' || project.javascript_pre_processor === 'javascript') {
+    if (project.javascript_pre_processor === 'javascript') {
       jsPreprocessor = "none";
     } else {
       jsPreprocessor = project.javascript_pre_processor;
@@ -3128,7 +3116,7 @@ async function share() {
       css_starter: "neither",
       css_prefix: "neither",
       js_module: project.module,
-      js: javascriptCode,
+      js: project.javascript,
       js_pre_processor: jsPreprocessor,
       js_external: project.libraries.filter(lib => lib.endsWith('.js')).join(';'),
       editors: '111',
