@@ -516,7 +516,7 @@ function LeftMenubar() {
 </ul>`;
 }
 function PreviewMenu() {
-  const buttonClass = 'inline-block border-0 bg-transparent text-sm';
+  const buttonClass = 'border-0 bg-transparent text-sm';
   const selectClass = 'mx-0 my-2 w-auto rounded-md capitalize text-[.6rem]';
   const selectStyle = 'padding: 0.5rem;';
 
@@ -598,17 +598,18 @@ function PreviewMenu() {
   return `<div class="flex justify-between items-center overflow-auto">
   ${previewSize}
 
-  <span class="whitespace-nowrap overflow-x-auto overflow-y-hidden">
-    <button 
-      aria-label="rotate canvas"
-      name="rotate canvas" 
-      class="${buttonClass} ${data.selectedSize === 'none' ? 'hidden' : ''}"
-      style="color: unset;"
-      onclick="rotateCanvas()">
-      ${icons.rotate}
-    </button>
-
-    <span class="${project.activePanel ? '' : 'hidden'}">
+  <ul class="m-0 p-0 flex whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    <li class="list-none">
+      <button 
+        aria-label="rotate canvas"
+        name="rotate canvas" 
+        class="${buttonClass} ${data.selectedSize === 'none' ? 'hidden' : ''}"
+        style="color: unset;"
+        onclick="rotateCanvas()">
+        ${icons.rotate}
+      </button>
+    </li>
+    <li class="list-none ${project.activePanel ? '' : 'hidden'}">
       <button
         aria-label="change view"
         name="change view"
@@ -618,6 +619,8 @@ function PreviewMenu() {
       >
         ${icons.columns}
       </button>
+    </li>
+    <li class="list-none ${project.activePanel ? '' : 'hidden'}">
       <button
         aria-label="toggle columns left or right"
         name="toggle columns left or right"
@@ -627,27 +630,29 @@ function PreviewMenu() {
       >
         ${project.columnsRight ? icons.leftChev : icons.rightChev}
       </button>
-    </span>
-
-    <button 
-      aria-label="tidy code"
-      name="tidy code"
-      class="${buttonClass} ${canTidyShow()}"
-      style="color: unset;"
-      onclick="tidy()">
-      ${icons.tidy}
-    </button>
-
-    <button
-      aria-label="run preview"
-      name="run preview"
-      class="${buttonClass} ${project.autorun ? 'hidden' : ''}"
-      style="color: unset;"
-      onclick="renderPreview(true)"
-    >
-      ${icons.play}
-    </button>
-  </span>
+    </li>
+    <li class="list-none">
+      <button 
+        aria-label="tidy code"
+        name="tidy code"
+        class="${buttonClass} ${canTidyShow()}"
+        style="color: unset;"
+        onclick="tidy()">
+        ${icons.tidy}
+      </button>
+    </li>
+    <li class="list-none">
+      <button
+        aria-label="run preview"
+        name="run preview"
+        class="${buttonClass} ${project.autorun ? 'hidden' : ''}"
+        style="color: unset;"
+        onclick="renderPreview(true)"
+      >
+        ${icons.play}
+      </button>
+    </li>
+  </ul>
 </div>`;
 }
 const App = {

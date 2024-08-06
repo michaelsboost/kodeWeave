@@ -303,7 +303,7 @@
       ${d.cog}
     </button>
   </li>
-</ul>`}function de(){let t="inline-block border-0 bg-transparent text-sm",s="mx-0 my-2 w-auto rounded-md capitalize text-[.6rem]",r="padding: 0.5rem;",o={Phones:{"320x480":"iPhone 3GS","375x667":"iPhone 6/7/8","414x736":"iPhone 6/7/8 Plus","375x812":"iPhone X/XS/11 Pro","414x896":"iPhone XR/XS Max/11/11 Pro Max","360x640":"Samsung Galaxy S5","360x740":"Samsung Galaxy S8+","1440x3200":"Samsung Galaxy S21 Ultra","1080x2340":"Google Pixel 5","1080x2400":"OnePlus 8 Pro","1440x3200":"Xiaomi Mi 11 Ultra","1644x3840":"Sony Xperia 1 III"},Tablets:{"2048x2732":'iPad Pro 12.9" (3rd/4th Gen)',"2388x1668":'iPad Pro 11" (1st/2nd/3rd Gen)',"2736x1824":"Microsoft Surface Pro 7","2800x1752":"Samsung Galaxy Tab S7+","2560x1600":"Huawei MatePad Pro","2000x1200":"Lenovo Tab P11 Pro","1920x1200":"Amazon Fire HD 10","1536x2048":"iPad Air (3rd Gen)","1620x2160":"iPad Air (4th Gen)","1620x2160":'iPad 10.2" (8th Gen)',"1668x2224":'iPad Pro 11" (2021)'},Desktops:{"3840x2160":"4K UHD (3840x2160)","2560x1440":"WQHD (2560x1440)","1920x1080":"Full HD (1920x1080)","1366x768":"Laptop (1366x768)","3440x1440":"UltraWide QHD (3440x1440)","5120x2880":"5K Retina (5120x2880)","1280x800":"MacBook (1280x800)","2560x1600":"MacBook Pro (2560x1600)","2880x1800":"MacBook Pro Retina (2880x1800)"}},i=`<label for="selectedSize" aria-label="resize canvas" class="mx-2">
+</ul>`}function de(){let t="border-0 bg-transparent text-sm",s="mx-0 my-2 w-auto rounded-md capitalize text-[.6rem]",r="padding: 0.5rem;",o={Phones:{"320x480":"iPhone 3GS","375x667":"iPhone 6/7/8","414x736":"iPhone 6/7/8 Plus","375x812":"iPhone X/XS/11 Pro","414x896":"iPhone XR/XS Max/11/11 Pro Max","360x640":"Samsung Galaxy S5","360x740":"Samsung Galaxy S8+","1440x3200":"Samsung Galaxy S21 Ultra","1080x2340":"Google Pixel 5","1080x2400":"OnePlus 8 Pro","1440x3200":"Xiaomi Mi 11 Ultra","1644x3840":"Sony Xperia 1 III"},Tablets:{"2048x2732":'iPad Pro 12.9" (3rd/4th Gen)',"2388x1668":'iPad Pro 11" (1st/2nd/3rd Gen)',"2736x1824":"Microsoft Surface Pro 7","2800x1752":"Samsung Galaxy Tab S7+","2560x1600":"Huawei MatePad Pro","2000x1200":"Lenovo Tab P11 Pro","1920x1200":"Amazon Fire HD 10","1536x2048":"iPad Air (3rd Gen)","1620x2160":"iPad Air (4th Gen)","1620x2160":'iPad 10.2" (8th Gen)',"1668x2224":'iPad Pro 11" (2021)'},Desktops:{"3840x2160":"4K UHD (3840x2160)","2560x1440":"WQHD (2560x1440)","1920x1080":"Full HD (1920x1080)","1366x768":"Laptop (1366x768)","3440x1440":"UltraWide QHD (3440x1440)","5120x2880":"5K Retina (5120x2880)","1280x800":"MacBook (1280x800)","2560x1600":"MacBook Pro (2560x1600)","2880x1800":"MacBook Pro Retina (2880x1800)"}},i=`<label for="selectedSize" aria-label="resize canvas" class="mx-2">
     <select id="selectedSize" onchange="resizeCanvas(this.value)" class="${s}" style="${r}">
       <option value="none">Select Size</option>
       ${Object.keys(o).map(c=>`
@@ -317,17 +317,18 @@
   </label>`;function n(){if(!e.activePanel||e.activePanel&&(e.activePanel==="html"&&e.html_pre_processor!=="html"||e.activePanel==="css"&&e.css_pre_processor!=="css"||e.activePanel==="javascript"&&e.javascript_pre_processor!=="javascript"))return"hidden"}return`<div class="flex justify-between items-center overflow-auto">
   ${i}
 
-  <span class="whitespace-nowrap overflow-x-auto overflow-y-hidden">
-    <button 
-      aria-label="rotate canvas"
-      name="rotate canvas" 
-      class="${t} ${g.selectedSize==="none"?"hidden":""}"
-      style="color: unset;"
-      onclick="rotateCanvas()">
-      ${d.rotate}
-    </button>
-
-    <span class="${e.activePanel?"":"hidden"}">
+  <ul class="m-0 p-0 flex whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    <li class="list-none">
+      <button 
+        aria-label="rotate canvas"
+        name="rotate canvas" 
+        class="${t} ${g.selectedSize==="none"?"hidden":""}"
+        style="color: unset;"
+        onclick="rotateCanvas()">
+        ${d.rotate}
+      </button>
+    </li>
+    <li class="list-none ${e.activePanel?"":"hidden"}">
       <button
         aria-label="change view"
         name="change view"
@@ -337,6 +338,8 @@
       >
         ${d.columns}
       </button>
+    </li>
+    <li class="list-none ${e.activePanel?"":"hidden"}">
       <button
         aria-label="toggle columns left or right"
         name="toggle columns left or right"
@@ -346,27 +349,29 @@
       >
         ${e.columnsRight?d.leftChev:d.rightChev}
       </button>
-    </span>
-
-    <button 
-      aria-label="tidy code"
-      name="tidy code"
-      class="${t} ${n()}"
-      style="color: unset;"
-      onclick="tidy()">
-      ${d.tidy}
-    </button>
-
-    <button
-      aria-label="run preview"
-      name="run preview"
-      class="${t} ${e.autorun?"hidden":""}"
-      style="color: unset;"
-      onclick="renderPreview(true)"
-    >
-      ${d.play}
-    </button>
-  </span>
+    </li>
+    <li class="list-none">
+      <button 
+        aria-label="tidy code"
+        name="tidy code"
+        class="${t} ${n()}"
+        style="color: unset;"
+        onclick="tidy()">
+        ${d.tidy}
+      </button>
+    </li>
+    <li class="list-none">
+      <button
+        aria-label="run preview"
+        name="run preview"
+        class="${t} ${e.autorun?"hidden":""}"
+        style="color: unset;"
+        onclick="renderPreview(true)"
+      >
+        ${d.play}
+      </button>
+    </li>
+  </ul>
 </div>`}var j={initialRender:!0,render(t){let s=g.selectedSize,r,o,i=document.getElementById("previewElm");document.getElementById("previewElm")&&(r=i.clientWidth,o=i.clientHeight);let[n,c]=s.split("x").map(Number),a=`<ul class="py-4 px-0">
                 <li class="list-none">
                   <div class="items-center text-center">
