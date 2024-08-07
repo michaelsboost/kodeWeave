@@ -1875,6 +1875,8 @@ async function compileCode(detect) {
   try {
     if (detect === 'html') {
       switch (project.html_pre_processor) {
+        case 'html':
+          return project.html;
         case 'markdown':
           return marked.parse(project.html);
         case 'jade':
@@ -1896,6 +1898,8 @@ async function compileCode(detect) {
 
     if (detect === 'css') {
       switch (project.css_pre_processor) {
+        case 'css':
+          return project.css;
         case 'stylus':
           return stylus.render(project.css);
         case 'less':
@@ -1913,6 +1917,8 @@ async function compileCode(detect) {
 
     if (detect === 'javascript') {
       switch (project.javascript_pre_processor) {
+        case 'javascript':
+          return project.javascript;
         case 'babel':
           if (typeof Babel === 'undefined') {
             await loadScript("libraries/preprocessors/babel.min.js");
@@ -2710,7 +2716,10 @@ export default {
   },
   plugins: [
     ${project.javascript_pre_processor === 'typescript' ? 'typescript(),' : ''}
-    ${project.javascript_pre_processor === 'babel' ? 'babel({ exclude: "node_modules/**" }),' : ''}
+    ${project.javascript_pre_processor === 'babel' ? `babel({
+      exclude: "node_modules/**",
+      presets: ["@babel/preset-env", "@babel/preset-react"]
+    }),` : ''}
     terser() // minifies the JavaScript
   ]
 };`;
@@ -2763,7 +2772,7 @@ export default {
   "type": "module",
   "scripts": {
     ${project.css.trim() !== '' ? `"build:css": "postcss src/styles.css -o dist/styles.min.css",
-    ` : ''}"build:js": "rollup -c && terser ${rollupInput} -o dist/script.min.js",
+    ` : ''}"build:js": "rollup -c",
     "build": "${project.css.trim() !== '' ? 'npm run build:css && ' : ''}npm run build:js",
     "serve": "http-server -c-1 -p 8081"
   },
@@ -2899,14 +2908,14 @@ ${project.description}`;
     let minifiedCSS = minifyCSS(await compileCode('css'));
 
     // Add style.css
-    if (project.css_pre_processor === 'css') zip.file('src/style.css', project.css);
-    if (project.css_pre_processor === 'css') zip.file('dist/style.css', project.css);
-    if (project.css_pre_processor === 'stylus') zip.file('src/style.styl', project.css);
-    if (project.css_pre_processor === 'stylus') zip.file('dist/style.css', minifiedCSS);
-    if (project.css_pre_processor === 'less') zip.file('src/style.less', project.css);
-    if (project.css_pre_processor === 'less') zip.file('dist/style.css', iframe.contentDocument.getElementById('aeoibrfa1').textContent);
-    if (project.css_pre_processor === 'sass') zip.file('src/style.scss', project.css);
-    if (project.css_pre_processor === 'sass') zip.file('dist/style.css', minifiedCSS);
+    zip.file('src/style.css', project.css);
+    zip.file('dist/style.css', minifiedCSS);
+    // if (project.css_pre_processor === 'stylus') zip.file('src/style.styl', project.css);
+    // if (project.css_pre_processor === 'stylus') zip.file('dist/style.css', minifiedCSS);
+    // if (project.css_pre_processor === 'less') zip.file('src/style.less', project.css);
+    // if (project.css_pre_processor === 'less') zip.file('dist/style.css', iframe.contentDocument.getElementById('aeoibrfa1').textContent);
+    // if (project.css_pre_processor === 'sass') zip.file('src/style.scss', project.css);
+    // if (project.css_pre_processor === 'sass') zip.file('dist/style.css', minifiedCSS);
 
     async function minifyJS(jsCode) {
       // detect if terser exists
