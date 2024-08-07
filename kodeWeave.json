@@ -1,6 +1,6 @@
 {
   "name": "kodeWeave",
-  "version": "1.2",
+  "version": "1.2.0",
   "title": "kodeWeave: Your on the go code playground!",
   "description": "kodeWeave is your on the go coding playground! Design with TailwindCSS or Pico.css, see how your app or website will look and behave on a desktop.",
   "author": "kodeWeave",
@@ -8,7 +8,7 @@
   "meta": "",
   "libraries": [
     "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-    "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+    "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
   ],
   "html_pre_processor": "html",
   "css_pre_processor": "css",
@@ -22,9 +22,8 @@
   "module": true,
   "autorun": true,
   "pwa": false,
-  "activePanel": "html",
   "preview": true,
+  "activePanel": "html",
   "columns": false,
-  "columnsRight": true,
-  "obj": {}
+  "columnsRight": true
 }
