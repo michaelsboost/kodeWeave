@@ -2878,7 +2878,7 @@ ${project.description}`;
         // Add icons to manifest.json based on image sizes
         const sizes = ['192x192', '256x256', '384x384', '512x512'];
         const icons = sizes.map(size => ({
-          "src": `../imgs/logo-${size}.png`,
+          "src": `./imgs/logo-${size}.png`,
           "sizes": size,
           "type": "image/png",
           "purpose": "any"
@@ -2902,7 +2902,7 @@ ${project.description}`;
           canvas.remove();
         }
     
-        zip.file(`dist/manifest.json`, JSON.stringify({
+        zip.file(`manifest.json`, JSON.stringify({
           "theme_color": "#13171f",
           "background_color": "#13171f",
           "display": "standalone",
@@ -3177,7 +3177,7 @@ plugins: [
     <meta property="og:type" content="website" />
     <meta property="og:title" content="${project.title}" />
     <meta property="og:description" content="${project.description}" />
-    <link rel="manifest" href="dist/manifest.json">
+    <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" type="image/x-icon" href="imgs/logo.svg">
     <link rel="icon" type="image/svg+xml" href="imgs/logo.svg" />
     <link rel="apple-touch-icon" href="imgs/logo.svg">
