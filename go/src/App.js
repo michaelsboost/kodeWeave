@@ -44,7 +44,7 @@ let app = {
 }
 let p = {
   name: "App name",
-  version: 0.01,
+  version: "0.0.1",
   title: "An attractive title",
   description: "The most attractive description ever!",
   author: "kodeWeave",
@@ -622,6 +622,636 @@ function PreviewMenu() {
   </ul>
 </div>`;
 }
+function Menu() {
+  let menuDialog = `<ul class="py-4 px-0">
+              <li class="list-none">
+                <div class="items-center text-center">
+                  <div>
+                    <a 
+                      aria-label="project homepage"
+                      name="project homepage"
+                      target="_blank" 
+                      href="${app.url}">
+                      <img 
+                        alt="logo"
+                        class="my-4 w-24 m-auto"
+                        src="../imgs/logo.svg"
+                        loading="lazy" />
+                    </a>
+                    <div class="text-2xl">
+                      About ${app.name}
+                    </div>
+                    <div class="my-2 text-xs">
+                      Version ${app.version}
+                    </div>
+                    <a 
+                      target="_blank" 
+                      class="text-sm underline mb-2 text-blue-500" 
+                      href="${app.license}">
+                        Open Source License
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li class="p-0 list-none">
+                <hr />
+              </li>
+              <li class="p-0 list-none -mt-2">
+                <button 
+                  class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
+                  style="color: unset;" 
+                  onclick="data.menuDialog = null; data.demos = true;">
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                  </svg>
+                  <span>new project</span>
+                </button>
+              </li>
+              <li class="p-0 list-none">
+                <button 
+                  class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
+                  style="color: unset;" 
+                  onclick="data.menuDialog = null; importProject()">
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m6.75 12-3-3m0 0-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                  </svg>
+                  <span>import project</span>
+                </button>
+              </li>
+              <li class="p-0 list-none">
+                <button 
+                  class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
+                  style="color: unset;" 
+                  onclick="data.menuDialog = null; downloadJSON()">
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+                  </svg>
+                  <span>download json</span>
+                </button>
+              </li>
+              <li class="p-0 list-none">
+                <button 
+                  class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
+                  style="color: unset;" 
+                  onclick="data.menuDialog = null; downloadProject()">
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                  </svg>
+                  <span>download zip</span>
+                </button>
+              </li>
+              <li class="p-0 list-none">
+                <button 
+                  class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
+                  style="color: unset;" 
+                  onclick="data.menuDialog = null; share()">
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+                  </svg>
+                  <span>share to codepen</span>
+                </button>
+              </li>
+              <li class="p-0 list-none">
+                <button 
+                  aria-label="Empty storage saved from kodeWeave"
+                  name="Empty storage saved from kodeWeave"
+                  class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
+                  style="color: unset;" 
+                  onclick="emptyStorage()">
+                  <svg class="h-5 w-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                    <path d="M566.6 54.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192-34.7-34.7c-4.2-4.2-10-6.6-16-6.6c-12.5 0-22.6 10.1-22.6 22.6l0 29.1L364.3 320l29.1 0c12.5 0 22.6-10.1 22.6-22.6c0-6-2.4-11.8-6.6-16l-34.7-34.7 192-192zM341.1 353.4L222.6 234.9c-42.7-3.7-85.2 11.7-115.8 42.3l-8 8C76.5 307.5 64 337.7 64 369.2c0 6.8 7.1 11.2 13.2 8.2l51.1-25.5c5-2.5 9.5 4.1 5.4 7.9L7.3 473.4C2.7 477.6 0 483.6 0 489.9C0 502.1 9.9 512 22.1 512l173.3 0c38.8 0 75.9-15.4 103.4-42.8c30.6-30.6 45.9-73.1 42.3-115.8z"/>
+                  </svg>
+                  <span>empty storage</span>
+                </button>
+              </li>
+            </ul>`;
+  menuDialog = `<dialog ${data.menuDialog ? 'open' : ''}>
+        <article class="rounded-md">
+          <header class="flex justify-between items-center">
+            <h1 class="text-lg font-thin m-0 capitalize">
+              file menu
+            </h1>
+            <button 
+              class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border-0" 
+              style="color: unset;" 
+              aria-label="Close"
+              onclick="data.menuDialog = null">
+              ${icons.times}
+            </button>
+          </header>
+          <main class="font-thin">
+            ${menuDialog}
+          </main>
+          <footer>
+            <button 
+              class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border ${project.dark ? 'border-gray-600' : 'border-gray-200'}" 
+              style="color: unset;" 
+              aria-label="Close" 
+              onclick="data.menuDialog = null">
+              close
+            </button>
+          </footer>
+        </article>
+      </dialog>`;
+    return menuDialog;
+}
+function Demos() {
+  const buttonClass = "grid grid-rows-1 items-center bg-transparent border-0 focus-within:shadow-none";
+  const buttonContentClass = "flex flex-col justify-between h-full";
+  const imageContentClass = "grid h-full items-center";
+  const textContentClass = "capitalize text-center mt-4";
+
+  const frameworks = [
+    "javascript",
+    "typescript",
+    "react",
+    "vue",
+    "preact",
+    "angular",
+    "alpine",
+    "solid",
+    "stimulus",
+    "mithril",
+    "hyperapp",
+    "aurelia",
+    "lit"
+  ]
+
+  let buttonHTML = "";
+  for (const name of frameworks) {
+    buttonHTML += `<button
+          aria-label="new ${name} project"
+          name="new ${name} project"
+          class="${buttonClass}"
+          style="color: unset;"
+          onclick="newProject('${name}')">
+          <div class="${buttonContentClass}">
+            <div class="${imageContentClass}">
+              <img loading="lazy" width="256" height="256" src="imgs/frameworks/${name}.svg" alt="${name}" />
+            </div>
+            <div class="${textContentClass}">
+              ${name}
+            </div>
+          </div>
+        </button>`;
+  }
+
+  let demosDialog = `<dialog ${data.demos ? 'open' : ''}>
+  <article class="rounded-md">
+    <header class="flex justify-between items-center">
+      <h1 class="text-lg font-thin m-0">
+        Are you sure you want to start a new project?
+      </h1>
+      <button 
+        class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border-0" 
+        style="color: unset;" 
+        aria-label="Close"
+        onclick="data.demos = null;">
+        ${icons.times}
+      </button>
+    </header>
+    <main class="font-thin">
+      <div class="p-4 text-center">All current data will be lost.</div>
+      <div class="p-4 relative h-80 overflow-auto">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          ${buttonHTML}
+        </div>
+      </div>
+    </main>
+    <footer>
+      <button 
+        class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border ${project.dark ? 'border-gray-600' : 'border-gray-200'}" 
+        style="color: unset;" 
+        aria-label="Close" 
+        onclick="data.demos = null;">
+        close
+      </button>
+    </footer>
+  </article>
+</dialog>`;
+  return demosDialog;
+}
+function Settings() {
+  let settingsHTML = `<ul class="px-0">
+    <li class="list-none">
+      <div class="mb-2">
+        <input 
+          id="pjqgd1wka"
+          type="file" 
+          name="project logo" 
+          class="hidden"
+          onchange="handleLogoChange(event)"
+        />
+        <label 
+          for="pjqgd1wka"
+          class="mb-2 flex justify-between items-center cursor-pointer">
+          <span>Project logo:</span>
+
+          <img 
+            id="projectLogo"
+            class="w-8"
+            alt="Project Logo"
+            src="${project.logo}"
+            loading="lazy">
+        </label>
+      </div>
+    </li>
+    <li class="list-none">
+      <nav class="flex justify-between mt-5 items-center">
+        <label 
+          for="o14tigo4m"
+          class="mb-2 flex justify-between items-center cursor-pointer">
+          <span>Dark:</span>
+        </label>
+
+        <input 
+          id="o14tigo4m"
+          class="m-0"
+          type="checkbox" 
+          role="switch"
+          name="toggle css reset"
+          onchange="project.dark = this.checked;"
+          ${project.dark ? 'checked' : ''}
+        />
+      </nav>
+    </li>
+    <li class="list-none">
+      <nav class="flex justify-between mt-5 items-center">
+        <label 
+          for="ep0b8bd4c"
+          class="mb-2 flex justify-between items-center cursor-pointer">
+          <span>Module:</span>
+        </label>
+
+        <input 
+          id="ep0b8bd4c"
+          class="m-0"
+          type="checkbox" 
+          role="switch"
+          name="toggle module"
+          onchange="project.module = this.checked;"
+          ${project.module ? 'checked' : ''}
+        />
+      </nav>
+    </li>
+    <li class="list-none">
+      <nav class="flex justify-between mt-5 items-center">
+        <label 
+          for="if2s51d22"
+          class="mb-2 flex justify-between items-center cursor-pointer">
+          <span>Auto run:</span>
+        </label>
+
+        <input 
+          id="if2s51d22"
+          class="m-0"
+          type="checkbox" 
+          role="switch"
+          name="toggle auto run"
+          onchange="project.autorun = this.checked;"
+          ${project.autorun ? 'checked' : ''}
+        />
+      </nav>
+    </li>
+    <li class="list-none">
+      <nav class="flex justify-between mt-5 items-center">
+        <label 
+          for="osbpm2k0q"
+          class="mb-2 flex justify-between items-center cursor-pointer">
+          <span>PWA:</span>
+        </label>
+
+        <input 
+          id="osbpm2k0q"
+          class="m-0"
+          type="checkbox" 
+          role="switch"
+          name="export project as a pwa"
+          onchange="project.pwa = this.checked"
+          ${project.pwa ? 'checked' : ''}
+        />
+      </nav>
+    </li>
+    <li class="p-0 list-none">
+      <hr />
+    </li>
+    <li class="list-none">
+      <nav class="flex justifu-between -mt-3 items-center">
+        <label 
+          for="wl7i1adq7"
+          class="m-0 flex justify-between items-center cursor-pointer">
+          <span>Libraries:</span>
+        </label>
+
+        <button
+          aria-label="search libraries"
+          name="search libraries"
+          class="bg-transparent border-0 focus-within:shadow-none"
+          style="color: unset;"
+          onclick="data.libraries = true; searchInput.focus();">
+          ${icons.search}
+        </button>
+      </nav>
+
+      <div id="librariesBox">
+        ${project.libraries.map((library, index) => `
+        <nav class="flex justify-between py-2" data-index="${index}">
+          <input 
+            type="text" 
+            placeholder="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js" 
+            data="library" 
+            class="w-full pl-3 pr-0 rounded-md rounded-r-none focus:shadow-none"
+            style="margin-bottom: 0;"
+            value="${library}" 
+            oninput="project.libraries[${index}] = this.value; renderPreview(true);" />
+          <button 
+            aria-label="delete library"
+            name="delete library"
+            class="px-3 py-[15px] h-full border-0 rounded-md rounded-l-none"
+            onclick="project.libraries.splice(${index}, 1); renderPreview(true);">
+            ${icons.trash}
+          </button>
+        </nav>
+      `).join('')}
+      </div>
+      <button 
+        aria-label="add another library or framework" 
+        name="add another library or framework" 
+        onclick="project.libraries.push('')" 
+        class="capitalize py-2 w-full items-center rounded-md">
+        <span class="text-[.75rem]">
+          Add another
+        </span>
+      </button>
+    </li>
+    <li class="p-0 list-none">
+      <hr />
+    </li>
+    <!--
+    <li class="list-none">
+      <nav class="flex justify-between mt-5 items-center">
+        <div class="mb-2">
+          HTML:
+        </div>
+
+        <select 
+          aria-label="html preprocessor"
+          name="html preprocessor"
+          onchange="setPreprocessor('html', this.value);" 
+          class="w-auto my-0 text-[.75rem]">
+          <option value="html" ${project.html_pre_processor === 'html' ? 'selected' : ''}>HTML</option>
+          <option value="markdown" ${project.html_pre_processor === 'markdown' ? 'selected' : ''}>Markdown</option>
+          <option value="pug" ${project.html_pre_processor === 'pug' ? 'selected' : ''}>Pug</option>
+        </select>
+      </nav>
+    </li>
+    <li class="p-0 list-none">
+      <hr />
+    </li>
+    <li class="list-none">
+      <nav class="flex justify-between mt-5 items-center">
+        <div class="mb-2">
+          CSS:
+        </div>
+
+        <select 
+          aria-label="css preprocessor"
+          name="css preprocessor"
+          onchange="setPreprocessor('css', this.value);" 
+          class="w-auto my-0 text-[.75rem]">
+          <option value="css" ${project.css_pre_processor === 'css' ? 'selected' : ''}>CSS</option>
+          <option value="sass" ${project.css_pre_processor === 'sass' ? 'selected' : ''}>Sass</option>
+          <option value="less" ${project.css_pre_processor === 'less' ? 'selected' : ''}>LESS</option>
+          <option value="stylus" ${project.css_pre_processor === 'stylus' ? 'selected' : ''}>Stylus</option>
+        </select>
+      </nav>
+    </li>
+    -->
+    <li class="p-0 list-none">
+      <hr />
+    </li>
+    <li class="list-none">
+      <nav class="flex justify-between mt-5 items-center">
+        <div class="mb-2">
+          JS:
+        </div>
+
+        <select 
+          aria-label="javascript preprocessor"
+          name="javascript preprocessor"
+          onchange="setPreprocessor('javascript', this.value);" 
+          class="w-auto my-0 text-[.75rem]">
+          <option value="javascript" ${project.javascript_pre_processor === 'javascript' ? 'selected' : ''}>Javascript</option>
+          <option value="babel" ${project.javascript_pre_processor === 'babel' ? 'selected' : ''}>Babel (JSX / ES6)</option>
+          <option value="typescript" ${project.javascript_pre_processor === 'typescript' ? 'selected' : ''}>Typescript</option>
+        </select>
+      </nav>
+    </li>
+    <li class="p-0 list-none">
+      <hr />
+    </li>
+    <li class="list-none">
+      <div class="mb-2">
+        Project name:
+      </div>
+      <input 
+        type="text" 
+        name="project name"
+        placeholder="Project name" 
+        class="p-2 rounded-md w-full" 
+        value="${project.name}"
+        oninput="project.name = this.value;"
+      />
+    </li>
+    <li class="p-0 list-none">
+      <hr />
+    </li>
+    <li class="list-none">
+      <div class="mb-2">
+        Project version:
+      </div>
+      <section class="flex justify-between gap-4">
+        <input 
+          type="number" 
+          min="0"
+          step="1"
+          name="project-major-version"
+          placeholder="Major"
+          class="p-2 rounded-md w-full" 
+          value="${project.version.split('.')[0]}"
+          oninput="updateVersionPart('major', this.value);"
+        />
+        <input 
+          type="number" 
+          min="0"
+          step="1"
+          name="project-minor-version"
+          placeholder="Minor" 
+          class="p-2 rounded-md w-full" 
+          value="${project.version.split('.')[1]}"
+          oninput="updateVersionPart('minor', this.value);"
+        />
+        <input 
+          type="number" 
+          min="0"
+          step="1"
+          name="project-patch-version"
+          placeholder="Patch" 
+          class="p-2 rounded-md w-full" 
+          value="${project.version.split('.')[2]}"
+          oninput="updateVersionPart('patch', this.value);"
+        />
+      </section>
+    </li>
+    <li class="p-0 list-none">
+      <hr />
+    </li>
+    <li class="list-none">
+      <div class="mb-2">
+        Project title:
+      </div>
+      <input 
+        type="text" 
+        name="project title"
+        placeholder="Project title"
+        class="p-2 rounded-md w-full" 
+        value="${project.title}"
+        oninput="project.title = this.value;"
+      />
+    </li>
+    <li class="p-0 list-none">
+      <hr />
+    </li>
+    <li class="list-none">
+      <div class="mb-2">
+        Project description:
+      </div>
+      <textarea 
+        name="project description"
+        placeholder="Project description" 
+        class="p-2 rounded-md w-full resize-vertical h-56"
+        oninput="project.description = this.value;"
+      >${project.description}</textarea>
+    </li>
+    <li class="p-0 list-none">
+      <hr />
+    </li>
+    <li class="list-none">
+      <div class="mb-2">
+        Project author:
+      </div>
+      <input 
+        type="text" 
+        name="project author"
+        placeholder="Project author" 
+        class="p-2 rounded-md w-full" 
+        value="${project.author}"
+        oninput="project.author = this.value;"
+      />
+    </li>
+    <li class="p-0 list-none">
+      <hr />
+    </li>
+    <li class="list-none">
+      <div class="mb-2">
+        Project url:
+      </div>
+      <input 
+        type="text" 
+        name="project url"
+        placeholder="Project url" 
+        class="p-2 rounded-md w-full" 
+        value="${project.url}"
+        oninput="project.url = this.value;"
+      />
+    </li>
+    <li class="p-0 list-none">
+      <hr />
+    </li>
+    <li class="list-none">
+      <div class="my-2">
+        HTML before closing head tag:
+      </div>
+      <textarea 
+        placeholder="HTML before closing </head> tag" 
+        class="p-2 rounded-md w-full resize-vertical h-56"
+        oninput="project.meta = this.value;"
+      >${project.meta}</textarea>
+    </li>
+  </ul>`;
+  settingsHTML = `<dialog ${data.settings ? 'open' : ''}>
+    <article class="rounded-md">
+      <header class="flex justify-between items-center">
+        <h1 class="text-lg font-thin m-0 capitalize">
+          settings
+        </h1>
+        <button 
+          class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border-0" 
+          style="color: unset;" 
+          aria-label="Close"
+          onclick="data.settings = null">
+          ${icons.times}
+        </button>
+      </header>
+      <main class="font-thin">
+        ${settingsHTML}
+      </main>
+      <footer>
+        <button 
+          class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border ${project.dark ? 'border-gray-600' : 'border-gray-200'}" 
+          style="color: unset;" 
+          aria-label="Close" 
+          onclick="data.settings = null">
+          close
+        </button>
+      </footer>
+    </article>
+  </dialog>`;
+  return settingsHTML;
+}
+function Libraries() {
+  let librariesDialog = `<dialog ${data.libraries ? 'open' : ''}>
+    <article class="rounded-md">
+      <header class="flex justify-between items-center">
+        <h1 class="text-lg font-thin m-0">
+          Search for resources (JQuery, Bootstrap, Foundation...)
+        </h1>
+        <button 
+          class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border-0" 
+          style="color: unset;" 
+          aria-label="Close"
+          onclick="data.libraries = null; data.searchLibKey = null; searchInput.value = null;">
+          ${icons.times}
+        </button>
+      </header>
+      <main class="font-thin">
+        <div class="p-4">
+          <input 
+            id="searchInput" 
+            type="search" 
+            placeholder="Search for resources (JQuery, Bootstrap, Foundation...)" 
+            class="w-full p-3 rounded-full bg-[#1c212c]" 
+            oninput="this.value ? data.searchLibKey = this.value : data.searchLibKey = null; data.searchLibKey ? fetchSuggestions(data.searchLibKey) : ''" />
+            
+          <div class="relative px-4 capitalize h-auto max-h-64 overflow-auto">
+            ${data.librarySuggestions && data.searchLibKey ? data.librarySuggestions : ''}
+          </div>
+        </div>
+      </main>
+      <footer>
+        <button 
+          class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border ${project.dark ? 'border-gray-600' : 'border-gray-200'}" 
+          style="color: unset;" 
+          aria-label="Close" 
+          onclick="data.libraries = null; data.searchLibKey = null; searchInput.value = null;">
+          close
+        </button>
+      </footer>
+    </article>
+  </dialog>`;
+
+  return librariesDialog;
+}
 const App = {
   initialRender: true,
   render(container) {
@@ -634,604 +1264,6 @@ const App = {
       viewportHeight = previewElm.clientHeight;
     }
     let [width, height] = size.split('x').map(Number);
-
-    let menuDialog = `<ul class="py-4 px-0">
-                <li class="list-none">
-                  <div class="items-center text-center">
-                    <div>
-                      <a 
-                        aria-label="project homepage"
-                        name="project homepage"
-                        target="_blank" 
-                        href="${app.url}">
-                        <img 
-                          alt="logo"
-                          class="my-4 w-24 m-auto"
-                          src="../imgs/logo.svg"
-                          loading="lazy" />
-                      </a>
-                      <div class="text-2xl">
-                        About ${app.name}
-                      </div>
-                      <div class="my-2 text-xs">
-                        Version ${app.version}
-                      </div>
-                      <a 
-                        target="_blank" 
-                        class="text-sm underline mb-2 text-blue-500" 
-                        href="${app.license}">
-                          Open Source License
-                      </a>
-                    </div>
-                  </div>
-                </li>
-                <li class="p-0 list-none">
-                  <hr />
-                </li>
-                <li class="p-0 list-none -mt-2">
-                  <button 
-                    class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
-                    style="color: unset;" 
-                    onclick="data.menuDialog = null; data.demos = true;">
-                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                    </svg>
-                    <span>new project</span>
-                  </button>
-                </li>
-                <li class="p-0 list-none">
-                  <button 
-                    class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
-                    style="color: unset;" 
-                    onclick="data.menuDialog = null; importProject()">
-                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m6.75 12-3-3m0 0-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                    </svg>
-                    <span>import project</span>
-                  </button>
-                </li>
-                <li class="p-0 list-none">
-                  <button 
-                    class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
-                    style="color: unset;" 
-                    onclick="data.menuDialog = null; downloadJSON()">
-                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
-                    </svg>
-                    <span>download json</span>
-                  </button>
-                </li>
-                <li class="p-0 list-none">
-                  <button 
-                    class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
-                    style="color: unset;" 
-                    onclick="data.menuDialog = null; downloadProject()">
-                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                    </svg>
-                    <span>download zip</span>
-                  </button>
-                </li>
-                <li class="p-0 list-none">
-                  <button 
-                    class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
-                    style="color: unset;" 
-                    onclick="data.menuDialog = null; share()">
-                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
-                    </svg>
-                    <span>share to codepen</span>
-                  </button>
-                </li>
-                <li class="p-0 list-none">
-                  <button 
-                    aria-label="Empty storage saved from kodeWeave"
-                    name="Empty storage saved from kodeWeave"
-                    class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
-                    style="color: unset;" 
-                    onclick="emptyStorage()">
-                    <svg class="h-5 w-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-                      <path d="M566.6 54.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192-34.7-34.7c-4.2-4.2-10-6.6-16-6.6c-12.5 0-22.6 10.1-22.6 22.6l0 29.1L364.3 320l29.1 0c12.5 0 22.6-10.1 22.6-22.6c0-6-2.4-11.8-6.6-16l-34.7-34.7 192-192zM341.1 353.4L222.6 234.9c-42.7-3.7-85.2 11.7-115.8 42.3l-8 8C76.5 307.5 64 337.7 64 369.2c0 6.8 7.1 11.2 13.2 8.2l51.1-25.5c5-2.5 9.5 4.1 5.4 7.9L7.3 473.4C2.7 477.6 0 483.6 0 489.9C0 502.1 9.9 512 22.1 512l173.3 0c38.8 0 75.9-15.4 103.4-42.8c30.6-30.6 45.9-73.1 42.3-115.8z"/>
-                    </svg>
-                    <span>empty storage</span>
-                  </button>
-                </li>
-              </ul>`;
-    menuDialog = `<dialog ${data.menuDialog ? 'open' : ''}>
-          <article class="rounded-md">
-            <header class="flex justify-between items-center">
-              <h1 class="text-lg font-thin m-0 capitalize">
-                file menu
-              </h1>
-              <button 
-                class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border-0" 
-                style="color: unset;" 
-                aria-label="Close"
-                onclick="data.menuDialog = null">
-                ${icons.times}
-              </button>
-            </header>
-            <main class="font-thin">
-              ${menuDialog}
-            </main>
-            <footer>
-              <button 
-                class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border ${project.dark ? 'border-gray-600' : 'border-gray-200'}" 
-                style="color: unset;" 
-                aria-label="Close" 
-                onclick="data.menuDialog = null">
-                close
-              </button>
-            </footer>
-          </article>
-        </dialog>`;
-
-    let settingsHTML = `<ul class="px-0">
-  <li class="list-none">
-    <div class="mb-2">
-      <input 
-        id="pjqgd1wka"
-        type="file" 
-        name="project logo" 
-        class="hidden"
-        onchange="handleLogoChange(event)"
-      />
-      <label 
-        for="pjqgd1wka"
-        class="mb-2 flex justify-between items-center cursor-pointer">
-        <span>Project logo:</span>
-
-        <img 
-          id="projectLogo"
-          class="w-8"
-          alt="Project Logo"
-          src="${project.logo}"
-          loading="lazy">
-      </label>
-    </div>
-  </li>
-  <li class="list-none">
-    <nav class="flex justify-between mt-5 items-center">
-      <label 
-        for="o14tigo4m"
-        class="mb-2 flex justify-between items-center cursor-pointer">
-        <span>Dark:</span>
-      </label>
-
-      <input 
-        id="o14tigo4m"
-        class="m-0"
-        type="checkbox" 
-        role="switch"
-        name="toggle css reset"
-        onchange="project.dark = this.checked;"
-        ${project.dark ? 'checked' : ''}
-      />
-    </nav>
-  </li>
-  <li class="list-none">
-    <nav class="flex justify-between mt-5 items-center">
-      <label 
-        for="ep0b8bd4c"
-        class="mb-2 flex justify-between items-center cursor-pointer">
-        <span>Module:</span>
-      </label>
-
-      <input 
-        id="ep0b8bd4c"
-        class="m-0"
-        type="checkbox" 
-        role="switch"
-        name="toggle module"
-        onchange="project.module = this.checked;"
-        ${project.module ? 'checked' : ''}
-      />
-    </nav>
-  </li>
-  <li class="list-none">
-    <nav class="flex justify-between mt-5 items-center">
-      <label 
-        for="if2s51d22"
-        class="mb-2 flex justify-between items-center cursor-pointer">
-        <span>Auto run:</span>
-      </label>
-
-      <input 
-        id="if2s51d22"
-        class="m-0"
-        type="checkbox" 
-        role="switch"
-        name="toggle auto run"
-        onchange="project.autorun = this.checked;"
-        ${project.autorun ? 'checked' : ''}
-      />
-    </nav>
-  </li>
-  <li class="list-none">
-    <nav class="flex justify-between mt-5 items-center">
-      <label 
-        for="osbpm2k0q"
-        class="mb-2 flex justify-between items-center cursor-pointer">
-        <span>PWA:</span>
-      </label>
-
-      <input 
-        id="osbpm2k0q"
-        class="m-0"
-        type="checkbox" 
-        role="switch"
-        name="export project as a pwa"
-        onchange="project.pwa = this.checked"
-        ${project.pwa ? 'checked' : ''}
-      />
-    </nav>
-  </li>
-  <li class="p-0 list-none">
-    <hr />
-  </li>
-  <li class="list-none">
-    <nav class="flex justifu-between -mt-3 items-center">
-      <label 
-        for="wl7i1adq7"
-        class="m-0 flex justify-between items-center cursor-pointer">
-        <span>Libraries:</span>
-      </label>
-
-      <button
-        aria-label="search libraries"
-        name="search libraries"
-        class="bg-transparent border-0 focus-within:shadow-none"
-        style="color: unset;"
-        onclick="data.libraries = true; searchInput.focus();">
-        ${icons.search}
-      </button>
-    </nav>
-
-    <div id="librariesBox">
-      ${project.libraries.map((library, index) => `
-      <nav class="flex justify-between py-2" data-index="${index}">
-        <input 
-          type="text" 
-          placeholder="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js" 
-          data="library" 
-          class="w-full pl-3 pr-0 rounded-md rounded-r-none focus:shadow-none"
-          style="margin-bottom: 0;"
-          value="${library}" 
-          oninput="project.libraries[${index}] = this.value; renderPreview(true);" />
-        <button 
-          aria-label="delete library"
-          name="delete library"
-          class="px-3 py-[15px] h-full border-0 rounded-md rounded-l-none"
-          onclick="project.libraries.splice(${index}, 1); renderPreview(true);">
-          ${icons.trash}
-        </button>
-      </nav>
-    `).join('')}
-    </div>
-    <button 
-      aria-label="add another library or framework" 
-      name="add another library or framework" 
-      onclick="project.libraries.push('')" 
-      class="capitalize py-2 w-full items-center rounded-md">
-      <span class="text-[.75rem]">
-        Add another
-      </span>
-    </button>
-  </li>
-  <li class="p-0 list-none">
-    <hr />
-  </li>
-  <!--
-  <li class="list-none">
-    <nav class="flex justify-between mt-5 items-center">
-      <div class="mb-2">
-        HTML:
-      </div>
-
-      <select 
-        aria-label="html preprocessor"
-        name="html preprocessor"
-        onchange="setPreprocessor('html', this.value);" 
-        class="w-auto my-0 text-[.75rem]">
-        <option value="html" ${project.html_pre_processor === 'html' ? 'selected' : ''}>HTML</option>
-        <option value="markdown" ${project.html_pre_processor === 'markdown' ? 'selected' : ''}>Markdown</option>
-        <option value="pug" ${project.html_pre_processor === 'pug' ? 'selected' : ''}>Pug</option>
-      </select>
-    </nav>
-  </li>
-  <li class="p-0 list-none">
-    <hr />
-  </li>
-  <li class="list-none">
-    <nav class="flex justify-between mt-5 items-center">
-      <div class="mb-2">
-        CSS:
-      </div>
-
-      <select 
-        aria-label="css preprocessor"
-        name="css preprocessor"
-        onchange="setPreprocessor('css', this.value);" 
-        class="w-auto my-0 text-[.75rem]">
-        <option value="css" ${project.css_pre_processor === 'css' ? 'selected' : ''}>CSS</option>
-        <option value="sass" ${project.css_pre_processor === 'sass' ? 'selected' : ''}>Sass</option>
-        <option value="less" ${project.css_pre_processor === 'less' ? 'selected' : ''}>LESS</option>
-        <option value="stylus" ${project.css_pre_processor === 'stylus' ? 'selected' : ''}>Stylus</option>
-      </select>
-    </nav>
-  </li>
-  -->
-  <li class="p-0 list-none">
-    <hr />
-  </li>
-  <li class="list-none">
-    <nav class="flex justify-between mt-5 items-center">
-      <div class="mb-2">
-        JS:
-      </div>
-
-      <select 
-        aria-label="javascript preprocessor"
-        name="javascript preprocessor"
-        onchange="setPreprocessor('javascript', this.value);" 
-        class="w-auto my-0 text-[.75rem]">
-        <option value="javascript" ${project.javascript_pre_processor === 'javascript' ? 'selected' : ''}>Javascript</option>
-        <option value="babel" ${project.javascript_pre_processor === 'babel' ? 'selected' : ''}>Babel (JSX / ES6)</option>
-        <option value="typescript" ${project.javascript_pre_processor === 'typescript' ? 'selected' : ''}>Typescript</option>
-      </select>
-    </nav>
-  </li>
-  <li class="p-0 list-none">
-    <hr />
-  </li>
-  <li class="list-none">
-    <div class="mb-2">
-      Project name:
-    </div>
-    <input 
-      type="text" 
-      name="project name"
-      placeholder="Project name" 
-      class="p-2 rounded-md w-full" 
-      value="${project.name}"
-      oninput="project.name = this.value;"
-    />
-  </li>
-  <li class="p-0 list-none">
-    <hr />
-  </li>
-  <li class="list-none">
-    <div class="mb-2">
-      Project version:
-    </div>
-    <input 
-      type="number" 
-      min="0"
-      step="0.01"
-      name="project version"
-      placeholder="Project version" 
-      class="p-2 rounded-md w-full" 
-      value="${project.version}"
-      oninput="project.version = this.value;"
-    />
-  </li>
-  <li class="p-0 list-none">
-    <hr />
-  </li>
-  <li class="list-none">
-    <div class="mb-2">
-      Project title:
-    </div>
-    <input 
-      type="text" 
-      name="project title"
-      placeholder="Project title"
-      class="p-2 rounded-md w-full" 
-      value="${project.title}"
-      oninput="project.title = this.value;"
-    />
-  </li>
-  <li class="p-0 list-none">
-    <hr />
-  </li>
-  <li class="list-none">
-    <div class="mb-2">
-      Project description:
-    </div>
-    <textarea 
-      name="project description"
-      placeholder="Project description" 
-      class="p-2 rounded-md w-full resize-vertical h-56"
-      oninput="project.description = this.value;"
-    >${project.description}</textarea>
-  </li>
-  <li class="p-0 list-none">
-    <hr />
-  </li>
-  <li class="list-none">
-    <div class="mb-2">
-      Project author:
-    </div>
-    <input 
-      type="text" 
-      name="project author"
-      placeholder="Project author" 
-      class="p-2 rounded-md w-full" 
-      value="${project.author}"
-      oninput="project.author = this.value;"
-    />
-  </li>
-  <li class="p-0 list-none">
-    <hr />
-  </li>
-  <li class="list-none">
-    <div class="mb-2">
-      Project url:
-    </div>
-    <input 
-      type="text" 
-      name="project url"
-      placeholder="Project url" 
-      class="p-2 rounded-md w-full" 
-      value="${project.url}"
-      oninput="project.url = this.value;"
-    />
-  </li>
-  <li class="p-0 list-none">
-    <hr />
-  </li>
-  <li class="list-none">
-    <div class="my-2">
-      HTML before closing head tag:
-    </div>
-    <textarea 
-      placeholder="HTML before closing </head> tag" 
-      class="p-2 rounded-md w-full resize-vertical h-56"
-      oninput="project.meta = this.value;"
-    >${project.meta}</textarea>
-  </li>
-</ul>`;
-    settingsHTML = `<dialog ${data.settings ? 'open' : ''}>
-          <article class="rounded-md">
-            <header class="flex justify-between items-center">
-              <h1 class="text-lg font-thin m-0 capitalize">
-                settings
-              </h1>
-              <button 
-                class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border-0" 
-                style="color: unset;" 
-                aria-label="Close"
-                onclick="data.settings = null">
-                ${icons.times}
-              </button>
-            </header>
-            <main class="font-thin">
-              ${settingsHTML}
-            </main>
-            <footer>
-              <button 
-                class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border ${project.dark ? 'border-gray-600' : 'border-gray-200'}" 
-                style="color: unset;" 
-                aria-label="Close" 
-                onclick="data.settings = null">
-                close
-              </button>
-            </footer>
-          </article>
-        </dialog>`;
-
-    let librariesDialog = `<dialog ${data.libraries ? 'open' : ''}>
-          <article class="rounded-md">
-            <header class="flex justify-between items-center">
-              <h1 class="text-lg font-thin m-0">
-                Search for resources (JQuery, Bootstrap, Foundation...)
-              </h1>
-              <button 
-                class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border-0" 
-                style="color: unset;" 
-                aria-label="Close"
-                onclick="data.libraries = null; data.searchLibKey = null; searchInput.value = null;">
-                ${icons.times}
-              </button>
-            </header>
-            <main class="font-thin">
-              <div class="p-4">
-                <input 
-                  id="searchInput" 
-                  type="search" 
-                  placeholder="Search for resources (JQuery, Bootstrap, Foundation...)" 
-                  class="w-full p-3 rounded-full bg-[#1c212c]" 
-                  oninput="this.value ? data.searchLibKey = this.value : data.searchLibKey = null; data.searchLibKey ? fetchSuggestions(data.searchLibKey) : ''" />
-                  
-                <div class="relative px-4 capitalize h-auto max-h-64 overflow-auto">
-                  ${data.librarySuggestions && data.searchLibKey ? data.librarySuggestions : ''}
-                </div>
-              </div>
-            </main>
-            <footer>
-              <button 
-                class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border ${project.dark ? 'border-gray-600' : 'border-gray-200'}" 
-                style="color: unset;" 
-                aria-label="Close" 
-                onclick="data.libraries = null; data.searchLibKey = null; searchInput.value = null;">
-                close
-              </button>
-            </footer>
-          </article>
-        </dialog>`;
-    const buttonClass = "grid grid-rows-1 items-center bg-transparent border-0 focus-within:shadow-none";
-    const buttonContentClass = "flex flex-col justify-between h-full";
-    const imageContentClass = "grid h-full items-center";
-    const textContentClass = "capitalize text-center mt-4";
-  
-    const frameworks = [
-      "javascript",
-      "typescript",
-      "react",
-      "vue",
-      "preact",
-      "angular",
-      "alpine",
-      "solid",
-      "stimulus",
-      "mithril",
-      "hyperapp",
-      "aurelia",
-      "lit"
-    ]
-  
-    let buttonHTML = "";
-    for (const name of frameworks) {
-      buttonHTML += `<button
-            aria-label="new ${name} project"
-            name="new ${name} project"
-            class="${buttonClass}"
-            style="color: unset;"
-            onclick="newProject('${name}')">
-            <div class="${buttonContentClass}">
-              <div class="${imageContentClass}">
-                <img loading="lazy" width="256" height="256" src="imgs/frameworks/${name}.svg" alt="${name}" />
-              </div>
-              <div class="${textContentClass}">
-                ${name}
-              </div>
-            </div>
-          </button>`;
-    }
-
-    let demosDialog = `<dialog ${data.demos ? 'open' : ''}>
-          <article class="rounded-md">
-            <header class="flex justify-between items-center">
-              <h1 class="text-lg font-thin m-0">
-                Are you sure you want to start a new project?
-              </h1>
-              <button 
-                class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border-0" 
-                style="color: unset;" 
-                aria-label="Close"
-                onclick="data.demos = null;">
-                ${icons.times}
-              </button>
-            </header>
-            <main class="font-thin">
-              <div class="p-4 text-center">All current data will be lost.</div>
-              <div class="p-4 relative h-80 overflow-auto">
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  ${buttonHTML}
-                </div>
-              </div>
-            </main>
-            <footer>
-              <button 
-                class="text-xs w-auto px-3 py-2 m-0 capitalize rounded-md bg-transparent border ${project.dark ? 'border-gray-600' : 'border-gray-200'}" 
-                style="color: unset;" 
-                aria-label="Close" 
-                onclick="data.demos = null;">
-                close
-              </button>
-            </footer>
-          </article>
-        </dialog>`;
   
     const html = `
       <div>
@@ -1315,10 +1347,10 @@ const App = {
           </div>
         </div>
 
-        ${menuDialog}
-        ${settingsHTML}
-        ${librariesDialog}
-        ${demosDialog}
+        ${Menu()}
+        ${Settings()}
+        ${Libraries()}
+        ${Demos()}
       </div>`
     
     const element = document.querySelector(container);
@@ -1553,6 +1585,17 @@ function emptyStorage() {
 
   console.log('All saved data, cookies, and service worker caches have been cleared.');
   location.reload();
+}
+function updateVersionPart(part, value) {
+  const versionParts = project.version.split('.');
+  if (part === 'major') {
+    versionParts[0] = value;
+  } else if (part === 'minor') {
+    versionParts[1] = value;
+  } else if (part === 'patch') {
+    versionParts[2] = value;
+  }
+  project.version = versionParts.join('.');
 }
 
 // editor functions
@@ -1957,7 +2000,6 @@ function fileToBase64(file) {
     reader.onerror = error => reject(error);
   });
 }
-
 function newProject(name) {
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -1968,7 +2010,7 @@ function newProject(name) {
   if (name !== "typescript") setPreprocessor('javascript', 'javascript');
   if (name === "typescript" || name === "angular") setPreprocessor('javascript', 'typescript');
   project.name = `${capitalizedTitle} name`;
-  project.version = 0.01;
+  project.version = '0.0.1';
   project.title = `A Cool ${capitalizedTitle} App`;
   project.description = `A modern ${capitalizedTitle} application!`;
   project.author = "kodeWeave";
@@ -1982,7 +2024,7 @@ function newProject(name) {
     project.meta = "";
     project.libraries = [
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<div class="flex flex-col items-center justify-center absolute inset-0">
   <h1 class="text-3xl font-thin mb-4">👋 Hello, ${capitalizedTitle}! 🌎</h1>
@@ -2005,7 +2047,7 @@ incrementButton.addEventListener('click', function() {
     project.meta = "";
     project.libraries = [
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<div class="flex flex-col items-center justify-center absolute inset-0">
   <h1 class="text-3xl font-thin mb-4">👋 Hello, ${capitalizedTitle}! 🌎</h1>
@@ -2032,7 +2074,7 @@ if (counterElement && incrementButton) {
       "https://unpkg.com/react@latest/umd/react.development.js",
       "https://unpkg.com/react-dom@latest/umd/react-dom.development.js",
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<div id="root"></div>`;
     project.css = ``;
@@ -2066,7 +2108,7 @@ root.render(<App />);`;
     project.libraries = [
       "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.37/vue.global.prod.min.js",
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<div id="root"></div>`;
     project.css = ``;
@@ -2105,7 +2147,7 @@ app.mount('#root');`;
     project.libraries = [
       "https://unpkg.com/preact@latest/dist/preact.min.js",
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<div id="root"></div>`;
     project.css = ``;
@@ -2137,7 +2179,7 @@ render(html\`<\${App} />\`, document.getElementById('root'));`;
     project.libraries = [
       "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js",
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<div ng-app="myApp" ng-controller="MainController" class="flex flex-col items-center justify-center absolute inset-0">
     <h1 class="text-3xl font-thin mb-4">👋 Hello, ${capitalizedTitle}! 🌎</h1>
@@ -2171,7 +2213,7 @@ render(html\`<\${App} />\`, document.getElementById('root'));`;
       "https://unpkg.com/@angular/platform-browser@11.0.5/bundles/platform-browser.umd.js",
       "https://unpkg.com/@angular/platform-browser-dynamic@11.0.5/bundles/platform-browser-dynamic.umd.js",
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<app-root>Loading...</app-root>`;
     project.css = ``;
@@ -2218,7 +2260,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);`;
     project.meta = `<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js" defer></script>`;
     project.libraries = [
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<div x-data="{ counter: 0 }" class="flex flex-col items-center justify-center absolute inset-0">
   <div class="flex flex-col items-center justify-center absolute inset-0">
@@ -2239,7 +2281,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);`;
     project.meta = ``;
     project.libraries = [
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<div id="root"></div>`;
     project.css = ``;
@@ -2270,7 +2312,7 @@ render(Counter, document.getElementById("root"));`;
       "https://cdn.jsdelivr.net/npm/@hotwired/stimulus@3.1.0/dist/stimulus.umd.js",
       "https://cdn.jsdelivr.net/npm/@hotwired/stimulus-loading@1.0.0/dist/stimulus-loading.umd.js",
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<div data-controller="counter" class="flex flex-col items-center justify-center absolute inset-0">
   <h1 class="text-3xl font-thin mb-4">👋 Hello, ${capitalizedTitle}! 🌎</h1>
@@ -2303,7 +2345,7 @@ application.register('counter', class extends Stimulus.Controller {
     project.libraries = [
       "https://cdn.jsdelivr.net/npm/mithril@2.0.4/mithril.min.js",
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<div id="root"></div>`;
     project.css = ``;
@@ -2329,7 +2371,7 @@ m.mount(document.getElementById('root'), app)`;
     project.meta = `<script src="https://unpkg.com/hyperapp@0.16.0"></script>`;
     project.libraries = [
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<h1 id="root"></h1>`;
     project.css = ``;
@@ -2351,7 +2393,7 @@ app({
     project.meta = '<script src="https://cdn.jsdelivr.net/npm/aurelia-script@1.4.0"></script>';
     project.libraries = [
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
-      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
     project.html = `<template id="root">
   <div class="flex flex-col items-center justify-center absolute inset-0">
@@ -2505,7 +2547,6 @@ function importProject() {
     }
   });
 }
-
 function getFileNameAndType(url) {
   // Extract the file name with extension from the URL
   const fileName = url.substring(url.lastIndexOf('/') + 1);
@@ -2615,6 +2656,17 @@ async function downloadJSON() {
     removeScript("libraries/jszip/FileSaver.min.js");
   }
 }
+async function getFile(url) {
+  try {
+    if (project.libraries.length <= 0) return;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Network response was not ok");
+    return await response.text();
+  } catch (error) {
+    console.warn("Request error:", error);
+    throw error; // Re-throw to handle in caller
+  }
+};
 async function downloadProject() {
   try {
     await loadScripts([
@@ -2765,26 +2817,6 @@ export default {
       zip.file("tsconfig.json", tsconfig);
     }
 
-    // Nodejs Package JSON
-    let nodeStr = `{
-  "name": "${project.name.toLowerCase().split(' ').join('')}",
-  "version": "${project.version}",
-  "type": "module",
-  "scripts": {
-    ${project.css.trim() !== '' ? `"build:css": "postcss src/styles.css -o dist/styles.min.css",
-    ` : ''}"build:js": "rollup -c",
-    "build": "${project.css.trim() !== '' ? 'npm run build:css && ' : ''}npm run build:js",
-    "serve": "http-server -c-1 -p 8081"
-  },
-  "devDependencies": {
-    "rollup": "^2.79.1",
-    "rollup-plugin-terser": "^7.0.2",
-    "terser": "^5.10.0",
-    "http-server": "^14.1.1"${checkCSSDependencies()}${checkJSDependencies()}
-  }
-}`;
-    zip.file("package.json", nodeStr);
-
     let licenseStr = `The MIT License (MIT)
 Copyright (c) ${new Date().getFullYear()} ${project.author}
 
@@ -2889,27 +2921,92 @@ ${project.description}`;
     }
 
     function minifyCSS(cssCode) {
-      let input = cssCode;
-      const output = input
-        .replace(/\/\*.*\*\/|\/\*[\s\S]*?\*\/|\n|\t|\v|\s{2,}/g, '')
-        .replace(/\s*\{\s*/g, '{')
-        .replace(/\s*\}\s*/g, '}')
-        .replace(/\s*\:\s*/g, ':')
-        .replace(/\s*\;\s*/g, ';')
-        .replace(/\s*\,\s*/g, ',')
-        .replace(/\s*\~\s*/g, '~')
-        .replace(/\s*\>\s*/g, '>')
-        .replace(/\s*\+\s*/g, '+')
-        .replace(/\s*\!\s*/g, ' !');
-      return output;
-  }
+      // Remove comments
+      let minified = cssCode.replace(/\/\*[\s\S]*?\*\//g, '');
+      // Remove whitespace and newlines
+      minified = minified.replace(/\s{2,}/g, ' ').replace(/\n/g, '');
+      // Remove spaces around selectors, properties, and values
+      minified = minified.replace(/\s*([{}:;])\s*/g, '$1');
+      // Remove the last semicolon before the closing brace
+      minified = minified.replace(/;}/g, '}');
+      return minified;
+    }
 
-    // let minifiedLESS = minifyCSS(iframe.contentDocument.getElementById('aeoibrfa1').textContent);
-    let minifiedCSS = minifyCSS(await compileCode('css'));
+    let cssContent = '';
+    let cssBuildItems = [];
+    let cssBuildItemsString = '';
+    let TailwindNoReset = null;
+    const promises = project.libraries.map(async library => {
+      const data = await getFile(library);
+      const parts = library.split("/");
+      const name = parts[parts.length - 1];
+
+      // Check if the library is one of the Tailwind files to ignore
+      if (name === "tailwind-mod-noreset.min.js") {
+        TailwindNoReset = true;
+        return;
+      }
+      
+      // Assuming libraries have .css or .js extensions for simplicity
+      if (name.endsWith('.css')) {
+        cssContent += data + '\n';
+        cssBuildItems.push(name);
+        cssBuildItemsString += `libraries/${name} `;
+        zip.folder('libraries').file(name, data);
+      }
+    });
+    await Promise.all(promises);
+
+    // Checks css for html
+    let cssBuild = '';
+    let css4html = '';
+    let twFound = '';
+    let tailwindDirectives = '';
+    let tailwindStyles = '';
+    let cssImport = '';
+    // Find out if user is using tailwind
+    if (idoc.getElementById('vyhibnq91')) {
+      twFound = true;
+      tailwindDirectives = `
+  ${!TailwindNoReset ? `@tailwind base;` : ''}
+@tailwind components;
+@tailwind utilities;
+`
+
+      if (twFound) {
+        cssBuildItems.map(async library => {
+          cssImport += `@import '../libraries/${library}';
+`;
+        });
+        cssImport += tailwindDirectives;
+      } else {
+        cssImport = cssContent;
+      }
+      tailwindStyles = idoc.getElementById('vyhibnq91').textContent;
+    }
+
+    if (cssContent && project.css) {
+      css4html = '<link rel="stylesheet" href="dist/bundle.css">';
+      cssBuild = `"build:css": "postcss src/bundle.css -o dist/bundle.css",`;
+      zip.file("src/style.css", project.css + cssImport);
+      zip.file("src/bundle.css", cssImport + project.css);
+      zip.file('dist/bundle.css', minifyCSS(cssContent + tailwindStyles + project.css));
+    }
+    if (cssContent && !project.css) {
+      css4html = '<link rel="stylesheet" href="dist/bundle.css">';
+      cssBuild = `"build:css": "postcss src/bundle.css -o dist/bundle.css",`;
+      zip.file("src/bundle.css", cssImport);
+      zip.file('dist/bundle.css', minifyCSS(cssContent + tailwindStyles));
+    }
+    if (!cssContent && project.css) {
+      css4html = '<link rel="stylesheet" href="dist/style.css">';
+      cssBuild = `"build:css": "postcss src/style.css -o dist/bundle.css",`;
+      zip.file("src/style.css", project.css + cssImport);
+      zip.file('dist/style.css', minifyCSS(tailwindStyles + project.css));
+    }
 
     // Add style.css
-    zip.file('src/style.css', project.css);
-    zip.file('dist/style.css', minifiedCSS);
+    // if (project.css_pre_processor === 'css') zip.file("src/style.css", project.css);
     // if (project.css_pre_processor === 'stylus') zip.file('src/style.styl', project.css);
     // if (project.css_pre_processor === 'stylus') zip.file('dist/style.css', minifiedCSS);
     // if (project.css_pre_processor === 'less') zip.file('src/style.less', project.css);
@@ -2933,6 +3030,73 @@ ${project.description}`;
     if (project.javascript_pre_processor === 'javascript') zip.file('dist/script.js', project.javascript);
     if (project.javascript_pre_processor === 'babel') zip.file('dist/script.js', minifiedJS);
     if (project.javascript_pre_processor === 'typescript') zip.file('dist/script.js', minifiedJS);
+
+    // Nodejs Package JSON
+    let nodeStr = `{
+  "name": "${project.name.toLowerCase().split(' ').join('')}",
+  "version": "${project.version}",
+  "type": "module",
+  "scripts": {
+    ${cssBuild}
+    ${project.javascript ? '"build:js": "rollup -c",' : ''}
+    ${cssBuild || project.javascript ? `"build": "npm-run-all ${cssBuild ? "build:css" : ''} ${project.javascript ? "build:js" : ''}"` : ''},
+    "serve": "http-server -c-1 -p 8081"
+  },
+  "devDependencies": {
+    ${cssBuild || twFound ? `"autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "postcss-import": "^16.1.0",
+    "cssnano": "^7.0.2",${twFound ? `
+    "tailwindcss": "^3.4.4",` : ''}` : ''}
+    "npm-run-all": "^4.1.5",
+    "rollup": "^2.79.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "terser": "^5.10.0",
+    "http-server": "^14.1.1"${checkCSSDependencies()}${checkJSDependencies()}
+  }
+}`;
+    zip.file("package.json", nodeStr);
+
+    // PostCSS config
+    if (cssBuild) {
+      zip.file("postcss.config.cjs", `module.exports = {
+  plugins: [
+    require('postcss-import'),
+    require('autoprefixer'),${twFound ? `
+    require('tailwindcss'),` : ''}
+    require('cssnano')({
+      preset: 'default',
+    }),
+  ],
+};`);
+    }
+
+    // Tailwind config
+    if (twFound) {
+      let twJS = "";
+      if (project.javascript_pre_processor === "javascript") {
+        twJS = `
+    './src/**/*.js',`;
+      }
+      if (project.javascript_pre_processor === "babel") {
+        twJS = `
+    './src/**/*.jsx',`;
+      }
+      if (project.javascript_pre_processor === "typescript") {
+        twJS = `
+    './src/**/*.ts',`;
+      }
+      let configCode = `module.exports = {
+  content: [
+    './src/**/*.html',${twJS}
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};`
+      zip.file("tailwind.config.js", configCode);
+    }
 
     // if pwa is enabled
     let swinit = '';
@@ -2977,10 +3141,15 @@ plugins: [
     let scriptTags = '';
     let cssTags = '';
     project.libraries.forEach(library => {
+      const parts = library.split("/");
+      const name = parts[parts.length - 1];
+
+      // Check if the library is one of the Tailwind files to ignore
+      if (name === "tailwind-mod-noreset.min.js" || name === "tailwind-mod.min.js") {
+        return;
+      }
       if (library.endsWith('.js')) {
         scriptTags += `<script src="${library}"></script>\n    `;
-      } else if (library.endsWith('.css')) {
-        cssTags += `<link rel="stylesheet" href="${library}">\n          `;
       } else {
         // Assuming it's a Google font
         cssTags += `<link href="${library}" rel="stylesheet">\n          `;
@@ -3012,7 +3181,7 @@ plugins: [
     <link rel="shortcut icon" type="image/x-icon" href="imgs/logo.svg">
     <link rel="icon" type="image/svg+xml" href="imgs/logo.svg" />
     <link rel="apple-touch-icon" href="imgs/logo.svg">
-    ${cssTags}${project.css ? '<link rel="stylesheet" href="dist/style.css">' : ''}
+    ${css4html}
     ${project.meta ? `${project.meta}\n  ` : ''}
     ${scriptTags ? scriptTags : ''}
   </head>
@@ -3256,6 +3425,7 @@ async function renderPreview(forceRun = false) {
 // Make functions available in global space
 window.Modal = Modal;
 window.emptyStorage = emptyStorage;
+window.updateVersionPart = updateVersionPart;
 window.addLibrary = addLibrary;
 window.fetchSuggestions = fetchSuggestions;
 window.setPreprocessor = setPreprocessor;
@@ -3272,6 +3442,7 @@ window.handleLogoChange = handleLogoChange;
 window.newProject = newProject;
 window.importProject = importProject;
 window.downloadJSON = downloadJSON;
+window.getFile = getFile;
 window.downloadProject = downloadProject;
 window.share = share;
 window.screenshot = screenshot;
