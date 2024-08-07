@@ -2944,14 +2944,18 @@ ${project.description}`;
       // Check if the library is one of the Tailwind files to ignore
       if (name === "tailwind-mod-noreset.min.js") {
         TailwindNoReset = true;
-        return;
       }
       
-      // Assuming libraries have .css or .js extensions for simplicity
+      // Assuming libraries have .css extensions for simplicity
       if (name.endsWith('.css')) {
         cssContent += data + '\n';
         cssBuildItems.push(name);
         cssBuildItemsString += `libraries/${name} `;
+        zip.folder('libraries').file(name, data);
+      }
+      
+      // Assuming libraries have .js extensions for simplicity
+      if (name.endsWith('.js')) {
         zip.folder('libraries').file(name, data);
       }
     });
@@ -3032,6 +3036,16 @@ ${project.description}`;
     if (project.javascript_pre_processor === 'typescript') zip.file('dist/script.js', minifiedJS);
 
     // Nodejs Package JSON
+    let npmBuildConditions = '';
+    if (cssBuild && !project.javascript) {
+      npmBuildConditions = `"build": "npm run build:css",`
+    }
+    if (!cssBuild && project.javascript) {
+      npmBuildConditions = `"build": "npm run build:js",`
+    }
+    if (cssBuild && project.javascript) {
+      npmBuildConditions = `"build": "npm run build:css && npm run build:js",`
+    }
     let nodeStr = `{
   "name": "${project.name.toLowerCase().split(' ').join('')}",
   "version": "${project.version}",
@@ -3039,7 +3053,7 @@ ${project.description}`;
   "scripts": {
     ${cssBuild}
     ${project.javascript ? '"build:js": "rollup -c",' : ''}
-    ${cssBuild || project.javascript ? `"build": "npm-run-all ${cssBuild ? "build:css" : ''} ${project.javascript ? "build:js" : ''}"` : ''},
+    ${npmBuildConditions}
     "serve": "http-server -c-1 -p 8081"
   },
   "devDependencies": {
@@ -3141,13 +3155,6 @@ plugins: [
     let scriptTags = '';
     let cssTags = '';
     project.libraries.forEach(library => {
-      const parts = library.split("/");
-      const name = parts[parts.length - 1];
-
-      // Check if the library is one of the Tailwind files to ignore
-      if (name === "tailwind-mod-noreset.min.js" || name === "tailwind-mod.min.js") {
-        return;
-      }
       if (library.endsWith('.js')) {
         scriptTags += `<script src="${library}"></script>\n    `;
       } else {
@@ -3189,18 +3196,15 @@ plugins: [
 
 ${await compileCode('html')}
 
-${project.javascript ? '<script src="dist/script.js"></script>' : ''}
+${project.javascript ? `<script src="dist/script.js" ${project.module ? 'type="module"' : ''}></script>` : ''}
 ${(project.pwa ? swinit : '')}
   </body>
 </html>`;
-    if (project.html_pre_processor === 'html') zip.file('src/index.html', project.html);
-    if (project.html_pre_processor === 'html') zip.file('index.html', indexHtmlContentCompiled);
-    if (project.html_pre_processor === 'markdown') zip.file('src/index.md', project.html);
-    if (project.html_pre_processor === 'markdown') zip.file('index.html', indexHtmlContentCompiled);
-    if (project.html_pre_processor === 'pug') zip.file('src/index.pug', project.html);
-    if (project.html_pre_processor === 'pug') zip.file('index.html', indexHtmlContentCompiled);
-    if (project.html_pre_processor === 'jade') zip.file('src/index.jade', project.html);
-    if (project.html_pre_processor === 'jade') zip.file('index.html', indexHtmlContentCompiled);
+    zip.file('index.html', indexHtmlContentCompiled);
+    if (project.html_pre_processor === 'html') zip.file('src/source.html', project.html);
+    if (project.html_pre_processor === 'markdown') zip.file('src/source.md', project.html);
+    if (project.html_pre_processor === 'pug') zip.file('src/source.pug', project.html);
+    if (project.html_pre_processor === 'jade') zip.file('src/source.jade', project.html);
 
     // Create a folder "imgs" and add images inside it with their correct MIME types
     if (audioUrls.length > 0) {
