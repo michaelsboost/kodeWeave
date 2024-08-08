@@ -3106,7 +3106,7 @@ ${project.description}`;
       // service worker for progressive web app
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./dist/sw.js')
+          navigator.serviceWorker.register('./sw.js')
         })
       }
     </script>`;
@@ -3133,7 +3133,7 @@ plugins: [
 ],
 })
 );`
-  zip.file("dist/sw.js", swjs);
+  zip.file("sw.js", swjs);
     }
 
     // Iterate over each library
@@ -3176,7 +3176,7 @@ plugins: [
       zip.folder('libraries').file(name, data);
 
       placeScript = `<script src="libraries/babel.min.js"></script>
-    <script type="text/babel" src="src/script.js" ${project.module ? 'data-type="module"' : ''}></script>`;
+    <script type="text/babel" src="src/script.jsx" ${project.module ? 'data-type="module"' : ''}></script>`;
     }
     if (project.javascript_pre_processor === 'typescript') {
       let library = "libraries/preprocessors/typescript.min.js";
