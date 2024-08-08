@@ -38,7 +38,7 @@ let app = {
     href: 'https://michaelsboost.com/',
     src: 'imgs/author.jpg'
   },
-  version: '1.2',
+  version: '1.2.1',
   url: 'https://github.com/michaelsboost/kodeWeave/',
   license: 'https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE'
 }
@@ -3176,8 +3176,7 @@ plugins: [
       zip.folder('libraries').file(name, data);
 
       placeScript = `<script src="libraries/babel.min.js"></script>
-    <script type="text/babel" data-type="module"></script>
-    <script src="src/script.js" ${project.module ? 'type="module"' : ''}></script>`;
+    <script type="text/babel" src="src/script.js" ${project.module ? 'data-type="module"' : ''}></script>`;
     }
     if (project.javascript_pre_processor === 'typescript') {
       let library = "libraries/preprocessors/typescript.min.js";
