@@ -774,7 +774,8 @@ function Demos() {
     "mithril",
     "hyperapp",
     "aurelia",
-    "lit"
+    "lit",
+    "knockout"
   ]
 
   let buttonHTML = "";
@@ -2459,6 +2460,32 @@ class MyElement extends LitElement {
   }
 }
 customElements.define('my-element', MyElement);`;
+  }
+  if (name === 'knockout') {
+    project.meta = "";
+    project.libraries = [
+      "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js"
+    ];
+    project.html = `<div class="flex flex-col items-center justify-center absolute inset-0">
+  <h1 class="text-3xl font-thin mb-4">👋 Hello, Knockout.js! 🌎</h1>
+  <p class="text-xl mb-4">Counter: <span class="font-mono" data-bind="text: counter">0</span></p>
+  <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition" 
+          data-bind="click: increment">
+    +
+  </button>
+</div>`;
+    project.css = ``;
+    project.javascript = `function AppViewModel() {
+  this.counter = ko.observable(0);
+
+  this.increment = () => {
+    this.counter(this.counter() + 1);
+  };
+}
+
+ko.applyBindings(new AppViewModel());`;
   }
 
   dispatchChanges(editorManager.htmlEditor, project.html);
