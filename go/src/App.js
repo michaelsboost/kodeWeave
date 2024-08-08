@@ -2658,7 +2658,6 @@ async function downloadJSON() {
 }
 async function getFile(url) {
   try {
-    if (project.libraries.length <= 0) return;
     const response = await fetch(url);
     if (!response.ok) throw new Error("Network response was not ok");
     return await response.text();
@@ -2712,7 +2711,7 @@ async function downloadProject() {
 
     function checkCSSDependencies() {
       if (project.css.trim() !== '') {
-        return `
+        return `,
     "postcss": "^8.4.6",
     "autoprefixer": "^10.4.2",
     "cssnano": "^5.0.12"`;
@@ -2990,20 +2989,23 @@ ${project.description}`;
     }
 
     if (cssContent && project.css) {
-      css4html = '<link rel="stylesheet" href="dist/bundle.css">';
+      css4html = `<link rel="stylesheet" href="dist/bundle.css">
+    `;
       cssBuild = `"build:css": "postcss src/bundle.css -o dist/bundle.css",`;
       zip.file("src/style.css", project.css + cssImport);
       zip.file("src/bundle.css", cssImport + project.css);
       zip.file('dist/bundle.css', minifyCSS(cssContent + tailwindStyles + project.css));
     }
     if (cssContent && !project.css) {
-      css4html = '<link rel="stylesheet" href="dist/bundle.css">';
+      css4html = `<link rel="stylesheet" href="dist/bundle.css">
+    `;
       cssBuild = `"build:css": "postcss src/bundle.css -o dist/bundle.css",`;
       zip.file("src/bundle.css", cssImport);
       zip.file('dist/bundle.css', minifyCSS(cssContent + tailwindStyles));
     }
     if (!cssContent && project.css) {
-      css4html = '<link rel="stylesheet" href="dist/style.css">';
+      css4html = `<link rel="stylesheet" href="dist/style.css">
+    `;
       cssBuild = `"build:css": "postcss src/style.css -o dist/bundle.css",`;
       zip.file("src/style.css", project.css + cssImport);
       zip.file('dist/style.css', minifyCSS(tailwindStyles + project.css));
@@ -3018,23 +3020,6 @@ ${project.description}`;
     // if (project.css_pre_processor === 'sass') zip.file('src/style.scss', project.css);
     // if (project.css_pre_processor === 'sass') zip.file('dist/style.css', minifiedCSS);
 
-    async function minifyJS(jsCode) {
-      // detect if terser exists
-      if (!document.querySelector("script[src='libraries/terser/bundle.min.js']")) {
-        await loadScript("libraries/terser/bundle.min.js");
-      }
-      return Terser.minify(jsCode);
-    }
-
-    let minifiedJS = await minifyJS(await compileCode('javascript'));
-    minifiedJS = minifiedJS.code;
-
-    // Add script.js
-    zip.file(`${rollupInput}`, project.javascript);
-    if (project.javascript_pre_processor === 'javascript') zip.file('dist/script.js', project.javascript);
-    if (project.javascript_pre_processor === 'babel') zip.file('dist/script.js', minifiedJS);
-    if (project.javascript_pre_processor === 'typescript') zip.file('dist/script.js', minifiedJS);
-
     // Nodejs Package JSON
     let npmBuildConditions = '';
     if (cssBuild && !project.javascript) {
@@ -3046,6 +3031,7 @@ ${project.description}`;
     if (cssBuild && project.javascript) {
       npmBuildConditions = `"build": "npm run build:css && npm run build:js",`
     }
+
     let nodeStr = `{
   "name": "${project.name.toLowerCase().split(' ').join('')}",
   "version": "${project.version}",
@@ -3062,7 +3048,6 @@ ${project.description}`;
     "postcss-import": "^16.1.0",
     "cssnano": "^7.0.2",${twFound ? `
     "tailwindcss": "^3.4.4",` : ''}` : ''}
-    "npm-run-all": "^4.1.5",
     "rollup": "^2.79.1",
     "rollup-plugin-terser": "^7.0.2",
     "terser": "^5.10.0",
@@ -3159,11 +3144,93 @@ plugins: [
         scriptTags += `<script src="${library}"></script>\n    `;
       } else {
         // Assuming it's a Google font
-        cssTags += `<link href="${library}" rel="stylesheet">\n          `;
+        cssTags += `<link href="${library}" rel="stylesheet">\n    `;
       }
     });
+
+    async function minifyJS(jsCode) {
+      // detect if terser exists
+      if (!document.querySelector("script[src='libraries/terser/bundle.min.js']")) {
+        await loadScript("libraries/terser/bundle.min.js");
+      }
+      return Terser.minify(jsCode);
+    }
+
+    let minifiedJS = await minifyJS(await compileCode('javascript'));
+    minifiedJS = minifiedJS.code;
+
+    // Add script.js
+    zip.file(`${rollupInput}`, project.javascript);
+    if (project.javascript_pre_processor === 'javascript') zip.file('dist/script.js', project.javascript);
+    if (project.javascript_pre_processor === 'babel') zip.file('dist/script.js', minifiedJS);
+    if (project.javascript_pre_processor === 'typescript') zip.file('dist/script.js', minifiedJS);
+
+    // script tag for test.html
+    let placeScript = `<script src="dist/script.js" ${project.module ? 'type="module"' : ''}></script>`;
+    if (project.javascript_pre_processor === 'babel') {
+      const library = "libraries/preprocessors/babel.min.js";
+      const data = await getFile(library);
+      const parts = library.split("/");
+      const name = parts[parts.length - 1];
+
+      zip.folder('libraries').file(name, data);
+
+      placeScript = `<script src="libraries/babel.min.js"></script>
+    <script type="text/babel" data-type="module"></script>
+    <script src="src/script.js" ${project.module ? 'type="module"' : ''}></script>`;
+    }
+    if (project.javascript_pre_processor === 'typescript') {
+      let library = "libraries/preprocessors/typescript.min.js";
+      let data = await getFile(library);
+      let parts = library.split("/");
+      let name = parts[parts.length - 1];
+      zip.folder('libraries').file(name, data);
+
+      library = "libraries/preprocessors/typescript.compile.min.js";
+      data = await getFile(library);
+      parts = library.split("/");
+      name = parts[parts.length - 1];
+      zip.folder('libraries').file(name, data);
+
+      placeScript = `<script type="text/typescript" src="src/script.ts"></script>
+    <script type="text/javascript" src="libraries/typescript.min.js"></script>
+    <script type="text/javascript" src="libraries/typescript.compile.min.js"></script>`;
+    }
   
     // Add index.html
+    const indexHtmlContent = `<!DOCTYPE html>
+<html lang="en" data-theme="${project.dark ? 'dark' : 'light'}">
+  <head>
+    <title>${project.title}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, interactive-widget=resizes-content">
+    <meta name="description" content="${project.description}">
+    <meta name="author" content="${project.author}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="${project.title}">
+    <meta name="theme-color" content="hsl(205deg 18.75% 87.45%)">
+    <meta name="apple-mobile-web-app-title" content="${project.title}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-starturl" content="./index.html">
+    <meta name="msapplication-navbutton-color" content="hsl(205deg 18.75% 87.45%)">
+    <meta property="og:url" content="${project.url}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="${project.title}" />
+    <meta property="og:description" content="${project.description}" />
+    <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" type="image/x-icon" href="imgs/logo.svg">
+    <link rel="icon" type="image/svg+xml" href="imgs/logo.svg" />
+    <link rel="apple-touch-icon" href="imgs/logo.svg">
+    ${cssTags ? cssTags : ''}${project.meta ? `${project.meta}\n  ` : ''}
+  </head>
+  <body>
+    ${await compileCode('html')}
+
+    ${scriptTags ? scriptTags : ''}
+    ${project.javascript ? placeScript : ''}${(project.pwa ? swinit : '')}
+  </body>
+</html>`;
     const indexHtmlContentCompiled = `<!DOCTYPE html>
 <html lang="en" data-theme="${project.dark ? 'dark' : 'light'}">
   <head>
@@ -3188,18 +3255,15 @@ plugins: [
     <link rel="shortcut icon" type="image/x-icon" href="imgs/logo.svg">
     <link rel="icon" type="image/svg+xml" href="imgs/logo.svg" />
     <link rel="apple-touch-icon" href="imgs/logo.svg">
-    ${css4html}
-    ${project.meta ? `${project.meta}\n  ` : ''}
-    ${scriptTags ? scriptTags : ''}
+    ${css4html}${project.meta ? `${project.meta}\n  ` : ''}${scriptTags ? scriptTags : ''}
   </head>
   <body>
+    ${await compileCode('html')}
 
-${await compileCode('html')}
-
-${project.javascript ? `<script src="dist/script.js" ${project.module ? 'type="module"' : ''}></script>` : ''}
-${(project.pwa ? swinit : '')}
+    ${project.javascript ? `<script src="dist/script.js" ${project.module ? 'type="module"' : ''}></script>` : ''}${(project.pwa ? swinit : '')}
   </body>
 </html>`;
+    zip.file('test.html', indexHtmlContent);
     zip.file('index.html', indexHtmlContentCompiled);
     if (project.html_pre_processor === 'html') zip.file('src/source.html', project.html);
     if (project.html_pre_processor === 'markdown') zip.file('src/source.md', project.html);
