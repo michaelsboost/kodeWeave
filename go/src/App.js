@@ -775,7 +775,8 @@ function Demos() {
     "hyperapp",
     "aurelia",
     "lit",
-    "knockout"
+    "knockout",
+    "moon"
   ]
 
   let buttonHTML = "";
@@ -2228,7 +2229,7 @@ enableProdMode();
   selector: 'app-root',
   template: \`
     <div class="flex flex-col items-center justify-center absolute inset-0">
-      <h1 class="text-3xl font-thin mb-4">👋 Hello, ${capitalizedTitle}! 🌎</h1>
+      <h1 class="text-3xl font-thin mb-4">👋 Hello, Angular 11! 🌎</h1>
       <p class="text-xl mb-4">Counter: <span id="counter" class="font-mono">{{ counter }}</span></p>
       <button
         id="incrementButton"
@@ -2486,6 +2487,32 @@ customElements.define('my-element', MyElement);`;
 }
 
 ko.applyBindings(new AppViewModel());`;
+  }
+  if (name === 'moon') {
+    project.meta = `<script src="https://unpkg.com/moonjs"></script>`;
+    project.libraries = [
+      "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
+      "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js",
+    ];
+    project.html = `<div id="root" class="flex flex-col items-center justify-center absolute inset-0">
+  <h1 class="text-3xl font-thin mb-4">👋 Hello, Moon.js! 🌎</h1>
+  <p class="text-xl mb-4">Counter: <span class="font-mono">{{ count }}</span></p>
+  <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition" m-on:click="increment">
+    +
+  </button>
+</div>`;
+    project.css = ``;
+    project.javascript = `var app = new Moon({
+  el: '#root',
+  data: {
+    count: 0
+  },
+  methods: {
+    increment() {
+      this.set('count', this.get('count') + 1);
+    }
+  }
+});`;
   }
 
   dispatchChanges(editorManager.htmlEditor, project.html);
