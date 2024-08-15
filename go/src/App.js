@@ -3394,48 +3394,55 @@ plugins: [
 }
 async function share() {
   try {
-    let jsPreprocessor = null;
-    if (project.javascript_pre_processor === 'javascript') {
-      jsPreprocessor = "none";
+    if (navigator.onLine) {
+      let jsPreprocessor = null;
+      if (project.javascript_pre_processor === 'javascript') {
+        jsPreprocessor = "none";
+      } else {
+        jsPreprocessor = project.javascript_pre_processor;
+      }
+
+      const shareProject = {
+        title: project.title,
+        description: project.description,
+        head: project.meta,
+        html: project.html,
+        html_pre_processor: project.html_pre_processor === "html" ? "none" : "",
+        css: project.css,
+        css_pre_processor: project.css_pre_processor === "css" ? "none" : "",
+        css_external: project.libraries.filter(lib => lib.endsWith('.css')).join(';'),
+        css_starter: "neither",
+        css_prefix: "neither",
+        js_module: project.module,
+        js: project.javascript,
+        js_pre_processor: jsPreprocessor,
+        js_external: project.libraries.filter(lib => lib.endsWith('.js')).join(';'),
+        editors: '111',
+        layout: 'left'
+      };
+
+      // Stringify the JSON object and escape quotes
+      const JSONstring = JSON.stringify(shareProject)
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+
+      // Create form element
+      const form = `
+        <form action="https://codepen.io/pen/define" method="POST" target="_blank">
+          <input type="hidden" name="data" value='${JSONstring}'>
+          <input type="image" src="http://s.cdpn.io/3/cp-arrow-right.svg" width="40" height="40" value="Create New Pen with Prefilled Data" class="codepen-mover-button">
+        </form>`;
+
+      // Append form to the document body and submit
+      document.body.insertAdjacentHTML('beforeend', form);
+      document.querySelector('form').submit();
+      document.querySelector('form').remove();
     } else {
-      jsPreprocessor = project.javascript_pre_processor;
+      Modal.render({
+        title: "Unable to share!",
+        content: `<div class="p-4 text-center">No internet connection!</div>`
+      });
     }
-
-    const shareProject = {
-      title: project.title,
-      description: project.description,
-      head: project.meta,
-      html: project.html,
-      html_pre_processor: project.html_pre_processor === "html" ? "none" : "",
-      css: project.css,
-      css_pre_processor: project.css_pre_processor === "css" ? "none" : "",
-      css_external: project.libraries.filter(lib => lib.endsWith('.css')).join(';'),
-      css_starter: "neither",
-      css_prefix: "neither",
-      js_module: project.module,
-      js: project.javascript,
-      js_pre_processor: jsPreprocessor,
-      js_external: project.libraries.filter(lib => lib.endsWith('.js')).join(';'),
-      editors: '111',
-      layout: 'left'
-    };
-
-    // Stringify the JSON object and escape quotes
-    const JSONstring = JSON.stringify(shareProject)
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&apos;");
-
-    // Create form element
-    const form = `
-      <form action="https://codepen.io/pen/define" method="POST" target="_blank">
-        <input type="hidden" name="data" value='${JSONstring}'>
-        <input type="image" src="http://s.cdpn.io/3/cp-arrow-right.svg" width="40" height="40" value="Create New Pen with Prefilled Data" class="codepen-mover-button">
-      </form>`;
-
-    // Append form to the document body and submit
-    document.body.insertAdjacentHTML('beforeend', form);
-    document.querySelector('form').submit();
-    document.querySelector('form').remove();
   } catch (error) {
     console.error('Error sharing project:', error);
   }
