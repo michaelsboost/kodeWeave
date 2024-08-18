@@ -295,6 +295,7 @@ const project = onChange(p, (property, oldValue, newValue) => {
     localStorage.setItem('kodeWeave', JSON.stringify(project));
     App.render('#app');
     if (property.toString() === 'activePanel') {
+      getIFrameClientSize();
       if (!window.editorManager) return;
       if (project.activePanel === 'html') setActiveEditor(editorManager.htmlEditor)
       if (project.activePanel === 'css') setActiveEditor(editorManager.cssEditor)
@@ -405,7 +406,7 @@ function LeftMenubar() {
       name="toggle html"
       class="${buttonSize} text-sm border-0 px-0 py-3 rounded-md bg-transparent ${project.activePanel === 'html' ? 'text-blue-500' : ''}"
       ${project.activePanel === 'html' ? '' : 'style="color: unset;"'}
-      onclick="setActiveEditor(htmlEditor); project.activePanel = project.activePanel === 'html' ? null : 'html'; defineScale();"
+      onclick="setActiveEditor(htmlEditor); project.activePanel = project.activePanel === 'html' ? null : 'html';"
     >
       ${icons.html}
     </button>
@@ -416,7 +417,7 @@ function LeftMenubar() {
       name="toggle css"
       class="${buttonSize} text-sm border-0 px-0 py-3 rounded-md bg-transparent ${project.activePanel === 'css' ? 'text-blue-500' : ''}"
       ${project.activePanel === 'css' ? '' : 'style="color: unset;"'}
-      onclick="setActiveEditor(cssEditor); project.activePanel = project.activePanel === 'css' ? null : 'css'; defineScale();"
+      onclick="setActiveEditor(cssEditor); project.activePanel = project.activePanel === 'css' ? null : 'css';"
     >
       ${icons.css}
     </button>
@@ -427,7 +428,7 @@ function LeftMenubar() {
       name="toggle javascript"
       class="${buttonSize} text-sm border-0 px-0 py-3 rounded-md bg-transparent ${project.activePanel === 'javascript' ? 'text-blue-500' : ''}"
       ${project.activePanel === 'javascript' ? '' : 'style="color: unset;"'}
-      onclick="setActiveEditor(jsEditor); project.activePanel = project.activePanel === 'javascript' ? null : 'javascript'; defineScale();"
+      onclick="setActiveEditor(jsEditor); project.activePanel = project.activePanel === 'javascript' ? null : 'javascript';"
     >
       ${icons.javascript}
     </button>
@@ -1865,55 +1866,32 @@ function rotateCanvas() {
   iframe.style.marginTop = `-${height / 2}px`;
   iframe.style.marginLeft = `-${width / 2}px`;
   data.selectedSize = width+'x'+height;
-}
-function defineScale() {
-  const iframe = document.getElementById('previewElm').firstElementChild;
-  if (iframe.style.width === '100%') return false;
-
-  // Extract current width and height
-  let width = parseInt(iframe.style.width);
-  let height = parseInt(iframe.style.height);
-
-  // Calculate the new transform scale
-  const viewportWidth = previewElm.clientWidth;
-  const viewportHeight = previewElm.clientHeight;
-  const scale = Math.min(viewportWidth / width, viewportHeight / height);
-
-  // Apply the new styles
-  iframe.style.width = `${width}px`;
-  iframe.style.height = `${height}px`;
-  iframe.style.transform = `scale(${scale})`;
-  iframe.style.marginTop = `-${height / 2}px`;
-  iframe.style.marginLeft = `-${width / 2}px`;
+  getIFrameClientSize();
 }
 let fadeTimeout;
 function getIFrameClientSize() {
-  if (data.selectedSize === 'none') {
-    const iframe = document.getElementById('iframe');
-    data.iframeSize = `${iframe.clientWidth}px x ${iframe.clientHeight}px`;
-    const element = document.getElementById('iframeClientSize');
-  
-    if (element.classList.contains('hidden')) {
-      // Clear existing timeout to prevent multiple calls
-      if (fadeTimeout) clearTimeout(fadeTimeout);
-  
-      // Remove hidden and add opacity-100 to show the element
-      element.classList.remove('hidden', 'opacity-0');
-      element.classList.add('opacity-100');
-  
-      // Set a timeout to handle fade-out
-      fadeTimeout = setTimeout(() => {
-        element.classList.remove('opacity-100');
-        element.classList.add('opacity-0');
-  
-        // Add hidden class after fade-out
-        setTimeout(() => {
-          element.classList.add('hidden');
-        }, 300); // Match the duration of the opacity transition
-      }, 2000); // Show duration
-    }
-  } else {
-    defineScale();
+  const iframe = document.getElementById('iframe');
+  data.iframeSize = `${iframe.clientWidth}px x ${iframe.clientHeight}px`;
+  const element = document.getElementById('iframeClientSize');
+
+  if (element.classList.contains('hidden')) {
+    // Clear existing timeout to prevent multiple calls
+    if (fadeTimeout) clearTimeout(fadeTimeout);
+
+    // Remove hidden and add opacity-100 to show the element
+    element.classList.remove('hidden', 'opacity-0');
+    element.classList.add('opacity-100');
+
+    // Set a timeout to handle fade-out
+    fadeTimeout = setTimeout(() => {
+      element.classList.remove('opacity-100');
+      element.classList.add('opacity-0');
+
+      // Add hidden class after fade-out
+      setTimeout(() => {
+        element.classList.add('hidden');
+      }, 300); // Match the duration of the opacity transition
+    }, 2000); // Show duration
   }
 }
 async function compileCode(detect) {
@@ -3564,7 +3542,6 @@ window.tidy = tidy;
 window.generateId = generateId;
 window.resizeCanvas = resizeCanvas;
 window.rotateCanvas = rotateCanvas;
-window.defineScale = defineScale;
 window.getIFrameClientSize = getIFrameClientSize;
 window.handleLogoChange = handleLogoChange;
 window.newProject = newProject;
