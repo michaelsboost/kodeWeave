@@ -38,7 +38,7 @@ let app = {
     href: 'https://michaelsboost.com/',
     src: 'imgs/author.jpg'
   },
-  version: '1.2.1',
+  version: '1.2.2',
   url: 'https://github.com/michaelsboost/kodeWeave/',
   license: 'https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE'
 }
@@ -2616,49 +2616,184 @@ function fetchResources(obj) {
     const doc = new DOMParser().parseFromString(obj.html, 'text/html');
     const body = doc.body;
 
-    const imageUrls = [];
-    const audioUrls = [];
-    const vectors = [];
-    const videoUrls = [];
+    const imageResources = [];
+    const audioResources = [];
+    const vectorResources = [];
+    const videoResources = [];
 
-    // Extract image URLs
+    let fileCounter = 1;
+
+    // Helper function to check if a string is Base64
+    function isBase64(str) {
+      return str.startsWith('data:') && str.includes('base64,');
+    }
+
+    // Helper function to extract file type from Base64 string
+    function getBase64FileType(str) {
+      const mimeMatch = str.match(/^data:(.*);base64,/);
+      if (mimeMatch) {
+        const mimeType = mimeMatch[1];
+        return mimeTypeToExtension(mimeType);
+      }
+      return 'unknown';
+    }
+
+    // Helper function to map MIME types to file extensions
+    function mimeTypeToExtension(mimeType) {
+      const typeMap = {
+        // Images
+        'image/jpeg': 'jpg',
+        'image/png': 'png',
+        'image/gif': 'gif',
+        'image/svg+xml': 'svg',
+        'image/webp': 'webp',
+        'image/tiff': 'tiff',
+        'image/bmp': 'bmp',
+        'image/x-icon': 'ico',
+
+        // Audio
+        'audio/mpeg': 'mp3',
+        'audio/wav': 'wav',
+        'audio/ogg': 'ogg',
+        'audio/aac': 'aac',
+        'audio/webm': 'webm',
+        'audio/flac': 'flac',
+
+        // Video
+        'video/mp4': 'mp4',
+        'video/webm': 'webm',
+        'video/ogg': 'ogv',
+        'video/avi': 'avi',
+        'video/mpeg': 'mpg',
+        'video/quicktime': 'mov',
+        'video/x-msvideo': 'avi',
+        'video/x-matroska': 'mkv',
+
+        // Fallback for unknown types
+        'unknown': 'bin'
+      };
+      return typeMap[mimeType] || 'bin';
+    }
+
+    // Helper function to extract file name from URL
+    function getFileName(url) {
+      return url.substring(url.lastIndexOf('/') + 1);
+    }
+
+    // Generate a file name for Base64 resources
+    function getBase64FileName() {
+      return `file-${fileCounter++}`;
+    }
+
+    // Extract image URLs and filenames
     body.querySelectorAll('img').forEach(img => {
       if (img.hasAttribute('src')) {
-        imageUrls.push(img.getAttribute('src'));
-        img.src = `imgs/${getFileNameAndType(img.getAttribute('src')).fileName}`;
+        const src = img.getAttribute('src');
+
+        if (isBase64(src)) {
+          const fileType = getBase64FileType(src);
+          const fileName = `${getBase64FileName()}.${fileType}`;
+          imageResources.push({ url: src, fileName: fileName });
+          img.src = `imgs/${fileName}`;
+        } else {
+          const fileName = getFileName(src);
+          imageResources.push({ url: src, fileName: fileName });
+          img.src = `imgs/${getFileNameAndType(src).fileName}`;
+        }
+      }
+
+      if (img.hasAttribute('srcset')) {
+        img.srcset.split(',').forEach(srcset => {
+          const url = srcset.trim().split(' ')[0];
+          if (isBase64(url)) {
+            const fileType = getBase64FileType(src);
+            const fileName = `${getBase64FileName()}.${fileType}`;
+            imageResources.push({ url: url, fileName: fileName });
+            img.src = `imgs/${fileName}`;
+          } else {
+            const fileName = getFileName(url);
+            imageResources.push({ url: url, fileName: fileName });
+            img.src = `imgs/${getFileNameAndType(img.getAttribute('src')).fileName}`;
+          }
+        });
       }
     });
 
-    // Extract audio URLs
+    // Extract audio URLs and filenames
     body.querySelectorAll('audio').forEach(audio => {
       audio.querySelectorAll('source').forEach(source => {
         if (source.hasAttribute('src')) {
-          audioUrls.push(source.getAttribute('src'));
-          source.src = `audios/${getFileNameAndType(source.getAttribute('src')).fileName}`;
+          const src = source.getAttribute('src');
+
+          if (isBase64(src)) {
+            const fileType = getBase64FileType(src);
+            const fileName = `${getBase64FileName()}.${fileType}`;
+            audioResources.push({ url: src, fileName: fileName });
+            source.src = `audios/${fileName}`;
+          } else {
+            const fileName = getFileName(src);
+            audioResources.push({ url: src, fileName: fileName });
+            source.src = `audios/${getFileNameAndType(src).fileName}`;
+          }
         }
       });
     });
 
     // Extract vectors
     body.querySelectorAll('svg').forEach(svg => {
-      vectors.push(svg.outerHTML);
+      vectorResources.push({ content: svg.outerHTML, fileName: `vector-${vectorResources.length + 1}.svg` });
     });
 
-    // Extract video URLs
+    // Extract video URLs and filenames
     body.querySelectorAll('video').forEach(video => {
       video.querySelectorAll('source').forEach(source => {
         if (source.hasAttribute('src')) {
-          videoUrls.push(source.getAttribute('src'));
-          source.src = `vids/${getFileNameAndType(source.getAttribute('src')).fileName}`;
+          const src = source.getAttribute('src');
+
+          if (isBase64(src)) {
+            const fileType = getBase64FileType(src);
+            const fileName = `${getBase64FileName()}.${fileType}`;
+            videoResources.push({ url: src, fileName: fileName });
+            source.src = `vids/${fileName}`;
+          } else {
+            const fileName = getFileName(src);
+            videoResources.push({ url: src, fileName: fileName });
+            source.src = `vids/${getFileNameAndType(src).fileName}`;
+          }
         }
       });
     });
 
+    // Function to extract and process background images from CSS
+    function extractBackgroundImageUrls(css) {
+      const urls = [];
+      const regex = /background-image\s*:\s*url\(([^)]+)\)/g;
+      let match;
+      while ((match = regex.exec(css)) !== null) {
+        let url = match[1].replace(/['"]/g, ""); // Remove quotes around URLs
+        if (isBase64(url)) {
+          const fileType = getBase64FileType(url);
+          const fileName = `${getBase64FileName()}.${fileType}`;
+          imageResources.push({ url: url, fileName: fileName });
+        } else {
+          const fileName = getFileName(url);
+          imageResources.push({ url: url, fileName: fileName });
+        }
+        urls.push(url);
+      }
+      return urls;
+    }
+
+    // Extract background-image URLs from project CSS
+    const projectCss = obj.css || '';
+    extractBackgroundImageUrls(projectCss);
+
     return {
-      imageUrls,
-      audioUrls,
-      vectors,
-      videoUrls
+      html: doc.body.innerHTML,
+      imageResources,
+      audioResources,
+      vectorResources,
+      videoResources
     };
   } catch (error) {
     console.error('Error fetching resources:', error);
@@ -2704,37 +2839,12 @@ async function downloadProject() {
       "libraries/jszip/jszip.min.js",
       "libraries/jszip/FileSaver.min.js"
     ]);
-    
-    let { imageUrls, audioUrls, vectors, videoUrls } = fetchResources(project);
 
     // Extract srcset URLs
     const iframe = document.getElementById('iframe');
     if (!iframe) return;
-
     const idoc = iframe.contentDocument || iframe.contentWindow.document;
-    idoc.querySelectorAll('img[srcset]').forEach(img => {
-      img.srcset.split(',').forEach(srcset => {
-        const url = srcset.trim().split(' ')[0];
-        imageUrls.push(url);
-      });
-    });
-
-    function extractBackgroundImageUrls(css) {
-      const urls = [];
-      const regex = /background-image\s*:\s*url\(([^)]+)\)/g;
-      let match;
-      while ((match = regex.exec(css)) !== null) {
-        let url = match[1].replace(/['"]/g, ""); // Remove quotes around URLs
-        if (!url.startsWith("data:")) {
-          urls.push(url);
-        }
-      }
-      return urls;
-    }
-    
-    // Extract background-image URLs from project CSS
-    const backgroundUrls = extractBackgroundImageUrls(await compileCode('css'));
-    imageUrls = imageUrls.concat(backgroundUrls); // Add to image URLs to download
+    const { html, imageResources, audioResources, vectorResources, videoResources } = fetchResources(project);
 
     const zip = new JSZip();
 
@@ -3256,7 +3366,8 @@ plugins: [
     ${cssTags ? cssTags : ''}${project.meta ? `${project.meta}\n  ` : ''}
   </head>
   <body>
-    ${await compileCode('html')}
+
+${html}
 
     ${scriptTags ? scriptTags : ''}
     ${project.javascript ? placeScript : ''}${(project.pwa ? swinit : '')}
@@ -3289,7 +3400,8 @@ plugins: [
     ${css4html}${project.meta ? `${project.meta}\n  ` : ''}${scriptTags ? scriptTags : ''}
   </head>
   <body>
-    ${await compileCode('html')}
+    
+${html}
 
     ${project.javascript ? `<script src="dist/script.js" ${project.module ? 'type="module"' : ''}></script>` : ''}${(project.pwa ? swinit : '')}
   </body>
@@ -3301,50 +3413,54 @@ plugins: [
     if (project.html_pre_processor === 'pug') zip.file('src/source.pug', project.html);
     if (project.html_pre_processor === 'jade') zip.file('src/source.jade', project.html);
 
-    // Create a folder "imgs" and add images inside it with their correct MIME types
-    if (audioUrls.length > 0) {
+    // Save audio files to ZIP
+    if (audioResources.length > 0) {
       const audioFolder = zip.folder('audios');
       try {
-        for (const audioUrl of audioUrls) {
-          const base64Audio = await getBase64Media(audioUrl);
-          audioFolder.file(audioUrl.substring(audioUrl.lastIndexOf('/') + 1), base64Audio, { base64: true });
+        for (const { url, fileName } of audioResources) {
+          const base64Audio = await getBase64Media(url);
+          audioFolder.file(fileName, base64Audio, { base64: true });
         }
       } catch (error) {
         console.error('Error adding audio to ZIP:', error);
         return;
       }
     }
-    if (imageUrls.length > 0) {
+
+    // Save image files to ZIP
+    if (imageResources.length > 0) {
       const imgFolder = zip.folder('imgs');
       try {
-        // Convert each image URL to Base64 and add to ZIP folder
-        for (const imageUrl of imageUrls) {
-          const base64Image = await getBase64Media(imageUrl);
-          imgFolder.file(imageUrl.substring(imageUrl.lastIndexOf('/') + 1), base64Image, { base64: true });
+        for (const { url, fileName } of imageResources) {
+          const base64Image = await getBase64Media(url);
+          imgFolder.file(fileName, base64Image, { base64: true });
         }
       } catch (error) {
         console.error('Error adding images to ZIP:', error);
-        return; // Exit method or handle error as needed
+        return;
       }
     }
-    if (vectors.length > 0) {
+
+    // Save SVG files to ZIP
+    if (vectorResources.length > 0) {
       const svgFolder = zip.folder('svgs');
       try {
-        // Convert each SVG to a file inside the 'svgs' folder
-        vectors.forEach((svg, index) => {
-          svgFolder.file(`vector-${index + 1}.svg`, svg);
-        });
+        for (const { content, fileName } of vectorResources) {
+          svgFolder.file(fileName, content);
+        }
       } catch (error) {
-        console.error('Error adding images to ZIP:', error);
-        return; // Exit method or handle error as needed
+        console.error('Error adding SVGs to ZIP:', error);
+        return;
       }
     }
-    if (videoUrls.length > 0) {
+
+    // Save video files to ZIP
+    if (videoResources.length > 0) {
       const videoFolder = zip.folder('vids');
       try {
-        for (const videoUrl of videoUrls) {
-          const base64Video = await getBase64Media(videoUrl);
-          videoFolder.file(videoUrl.substring(videoUrl.lastIndexOf('/') + 1), base64Video, { base64: true });
+        for (const { url, fileName } of videoResources) {
+          const base64Video = await getBase64Media(url);
+          videoFolder.file(fileName, base64Video, { base64: true });
         }
       } catch (error) {
         console.error('Error adding videos to ZIP:', error);
@@ -3357,7 +3473,7 @@ plugins: [
     saveAs(blob, `${project.name.toLowerCase().split(' ').join('')}.zip`);
     
     // Clear all arrays after saving
-    imageUrls.length = audioUrls.length = videoUrls.length = 0;
+    imageResources.length = audioResources.length = vectorResources.length = videoResources.length = 0;
   } catch (error) {
     console.error('Error:', error);
   } finally {
