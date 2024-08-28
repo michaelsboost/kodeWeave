@@ -316,7 +316,9 @@ const project = onChange(p, (property, oldValue, newValue) => {
         if (string === 'css' && editorManager.cssEditor.state.doc.toString() !== project.css) {
           dispatchChanges(editorManager.cssEditor, project.css);
         }
-        doc.getElementById('cuxjju3ew').textContent = consoleCSS;
+        if (doc.getElementById('cuxjju3ew')) {
+          doc.getElementById('cuxjju3ew').textContent = consoleCSS;
+        }
       }
       // render right away
       if (string === 'html') {
@@ -1564,29 +1566,40 @@ function emptyStorage() {
   // Clear local storage
   localStorage.removeItem('kodeWeave');
 
-  // Clear session storage
-  sessionStorage.clear();
+  // Clear session storage specific to kodeWeave (if you use a specific key)
+  sessionStorage.removeItem('kodeWeave');
 
-  // Clear cookies
+  // Clear cookies specific to kodeWeave
   document.cookie.split(";").forEach(function(c) {
-    document.cookie = c.trim().split("=")[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+    if (c.trim().startsWith('kodeWeave')) {
+      document.cookie = c.trim().split("=")[0] + 
+                        '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+    }
   });
 
-  // Clear service worker caches
+  // Clear service worker caches specific to kodeWeave
   if ('caches' in window) {
     caches.keys().then(function(names) {
-      for (let name of names) caches.delete(name)
+      names.forEach(function(name) {
+        if (name === 'kodeWeave-cache') {
+          caches.delete(name);
+        }
+      });
     });
   }
 
-  // Unregister all service workers
+  // Unregister service workers specific to kodeWeave
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function(registrations) {
-      for (let registration of registrations) registration.unregister()
+      registrations.forEach(function(registration) {
+        if (registration.scope.includes('kodeWeave')) {
+          registration.unregister();
+        }
+      });
     });
   }
 
-  console.log('All saved data, cookies, and service worker caches have been cleared.');
+  console.log('kodeWeave-specific data, cookies, and service worker caches have been cleared.');
   location.reload();
 }
 function updateVersionPart(part, value) {
