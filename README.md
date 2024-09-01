@@ -10,7 +10,7 @@ If you've ever used jsfiddle, jsbin, dabblet, liveweave, codepen, cssdeck, cssde
 Version
 -------------
 
-1.2.0
+1.2.2
 
 License
 -------------
@@ -30,6 +30,8 @@ kodeWeave uses a number of open source projects to work properly:
 * [Emmet](http://emmet.io/) - Codemirror Plugin for Zen Coding
 * [Pico.css](https://picocss.com/) and [Tailwind CSS](https://tailwindcss.com/) - Used to design the Application's interface.
 * [HeroIcons](https://heroicons.com/) and [Font Awesome](https://fontawesome.com/) - Icon library used for the app's ui. (I did have to design the twitter logo icon myself though)
+* [Openverse Api](https://docs.openverse.org/api/guides/documentation.html) - Used for users to easily search for images and audio files to add to their weave.
+* [Iconify Api](https://iconify.design/docs/api/) - Used for users to easily search for vector graphics (svgs) to add to their weave.
 
 Development
 -------------
