@@ -1,0 +1,5 @@
+@import '../libraries/pico/pico.classless.mod.css';
+@import 'editor.css';
+
+@tailwind components;
+@tailwind utilities;

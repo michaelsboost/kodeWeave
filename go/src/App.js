@@ -288,7 +288,7 @@ const icons = (function() {
 })();
 
 // Reactive objects
-const project = onChange(p, (property, oldValue, newValue) => {
+window.project = onChange(p, (property, oldValue, newValue) => {
   const iframe = document.getElementById('iframe');
   const doc = iframe.contentWindow.document;
   if (oldValue !== newValue) {
@@ -351,12 +351,10 @@ const project = onChange(p, (property, oldValue, newValue) => {
     }
   }
 });
-const data = onChange(d, (property, oldValue, newValue) => {
+window.data = onChange(d, (property, oldValue, newValue) => {
   // Only render if the actual value has changed
   if (oldValue !== newValue) App.render('#app');
 });
-window.project = project;
-window.data = data;
 
 // Components
 function LeftMenubar() {
@@ -396,6 +394,16 @@ function LeftMenubar() {
     >
       ${icons.heart}
     </a>
+  </li>
+  <li class="list-none m-0">
+    <button 
+      aria-label="add blocks" 
+      name="add blocks" 
+      class="w-11 text-sm border-0 px-0 py-3 mb-2"
+      onclick="searchMedia()"
+    >
+      ${icons.search}
+    </button>
   </li>
 </ul>
 <ul class="p-0 m-0">
@@ -1257,7 +1265,7 @@ function Libraries() {
 
   return librariesDialog;
 }
-const App = {
+window.App = {
   initialRender: true,
   render(container) {
     // Calculate zoom transform based on viewport size and iframe size
@@ -1378,7 +1386,7 @@ const App = {
     diffNodes(currentDoc, newDoc);
   }
 }
-const Modal = {
+window.Modal = {
   render({
     large,
     title = "Are you sure you want to proceed?",
@@ -1562,47 +1570,52 @@ function editorNav() {
     </button>
   </div>`;
 }
-function emptyStorage() {
-  // Clear local storage
-  localStorage.removeItem('kodeWeave');
-
-  // Clear session storage specific to kodeWeave (if you use a specific key)
-  sessionStorage.removeItem('kodeWeave');
-
-  // Clear cookies specific to kodeWeave
-  document.cookie.split(";").forEach(function(c) {
-    if (c.trim().startsWith('kodeWeave')) {
-      document.cookie = c.trim().split("=")[0] + 
-                        '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+window.emptyStorage = () => {
+  Modal.render({
+    title: "Are you sure you want to empty storage?",
+    content: '<div class="p-4 text-center">All current data will be lost.</div>',
+    onConfirm() {
+      // Clear local storage
+      localStorage.removeItem('kodeWeave');
+    
+      // Clear session storage specific to kodeWeave (if you use a specific key)
+      sessionStorage.removeItem('kodeWeave');
+    
+      // Clear cookies specific to kodeWeave
+      document.cookie.split(";").forEach(function(c) {
+        if (c.trim().startsWith('kodeWeave')) {
+          document.cookie = c.trim().split("=")[0] + 
+                            '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+        }
+      });
+    
+      // Clear service worker caches specific to kodeWeave
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          names.forEach(function(name) {
+            if (name === 'kodeWeave-cache') {
+              caches.delete(name);
+            }
+          });
+        });
+      }
+    
+      // Unregister service workers specific to kodeWeave
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          registrations.forEach(function(registration) {
+            if (registration.scope.includes('kodeWeave')) {
+              registration.unregister();
+            }
+          });
+        });
+      }
+    
+      location.reload();
     }
   });
-
-  // Clear service worker caches specific to kodeWeave
-  if ('caches' in window) {
-    caches.keys().then(function(names) {
-      names.forEach(function(name) {
-        if (name === 'kodeWeave-cache') {
-          caches.delete(name);
-        }
-      });
-    });
-  }
-
-  // Unregister service workers specific to kodeWeave
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function(registrations) {
-      registrations.forEach(function(registration) {
-        if (registration.scope.includes('kodeWeave')) {
-          registration.unregister();
-        }
-      });
-    });
-  }
-
-  console.log('kodeWeave-specific data, cookies, and service worker caches have been cleared.');
-  location.reload();
 }
-function updateVersionPart(part, value) {
+window.updateVersionPart = (part, value) => {
   const versionParts = project.version.split('.');
   if (part === 'major') {
     versionParts[0] = value;
@@ -1613,9 +1626,283 @@ function updateVersionPart(part, value) {
   }
   project.version = versionParts.join('.');
 }
+window.searchMedia = () => {
+  let modalContent = `
+    <input class="hidden" type="file" name="file" id="file-input">
+
+    <div class="p-4 text-center grid grid-cols-1 gap-4 items-center">
+      <!-- Media Type Dropdown -->
+      <nav class="w-full flex justify-between place-items-center">
+        <div>Select Media Type:</div>
+        <button class="ml-4 font-thin text-xs bg-transparent border-0" style="color: unset;" onclick="document.getElementById('file-input').click();">
+          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"></path>
+          </svg>
+        </button>
+      </nav>
+      <select id="media-type-select" class="p-2 w-full">
+        <option value="all">All</option>
+        <option value="image" selected>Images</option>
+        <option value="audio">Audios</option>
+        <option value="svg">SVGs</option>
+      </select>
+
+      <!-- Search Input and Button -->
+      <fieldset role="group" class="border-0 shadow-none">
+        <input 
+          id="search-input" 
+          type="text" 
+          placeholder="Search for media..." 
+          class="p-2 w-full" 
+          onkeydown="if (event.key === 'Enter') { document.getElementById('search-btn').click(); }"
+        />
+        <button id="search-btn">${icons.search}</button>
+      </fieldset>
+
+      <!-- Search Results -->
+      <div id="search-results" class="mt-4 grid grid-cols-4 gap-4"></div>
+
+      <!-- Additional Information -->
+      <div class="font-thin text-xs">
+        You can grab your own media from <a href="https://pixabay.com/" target="_blank">Pixabay.com</a>, 
+        <a href="https://pexels.com/" target="_blank">Pexels.com</a>, or <a href="https://freesound.org/" target="_blank">freesound.org</a>.
+      </div>
+    </div>`;
+
+  Modal.render({
+    title: "Search Media",
+    content: modalContent,
+    onLoad: async function() {
+      const apiConnection = await checkApiConnection();
+      const searchInput = document.getElementById('search-input');
+      const searchBtn = document.getElementById('search-btn');
+      const mediaTypeSelect = document.getElementById('media-type-select');
+      const resultsContainer = document.getElementById('search-results');
+      const fileInput = document.getElementById('file-input');
+      searchInput.focus();
+
+      const handleSearch = async () => {
+        const query = searchInput.value;
+        const mediaType = mediaTypeSelect.value;
+
+        if (query) {
+          let results = [];
+          if (mediaType === 'all' || mediaType === 'image') {
+            const images = await searchOpenverseImage(query);
+            results.push(...images.map(img => ({ type: 'image', ...img })));
+          }
+          if (mediaType === 'all' || mediaType === 'audio') {
+            const audios = await searchOpenverseAudio(query);
+            results.push(...audios.map(audio => ({ type: 'audio', ...audio })));
+          }
+          if (mediaType === 'all' || mediaType === 'svg') {
+            const icons = await searchIcons(query);
+            results.push(...icons.map(icon => ({ type: 'icon', url: `https://api.iconify.design/${icon}.svg` })));
+          }
+          displayResults(results);
+        } else {
+          resultsContainer.innerHTML = '';
+        }
+      };
+
+      mediaTypeSelect.onchange = handleSearch;
+      searchInput.oninput = handleSearch;
+      searchBtn.onclick = handleSearch;
+
+      fileInput.onchange = async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const base64 = await fileToBase64(file);
+          let resultHTML;
+
+          if (file.type.startsWith('image/')) {
+            resultHTML = `<img 
+  src="${base64}" 
+  alt="${file.name}" 
+  title="${file.name}"
+  loading="lazy"
+  class="cursor-pointer w-full"
+/>`;
+copyToClipboard(resultHTML);
+alert('Image copied to clipboard');
+          } else if (file.type.startsWith('audio/')) {
+            resultHTML = `<audio controls class="w-full" preload="true">
+  <source src="${base64}" type="${file.type}">
+  Your browser does not support the audio element.
+</audio>`;
+            copyToClipboard(resultHTML);
+            alert('Audio copied to clipboard');
+          } else if (file.type === 'image/svg+xml') {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const svgContent = reader.result;
+              copyToClipboard(svgContent);
+              alert('SVG copied to clipboard');
+            };
+            reader.readAsText(file);
+            return;
+          } else if (file.type.startsWith('video/')) {
+            const resultHTML = `<video controls preload="true">
+  <source src="${base64}" type="${file.type}">
+  Your browser does not support the video tag.
+</video>`
+            copyToClipboard(resultHTML);
+            alert('Video copied to clipboard');
+            return;
+          }
+
+          closeOpenDialog();
+        }
+      };
+
+      function displayResults(results) {
+        if (navigator.onLine) {
+          resultsContainer.innerHTML = results.map(result => {
+            if (result.type === 'image') {
+              resultsContainer.className = "mt-4 grid grid-cols-4 gap-4";
+              const imgHTML = `
+                <img 
+                  src="${result.url}" 
+                  alt="${result.title}" 
+                  title="${result.title}"
+                  loading="lazy"
+                  class="cursor-pointer w-full"
+                />`;
+              // Remove 'class' attribute
+              const parser = new DOMParser();
+              const imgDoc = parser.parseFromString(imgHTML, 'text/html');
+              const imgElement = imgDoc.querySelector('img');
+              if (imgElement) imgElement.removeAttribute('class');
+              const cleanedImgHTML = imgElement.outerHTML;
+
+              // Properly escape HTML for the onclick attribute
+              const escapedImgHTML = cleanedImgHTML
+                .replace(/`/g, '\\`') // Escape backticks
+                .replace(/</g, '&lt;') // Escape less than signs
+                .replace(/>/g, '&gt;') // Escape greater than signs
+                .replace(/"/g, '&quot;'); // Escape double quotes
+
+              return `
+                <div class="cursor-pointer" onclick="copyToClipboard(\`${escapedImgHTML}\`); alert('Image HTML copied to clipboard'); closeOpenDialog();">
+                  ${imgHTML}
+                </div>`;
+            } else if (result.type === 'audio') {
+              resultsContainer.className = "mt-4 grid grid-cols-1 gap-1";
+              return `
+                <div>
+                  <div class="font-thin mb-2 text-left">${result.title}</div>
+                  <figure class="m-0 mb-2">
+                    <nav class="text-center flex justify-between place-items-center">
+<audio controls class="w-full" preload="true">
+  <source src="${result.url}" type="${result.mime_type}">
+  Your browser does not support the audio element.
+</audio>
+                      <button 
+                        class="ml-4 font-thin text-xs" 
+                        onclick="copyToClipboard(this.previousElementSibling.outerHTML); alert('Audio HTML copied to clipboard'); closeOpenDialog();"
+                      >
+                        Select
+                      </button>
+                    </nav>
+                    <figcaption class="font-thin text-sm text-left mt-2">
+                      <span>Artist is 
+                      <a href="${result.foreign_landing_url}" target="_blank">${result.creator}</a>.
+                    </figcaption>
+                  </figure>
+                  <hr/>
+                </div>`;
+            } else if (result.type === 'icon') {
+              resultsContainer.className = "mt-4 grid grid-cols-4 gap-4";
+              if (apiConnection) {
+                // Fetch and render SVG content
+                getFile(result.url, (error, svgContent) => {
+                  if (error) {
+                    resultsContainer.innerHTML = "Unable to fetch SVG.";
+                  } else {
+                    // Remove width and height attributes from SVG content
+                    const parser = new DOMParser();
+                    const svgDoc = parser.parseFromString(svgContent, 'image/svg+xml');
+                    const svgElement = svgDoc.querySelector('svg');
+                    if (svgElement) {
+                      svgElement.removeAttribute('width');
+                      svgElement.removeAttribute('height');
+                      const serializer = new XMLSerializer();
+                      const cleanedSvgContent = serializer.serializeToString(svgElement);
+                      resultsContainer.innerHTML += `
+                        <div class="cursor-pointer" onclick="copyToClipboard(this.innerHTML); alert('copied to clipboard'); closeOpenDialog();">${cleanedSvgContent}</div>`;
+                    }
+                  }
+                });
+              } else {
+                resultsContainer.className = "mt-4 grid grid-cols-1 gap-4";
+                resultsContainer.innerHTML = "Unable to search: Connection not found!";
+              }
+            }
+          }).join('');
+        } else {
+          resultsContainer.innerHTML = "Unable to search: Connection not found!";
+        }
+      }
+    }
+  });
+}
+window.checkApiConnection = async () => {
+  try {
+    const response = await fetch('https://api.iconify.design/collections');
+    if (response.ok) {
+      return true;
+    }
+  } catch (error) {
+    console.error("API connection failed:", error);
+  }
+  return false;
+}
+window.searchOpenverseImage = async query => {
+  const url = `https://api.openverse.org/v1/images?q=${encodeURIComponent(query)}`;
+  const response = await fetch(url);
+  if (response.ok) {
+      const data = await response.json();
+      return data.results;
+  } else {
+      console.error("API request failed:", response.status);
+      return [];
+  }
+}
+window.searchOpenverseAudio = async query => {
+  const url = `https://api.openverse.org/v1/audio?q=${encodeURIComponent(query)}`;
+  const response = await fetch(url);
+  if (response.ok) {
+    const data = await response.json();
+    return data.results;
+  } else {
+    console.error("API request failed:", response.status);
+    return [];
+  }
+}
+window.searchIcons = async query => {
+  const searchUrl = `https://api.iconify.design/search?query=${encodeURIComponent(query)}`;
+  try {
+    const response = await fetch(searchUrl);
+    if (response.ok) {
+      const data = await response.json();
+      return data.icons || [];
+    } else {
+      console.error("Failed to fetch icon search results.");
+    }
+  } catch (error) {
+    console.error("Error during icon search:", error);
+  }
+  return [];
+}
+window.copyToClipboard = text => {
+  navigator.clipboard.writeText(text).then(function() {
+  }).catch(function(error) {
+    console.error('Failed to copy text: ', error);
+  });
+}
 
 // editor functions
-const addLibrary = url => {
+window.addLibrary = url => {
   if (!url) {
     project.libraries.push('');
     document.getElementById('librariesBox').innerHTML = renderLibraries();
@@ -1653,7 +1940,7 @@ function renderLibraries() {
     </nav>
   `).join('')
 }
-function fetchSuggestions(key) {
+window.fetchSuggestions = key => {
   fetch(
     `https://api.cdnjs.com/libraries?search=${key}&fields=filename,description,version`
   )
@@ -1691,17 +1978,17 @@ function fetchSuggestions(key) {
       console.error("Error fetching data:", error);
     });
 }
-function removeScript(src) {
+window.removeScript = src => {
   const script = document.querySelector(`script[src="${src}"]`);
   if (script) script.remove();
 }
-function removeScripts(scripts) {
+window.removeScripts = scripts => {
   scripts.forEach(src => {
     const script = document.querySelector(`script[src="${src}"]`);
     if (script) script.remove();
   });
 }
-async function loadScript(scriptUrl) {
+window.loadScript = async scriptUrl => {
   return new Promise((resolve, reject) => {
     // Check if the script is already loaded
     const existingScript = document.querySelector(`script[src="${scriptUrl}"]`);
@@ -1718,10 +2005,10 @@ async function loadScript(scriptUrl) {
     document.body.appendChild(scriptElement); // Append the script to the body
   });
 }
-async function loadScripts(srcArray) {
+window.loadScripts = async srcArray => {
   return Promise.all(srcArray.map(loadScript));
 }
-async function setPreprocessor(editor, value) {
+window.setPreprocessor = async (editor, value) => {
   const scriptMap = {
     html: {
       markdown: "libraries/preprocessors/marked.min.js",
@@ -1780,7 +2067,7 @@ async function setPreprocessor(editor, value) {
     console.error('Error setting preprocessor:', error);
   }
 }
-async function initializePreprocessors() {
+window.initializePreprocessors = async () => {
   await Promise.all([
     setPreprocessor('html', project.html_pre_processor),
     setPreprocessor('css', project.css_pre_processor),
@@ -1793,7 +2080,7 @@ async function initializePreprocessors() {
   dispatchChanges(editorManager.jsEditor, project.javascript);
   renderPreview(true);
 }
-async function loadBeautifyLibraries() {
+window.loadBeautifyLibraries = async () => {
   const beautifyLibraries = [
     "libraries/js-beautify/beautify.min.js",
     "libraries/js-beautify/beautify-css.min.js",
@@ -1801,7 +2088,7 @@ async function loadBeautifyLibraries() {
   ];
   await loadScripts(beautifyLibraries);
 }
-async function removeBeautifyLibraries() {
+window.removeBeautifyLibraries = async () => {
   const beautifyLibraries = [
     "libraries/js-beautify/beautify.min.js",
     "libraries/js-beautify/beautify-css.min.js",
@@ -1809,7 +2096,7 @@ async function removeBeautifyLibraries() {
   ];
   removeScripts(beautifyLibraries);
 }
-async function tidy() {
+window.tidy = async () => {
   await loadBeautifyLibraries();
 
   let formattedCode;
@@ -1843,20 +2130,23 @@ async function tidy() {
 
   await removeBeautifyLibraries();
 }
+window.closeOpenDialog = () => {
+   document.querySelector('dialog[open] footer button:last-child').click();
+}
 
 // iframe functions
-function generateId() {
+window.generateId = () => {
   let id = '';
   while (!/^[a-zA-Z]/.test(id)) {
     id = Math.random().toString(36).substr(2, 9);
   }
   return id;
 }
-function resizeCanvas(size) {
+window.resizeCanvas =size => {
   data.selectedSize = size;
   getIFrameClientSize();
 }
-function rotateCanvas() {
+window.rotateCanvas = () => {
   const iframe = document.getElementById('previewElm').firstElementChild;
   if (iframe.style.width === '100%') return false;
 
@@ -1882,7 +2172,7 @@ function rotateCanvas() {
   getIFrameClientSize();
 }
 let fadeTimeout;
-function getIFrameClientSize() {
+window.getIFrameClientSize = () => {
   const iframe = document.getElementById('iframe');
   data.iframeSize = `${iframe.clientWidth}px x ${iframe.clientHeight}px`;
   const element = document.getElementById('iframeClientSize');
@@ -1907,7 +2197,7 @@ function getIFrameClientSize() {
     }, 2000); // Show duration
   }
 }
-async function compileCode(detect) {
+window.compileCode = async detect => {
   try {
     if (detect === 'html') {
       switch (project.html_pre_processor) {
@@ -1972,7 +2262,7 @@ async function compileCode(detect) {
 }
 
 // save functions
-async function handleLogoChange(event) {
+window.handleLogoChange = async event => {
   const file = event.target.files[0];
   if (!file) return; // If no file selected, return
 
@@ -1985,7 +2275,7 @@ async function handleLogoChange(event) {
     console.error('Error converting image to base64:', error);
   }
 }
-function fileToBase64(file) {
+window.fileToBase64 = file => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -1993,7 +2283,7 @@ function fileToBase64(file) {
     reader.onerror = error => reject(error);
   });
 }
-function newProject(name) {
+window.newProject = name => {
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -2513,7 +2803,7 @@ ko.applyBindings(new AppViewModel());`;
   data.demos = false;
   renderPreview(true);
 }
-function importJSON(obj) {
+window.importJSON = obj => {
   if (obj === null) return;
   const clone = { ...obj };
   project.autorun = false;
@@ -2551,7 +2841,7 @@ function importJSON(obj) {
   setPreprocessor('javascript', obj.javascript_pre_processor);
   project.autorun = clone.autorun;
 }
-function importProject() {
+window.importProject = () => {
   Modal.render({
     title: "Are you sure you want to load a new project?",
     content: `<div class="p-4 text-center">All current data will be lost.</div>`,
@@ -2592,7 +2882,7 @@ function importProject() {
     }
   });
 }
-function getFileNameAndType(url) {
+window.getFileNameAndType = url => {
   // Extract the file name with extension from the URL
   const fileName = url.substring(url.lastIndexOf('/') + 1);
   
@@ -2624,7 +2914,7 @@ function getFileNameAndType(url) {
     fileType
   };
 }
-function fetchResources(obj) {
+window.fetchResources = obj => {
   try {
     const doc = new DOMParser().parseFromString(obj.html, 'text/html');
     const body = doc.body;
@@ -2813,7 +3103,7 @@ function fetchResources(obj) {
     return null; // Or handle the error in an appropriate way
   }
 }
-async function getBase64Media(mediaUrl) {
+window.getBase64Media = async mediaUrl => {
   const response = await fetch(mediaUrl);
   const blob = await response.blob();
   return new Promise((resolve, reject) => {
@@ -2823,7 +3113,7 @@ async function getBase64Media(mediaUrl) {
     reader.readAsDataURL(blob);
   });
 }
-async function downloadJSON() {
+window.downloadJSON = async () => {
   try {
     await loadScript("libraries/jszip/FileSaver.min.js");
     let blob = new Blob([JSON.stringify(project, null, 2)], {type: "application/json"});
@@ -2836,17 +3126,26 @@ async function downloadJSON() {
     removeScript("libraries/jszip/FileSaver.min.js");
   }
 }
-async function getFile(url) {
+window.getFile = async (url, callback = null) => {
   try {
     const response = await fetch(url);
     if (!response.ok) throw new Error("Network response was not ok");
-    return await response.text();
+    const fileContent = await response.text();
+    if (callback && typeof callback === 'function') {
+      callback(null, fileContent); // Call the callback with the file content
+    } else {
+      return fileContent; // Return the file content
+    }
   } catch (error) {
     console.warn("Request error:", error);
-    throw error; // Re-throw to handle in caller
+    if (callback && typeof callback === 'function') {
+      callback(error, null); // Call the callback with the error
+    } else {
+      throw error; // Re-throw to handle in caller
+    }
   }
-};
-async function downloadProject() {
+}
+window.downloadProject = async () => {
   try {
     await loadScripts([
       "libraries/jszip/jszip.min.js",
@@ -3219,7 +3518,9 @@ ${project.description}`;
     require('autoprefixer'),${twFound ? `
     require('tailwindcss'),` : ''}
     require('cssnano')({
-      preset: 'default',
+      preset: ['default', {
+        discardComments: { removeAll: true }, // Remove all comments
+      }],
     }),
   ],
 };`);
@@ -3499,7 +3800,7 @@ ${html}
     removeScripts(scriptsToRemove);
   }
 }
-async function share() {
+window.share = async () => {
   try {
     if (navigator.onLine) {
       let jsPreprocessor = null;
@@ -3555,7 +3856,7 @@ async function share() {
   }
 }
 
-async function screenshot() {
+window.screenshot = async () => {
   const iframe = document.getElementById('iframe');
   const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
 
@@ -3602,7 +3903,7 @@ async function screenshot() {
     removeScript("../libraries/jszip/FileSaver.min.js");
   }
 }
-async function renderPreview(forceRun = false) {
+window.renderPreview = async (forceRun = false) => {
   const iframe = document.getElementById('iframe');
   if (!iframe) return;
 
@@ -3657,33 +3958,8 @@ async function renderPreview(forceRun = false) {
   }
 }
 
-// Make functions available in global space
-window.Modal = Modal;
-window.emptyStorage = emptyStorage;
-window.updateVersionPart = updateVersionPart;
-window.addLibrary = addLibrary;
-window.fetchSuggestions = fetchSuggestions;
-window.setPreprocessor = setPreprocessor;
-window.initializePreprocessors = initializePreprocessors;
-window.loadBeautifyLibraries = loadBeautifyLibraries
-window.removeBeautifyLibraries = removeBeautifyLibraries;
-window.tidy = tidy;
-window.generateId = generateId;
-window.resizeCanvas = resizeCanvas;
-window.rotateCanvas = rotateCanvas;
-window.getIFrameClientSize = getIFrameClientSize;
-window.handleLogoChange = handleLogoChange;
-window.newProject = newProject;
-window.importProject = importProject;
-window.downloadJSON = downloadJSON;
-window.getFile = getFile;
-window.downloadProject = downloadProject;
-window.share = share;
-window.screenshot = screenshot;
-window.renderPreview = renderPreview;
-
 // Diffing algorithm to update ui when changes occur
-function diffNodes(oldNode, newNode) {
+window.diffNodes = (oldNode, newNode) => {
   if (!oldNode || !newNode) {
     return;
   }

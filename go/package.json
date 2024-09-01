@@ -3,7 +3,7 @@
   "version": "1.2.2",
   "type": "module",
   "scripts": {
-    "build:css": "postcss src/style.css src/editor.css --dir dist",
+    "build:css": "postcss src/bundle.css -o dist/style.css",
     "build:js": "esbuild src/concat.js --bundle --minify --sourcemap --outfile=dist/App.min.js",
     "build:c": "rollup -c",
     "build": "npm-run-all build:css build:c build:js",
