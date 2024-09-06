@@ -646,7 +646,7 @@ function Menu() {
                       <img 
                         alt="logo"
                         class="my-4 w-24 m-auto"
-                        src="../imgs/logo.svg"
+                        src="imgs/logo.svg"
                         loading="lazy" />
                     </a>
                     <div class="text-2xl">
@@ -3336,24 +3336,32 @@ ${project.description}`;
           "type": "image/png",
           "purpose": "any"
         }));
-        for (const size of sizes) {
-          const canvas = document.createElement('canvas');
-          canvas.width = parseInt(size.split('x')[0]);
-          canvas.height = parseInt(size.split('x')[1]);
-          const ctx = canvas.getContext('2d');
 
-          // Draw logo on canvas at the desired size
-          const img = new Image();
-          img.src = base64Logo;
-          img.onload = function() {
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            const base64Image = canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, '');
-            zip.folder('imgs').file(`logo-${size}.png`, base64Image, { base64: true });
-          };
-
-          // Clean up canvas element
-          canvas.remove();
-        }
+        // Helper function to create resized images
+        const createResizedImage = (size) => {
+          return new Promise((resolve, reject) => {
+            const canvas = document.createElement('canvas');
+            canvas.width = parseInt(size.split('x')[0]);
+            canvas.height = parseInt(size.split('x')[1]);
+            const ctx = canvas.getContext('2d');
+    
+            const img = new Image();
+            img.src = base64Logo;
+            img.onload = function() {
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              const base64Image = canvas.toDataURL('image/png').replace(/^data:image\/png;base64,/, '');
+              zip.folder('imgs').file(`logo-${size}.png`, base64Image, { base64: true });
+              resolve();
+            };
+            img.onerror = reject;
+    
+            // Clean up canvas element
+            canvas.remove();
+          });
+        };
+    
+        // Create all resized images
+        await Promise.all(sizes.map(createResizedImage));
     
         zip.file(`manifest.json`, JSON.stringify({
           "theme_color": "#13171f",
@@ -3743,11 +3751,10 @@ ${html}
 
     // Save image files to ZIP
     if (imageResources.length > 0) {
-      const imgFolder = zip.folder('imgs');
       try {
         for (const { url, fileName } of imageResources) {
           const base64Image = await getBase64Media(url);
-          imgFolder.file(fileName, base64Image, { base64: true });
+          zip.folder('imgs').file(fileName, base64Image, { base64: true });
         }
       } catch (error) {
         console.error('Error adding images to ZIP:', error);
