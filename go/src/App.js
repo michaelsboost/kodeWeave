@@ -60,6 +60,7 @@ let p = {
   logo: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiCiAgIHZpZXdCb3g9IjAgMCA1MTEuOTk5OTkgNTExLjk5OTk5IgogICBoZWlnaHQ9IjUxMiIKICAgd2lkdGg9IjUxMiIKICAgdmVyc2lvbj0iMS4xIgogICBpZD0ic3ZnNDE5MCI+CiAgPG1ldGFkYXRhCiAgICAgaWQ9Im1ldGFkYXRhNDE5NiI+CiAgICA8cmRmOlJERj4KICAgICAgPGNjOldvcmsKICAgICAgICAgcmRmOmFib3V0PSIiPgogICAgICAgIDxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PgogICAgICAgIDxkYzp0eXBlCiAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4KICAgICAgICA8ZGM6dGl0bGU+PC9kYzp0aXRsZT4KICAgICAgPC9jYzpXb3JrPgogICAgPC9yZGY6UkRGPgogIDwvbWV0YWRhdGE+CiAgPGRlZnMKICAgICBpZD0iZGVmczQxOTQiPgogICAgPGxpbmVhckdyYWRpZW50CiAgICAgICBpZD0ibGluZWFyR3JhZGllbnQ0Mjc2Ij4KICAgICAgPHN0b3AKICAgICAgICAgaWQ9InN0b3A0Mjc4IgogICAgICAgICBvZmZzZXQ9IjAiCiAgICAgICAgIHN0eWxlPSJzdG9wLWNvbG9yOiNmZDVkOTI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wCiAgICAgICAgIGlkPSJzdG9wNDI4MCIKICAgICAgICAgb2Zmc2V0PSIxIgogICAgICAgICBzdHlsZT0ic3RvcC1jb2xvcjojZmYwMDAwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudAogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiCiAgICAgICB5Mj0iMjU3LjMxMjUiCiAgICAgICB4Mj0iMC4xMzQwNDE2NSIKICAgICAgIHkxPSIyNTcuMzEyNSIKICAgICAgIHgxPSI1MTEuNzE4NzUiCiAgICAgICBpZD0ibGluZWFyR3JhZGllbnQ0MjgyIgogICAgICAgeGxpbms6aHJlZj0iI2xpbmVhckdyYWRpZW50NDI3NiIgLz4KICA8L2RlZnM+CiAgPGcKICAgICBpZD0iZzQyODQiPgogICAgPGNpcmNsZQogICAgICAgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOnVybCgjbGluZWFyR3JhZGllbnQ0MjgyKTtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZTtzdHJva2Utd2lkdGg6MTI7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTo3MiwgNzI7c3Ryb2tlLWRhc2hvZmZzZXQ6MDtzdHJva2Utb3BhY2l0eToxIgogICAgICAgaWQ9InBhdGg0MjcwIgogICAgICAgY3g9IjI1NiIKICAgICAgIGN5PSIyNTYiCiAgICAgICByPSIyNTYiIC8+CiAgICA8cGF0aAogICAgICAgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmU7c3Ryb2tlLXdpZHRoOjEyO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6NzIsIDcyO3N0cm9rZS1kYXNob2Zmc2V0OjA7c3Ryb2tlLW9wYWNpdHk6MSIKICAgICAgIGQ9Im0gMjUxLjA2MDY4LDU4LjY3ODI3MiBjIC00LjU2MDMyLDAuMDcwMzUgLTIwLjc2MDYxLDIuMDQxOTQ1IC0yOS4yOTc5MiwzLjY1NTk4NCAtMjguMzQzOTEsNS4zNTg2MiAtNjYuODgwODEsMjIuNjE5ODE0IC03My4wMzY5OSwzMi43MTkwNjEgLTEuODk3NTUsMy4xMTI5MzUgLTEuOTQ2MTYsNy4xNDcwMTMgLTEuOTQ2MTYsMTYwLjgxNzAyMyAwLDE1Mi4yNTg4IDAuMDY3MSwxNTcuNzI0NjQgMS44OTk5OCwxNjAuNzMxMjEgNS4yMDU5OSw4LjUzOTg5IDM2LjcyMDAzLDIzLjcwOTM0IDYzLjQ1MTMzLDMwLjU0MTM0IDkuNzY1NzIsMi40OTU5MyAzNC4zMzUwOSw2LjM0NDggMzguNTA3NTQsNi4wMzE2OSAyLjAwMzg4LC0wLjE1MDM2IDIuMDMyMDMsLTAuOTc0NjkgMi4yODkyMSwtNzMuMDkzMjQgMC4xNDU1OCwtNDAuODM3NTkgMC42NTY0MywtNzMuMzM0MTQgMS4xNjEwOSwtNzMuODM4OTYgMS4zNzc1MSwtMS4zNzc5NSA3LjM0NzM5LDEuODg0NzMgMTAuMzU3NTIsNS42NjIxNSAxLjQ2MjAyLDEuODM0NjggMTMuNzk3NTUsMjAuNjU1MjggMjcuNDE3NzQsNDEuODE5NDMgNTEuNDQ0NTIsNzkuOTM4NDcgNTAuNDY1MTEsNzguNDc3OTggNTMuMzA0OTQsNzkuMTkwOTQgMy4zMjQ3OCwwLjgzNDc0IDEyLjU2NzA4LC0zLjc4OTQ3IDI3LjU3NjA2LC0xMy43ODU4MyAxNC4yNDMzOCwtOS40ODY0NiAyMy44ODU1LC0xNy43ODMxIDM0LjgxOTcyLC0yOS45NjcxNyAxMS4yOTUwMiwtMTIuNTg2MTUgMTQuODMwMzksLTE3LjQxNzg1IDE0LjgzMDM5LC0yMC4yNTMwOCAwLC0xLjIyMDA5IC0xNC45NzA2LC0yNC41NDAzMyAtMzMuNDAxMzMsLTUyLjAyODQ2IC0xOC4zNzA1NywtMjcuMzk4MzcgLTM0LjEwMTA3LC01MS4xNjg3NiAtMzQuOTU4MjgsLTUyLjgyNjk2IC0wLjg1NzIzLC0xLjY1ODIgLTEuNTU2OTMsLTQuMDczMzUgLTEuNTU2OTMsLTUuMzY1MTkgMCwtMS4zMjEyMyAxMi40ODk1OSwtMjIuMjk0ODcgMjguNTQ1ODQsLTQ3Ljk0MzUyIDQ0LjQ4MzE1LC03MS4wNTg1NiA0MS45MzgzMywtNjYuMjkxNzggMzguODMwODEsLTcyLjg0MjQ3IC0yLjU1NzU1LC01LjM5MTM2IC0xNS4zNjI2MiwtMTkuNjU4MDkgLTI2LjEzMTI5LC0yOS4xMTU4NyAtMTEuNDU0NTksLTEwLjA2MDE5MSAtMzUuMDY0MTMsLTI1Ljk1MDI3NiAtMzkuOTA2MTIsLTI2Ljg1ODkzNCAtMi45NDE1NCwtMC41NTIwMSAtMy45NzUxOSwtMC4yNDY3ODggLTUuOTE3NjYsMS43NDIyMDEgLTEuMjk1NjQsMS4zMjY2NDggLTIwLjM1MDEyLDMyLjM0ODMwMyAtNDIuMzQwNDgsNjguOTM1NzIzIC0yMS45OTAzNiwzNi41ODc0IC00MS4wNjUzOSw2Ny45OTE2NyAtNDIuMzg2NjUsNjkuNzg3MDIgLTIuNjE5NTQsMy41NTkzNyAtNi43MzI4MSw2LjA5MzA2IC04LjczNDYzLDUuMzc4MzggLTAuOTk5NDcsLTAuMzU2ODMgLTEuMjY2NjUsLTE4LjE3MDM1IC0xLjI2NjY1LC04NC40NDM5NCAwLC00OS41MTMxOTYgLTAuMzc4NjQsLTg0LjIxOTIyNiAtMC45MjM2LC04NC41NTYxMzggLTAuMTE5ODQsLTAuMDc0MSAtMC41MzYwMSwtMC4xMDI0NDYgLTEuMTg3NDgsLTAuMDkyMzggeiIKICAgICAgIGlkPSJwYXRoNDI2MCIgLz4KICA8L2c+Cjwvc3ZnPgo=",
   console: false,
   dark: true,
+  previewDark: true,
   module: true,
   autorun: true,
   pwa: false,
@@ -210,6 +211,12 @@ const icons = (function() {
       <path d="m 12,18.340203 h 8.757019" />
       <path d="M 3.3316546,18.340203 10.159567,11.778315 3.2429806,5.6597968" />
     </svg>`,
+    sun: `<svg class="${SidebarIconCSS}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+    </svg>`,
+    moon: `<svg class="${SidebarIconCSS}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+    </svg>`,
     play: `<svg class="${SidebarIconCSS}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
     </svg>`,
@@ -340,10 +347,12 @@ window.project = onChange(p, (property, oldValue, newValue) => {
       if (string === 'module' || string === 'meta' || string === 'libraries' || string === 'html_pre_processor' || string === 'css_pre_processor' || string === 'javascript_pre_processor') {
         renderPreview(project.autorun);
       }
+      if (string === "previewDark") {
+        doc.documentElement.setAttribute('data-theme', project.previewDark ? 'dark' : 'light');
+      }
       if (string === "dark") {
         App.render('#app');
         document.documentElement.setAttribute('data-theme', project.dark ? 'dark' : 'light');
-        doc.documentElement.setAttribute('data-theme', project.dark ? 'dark' : 'light');
         document.querySelector('meta[name=apple-mobile-web-app-status-bar-style]').setAttribute('content', project.dark ? 'black-translucent' : 'default');
         document.querySelector('meta[name=theme-color]').setAttribute('content', project.dark ? '#13171f' : '#ffffff');
         document.querySelector('meta[name=msapplication-navbutton-color]').setAttribute('content', project.dark ? '#13171f' : '#ffffff');
@@ -448,6 +457,17 @@ function LeftMenubar() {
   </li>
 </ul>
 <ul class="p-0 m-0">
+  <li class="list-none m-0">
+    <button
+      aria-label="toggle theme"
+      name="toggle theme"
+      class="${buttonSize} text-sm border-0 px-0 py-3 rounded-md bg-transparent"
+      style="color: unset;"
+      onclick="project.previewDark = !project.previewDark;"
+    >
+      ${project.previewDark ? icons.sun : icons.moon}
+    </button>
+  </li>
   <li class="list-none m-0">
     <button
       aria-label="toggle preview"
@@ -2823,6 +2843,13 @@ window.importJSON = obj => {
   project.columns = obj.columns;
   project.columnsRight = obj.columnsRight;
   
+  // Check and set previewDark state
+  if (typeof project.previewDark === 'undefined') {
+    project.previewDark = obj.previewDark !== undefined ? obj.previewDark : obj.dark;
+  } else {
+    project.previewDark = obj.previewDark;
+  }
+  
   project.meta = obj.meta;
   project.libraries = obj.libraries;
   project.html = obj.html;
@@ -3662,7 +3689,7 @@ plugins: [
   
     // Add index.html
     const indexHtmlContent = `<!DOCTYPE html>
-<html lang="en" data-theme="${project.dark ? 'dark' : 'light'}">
+<html lang="en" data-theme="${project.previewDark ? 'dark' : 'light'}">
   <head>
     <title>${project.title}</title>
     <meta charset="utf-8">
@@ -3696,7 +3723,7 @@ ${html}
   </body>
 </html>`;
     const indexHtmlContentCompiled = `<!DOCTYPE html>
-<html lang="en" data-theme="${project.dark ? 'dark' : 'light'}">
+<html lang="en" data-theme="${project.previewDark ? 'dark' : 'light'}">
   <head>
     <title>${project.title}</title>
     <meta charset="utf-8">
@@ -3829,7 +3856,9 @@ window.share = async () => {
         css_starter: "neither",
         css_prefix: "neither",
         js_module: project.module,
-        js: project.javascript,
+        js: `document.documentElement.setAttribute('data-theme', '${project.previewDark ? 'dark' : 'light'}');
+        
+${project.javascript}`,
         js_pre_processor: jsPreprocessor,
         js_external: project.libraries.filter(lib => lib.endsWith('.js')).join(';'),
         editors: '111',
@@ -3932,7 +3961,7 @@ window.renderPreview = async (forceRun = false) => {
     [data-zwj=zwjkonsole] {
       display: ${project.console ? 'flex' : 'none'};
     }`
-  const iframeSrc = `<html data-theme="${project.dark ? 'dark' : 'light'}">
+  const iframeSrc = `<html data-theme="${project.previewDark ? 'dark' : 'light'}">
   <head>
     <title>${project.title}</title>
     <meta charset="utf-8">
