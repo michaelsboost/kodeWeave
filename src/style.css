@@ -1,7 +1,0 @@
-html {
-  scroll-behavior: smooth;
-}@import '../libraries/pico.min.css';
-
-  
-@tailwind components;
-@tailwind utilities;
