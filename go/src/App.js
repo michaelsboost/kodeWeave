@@ -38,7 +38,7 @@ let app = {
     href: 'https://michaelsboost.com/',
     src: 'imgs/author.jpg'
   },
-  version: '1.2.2',
+  version: '1.2.3',
   url: 'https://github.com/michaelsboost/kodeWeave/',
   license: 'https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE'
 }
@@ -295,12 +295,13 @@ const icons = (function() {
 })();
 
 // Reactive objects
-window.project = onChange(p, (property, oldValue, newValue) => {
+window.project = onChange(p, async (property, oldValue, newValue) => {
   const iframe = document.getElementById('iframe');
-  const doc = iframe.contentWindow.document;
+  const doc = iframe ? iframe.contentWindow.document : null;
   if (oldValue !== newValue) {
     localStorage.setItem('kodeWeave', JSON.stringify(project));
     App.render('#app');
+    
     if (property.toString() === 'activePanel') {
       getIFrameClientSize();
       if (!window.editorManager) return;
@@ -308,9 +309,10 @@ window.project = onChange(p, (property, oldValue, newValue) => {
       if (project.activePanel === 'css') setActiveEditor(editorManager.cssEditor)
       if (project.activePanel === 'javascript') setActiveEditor(editorManager.javascriptEditor)
     }
+    
     if (!App.initialRender) {
       let string = property.toString();
-      // diff nodes
+      
       if (string === 'css' || string === 'console') {
         let consoleCSS = `
       [data-zwj=zwjkonsole] {
@@ -327,7 +329,7 @@ window.project = onChange(p, (property, oldValue, newValue) => {
           doc.getElementById('cuxjju3ew').textContent = consoleCSS;
         }
       }
-      // render right away
+      
       if (string === 'html') {
         renderPreview(project.autorun);
         if (!window.editorManager) return;
@@ -347,9 +349,13 @@ window.project = onChange(p, (property, oldValue, newValue) => {
       if (string === 'module' || string === 'meta' || string === 'libraries' || string === 'html_pre_processor' || string === 'css_pre_processor' || string === 'javascript_pre_processor') {
         renderPreview(project.autorun);
       }
+
       if (string === "previewDark") {
-        doc.documentElement.setAttribute('data-theme', project.previewDark ? 'dark' : 'light');
+        if (doc) {
+          doc.documentElement.setAttribute('data-theme', project.previewDark ? 'dark' : 'light');
+        }
       }
+
       if (string === "dark") {
         App.render('#app');
         document.documentElement.setAttribute('data-theme', project.dark ? 'dark' : 'light');
@@ -2893,9 +2899,7 @@ window.importProject = () => {
         reader.onload = event => {
           try {
             importJSON(JSON.parse(event.target.result));
-            setTimeout(function() {
-              renderPreview(true);
-            }, 100);
+            renderPreview(true);
           } catch (error) {
             console.error('Error parsing JSON file:', error);
           }
@@ -3939,6 +3943,10 @@ window.screenshot = async () => {
     removeScript("../libraries/jszip/FileSaver.min.js");
   }
 }
+window.createBlobURL = (content, type) => {
+  const blob = new Blob([content], { type });
+  return URL.createObjectURL(blob);
+}
 window.renderPreview = async (forceRun = false) => {
   const iframe = document.getElementById('iframe');
   if (!iframe) return;
@@ -3957,10 +3965,14 @@ window.renderPreview = async (forceRun = false) => {
 
   const javascriptCode = await compileCode('javascript');
   const cssCode = await compileCode('css');
-  const consoleCSS = `
-    [data-zwj=zwjkonsole] {
-      display: ${project.console ? 'flex' : 'none'};
-    }`
+  const consoleCSS = `[data-zwj=zwjkonsole] {
+  display: ${project.console ? 'flex' : 'none'};
+}
+
+`
+
+  const domconsoleContent = await fetch('libraries/domconsole/dom-console-mod.min.js').then(response => response.text());
+  let jsLink = createBlobURL(javascriptCode, 'application/javascript');
   const iframeSrc = `<html data-theme="${project.previewDark ? 'dark' : 'light'}">
   <head>
     <title>${project.title}</title>
@@ -3973,24 +3985,21 @@ window.renderPreview = async (forceRun = false) => {
     <style id="cuxjju3ew" type="text/${project.css_pre_processor === 'css' || project.css_pre_processor === 'stylus' || project.css_pre_processor === 'sass' ? 'css' : project.css_pre_processor}">
       ${consoleCSS + cssCode}
     </style>
-    <script type="module" src="libraries/domconsole/dom-console-mod.min.js" defer></script>
+    <script type="module">
+      ${domconsoleContent}
+    </script>
   </head>
   <body>
     ${await compileCode('html')}
     ${scriptTags ? scriptTags : ''}
     ${project.css_pre_processor === 'less' ? '<script src="libraries/preprocessors/less.js"></script>' : ''}
+    <script type="${project.module ? 'module' : 'text/javascript'}" src="${jsLink}"></script>
   </body>
 </html>`;
+  const newHtmlBlobURL = createBlobURL(iframeSrc, 'text/html');
 
   if (forceRun) {
-    iframe.setAttribute('srcdoc', iframeSrc);
-    iframe.onload = () => {
-      const doc = iframe.contentWindow.document;
-      const script = doc.createElement('script');
-      script.type = project.module ? 'module' : 'text/javascript';
-      script.textContent = javascriptCode;
-      doc.body.appendChild(script);
-    }
+    iframe.setAttribute('src', newHtmlBlobURL);
   }
 }
 
@@ -4084,9 +4093,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (localStorage.getItem('kodeWeave')) {
       importJSON(JSON.parse(localStorage.getItem('kodeWeave')));
-      setTimeout(function() {
-        renderPreview(true);
-      }, 100);
+      renderPreview(true);
     }
   }
   window.onresize = () => getIFrameClientSize();
