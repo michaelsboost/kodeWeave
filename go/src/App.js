@@ -153,12 +153,7 @@ let d = {
     },
     'bulm css': {
       libraries: [
-        "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
-      ],
-      meta: ''
-    },
-    'bulma-extensions': {
-      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css",
         "https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/css/bulma-extensions.min.css",
         "https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/js/bulma-extensions.min.js"
       ],
@@ -186,6 +181,12 @@ let d = {
     'd3': {
       libraries: [
         "https://d3js.org/d3.v7.min.js"
+      ],
+      meta: ''
+    },
+    'dojo': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/dojo/1.17.3/dojo.js"
       ],
       meta: ''
     },
