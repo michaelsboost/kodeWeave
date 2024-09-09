@@ -78,7 +78,397 @@ let d = {
   menuDialog: null,
   settings: null,
   libraries: null,
-  demos: null
+  demos: null,
+  chosenFramework: '',
+  frameworks: {
+    'alpine.js': {
+      libraries: [
+        "https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"
+      ],
+      meta: ''
+    },
+    'algolia.js': {
+      libraries: [
+        "https://cdn.jsdelivr.net/npm/algoliasearch@4.17.0/dist/algoliasearch.umd.js"
+      ],
+      meta: ''
+    },
+    'angular': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.6.3/rxjs.umd.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/core-js/2.5.7/core.js",
+        "https://unpkg.com/@angular/core@11.0.5/bundles/core.umd.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.10.3/zone.min.js",
+        "https://unpkg.com/@angular/common@11.0.5/bundles/common.umd.js",
+        "https://unpkg.com/@angular/compiler@11.0.5/bundles/compiler.umd.js",
+        "https://unpkg.com/@angular/platform-browser@11.0.5/bundles/platform-browser.umd.js",
+        "https://unpkg.com/@angular/platform-browser-dynamic@11.0.5/bundles/platform-browser-dynamic.umd.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
+        "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
+      ],
+      meta: ''
+    },
+    'animate.css': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      ],
+      meta: ''
+    },
+    'anime js': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+      ],
+      meta: ''
+    },
+    'aos': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
+      ],
+      meta: ''
+    },
+    'apex charts js': {
+      libraries: [
+        "https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.css",
+        "https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"
+      ],
+      meta: ''
+    },
+    'aurelia': {
+      libraries: [],
+      meta: '<script src="https://cdn.jsdelivr.net/npm/aurelia-script@1.4.0"></script>'
+    },
+    'barba.js': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/barba.js/2.9.7/barba.min.js"
+      ],
+      meta: ''
+    },
+    'bootstrap 5': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"
+      ],
+      meta: ''
+    },
+    'bulm css': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+      ],
+      meta: ''
+    },
+    'bulma-extensions': {
+      libraries: [
+        "https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/css/bulma-extensions.min.css",
+        "https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/js/bulma-extensions.min.js"
+      ],
+      meta: ''
+    },
+    'chakra-ui': {
+      libraries: [
+        "https://cdn.jsdelivr.net/npm/@chakra-ui/react@2.0.0/dist/chakra-ui.min.css"
+      ],
+      meta: ''
+    },
+    'chart js': {
+      libraries: [
+        "https://cdn.jsdelivr.net/npm/chart.js"
+      ],
+      meta: ''
+    },
+    'chartist': {
+      libraries: [
+        "https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css",
+        "https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"
+      ],
+      meta: ''
+    },
+    'd3': {
+      libraries: [
+        "https://d3js.org/d3.v7.min.js"
+      ],
+      meta: ''
+    },
+    'echarts': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/echarts/5.3.3/echarts.min.js"
+      ],
+      meta: ''
+    },
+    'file-saver': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"
+      ],
+      meta: ''
+    },
+    'foundation': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/foundation/6.6.3/css/foundation.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/foundation/6.6.3/js/foundation.min.js"
+      ],
+      meta: ''
+    },
+    'fullpage.js': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.11/fullpage.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.11/fullpage.min.js"
+      ],
+      meta: ''
+    },
+    'granim': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/granim/2.0.0/granim.min.js"
+      ],
+      meta: ''
+    },
+    'google charts': {
+      libraries: [
+        "https://cdn.jsdelivr.net/npm/google-charts@2.0.0/dist/googleCharts.min.js"
+      ],
+      meta: ''
+    },
+    'gsap': {
+      libraries: [
+        "https://unpkg.com/gsap@3/dist/gsap.min.js"
+      ],
+      meta: ''
+    },
+    'half moon': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/Halfmoon/1.0.4/css/halfmoon.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/Halfmoon/1.0.4/js/halfmoon.min.js"
+      ],
+      meta: ''
+    },
+    'hint css': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/hint.css/3.0.0/hint.min.css"
+      ],
+      meta: ''
+    },
+    'hyperapp': {
+      libraries: [],
+      meta: '<script src="https://unpkg.com/hyperapp@0.16.0"></script>'
+    },
+    'jquery': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      ],
+      meta: ''
+    },
+    'jszip': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"
+      ],
+      meta: ''
+    },
+    'knockout.js': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js"
+      ],
+      meta: ''
+    },
+    'leaflet': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"
+      ],
+      meta: ''
+    },
+    'locomotive-scroll': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/locomotive-scroll/4.1.4/locomotive-scroll.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/locomotive-scroll/4.1.4/locomotive-scroll.min.js"
+      ],
+      meta: ''
+    },
+    'lodash': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+      ],
+      meta: ''
+    },
+    'masonry js': {
+      libraries: [
+        "https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"
+      ],
+      meta: ''
+    },
+    'materialize': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
+      ],
+      meta: ''
+    },
+    'milligram css': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css"
+      ],
+      meta: ''
+    },
+    'mithril': {
+      libraries: [
+        "https://cdn.jsdelivr.net/npm/mithril@2.0.4/mithril.min.js"
+      ],
+      meta: ''
+    },
+    'moment js': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"
+      ],
+      meta: ''
+    },
+    'moon.js': {
+      libraries: [],
+      meta: '<script src="https://unpkg.com/moonjs"></script>'
+    },
+    'pattern css': {
+      libraries: [
+        "https://unpkg.com/pattern.css@1.0.0/dist/pattern.min.css"
+      ],
+      meta: ''
+    },
+    'pico.css': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
+        "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
+      ],
+      meta: ''
+    },
+    'preact': {
+      libraries: [
+        "https://unpkg.com/preact@latest/dist/preact.min.js"
+      ],
+      meta: ''
+    },
+    'primer css': {
+      libraries: [
+        "https://unpkg.com/@primer/css@^20.2.4/dist/primer.css"
+      ],
+      meta: ''
+    },
+    'popper js': {
+      libraries: [
+        "https://unpkg.com/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+      ],
+      meta: ''
+    },
+    'pure.css': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/pure/2.0.6/pure-min.css"
+      ],
+      meta: ''
+    },
+    'raisin css': {
+      libraries: [
+        "https://cdn.jsdelivr.net/gh/tretapey/raisincss@1.1.1/raisin.min.css"
+      ],
+      meta: ''
+    },
+    'raphael js': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"
+      ],
+      meta: ''
+    },
+    'react js': {
+      libraries: [
+        "https://unpkg.com/react@latest/umd/react.development.js",
+        "https://unpkg.com/react-dom@latest/umd/react-dom.development.js"
+      ],
+      meta: ''
+    },
+    'semantic ui': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.2/semantic.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.2/semantic.min.js"
+      ],
+      meta: ''
+    },
+    'skeleton css': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+      ],
+      meta: ''
+    },
+    'spectre.css': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.9/spectre.min.css"
+      ],
+      meta: ''
+    },
+    'stimulus': {
+      libraries: [
+        "https://cdn.jsdelivr.net/npm/@hotwired/stimulus@3.1.0/dist/stimulus.umd.js",
+        "https://cdn.jsdelivr.net/npm/@hotwired/stimulus-loading@1.0.0/dist/stimulus-loading.umd.js"
+      ],
+      meta: ''
+    },
+    'swiper': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.1.2/swiper-bundle.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.1.2/swiper-bundle.min.js"
+      ],
+      meta: ''
+    },
+    'tachyons': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.12.0/tachyons.min.css"
+      ],
+      meta: ''
+    },
+    'tailwind css': {
+      libraries: [
+        "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
+      ],
+      meta: ''
+    },
+    'three.js': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/three.js/r148/three.min.js"
+      ],
+      meta: ''
+    },
+    'tippy js': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/tippy.js/6.3.7/tippy-bundle.umd.min.js"
+      ],
+      meta: ''
+    },
+    'uikit': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/uikit/3.17.2/css/uikit.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/uikit/3.17.2/js/uikit.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/uikit/3.17.2/js/uikit-icons.min.js"
+      ],
+      meta: ''
+    },
+    'vivus': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.6/vivus.min.js"
+      ],
+      meta: ''
+    },
+    'vite': {
+      libraries: [
+        "https://unpkg.com/vite@latest/dist/vite.min.js"
+      ],
+      meta: ''
+    },
+    'vue js': {
+      libraries: [
+        "https://unpkg.com/vue@latest/dist/vue.global.prod.js"
+      ],
+      meta: ''
+    },
+    'water.css': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/water.css/2.1.1/water.min.css"
+      ],
+      meta: ''
+    }
+  }
 };
 const icons = (function() {
   const SidebarIconCSS = "h-4 w-4";
@@ -871,6 +1261,16 @@ function Demos() {
   return demosDialog;
 }
 function Settings() {
+  let frameworks = data.frameworks;
+
+  // Get the keys, sort them alphabetically, and reduce them back into an object
+  let sortedFrameworks = Object.keys(frameworks)
+    .sort()
+    .reduce((acc, key) => {
+      acc[key] = frameworks[key];
+      return acc;
+    }, {});
+
   let settingsHTML = `<ul class="px-0">
     <li class="list-none">
       <div class="mb-2">
@@ -991,6 +1391,29 @@ function Settings() {
           ${icons.search}
         </button>
       </nav>
+
+      <select onchange="
+        if (this.value) {
+          data.chosenFramework = this.value.toLowerCase();
+          let framework = data.frameworks[\`\${data.chosenFramework}\`];
+          if (!project.libraries.includes(framework.libraries)) {
+            for (item of framework.libraries) {
+              project.libraries.push(item);
+            }
+          }
+          if (framework.meta) project.meta += framework.meta;
+        } else {
+          data.chosenFramework = '';
+        }
+      ">
+        <option value="" ${!data.chosenFramework ? 'selected' : ''}>-- Popular Libraries/Frameworks --</option>
+        ${Object.keys(sortedFrameworks).map(framework => {
+          // Lowercase except first character is uppercase
+          let name = framework.toLowerCase();
+          name = name.charAt(0).toUpperCase() + name.slice(1);
+          return `<option value="${name}" ${name === data.chosenFramework ? 'selected' : ''}>${name}</option>`
+        }).join('')}
+      </select>
 
       <div id="librariesBox">
         ${project.libraries.map((library, index) => `
