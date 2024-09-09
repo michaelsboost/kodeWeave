@@ -2200,7 +2200,7 @@ window.rotateCanvas = () => {
 let fadeTimeout;
 window.getIFrameClientSize = () => {
   const iframe = document.getElementById('iframe');
-  data.iframeSize = `${iframe.clientWidth}px x ${iframe.clientHeight}px`;
+  data.iframeSize = `${iframe.offsetWidth}px x ${iframe.offsetHeight}px`;
   const element = document.getElementById('iframeClientSize');
 
   if (element.classList.contains('hidden')) {
