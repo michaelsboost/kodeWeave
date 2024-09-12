@@ -3619,7 +3619,7 @@ window.downloadProject = async () => {
     zip.file(`${project.name.split(' ').join('').toLowerCase()}-kodeWeave.json`, JSON.stringify(project, null, 2));
 
     function checkCSSDependencies() {
-      if (project.css.trim() !== '') {
+      if (!twFound && project.css.trim() !== '') {
         return `,
     "postcss": "^8.4.6",
     "autoprefixer": "^10.4.2",
@@ -3684,17 +3684,6 @@ export default {
   ]
 };`;
     zip.file("rollup.config.js", rollupStr);
-    
-    // PostCSS Configuration
-    if (project.css.trim() !== '') {
-      let postcssStr = `module.exports = {
-  plugins: [
-    require('autoprefixer'), // adds vendor prefixes
-    require('cssnano') // minifies the CSS
-  ]
-};`;
-      zip.file("postcss.config.js", postcssStr);
-    }
     
     // Babel Configuration
     if (project.javascript_pre_processor === 'babel') {
@@ -3884,6 +3873,7 @@ ${project.description}`;
     let tailwindDirectives = '';
     let tailwindStyles = '';
     let cssImport = '';
+
     // Find out if user is using tailwind
     if (idoc.getElementById('vyhibnq91')) {
       twFound = true;
@@ -3903,8 +3893,36 @@ ${project.description}`;
         cssImport = cssContent;
       }
       tailwindStyles = idoc.getElementById('vyhibnq91').textContent;
+
+      // Tailwind config
+      if (twFound) {
+        let twJS = "";
+        if (project.javascript_pre_processor === "javascript") {
+          twJS = `
+      './src/**/*.js',`;
+        }
+        if (project.javascript_pre_processor === "babel") {
+          twJS = `
+      './src/**/*.jsx',`;
+        }
+        if (project.javascript_pre_processor === "typescript") {
+          twJS = `
+      './src/**/*.ts',`;
+        }
+        let configCode = `module.exports = {
+    content: [
+      './src/**/*.html',${twJS}
+    ],
+    theme: {
+      extend: {},
+    },
+    plugins: [],
+  };`
+        zip.file("tailwind.config.js", configCode);
+      }
     }
 
+    // Add style.css & tailwind build
     if (cssContent && project.css) {
       css4html = `<link rel="stylesheet" href="dist/bundle.css">
     `;
@@ -3921,21 +3939,13 @@ ${project.description}`;
       zip.file('dist/bundle.css', minifyCSS(cssContent + tailwindStyles));
     }
     if (!cssContent && project.css) {
-      css4html = `<link rel="stylesheet" href="dist/style.css">
+      css4html = `<link rel="stylesheet" href="dist/bundle.css">
     `;
-      cssBuild = `"build:css": "postcss src/style.css -o dist/bundle.css",`;
-      zip.file("src/style.css", project.css + cssImport);
-      zip.file('dist/style.css', minifyCSS(tailwindStyles + project.css));
+      cssBuild = `"build:css": "postcss src/bundle.css -o dist/bundle.css",`;
+      zip.file("src/bundle.css", project.css + cssImport);
+      zip.file("src/style.css", project.css);
+      zip.file('dist/bundle.css', minifyCSS(tailwindStyles + project.css));
     }
-
-    // Add style.css
-    // if (project.css_pre_processor === 'css') zip.file("src/style.css", project.css);
-    // if (project.css_pre_processor === 'stylus') zip.file('src/style.styl', project.css);
-    // if (project.css_pre_processor === 'stylus') zip.file('dist/style.css', minifiedCSS);
-    // if (project.css_pre_processor === 'less') zip.file('src/style.less', project.css);
-    // if (project.css_pre_processor === 'less') zip.file('dist/style.css', iframe.contentDocument.getElementById('aeoibrfa1').textContent);
-    // if (project.css_pre_processor === 'sass') zip.file('src/style.scss', project.css);
-    // if (project.css_pre_processor === 'sass') zip.file('dist/style.css', minifiedCSS);
 
     // Nodejs Package JSON
     let npmBuildConditions = '';
@@ -3989,33 +3999,6 @@ ${project.description}`;
 };`);
     }
 
-    // Tailwind config
-    if (twFound) {
-      let twJS = "";
-      if (project.javascript_pre_processor === "javascript") {
-        twJS = `
-    './src/**/*.js',`;
-      }
-      if (project.javascript_pre_processor === "babel") {
-        twJS = `
-    './src/**/*.jsx',`;
-      }
-      if (project.javascript_pre_processor === "typescript") {
-        twJS = `
-    './src/**/*.ts',`;
-      }
-      let configCode = `module.exports = {
-  content: [
-    './src/**/*.html',${twJS}
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};`
-      zip.file("tailwind.config.js", configCode);
-    }
-
     // if pwa is enabled
     let swinit = '';
     if (project.pwa) {
@@ -4057,13 +4040,19 @@ plugins: [
 
     // Iterate over each library
     let scriptTags = '';
+    let scriptTagsTWChecked = '';
     let cssTags = '';
+    let gFonts = '';
     project.libraries.forEach(library => {
       if (library.endsWith('.js')) {
         scriptTags += `<script src="${library}"></script>\n    `;
+        if (twFound && (library.startsWith('https://michaelsboost.com/TailwindCSSMod/') || library.startsWith('http://michaelsboost.com/TailwindCSSMod/') || library.startsWith('//michaelsboost.com/TailwindCSSMod/'))) return;
+        scriptTagsTWChecked += `<script src="${library}"></script>\n    `;
+      } else if (library.endsWith('.css')) {
+        cssTags += `<link href="${library}" rel="stylesheet">\n    `;
       } else {
         // Assuming it's a Google font
-        cssTags += `<link href="${library}" rel="stylesheet">\n    `;
+        gFonts += `<link href="${library}" rel="stylesheet">\n    `;
       }
     });
 
@@ -4136,18 +4125,20 @@ plugins: [
     <meta property="og:type" content="website" />
     <meta property="og:title" content="${project.title}" />
     <meta property="og:description" content="${project.description}" />
-    <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" type="image/x-icon" href="imgs/logo.svg">
     <link rel="icon" type="image/svg+xml" href="imgs/logo.svg" />
     <link rel="apple-touch-icon" href="imgs/logo.svg">
-    ${cssTags ? cssTags : ''}${project.meta ? `${project.meta}\n  ` : ''}
+    ${gFonts}${cssTags ? cssTags : ''}${project.meta ? `${project.meta}\n  ` : ''}
+    ${twFound ? 
+    cssContent ? `<link rel="stylesheet" href="src/bundle.css">` : `<link rel="stylesheet" href="src/style.css">` 
+    : `<link rel="stylesheet" href="src/bundle.css">`}
   </head>
   <body>
 
 ${html}
 
     ${scriptTags ? scriptTags : ''}
-    ${project.javascript ? placeScript : ''}${(project.pwa ? swinit : '')}
+    ${project.javascript ? placeScript : ''}
   </body>
 </html>`;
     const indexHtmlContentCompiled = `<!DOCTYPE html>
@@ -4174,7 +4165,7 @@ ${html}
     <link rel="shortcut icon" type="image/x-icon" href="imgs/logo.svg">
     <link rel="icon" type="image/svg+xml" href="imgs/logo.svg" />
     <link rel="apple-touch-icon" href="imgs/logo.svg">
-    ${css4html}${project.meta ? `${project.meta}\n  ` : ''}${scriptTags ? scriptTags : ''}
+    ${gFonts}${css4html}${project.meta ? `${project.meta}\n  ` : ''}${scriptTags ? twFound ? scriptTagsTWChecked : scriptTags : ''}
   </head>
   <body>
     
