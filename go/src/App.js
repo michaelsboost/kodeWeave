@@ -3842,26 +3842,30 @@ ${project.description}`;
     let cssBuildItemsString = '';
     let TailwindNoReset = null;
     const promises = project.libraries.map(async library => {
-      const data = await getFile(library);
-      const parts = library.split("/");
-      const name = parts[parts.length - 1];
+      try {
+        const data = await getFile(library);
+        const parts = library.split("/");
+        const name = parts[parts.length - 1];
 
-      // Check if the library is one of the Tailwind files to ignore
-      if (name === "tailwind-mod-noreset.min.js") {
-        TailwindNoReset = true;
-      }
-      
-      // Assuming libraries have .css extensions for simplicity
-      if (name.endsWith('.css')) {
-        cssContent += data + '\n';
-        cssBuildItems.push(name);
-        cssBuildItemsString += `libraries/${name} `;
-        zip.folder('libraries').file(name, data);
-      }
-      
-      // Assuming libraries have .js extensions for simplicity
-      if (name.endsWith('.js')) {
-        zip.folder('libraries').file(name, data);
+        // Check if the library is one of the Tailwind files to ignore
+        if (name === "tailwind-mod-noreset.min.js") {
+          TailwindNoReset = true;
+        }
+        
+        // Assuming libraries have .css extensions for simplicity
+        if (name.endsWith('.css')) {
+          cssContent += data + '\n';
+          cssBuildItems.push(name);
+          cssBuildItemsString += `libraries/${name} `;
+          zip.folder('libraries').file(name, data);
+        }
+        
+        // Assuming libraries have .js extensions for simplicity
+        if (name.endsWith('.js')) {
+          zip.folder('libraries').file(name, data);
+        }
+      } catch (error) {
+        console.warn(`Failed to fetch library ${library}:`, error);
       }
     });
     await Promise.all(promises);
