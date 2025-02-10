@@ -30,6 +30,8 @@ function onChange(target, callback, path = []) {
   return createProxy(target, path);
 }
 
+import LZString from 'lz-string';
+
 // Keep project and data in the global scope
 let app = {
   name: 'kodeWeave',
@@ -1132,9 +1134,20 @@ function Menu() {
                 <button 
                   class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
                   style="color: unset;" 
-                  onclick="data.menuDialog = null; share()">
+                  onclick="data.menuDialog = null; shareProject()">
                   <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+                  </svg>
+                  <span>share weave</span>
+                </button>
+              </li>
+              <li class="p-0 list-none">
+                <button 
+                  class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
+                  style="color: unset;" 
+                  onclick="data.menuDialog = null; shareToCodepen()">
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" fill-rule="evenodd" d="M22 15.047a1 1 0 0 1-.008.112l-.006.037l-.016.072q-.005.022-.013.042l-.022.063l-.02.042q-.013.03-.028.057l-.025.04a1 1 0 0 1-.108.135l-.035.034l-.049.04l-.038.03l-.015.01l-9.14 6.095a.86.86 0 0 1-.954 0l-9.14-6.094l-.014-.01a1 1 0 0 1-.088-.071q-.018-.016-.034-.034q-.023-.022-.043-.046a1 1 0 0 1-.066-.09a1 1 0 0 1-.054-.096l-.019-.042l-.022-.063q-.008-.02-.013-.042q-.009-.035-.015-.072l-.007-.037A1 1 0 0 1 2 15.047V8.953q0-.057.008-.112l.007-.037q.005-.037.015-.072l.013-.042a.8.8 0 0 1 .131-.254l.03-.037l.043-.046l.034-.034a1 1 0 0 1 .088-.07l.014-.01l9.14-6.095a.86.86 0 0 1 .954 0l9.14 6.094l.015.01l.038.03l.05.041l.034.034a.7.7 0 0 1 .108.136l.025.04l.029.056l.019.042l.022.063q.008.02.013.042q.01.035.016.072l.006.037a1 1 0 0 1 .008.112zM3.719 10.562v2.876L5.869 12zm7.422-2.088V4.465l-6.734 4.49l3.008 2.011zm8.452.48L12.86 4.465v4.009l3.726 2.492zM4.407 15.046l6.734 4.489v-4.009l-3.726-2.492zm8.453.48v4.009l6.733-4.49l-3.007-2.01zM12 9.966L8.96 12L12 14.033L15.04 12zm8.281 3.472v-2.876L18.131 12z"/>
                   </svg>
                   <span>share to codepen</span>
                 </button>
@@ -2025,6 +2038,10 @@ window.emptyStorage = () => {
     title: "Are you sure you want to empty storage?",
     content: '<div class="p-4 text-center">All current data will be lost.</div>',
     onConfirm() {
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+
       // Clear local storage
       localStorage.removeItem('kodeWeave');
     
@@ -2719,7 +2736,20 @@ window.handleLogoChange = async event => {
   try {
     // Convert file to base64 string
     const base64String = await fileToBase64(file);
-    // Update project.logo with base64String
+    // if (base64String.length > 3000) {
+    //   Modal.render({
+    //     title: "🚨 Large Logo Detected 🚨",
+    //     content: `
+    //       <div class="p-4 text-center">
+    //         Your logo is quite large (${base64String.length} characters)! <br/>
+    //         Consider reducing its size for faster sharing. 🖼️
+    //       </div>
+    //     `
+    //   });
+    // } else {
+    //   project.logo = base64String;
+    // }
+
     project.logo = base64String;
   } catch (error) {
     console.error('Error converting image to base64:', error);
@@ -2734,6 +2764,7 @@ window.fileToBase64 = file => {
   });
 }
 window.newProject = name => {
+  history.replaceState(null, '', window.location.pathname + window.location.search);
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -2753,6 +2784,13 @@ window.newProject = name => {
   if (name === 'angular') project.module = false;
   project.pwa = false;
 
+  if (name === 'empty') {
+    project.meta = "";
+    project.libraries = [];
+    project.html = ``;
+    project.css = ``;
+    project.javascript = ``;
+  }
   if (name === 'javascript') {
     project.meta = "";
     project.libraries = [
@@ -2804,8 +2842,8 @@ if (counterElement && incrementButton) {
   if (name === 'react') {
     project.meta = "";
     project.libraries = [
-      "https://unpkg.com/react@latest/umd/react.development.js",
-      "https://unpkg.com/react-dom@latest/umd/react-dom.development.js",
+      "https://unpkg.com/react@16.13.1/umd/react.development.js",
+      "https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js",
       "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
       "https://michaelsboost.com/TailwindCSSMod/tailwind-mod-noreset.min.js"
     ];
@@ -2833,8 +2871,10 @@ function App() {
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);`;
+ReactDOM.render(
+  <App/>,
+  document.getElementById('root')
+)`;
   }
   if (name === 'vue') {
     project.meta = "";
@@ -3255,6 +3295,9 @@ ko.applyBindings(new AppViewModel());`;
 }
 window.importJSON = obj => {
   if (obj === null) return;
+  if (window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
   const clone = { ...obj };
   project.autorun = false;
   project.name = obj.name;
@@ -3306,6 +3349,11 @@ window.importProject = () => {
       data.menuDialog = true;
     },
     onConfirm: function() {
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+
+      history.replaceState(null, '', window.location.pathname + window.location.search);
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = '.json';
@@ -4257,7 +4305,7 @@ ${html}
     removeScripts(scriptsToRemove);
   }
 }
-window.share = async () => {
+window.shareToCodepen = async () => {
   try {
     if (navigator.onLine) {
       let jsPreprocessor = null;
@@ -4314,6 +4362,48 @@ ${project.javascript}`,
     console.error('Error sharing project:', error);
   }
 }
+window.shareProject = () => {
+  const jsonData = JSON.stringify(project);
+  const compressedData = LZString.compressToEncodedURIComponent(jsonData);
+
+  // Check if the compressed data length exceeds 2000 characters
+  if (compressedData.length > 50000) {
+    Modal.render({
+      title: "🚨 Project Too Large! 🚨",
+      content: `
+        <div class="p-4 text-center">
+          🛑 <strong>Oops!</strong> Your project is too big to be shared in the URL.<br/><br/>
+          ✂️ Try trimming it down to keep it short and sweet! 🌟<br/><br/>
+          🧑‍💻 Happy Coding! 🚀
+        </div>
+      `
+    });        
+    return;
+  }
+  
+  window.location.hash = compressedData;
+  
+  Modal.render({
+    title: "✅ Project Shared! ✅",
+    content: `<div class="p-4 text-center">📦 Copy this URL to share your project!</div>`,
+    onConfirm: () => {
+      copyToClipboard(window.location.href);
+    }
+  });
+}
+
+if (window.location.hash) {
+  const hash = window.location.hash.substring(1);
+
+  try {
+    const compressedData = decodeURIComponent(hash);
+    const jsonData = LZString.decompressFromEncodedURIComponent(compressedData);
+    project = JSON.parse(jsonData);
+  } catch (error) {
+    console.error('Failed to load project from URL:', error);
+  }
+}
+
 
 window.screenshot = async () => {
   const iframe = document.getElementById('iframe');
