@@ -56,6 +56,22 @@ kodeWeave uses a number of open-source projects to work properly:
 
 ----------
 
+## **📰 Featured On**
+
+kodeWeave has been highlighted on several notable platforms:
+
+- **Web Designer Depot**: https://www.webdesignerdepot.com/5-essential-open-source-tools-for-web-designers/
+
+- **List Of Freeware**: https://listoffreeware.com/free-open-source-dreamweaver-alternative-software-windows/
+
+- **Bootstrap Dash**: https://www.bootstrapdash.com/blog/codepen-alternatives
+
+- **APTRON**: https://aptronnoida.in/blog/essential-open-source-tools-for-web-designers/
+
+- **Linux for Devices**: https://www.linuxfordevices.com/tutorials/linux/adobe-dreamweaver-alternatives
+
+----------
+
 ## **📥 Installation & Setup**
 
 kodeWeave is **fully web-based** – no installation needed. Try it now:  
