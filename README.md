@@ -5,6 +5,8 @@ _kodeWeave is your on-the-go coding playground!_
 
 ![kodeWeave](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/screenshot.png)
 
+[![MIT License](https://img.shields.io/github/license/michaelsboost/kodeWeave)](LICENSE) [![GitHub Stars](https://img.shields.io/github/stars/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/issues)
+
 ----------
 
 ## **🚀 About kodeWeave**
