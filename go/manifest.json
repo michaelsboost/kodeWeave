@@ -1,12 +1,15 @@
 {
-    "theme_color":      "#13171f",
+    "id": "com.michaelsboost.kodeweave",
+    "name": "kodeWeave",
+    "short_name": "kodeWeave",
+    "description": "kodeWeave is your on the go coding playground! Design with TailwindCSS or Pico.css, see how your app or website will look and behave on a desktop.",
+    "lang": "en-US",
+    "dir": "ltr",
+    "start_url": "./index.html",
+    "scope": "./",
+    "display": "standalone",
+    "theme_color": "#13171f",
     "background_color": "#13171f",
-    "display":      "standalone",
-    "start_url":    "./index.html",
-    "lang":         "en-US",
-    "name":         "kodeWeave",
-    "short_name":   "kodeWeave",
-    "description" : "kodeWeave is your on the go coding playground! Design with TailwindCSS or Pico.css, see how your app or website will look and behave on a desktop.",
     "icons": [
       {
         "src":     "../imgs/icon-192x192.png",
@@ -32,5 +35,17 @@
         "type":    "image/png",
         "purpose": "maskable"
       }
+    ],
+    "categories": [
+      "productivity",
+      "utilities"
+    ],
+    "prefer_related_applications": true,
+    "related_applications": [
+      {
+        "platform": "play",
+        "id": "com.michaelsboost.kodeweave"
+      }
     ]
   }
+  
