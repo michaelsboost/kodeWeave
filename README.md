@@ -133,6 +133,9 @@ kodeWeave has been used to create powerful applications, including:
 
 A **progressive survival application** designed to provide **offline survival knowledge**, built entirely with kodeWeave.
 
+### 🏋️ [Rite Fitness Timer](https://michaelsboost.com/Rite)
+A clean, minimalist fitness timer for interval training, workouts, stretching, and daily movement routines—adaptable to any fitness style.
+
 ### **🎲 [Character Party](https://michaelsboost.com/Character-Party)**
 
 A **character brainstorming tool** that generates unique character ideas by combining quirky job titles, moods, and animals. It even includes **hyperlinks** for deeper exploration.
