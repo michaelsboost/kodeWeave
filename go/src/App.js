@@ -743,6 +743,9 @@ window.project = onChange(p, async (property, oldValue, newValue) => {
       if (string === "previewDark") {
         if (doc) {
           doc.documentElement.setAttribute('data-theme', project.previewDark ? 'dark' : 'light');
+          doc.documentElement.querySelector('meta[name=apple-mobile-web-app-status-bar-style]').setAttribute('content', project.previewDark ? 'black-translucent' : 'default');
+          doc.documentElement.querySelector('meta[name=theme-color]').setAttribute('content', project.previewDark ? '#13171f' : '#d9e0e5');
+          doc.documentElement.querySelector('meta[name=msapplication-navbutton-color]').setAttribute('content', project.previewDark ? '#13171f' : '#d9e0e5');
         }
       }
 
@@ -905,42 +908,52 @@ function PreviewMenu() {
 
   const sizeOptions = {
     Phones: {
-      '320x480': 'iPhone 3GS',
-      '375x667': 'iPhone 6/7/8',
+      // iOS (portrait)
+      '320x480': 'iPhone 3/3GS (legacy)',
+      '375x667': 'iPhone 6/7/8/SE (2nd gen)',
       '414x736': 'iPhone 6/7/8 Plus',
-      '375x812': 'iPhone X/XS/11 Pro',
-      '414x896': 'iPhone XR/XS Max/11/11 Pro Max',
-      '360x640': 'Samsung Galaxy S5',
-      '360x740': 'Samsung Galaxy S8+',
-      '1440x3200': 'Samsung Galaxy S21 Ultra',
-      '1080x2340': 'Google Pixel 5',
-      '1080x2400': 'OnePlus 8 Pro',
-      '1440x3200': 'Xiaomi Mi 11 Ultra',
-      '1644x3840': 'Sony Xperia 1 III'
+      '375x812': 'iPhone X / XS / 11 Pro',
+      '414x896': 'iPhone XR / 11 / 11 Pro Max',
+      '390x844': 'iPhone 12/13/14/15 & Pro',
+      '428x926': 'iPhone 12/13/14/15 Pro Max',
+      '360x780': 'iPhone 12/13 mini',
+
+      // Android (portrait) — common viewports (representative, varies by OEM/DPI)
+      '360x640': 'Android phone (compact baseline)',
+      '360x740': 'Android tall (e.g., Galaxy S8 class)',
+      '384x854': 'Android mid (older phablets)',
+      '392x873': 'Android tall-mid',
+      '393x851': 'Pixel 5 class',
+      '412x915': 'Android XL (e.g., Galaxy S21 Ultra class)',
     },
+
     Tablets: {
-      '2048x2732': 'iPad Pro 12.9" (3rd/4th Gen)',
-      '2388x1668': 'iPad Pro 11" (1st/2nd/3rd Gen)',
-      '2736x1824': 'Microsoft Surface Pro 7',
-      '2800x1752': 'Samsung Galaxy Tab S7+',
-      '2560x1600': 'Huawei MatePad Pro',
-      '2000x1200': 'Lenovo Tab P11 Pro',
-      '1920x1200': 'Amazon Fire HD 10',
-      '1536x2048': 'iPad Air (3rd Gen)',
-      '1620x2160': 'iPad Air (4th Gen)',
-      '1620x2160': 'iPad 10.2" (8th Gen)',
-      '1668x2224': 'iPad Pro 11" (2021)'
+      // iPad (portrait) — these are *logical* CSS viewports on mobile Safari
+      // Note: iPad viewports can be affected by browser UI; values below are common baselines.
+      '768x1024': 'iPad 9.7" (classic)',
+      '820x1180': 'iPad Air 10.9" (4th/5th gen)',
+      '810x1080': 'iPad 10.2" (7th/8th/9th gen)',
+      '834x1194': 'iPad Pro 11" (all gens)',
+      '1024x1366': 'iPad Pro 12.9" (all gens)',
+
+      // Android/Windows tablets (portrait) — common logical viewports
+      '800x1280': 'Android tablet (8–10") baseline',
+      '912x1368': 'Android large tablet (11–12")',
+      '1134x1512': 'Surface/HiDPI tablet (approx logical)',
     },
+
     Desktops: {
-      '3840x2160': '4K UHD (3840x2160)',
-      '2560x1440': 'WQHD (2560x1440)',
-      '1920x1080': 'Full HD (1920x1080)',
-      '1366x768': 'Laptop (1366x768)',
-      '3440x1440': 'UltraWide QHD (3440x1440)',
-      '5120x2880': '5K Retina (5120x2880)',
-      '1280x800': 'MacBook (1280x800)',
-      '2560x1600': 'MacBook Pro (2560x1600)',
-      '2880x1800': 'MacBook Pro Retina (2880x1800)'
+      // Desktop/laptop screen *CSS* layout sizes (common)
+      '1280x800': 'HD (13" laptop baseline)',
+      '1366x768': 'HD (common laptop)',
+      '1440x900': 'WXGA+ (legacy Mac 15")',
+      '1536x864': 'HD+ (scaled 1080p)',
+      '1680x1050': 'WSXGA+ (older 15–17")',
+      '1920x1080': 'Full HD',
+      '2560x1440': 'WQHD',
+      '3440x1440': 'UltraWide QHD',
+      '3840x2160': '4K UHD',
+      '5120x2880': '5K Retina',
     }
   };
 
@@ -3842,8 +3855,8 @@ ${project.description}`;
         await Promise.all(sizes.map(createResizedImage));
     
         zip.file(`manifest.json`, JSON.stringify({
-          "theme_color": "#13171f",
-          "background_color": "#13171f",
+          "theme_color": project.previewDark ? '#13171f' : '#d9e0e5',
+          "background_color": project.previewDark ? '#13171f' : '#d9e0e5',
           "display": "standalone",
           "start_url": "./index.html",
           "lang": "en-US",
@@ -4210,12 +4223,12 @@ self.addEventListener('message', (event) => {
     <meta name="author" content="${project.author}">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="${project.title}">
-    <meta name="theme-color" content="hsl(205deg 18.75% 87.45%)">
+    <meta name="theme-color" content="${project.previewDark ? '#13171f' : '#d9e0e5'}">
     <meta name="apple-mobile-web-app-title" content="${project.title}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="msapplication-starturl" content="./index.html">
-    <meta name="msapplication-navbutton-color" content="hsl(205deg 18.75% 87.45%)">
+    <meta name="msapplication-navbutton-color" content="${project.previewDark ? '#13171f' : '#d9e0e5'}">
     <meta property="og:url" content="${project.url}" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="${project.title}" />
@@ -4246,12 +4259,12 @@ ${html}
     <meta name="author" content="${project.author}">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="${project.title}">
-    <meta name="theme-color" content="hsl(205deg 18.75% 87.45%)">
+    <meta name="theme-color" content="${project.previewDark ? '#13171f' : '#d9e0e5'}">
     <meta name="apple-mobile-web-app-title" content="${project.title}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="msapplication-starturl" content="./index.html">
-    <meta name="msapplication-navbutton-color" content="hsl(205deg 18.75% 87.45%)">
+    <meta name="msapplication-navbutton-color" content="${project.previewDark ? '#13171f' : '#d9e0e5'}">
     <meta property="og:url" content="${project.url}" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="${project.title}" />
@@ -4446,7 +4459,6 @@ if (window.location.hash) {
     console.error('Failed to load project from URL:', error);
   }
 }
-
 
 window.screenshot = async () => {
   const iframe = document.getElementById('iframe');
