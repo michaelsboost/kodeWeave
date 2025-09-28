@@ -6,6 +6,7 @@ const { NetworkFirst, StaleWhileRevalidate, CacheFirst } = workbox.strategies;
 const { CacheableResponsePlugin } = workbox.cacheableResponse;
 const { ExpirationPlugin } = workbox.expiration;
 const { clientsClaim, skipWaiting } = workbox.core;
+const { RangeRequestsPlugin } = workbox.rangeRequests;
 
 // Define cache name dynamically based on the project name
 const cacheName = 'kodeWeave-cache';
@@ -38,6 +39,39 @@ registerRoute(
       new CacheableResponsePlugin({
         statuses: [0, 200],
       }),
+    ],
+  })
+);
+
+// EASIEST: Cache ALL files from the libraries directory
+// registerRoute(
+//   ({ url }) => url.pathname.includes('/libraries/'),
+//   new CacheFirst({
+//     cacheName: cacheName,
+//     plugins: [
+//       new CacheableResponsePlugin({
+//         statuses: [0, 200],
+//       }),
+//       new ExpirationPlugin({
+//         maxEntries: 500, // Increase limit for all libraries
+//         maxAgeSeconds: 365 * 24 * 60 * 60, // 1 year - libraries rarely change
+//       }),
+//     ],
+//   })
+// );
+registerRoute(
+  ({ url }) => url.pathname.includes('/libraries/'),
+  new CacheFirst({
+    cacheName: cacheName,
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxEntries: 500,
+        maxAgeSeconds: 365 * 24 * 60 * 60,
+      }),
+      new RangeRequestsPlugin(), // For partial content requests
     ],
   })
 );

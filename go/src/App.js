@@ -4535,7 +4535,19 @@ window.renderPreview = async (forceRun = false) => {
 
 `
 
-  const domconsoleContent = await fetch('libraries/domconsole/dom-console-mod.min.js').then(response => response.text());
+  // Add error handling for the fetch
+  let domconsoleContent = '';
+  try {
+    const response = await fetch('libraries/domconsole/dom-console-mod.min.js');
+    if (response.ok) {
+      domconsoleContent = await response.text();
+    } else {
+      console.warn('Failed to fetch domconsole library, proceeding without it');
+    }
+  } catch (error) {
+    console.warn('Network error fetching domconsole, proceeding without it:', error);
+  }
+
   let jsLink = createBlobURL(javascriptCode, 'application/javascript');
   const iframeSrc = `<html data-theme="${project.previewDark ? 'dark' : 'light'}">
   <head>
