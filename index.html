@@ -75,630 +75,628 @@
     }
     </script>
   </head>
-  <body>
-    <div class="bg-slate-950 text-slate-100 selection:bg-brand-400/40" x-data="{ mobileMenuOpen: false }">
-      <!-- NAV -->
-      <header class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-950/90 border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center justify-between h-16">
-            <a href="#" class="flex items-center gap-2 group">
-              <svg class="w-7 h-7 text-brand-400 group-hover:text-brand-300 transition" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <defs>
-                  <linearGradient id="grad" x1="100%" y1="50%" x2="0%" y2="50%">
-                    <stop offset="0" stop-color="#22d3ee"></stop>
-                    <stop offset="1" stop-color="#178a9c"></stop>
-                  </linearGradient>
-                </defs>
-                <circle cx="256" cy="256" r="256" fill="url(#grad)"></circle>
-                <path fill="#fff" d="M251 58.7c-4.6.1-20.8 2-29.3 3.7-28.3 5.4-66.9 22.6-73 32.7-1.9 3.1-2 7.2-2 160.8 0 152.3.1 157.7 1.9 160.7 5.2 8.5 36.7 23.7 63.5 30.5 9.8 2.5 34.3 6.3 38.5 6 2-.2 2-1 2.3-73.1.1-40.8.7-73.3 1.2-73.8 1.4-1.4 7.3 1.9 10.4 5.7 1.5 1.8 13.8 20.7 27.4 41.8 51.4 80 50.5 78.5 53.3 79.2 3.3.8 12.6-3.8 27.6-13.8 14.2-9.5 23.9-17.8 34.8-30 11.3-12.6 14.8-17.4 14.8-20.3 0-1.2-15-24.5-33.4-52-18.4-27.4-34.1-51.2-35-52.9-.9-1.7-1.5-4.1-1.5-5.4 0-1.3 12.5-22.3 28.5-47.9 44.5-71.1 41.9-66.3 38.8-72.8-2.6-5.4-15.4-19.7-26.1-29.1-11.5-10.1-35.1-26-39.9-26.9-2.9-.6-4-.3-5.9 1.7-1.3 1.3-20.4 32.3-42.3 68.9-22 36.6-41.1 68-42.4 69.8-2.6 3.6-6.7 6.1-8.7 5.4-1-.4-1.3-18.2-1.3-84.4 0-49.5-.4-84.2-.9-84.6-.1-.1-.5-.1-1.2-.1z"></path>
-              </svg>
-              <span class="font-bold text-xl tracking-tight">kodeWeave</span>
-            </a>
-            <nav class="hidden md:flex items-center gap-6 text-sm">
-              <a href="#features" class="hover:text-brand-300 transition-colors">Features</a>
-              <a href="#benchmarks" class="hover:text-brand-300 transition-colors">Benchmarks</a>
-              <a href="#compare" class="hover:text-brand-300 transition-colors">Compare</a>
-              <a href="#gallery" class="hover:text-brand-300 transition-colors">Made with kodeWeave</a>
-              <a href="/go" target="_blank" class="ml-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-900 font-semibold shadow-glow transition-all">
-                <i class="fas fa-bolt mr-1"></i> Launch App
-              </a>
-            </nav>
-            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2" aria-label="Open Menu">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-        
-        <!-- Mobile menu -->
-        <div x-show="mobileMenuOpen" x-transition="" class="md:hidden border-t border-white/10 bg-slate-950/95 backdrop-blur">
-          <nav class="px-4 py-3 space-y-3 text-center">
-            <a href="#features" class="block py-2 hover:text-brand-300 transition-colors">Features</a>
-            <a href="#benchmarks" class="block py-2 hover:text-brand-300 transition-colors">Benchmarks</a>
-            <a href="#compare" class="block py-2 hover:text-brand-300 transition-colors">Compare</a>
-            <a href="#gallery" class="block py-2 hover:text-brand-300 transition-colors">Made with kodeWeave</a>
-            <a href="#faq" class="block py-2 hover:text-brand-300 transition-colors">FAQ</a>
-            <a href="/go" target="_blank" class="inline-flex w-full items-center gap-2 px-4 py-2 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-900 font-semibold shadow-glow transition-all mt-2">
+  <body class="bg-slate-950 text-slate-100 selection:bg-brand-400/40" x-data="{ mobileMenuOpen: false }">
+    <!-- NAV -->
+    <header class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-950/90 border-b border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <a href="#" class="flex items-center gap-2 group">
+            <svg class="w-7 h-7 text-brand-400 group-hover:text-brand-300 transition" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="grad" x1="100%" y1="50%" x2="0%" y2="50%">
+                  <stop offset="0" stop-color="#22d3ee"></stop>
+                  <stop offset="1" stop-color="#178a9c"></stop>
+                </linearGradient>
+              </defs>
+              <circle cx="256" cy="256" r="256" fill="url(#grad)"></circle>
+              <path fill="#fff" d="M251 58.7c-4.6.1-20.8 2-29.3 3.7-28.3 5.4-66.9 22.6-73 32.7-1.9 3.1-2 7.2-2 160.8 0 152.3.1 157.7 1.9 160.7 5.2 8.5 36.7 23.7 63.5 30.5 9.8 2.5 34.3 6.3 38.5 6 2-.2 2-1 2.3-73.1.1-40.8.7-73.3 1.2-73.8 1.4-1.4 7.3 1.9 10.4 5.7 1.5 1.8 13.8 20.7 27.4 41.8 51.4 80 50.5 78.5 53.3 79.2 3.3.8 12.6-3.8 27.6-13.8 14.2-9.5 23.9-17.8 34.8-30 11.3-12.6 14.8-17.4 14.8-20.3 0-1.2-15-24.5-33.4-52-18.4-27.4-34.1-51.2-35-52.9-.9-1.7-1.5-4.1-1.5-5.4 0-1.3 12.5-22.3 28.5-47.9 44.5-71.1 41.9-66.3 38.8-72.8-2.6-5.4-15.4-19.7-26.1-29.1-11.5-10.1-35.1-26-39.9-26.9-2.9-.6-4-.3-5.9 1.7-1.3 1.3-20.4 32.3-42.3 68.9-22 36.6-41.1 68-42.4 69.8-2.6 3.6-6.7 6.1-8.7 5.4-1-.4-1.3-18.2-1.3-84.4 0-49.5-.4-84.2-.9-84.6-.1-.1-.5-.1-1.2-.1z"></path>
+            </svg>
+            <span class="font-bold text-xl tracking-tight">kodeWeave</span>
+          </a>
+          <nav class="hidden md:flex items-center gap-6 text-sm">
+            <a href="#features" class="hover:text-brand-300 transition-colors">Features</a>
+            <a href="#benchmarks" class="hover:text-brand-300 transition-colors">Benchmarks</a>
+            <a href="#compare" class="hover:text-brand-300 transition-colors">Compare</a>
+            <a href="#gallery" class="hover:text-brand-300 transition-colors">Made with kodeWeave</a>
+            <a href="/go" target="_blank" class="ml-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-900 font-semibold shadow-glow transition-all">
               <i class="fas fa-bolt mr-1"></i> Launch App
             </a>
           </nav>
+          <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2" aria-label="Open Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
         </div>
-      </header>
+      </div>
+      
+      <!-- Mobile menu -->
+      <div x-show="mobileMenuOpen" x-transition="" class="md:hidden border-t border-white/10 bg-slate-950/95 backdrop-blur">
+        <nav class="px-4 py-3 space-y-3 text-center">
+          <a href="#features" class="block py-2 hover:text-brand-300 transition-colors">Features</a>
+          <a href="#benchmarks" class="block py-2 hover:text-brand-300 transition-colors">Benchmarks</a>
+          <a href="#compare" class="block py-2 hover:text-brand-300 transition-colors">Compare</a>
+          <a href="#gallery" class="block py-2 hover:text-brand-300 transition-colors">Made with kodeWeave</a>
+          <a href="#faq" class="block py-2 hover:text-brand-300 transition-colors">FAQ</a>
+          <a href="/go" target="_blank" class="inline-flex w-full items-center gap-2 px-4 py-2 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-900 font-semibold shadow-glow transition-all mt-2">
+            <i class="fas fa-bolt mr-1"></i> Launch App
+          </a>
+        </nav>
+      </div>
+    </header>
 
-      <!-- HERO -->
-      <section class="radial relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20">
-          <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div class="inline-flex items-center gap-2 text-xs rounded-full border border-white/10 px-3 py-1 bg-white/5 mb-6">
-                <span class="inline-flex items-center gap-1">
-                  <i class="fas fa-check-circle text-emerald-400"></i> 100× Lighthouse
-                </span>
-                <span class="text-white/70">Built for Mobile • PWA • Lightning Fast</span>
-              </div>
-              <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
-                The fastest real‑time web playground
-              </h1>
-              <p class="mt-4 text-lg text-white/80 max-w-xl">
-                The real-time coding playground that works entirely in your browser. Build with HTML, CSS, and JS, import assets via APIs, export as PWAs, and take full-page screenshots — all with unmatched performance and zero setup required.
-              </p>
-              <div class="mt-8 flex flex-wrap gap-4">
-                <a href="/go" target="_blank" class="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-brand-500 hover:bg-brand-400 text-slate-900 font-bold shadow-glow transition-all group">
-                  <i class="fas fa-bolt"></i>
-                  Start Coding Now
-                  <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                </a>
-                <a href="https://www.youtube.com/watch?v=ixIgMwVVTW0" class="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors" target="_blank">
-                  <i class="fas fa-play-circle"></i>
-                  Watch Demo
-                </a>
-              </div>
-              <div class="mt-8 flex items-center gap-6 text-sm text-white/60">
-                <span class="flex items-center gap-2">
-                  <i class="fas fa-shield-alt text-brand-400"></i>
-                  No ads • No tracking
-                </span>
-                <div class="h-4 w-px bg-white/10"></div>
-                <span class="flex items-center gap-2">
-                  <i class="fas fa-users text-brand-400"></i>
-                  Trusted by developers
-                </span>
-              </div>
+    <!-- HERO -->
+    <section class="radial relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 text-xs rounded-full border border-white/10 px-3 py-1 bg-white/5 mb-6">
+              <span class="inline-flex items-center gap-1">
+                <i class="fas fa-check-circle text-emerald-400"></i> 100× Lighthouse
+              </span>
+              <span class="text-white/70">Built for Mobile • PWA • Lightning Fast</span>
             </div>
-            <div class="relative lg:pl-8 reveal reveal-right">
-              <a href="imgs/screenshot.webp" target="_blank">
-                <img class="w-full object-cover object-center rounded-lg" 
-                  src="imgs/screenshot.webp" 
-                  srcset="imgs/screenshot-640w.webp 640w, imgs/screenshot-1280w.webp 1280w" 
-                  alt="kodeWeave">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+              The fastest real‑time web playground
+            </h1>
+            <p class="mt-4 text-lg text-white/80 max-w-xl">
+              The real-time coding playground that works entirely in your browser. Build with HTML, CSS, and JS, import assets via APIs, export as PWAs, and take full-page screenshots — all with unmatched performance and zero setup required.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-4">
+              <a href="/go" target="_blank" class="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-brand-500 hover:bg-brand-400 text-slate-900 font-bold shadow-glow transition-all group">
+                <i class="fas fa-bolt"></i>
+                Start Coding Now
+                <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
               </a>
-              <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-brand-500/20 rounded-full blur-xl"></div>
-              <div class="absolute -top-4 -left-4 w-20 h-20 bg-brand-400/20 rounded-full blur-lg"></div>
+              <a href="https://www.youtube.com/watch?v=ixIgMwVVTW0" class="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors" target="_blank">
+                <i class="fas fa-play-circle"></i>
+                Watch Demo
+              </a>
+            </div>
+            <div class="mt-8 flex items-center gap-6 text-sm text-white/60">
+              <span class="flex items-center gap-2">
+                <i class="fas fa-shield-alt text-brand-400"></i>
+                No ads • No tracking
+              </span>
+              <div class="h-4 w-px bg-white/10"></div>
+              <span class="flex items-center gap-2">
+                <i class="fas fa-users text-brand-400"></i>
+                Trusted by developers
+              </span>
             </div>
           </div>
+          <div class="relative lg:pl-8 reveal reveal-right">
+            <a href="imgs/screenshot.webp" target="_blank">
+              <img class="w-full object-cover object-center rounded-lg" 
+                src="imgs/screenshot.webp" 
+                srcset="imgs/screenshot-640w.webp 640w, imgs/screenshot-1280w.webp 1280w" 
+                alt="kodeWeave">
+            </a>
+            <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-brand-500/20 rounded-full blur-xl"></div>
+            <div class="absolute -top-4 -left-4 w-20 h-20 bg-brand-400/20 rounded-full blur-lg"></div>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- FEATURES -->
-      <section id="features" class="py-20 border-t border-white/10 bg-gradient-to-b from-slate-950 to-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold">Why kodeWeave Stands Out</h2>
-            <p class="text-white/70 mt-4 max-w-2xl mx-auto">Performance‑obsessed and built for touch. Vanilla JS (with Proxies for reactivity) + CodeMirror v6 = buttery editing everywhere.</p>
+    <!-- FEATURES -->
+    <section id="features" class="py-20 border-t border-white/10 bg-gradient-to-b from-slate-950 to-slate-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl font-bold">Why kodeWeave Stands Out</h2>
+          <p class="text-white/70 mt-4 max-w-2xl mx-auto">Performance‑obsessed and built for touch. Vanilla JS (with Proxies for reactivity) + CodeMirror v6 = buttery editing everywhere.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
+            <div class="feature-icon bg-brand-500/20 text-brand-400">
+              <i class="fas fa-mobile-alt text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold">Mobile‑first Editor</h3>
+            <p class="text-white/70 mt-2">CodeMirror v6, soft‑keyboard‑friendly UI optimized for phones and tablets.</p>
           </div>
           
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
-              <div class="feature-icon bg-brand-500/20 text-brand-400">
-                <i class="fas fa-mobile-alt text-2xl"></i>
-              </div>
-              <h3 class="text-xl font-bold">Mobile‑first Editor</h3>
-              <p class="text-white/70 mt-2">CodeMirror v6, soft‑keyboard‑friendly UI optimized for phones and tablets.</p>
+          <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
+            <div class="feature-icon bg-purple-500/20 text-purple-400">
+              <i class="fas fa-camera text-2xl"></i>
             </div>
-            
-            <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
-              <div class="feature-icon bg-purple-500/20 text-purple-400">
-                <i class="fas fa-camera text-2xl"></i>
-              </div>
-              <h3 class="text-xl font-bold">Full‑page Screenshots</h3>
-              <p class="text-white/70 mt-2">Capture the entire page, not just the viewport, right from the editor with one click.</p>
+            <h3 class="text-xl font-bold">Full‑page Screenshots</h3>
+            <p class="text-white/70 mt-2">Capture the entire page, not just the viewport, right from the editor with one click.</p>
+          </div>
+          
+          <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
+            <div class="feature-icon bg-green-500/20 text-green-400">
+              <i class="fas fa-download text-2xl"></i>
             </div>
-            
-            <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
-              <div class="feature-icon bg-green-500/20 text-green-400">
-                <i class="fas fa-download text-2xl"></i>
-              </div>
-              <h3 class="text-xl font-bold">Export as PWA</h3>
-              <p class="text-white/70 mt-2">Turn your creations into installable Progressive Web Apps with one click export functionality.</p>
+            <h3 class="text-xl font-bold">Export as PWA</h3>
+            <p class="text-white/70 mt-2">Turn your creations into installable Progressive Web Apps with one click export functionality.</p>
+          </div>
+          
+          <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
+            <div class="feature-icon bg-blue-500/20 text-blue-400">
+              <i class="fab fa-codepen text-2xl"></i>
             </div>
-            
-            <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
-              <div class="feature-icon bg-blue-500/20 text-blue-400">
-                <i class="fab fa-codepen text-2xl"></i>
-              </div>
-              <h3 class="text-xl font-bold">Share to CodePen</h3>
-              <p class="text-white/70 mt-2">Share to CodePen for showcasing your work and getting community feedback.</p>
+            <h3 class="text-xl font-bold">Share to CodePen</h3>
+            <p class="text-white/70 mt-2">Share to CodePen for showcasing your work and getting community feedback.</p>
+          </div>
+          
+          <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
+            <div class="feature-icon bg-yellow-500/20 text-yellow-400">
+              <i class="fas fa-bolt text-2xl"></i>
             </div>
-            
-            <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
-              <div class="feature-icon bg-yellow-500/20 text-yellow-400">
-                <i class="fas fa-bolt text-2xl"></i>
-              </div>
-              <h3 class="text-xl font-bold">100× Lighthouse</h3>
-              <p class="text-white/70 mt-2">Zero framework bloat. SPA tuned for speed on low‑end phones with perfect performance scores.</p>
+            <h3 class="text-xl font-bold">100× Lighthouse</h3>
+            <p class="text-white/70 mt-2">Zero framework bloat. SPA tuned for speed on low‑end phones with perfect performance scores.</p>
+          </div>
+          
+          <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
+            <div class="feature-icon bg-red-500/20 text-red-400">
+              <i class="fas fa-search text-2xl"></i>
             </div>
-            
-            <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
-              <div class="feature-icon bg-red-500/20 text-red-400">
-                <i class="fas fa-search text-2xl"></i>
-              </div>
-              <h3 class="text-xl font-bold">Asset Search &amp; Import</h3>
-              <p class="text-white/70 mt-2">Find images, SVGs, and audio via APIs or paste Base64. Loading local files supported.</p>
-            </div>
+            <h3 class="text-xl font-bold">Asset Search &amp; Import</h3>
+            <p class="text-white/70 mt-2">Find images, SVGs, and audio via APIs or paste Base64. Loading local files supported.</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- BENCHMARKS -->
-      <section id="benchmarks" class="py-20 border-t border-white/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-end justify-between gap-4 mb-12">
-            <div>
-              <h2 class="text-3xl font-bold">Proven Performance</h2>
-              <p class="text-white/70">Measured on mid‑range Android and entry laptops. Your miles may vary.</p>
+    <!-- BENCHMARKS -->
+    <section id="benchmarks" class="py-20 border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-4 mb-12">
+          <div>
+            <h2 class="text-3xl font-bold">Proven Performance</h2>
+            <p class="text-white/70">Measured on mid‑range Android and entry laptops. Your miles may vary.</p>
+          </div>
+        </div>
+        
+        <div class="grid lg:grid-cols-2 gap-8">
+          <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
+            <h3 class="text-xl font-bold mb-4">Lighthouse Scores (PWA installed)</h3>
+            <div class="grid grid-cols-2 gap-4 mt-6">
+              <div class="text-center p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                <div class="text-3xl font-bold text-emerald-400">100</div>
+                <div class="text-sm text-emerald-300 mt-1">Performance</div>
+              </div>
+              <div class="text-center p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                <div class="text-3xl font-bold text-emerald-400">93</div>
+                <div class="text-sm text-emerald-300 mt-1">Accessibility</div>
+              </div>
+              <div class="text-center p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                <div class="text-3xl font-bold text-emerald-400">100</div>
+                <div class="text-sm text-emerald-300 mt-1">Best Practices</div>
+              </div>
+              <div class="text-center p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                <div class="text-3xl font-bold text-emerald-400">100</div>
+                <div class="text-sm text-emerald-300 mt-1">SEO</div>
+              </div>
             </div>
           </div>
           
-          <div class="grid lg:grid-cols-2 gap-8">
-            <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
-              <h3 class="text-xl font-bold mb-4">Lighthouse Scores (PWA installed)</h3>
-              <div class="grid grid-cols-2 gap-4 mt-6">
-                <div class="text-center p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                  <div class="text-3xl font-bold text-emerald-400">100</div>
-                  <div class="text-sm text-emerald-300 mt-1">Performance</div>
+          <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
+            <h3 class="text-xl font-bold mb-4">Cold‑start Performance vs Competitors</h3>
+            <div class="space-y-4 mt-6">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-3 h-3 rounded-full bg-brand-500"></div>
+                  <span class="font-medium">kodeWeave</span>
                 </div>
-                <div class="text-center p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                  <div class="text-3xl font-bold text-emerald-400">93</div>
-                  <div class="text-sm text-emerald-300 mt-1">Accessibility</div>
-                </div>
-                <div class="text-center p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                  <div class="text-3xl font-bold text-emerald-400">100</div>
-                  <div class="text-sm text-emerald-300 mt-1">Best Practices</div>
-                </div>
-                <div class="text-center p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                  <div class="text-3xl font-bold text-emerald-400">100</div>
-                  <div class="text-sm text-emerald-300 mt-1">SEO</div>
-                </div>
+                <div class="text-2xl font-bold text-brand-400">1.3s</div>
               </div>
-            </div>
-            
-            <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
-              <h3 class="text-xl font-bold mb-4">Cold‑start Performance vs Competitors</h3>
-              <div class="space-y-4 mt-6">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <div class="w-3 h-3 rounded-full bg-brand-500"></div>
-                    <span class="font-medium">kodeWeave</span>
-                  </div>
-                  <div class="text-2xl font-bold text-brand-400">1.3s</div>
-                </div>
-                
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <div class="w-3 h-3 rounded-full bg-slate-500"></div>
-                    <span class="font-medium">JS Bin</span>
-                  </div>
-                  <div class="text-xl font-bold text-slate-400">2.2s</div>
-                </div>
-                
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <div class="w-3 h-3 rounded-full bg-slate-500"></div>
-                    <span class="font-medium">CodePen</span>
-                  </div>
-                  <div class="text-xl font-bold text-slate-400">6.0s</div>
-                </div>
-                
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <div class="w-3 h-3 rounded-full bg-slate-500"></div>
-                    <span class="font-medium">JSFiddle</span>
-                  </div>
-                  <div class="text-xl font-bold text-slate-400">8.0s</div>
-                </div>
-              </div>
-              <p class="text-xs text-white/50 mt-4">Measured on average 5G connection with mid-range Android device</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- COMPARE -->
-      <section id="compare" class="py-20 border-t border-white/10 bg-gradient-to-b from-slate-900 to-slate-950">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 class="text-3xl font-bold text-center mb-12">How We Compare</h2>
-          <div class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-800/30 backdrop-blur">
-            <table class="min-w-full text-sm">
-              <thead class="text-left border-b border-white/10">
-                <tr>
-                  <th class="px-6 py-4 font-semibold text-white">Feature</th>
-                  <th class="px-6 py-4 font-semibold text-brand-400">kodeWeave</th>
-                  <th class="px-6 py-4 font-semibold text-white">CodePen</th>
-                  <th class="px-6 py-4 font-semibold text-white">JSFiddle</th>
-                  <th class="px-6 py-4 font-semibold text-white">JS Bin</th>
-                  <th class="px-6 py-4 font-semibold text-white">Liveweave</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td class="px-6 py-4 font-medium text-white/70">PWA install</td>
-                  <td class="px-6 py-4 text-brand-400"><i class="fas fa-check-circle"></i> Yes</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                </tr>
-                <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td class="px-6 py-4 font-medium text-white/70">Full‑page screenshots</td>
-                  <td class="px-6 py-4 text-brand-400"><i class="fas fa-check-circle"></i> Yes</td>
-                  <td class="px-6 py-4 text-white/60">Partial</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                </tr>
-                <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td class="px-6 py-4 font-medium text-white/70">Mobile-optimized Editor</td>
-                  <td class="px-6 py-4 text-brand-400"><i class="fas fa-check-circle"></i> Yes</td>
-                  <td class="px-6 py-4 text-white/60">Varies</td>
-                  <td class="px-6 py-4 text-white/60">Varies</td>
-                  <td class="px-6 py-4 text-white/60">Varies</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                </tr>
-                <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td class="px-6 py-4 font-medium text-white/70">Asset search/import</td>
-                  <td class="px-6 py-4 text-brand-400"><i class="fas fa-check-circle"></i> Built‑in</td>
-                  <td class="px-6 py-4 text-white/60">Plugins</td>
-                  <td class="px-6 py-4 text-white/60">Manual</td>
-                  <td class="px-6 py-4 text-white/60">Manual</td>
-                  <td class="px-6 py-4 text-white/60">Manual</td>
-                </tr>
-                <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td class="px-6 py-4 font-medium text-white/70">Share to CodePen</td>
-                  <td class="px-6 py-4 text-brand-400"><i class="fas fa-check-circle"></i> 1‑click</td>
-                  <td class="px-6 py-4 text-white/40">N/A</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                </tr>
-                <tr class="hover:bg-white/5 transition-colors">
-                  <td class="px-6 py-4 font-medium text-white/70">Export as PWA</td>
-                  <td class="px-6 py-4 text-brand-400"><i class="fas fa-check-circle"></i> Yes</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                  <td class="px-6 py-4 text-white/40">—</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="text-sm text-white/50 mt-4 text-center">All data verified as of latest testing. kodeWeave leads in mobile experience and export capabilities.</p>
-        </div>
-      </section>
-
-      <!-- MADE WITH KODEWEAVE GALLERY -->
-      <section id="gallery" class="py-20 border-t border-white/10" x-data="{
-          filter: 'all',
-          items: [
-            {
-              title: 'AlgoArena ⚔️',
-              tags: ['game', 'trading', 'finance'],
-              url: 'https://michaelsboost.github.io/AlgoArena',
-              img: 'https://raw.githubusercontent.com/michaelsboost/AlgoArena/main/imgs/screenshot.jpeg',
-              author: 'michaelsboost',
-              authorUrl: 'https://michaelsboost.com/',
-              description: 'A trading game where simple strategies fight for the leaderboard.',
-              features: ['Trading', 'Gamification', 'Leaderboard']
-            },
-            {
-              title: 'Chart Dojo 📈',
-              tags: ['trading', 'game', 'education', 'finance'],
-              url: 'https://michaelsboost.github.io/ChartDojo',
-              img: 'https://raw.githubusercontent.com/michaelsboost/ChartDojo/main/imgs/screenshot-2.jpeg',
-              author: 'michaelsboost',
-              authorUrl: 'https://michaelsboost.com/',
-              description: 'Gamified technical analysis trainer with XP, streaks, and skill leveling.',
-              features: ['Technical Analysis', 'Gamification', 'Training']
-            },
-            {
-              title: 'The Deck',
-              tags: ['cards', 'game', 'entertainment'],
-              url: 'https://michaelsboost.github.io/the-deck',
-              img: 'https://raw.githubusercontent.com/michaelsboost/the-deck/main/imgs/screenshot.jpeg',
-              author: 'michaelsboost',
-              authorUrl: 'https://michaelsboost.com/',
-              description: 'Central hub for card-based web apps including survival, family, and couple cards.',
-              features: ['Card Games', 'Multi-app', 'Interactive']
-            },
-            {
-              title: 'Beacon Survival App',
-              tags: ['survival', 'education', 'productivity', 'fitness'],
-              url: 'https://michaelsboost.github.io/Beacon/',
-              img: 'https://raw.githubusercontent.com/michaelsboost/Beacon/main/imgs/screenshots/screenshot-training.png',
-              author: 'michaelsboost',
-              authorUrl: 'https://michaelsboost.com/',
-              description: 'Interactive survival training with guides, simulations, and progress tracking.',
-              features: ['Survival Training', 'Progress Tracking', 'Alpine.js']
-            },
-            {
-              title: 'The Trading Game 🎮',
-              tags: ['trading', 'game', 'finance', 'simulation'],
-              url: 'https://michaelsboost.github.io/TheTradingGame/',
-              img: 'https://raw.githubusercontent.com/michaelsboost/TheTradingGame/gh-pages/imgs/screenshot.jpeg',
-              author: 'michaelsboost',
-              authorUrl: 'https://michaelsboost.com/',
-              description: 'Binary options trading simulator for high-speed decision-making practice.',
-              features: ['Trading Simulator', 'Binary Options', 'Performance Analysis']
-            },
-            {
-              title: 'Compound Calculator 📈',
-              tags: ['finance', 'productivity', 'tools'],
-              url: 'https://michaelsboost.github.io/CompoundCalculator',
-              img: 'https://raw.githubusercontent.com/michaelsboost/CompoundCalculator/main/screenshot.png',
-              author: 'michaelsboost',
-              authorUrl: 'https://michaelsboost.com/',
-              description: 'Plan trading growth with precise compound interest calculations.',
-              features: ['Finance', 'Calculator', 'Trading Tools']
-            },
-            {
-              title: 'PropForge',
-              tags: ['trading', 'simulation', 'education'],
-              url: 'https://michaelsboost.github.io/PropForge',
-              img: 'https://raw.githubusercontent.com/michaelsboost/PropForge/main/imgs/screenshot.jpeg',
-              author: 'michaelsboost',
-              authorUrl: 'https://michaelsboost.com/',
-              description: 'Prop firm training simulator for challenge preparation.',
-              features: ['Trading Sim', 'Prop Firm', 'Training']
-            },
-            {
-              title: 'Plainly',
-              tags: ['productivity', 'tools', 'writing'],
-              url: 'https://michaelsboost.github.io/Plainly/',
-              img: 'https://raw.githubusercontent.com/michaelsboost/Plainly/main/imgs/screenshot.jpeg',
-              author: 'michaelsboost',
-              authorUrl: 'https://michaelsboost.com/',
-              description: 'Markdown editor with live preview and export to DOCX, PDF, and more.',
-              features: ['Markdown', 'Export', 'Productivity']
-            },
-            {
-              title: 'RITE 🏋️‍♂️',
-              tags: ['fitness', 'productivity', 'health'],
-              url: 'https://michaelsboost.github.io/Rite/',
-              img: 'https://raw.githubusercontent.com/michaelsboost/Rite/gh-pages/imgs/screenshot.jpeg',
-              author: 'michaelsboost',
-              authorUrl: 'https://michaelsboost.com/',
-              description: 'Minimalist browser-based fitness timer with audio cues and lap tracking.',
-              features: ['Fitness', 'Timer', 'Audio Cues']
-            },
-            {
-              title: 'Character Party',
-              tags: ['creative', 'writing', 'tools'],
-              url: 'https://michaelsboost.github.io/Character-Party/',
-              img: 'https://raw.githubusercontent.com/michaelsboost/Character-Party/gh-pages/imgs/screenshot.png',
-              author: 'michaelsboost',
-              authorUrl: 'https://michaelsboost.com/',
-              description: 'Character idea generator with unique combinations and hyperlink exploration.',
-              features: ['Creative', 'Generator', 'Storytelling']
-            }
-          ]
-        }">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold">Made with kodeWeave</h2>
-            <p class="text-white/70 mt-2">Real projects built by the community showcasing kodeWeave's versatility.</p>
-          </div>
-          
-          <nav class="overflow-auto flex flex-wrap gap-3 m-auto">
-            <div class="flex gap-3 list-none m-auto p-4 text-center whitespace-nowrap">
-              <button @click="filter='all'" :class="filter==='all'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
-                All Projects
-              </button>
-              <button @click="filter='trading'" :class="filter==='trading'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
-                Trading
-              </button>
-              <button @click="filter='game'" :class="filter==='game'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
-                Games
-              </button>
-              <button @click="filter='productivity'" :class="filter==='productivity'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
-                Productivity
-              </button>
-              <button @click="filter='fitness'" :class="filter==='fitness'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
-                Fitness
-              </button>
-                <button @click="filter='creative'" :class="filter==='creative'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
-                  Creative
-                </button>
               
-              <button @click="filter='finance'" :class="filter==='finance'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
-                Finance
-              </button>
-              <button @click="filter='education'" :class="filter==='education'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
-                Education
-              </button>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-3 h-3 rounded-full bg-slate-500"></div>
+                  <span class="font-medium">JS Bin</span>
+                </div>
+                <div class="text-xl font-bold text-slate-400">2.2s</div>
+              </div>
+              
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-3 h-3 rounded-full bg-slate-500"></div>
+                  <span class="font-medium">CodePen</span>
+                </div>
+                <div class="text-xl font-bold text-slate-400">6.0s</div>
+              </div>
+              
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-3 h-3 rounded-full bg-slate-500"></div>
+                  <span class="font-medium">JSFiddle</span>
+                </div>
+                <div class="text-xl font-bold text-slate-400">8.0s</div>
+              </div>
             </div>
-          </nav>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 auto-rows-fr">
-            <template x-for="(item,idx) in items" :key="idx">
-              <a :href="item.url" target="_blank" x-show="filter==='all' || item.tags.includes(filter)" class="reveal group block rounded-2xl overflow-hidden border border-white/10 bg-white/5 card-hover relative">
-                <div class="aspect-video overflow-hidden bg-slate-800">
-                  <img :src="item.img" :alt="item.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
-                </div>
-                <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4">
-                  <div class="text-center">
-                    <p class="text-sm text-white/80 mb-3" x-text="item.description"></p>
-                    <div class="flex flex-wrap justify-center gap-1 mb-3">
-                      <template x-for="feature in item.features" :key="feature">
-                        <span class="px-2 py-1 bg-brand-500/20 text-brand-300 rounded text-xs" x-text="feature"></span>
-                      </template>
-                    </div>
-                    <button class="mb-2 px-4 py-2 rounded-lg bg-brand-500 text-slate-900 font-medium">
-                      Live Demo
-                    </button>
-                    <template x-if="item.authorUrl">
-                      <a :href="item.authorUrl" target="_blank" class="text-xs text-brand-300 hover:text-brand-200 transition-colors block">
-                        by <span x-text="item.author"></span>
-                      </a>
-                    </template>
-                  </div>
-                </div>
-                <div class="p-4">
-                  <div class="flex justify-between items-start mb-2">
-                    <div class="flex flex-wrap gap-1">
-                      <template x-for="tag in item.tags" :key="tag">
-                        <span class="px-2 py-1 bg-brand-500/20 text-brand-300 rounded text-xs" x-text="'#' + tag"></span>
-                      </template>
-                    </div>
-                    <template x-if="item.authorUrl">
-                      <a :href="item.authorUrl" target="_blank" class="text-xs text-brand-300 hover:text-brand-200 transition-colors" x-text="item.author"></a>
-                    </template>
-                    <template x-if="!item.authorUrl">
-                      <div class="text-xs text-white/60" x-text="item.author"></div>
-                    </template>
-                  </div>
-                  <h3 class="font-semibold text-white mt-2" x-text="item.title"></h3>
-                </div>
-              </a>
-            </template>
-          </div>
-          
-          <div class="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10 text-center">
-            <h3 class="text-xl font-bold">Share Your Creation</h3>
-            <p class="text-white/70 mt-2 mb-8 max-w-2xl mx-auto">Have you built something amazing with kodeWeave? Share your project link with us and we might feature it here to inspire others.</p>
-            <a href="https://github.com/michaelsboost/kodeWeave/issues" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-900 font-semibold shadow-glow transition-all">
-              <i class="fas fa-code"></i>
-              Submit Project
-            </a>
+            <p class="text-xs text-white/50 mt-4">Measured on average 5G connection with mid-range Android device</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- TESTIMONIALS -->
-      <section class="py-20 border-t border-white/10 bg-gradient-to-b from-slate-900 to-slate-950">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 class="text-3xl font-bold text-center mb-12">What Developers Say</h2>
-          <div class="grid md:grid-cols-2 gap-8">
-            <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
-              <div class="flex items-center gap-4 mb-4">
-                <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold">DM</div>
-                <div>
-                  <div class="font-semibold">Darin Murphy</div>
-                  <div class="text-sm text-white/60">Google Play Review</div>
-                </div>
-              </div>
-              <p class="text-white/80 italic">"I've been using kodeWeave for several months now and really love it! It makes it possible to live code in HTML, Javascript and CSS, all at the same time! Awesome!"</p>
-            </div>
+    <!-- COMPARE -->
+    <section id="compare" class="py-20 border-t border-white/10 bg-gradient-to-b from-slate-900 to-slate-950">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-12">How We Compare</h2>
+        <div class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-800/30 backdrop-blur">
+          <table class="min-w-full text-sm">
+            <thead class="text-left border-b border-white/10">
+              <tr>
+                <th class="px-6 py-4 font-semibold text-white">Feature</th>
+                <th class="px-6 py-4 font-semibold text-brand-400">kodeWeave</th>
+                <th class="px-6 py-4 font-semibold text-white">CodePen</th>
+                <th class="px-6 py-4 font-semibold text-white">JSFiddle</th>
+                <th class="px-6 py-4 font-semibold text-white">JS Bin</th>
+                <th class="px-6 py-4 font-semibold text-white">Liveweave</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td class="px-6 py-4 font-medium text-white/70">PWA install</td>
+                <td class="px-6 py-4 text-brand-400"><i class="fas fa-check-circle"></i> Yes</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+              </tr>
+              <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td class="px-6 py-4 font-medium text-white/70">Full‑page screenshots</td>
+                <td class="px-6 py-4 text-brand-400"><i class="fas fa-check-circle"></i> Yes</td>
+                <td class="px-6 py-4 text-white/60">Partial</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+              </tr>
+              <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td class="px-6 py-4 font-medium text-white/70">Mobile-optimized Editor</td>
+                <td class="px-6 py-4 text-brand-400"><i class="fas fa-check-circle"></i> Yes</td>
+                <td class="px-6 py-4 text-white/60">Varies</td>
+                <td class="px-6 py-4 text-white/60">Varies</td>
+                <td class="px-6 py-4 text-white/60">Varies</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+              </tr>
+              <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td class="px-6 py-4 font-medium text-white/70">Asset search/import</td>
+                <td class="px-6 py-4 text-brand-400"><i class="fas fa-check-circle"></i> Built‑in</td>
+                <td class="px-6 py-4 text-white/60">Plugins</td>
+                <td class="px-6 py-4 text-white/60">Manual</td>
+                <td class="px-6 py-4 text-white/60">Manual</td>
+                <td class="px-6 py-4 text-white/60">Manual</td>
+              </tr>
+              <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td class="px-6 py-4 font-medium text-white/70">Share to CodePen</td>
+                <td class="px-6 py-4 text-brand-400"><i class="fas fa-check-circle"></i> 1‑click</td>
+                <td class="px-6 py-4 text-white/40">N/A</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="px-6 py-4 font-medium text-white/70">Export as PWA</td>
+                <td class="px-6 py-4 text-brand-400"><i class="fas fa-check-circle"></i> Yes</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+                <td class="px-6 py-4 text-white/40">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-white/50 mt-4 text-center">All data verified as of latest testing. kodeWeave leads in mobile experience and export capabilities.</p>
+      </div>
+    </section>
+
+    <!-- MADE WITH KODEWEAVE GALLERY -->
+    <section id="gallery" class="py-20 border-t border-white/10" x-data="{
+        filter: 'all',
+        items: [
+          {
+            title: 'AlgoArena ⚔️',
+            tags: ['game', 'trading', 'finance'],
+            url: 'https://michaelsboost.github.io/AlgoArena',
+            img: 'https://raw.githubusercontent.com/michaelsboost/AlgoArena/main/imgs/screenshot.jpeg',
+            author: 'michaelsboost',
+            authorUrl: 'https://michaelsboost.com/',
+            description: 'A trading game where simple strategies fight for the leaderboard.',
+            features: ['Trading', 'Gamification', 'Leaderboard']
+          },
+          {
+            title: 'Chart Dojo 📈',
+            tags: ['trading', 'game', 'education', 'finance'],
+            url: 'https://michaelsboost.github.io/ChartDojo',
+            img: 'https://raw.githubusercontent.com/michaelsboost/ChartDojo/main/imgs/screenshot-2.jpeg',
+            author: 'michaelsboost',
+            authorUrl: 'https://michaelsboost.com/',
+            description: 'Gamified technical analysis trainer with XP, streaks, and skill leveling.',
+            features: ['Technical Analysis', 'Gamification', 'Training']
+          },
+          {
+            title: 'The Deck',
+            tags: ['cards', 'game', 'entertainment'],
+            url: 'https://michaelsboost.github.io/the-deck',
+            img: 'https://raw.githubusercontent.com/michaelsboost/the-deck/main/imgs/screenshot.jpeg',
+            author: 'michaelsboost',
+            authorUrl: 'https://michaelsboost.com/',
+            description: 'Central hub for card-based web apps including survival, family, and couple cards.',
+            features: ['Card Games', 'Multi-app', 'Interactive']
+          },
+          {
+            title: 'Beacon Survival App',
+            tags: ['survival', 'education', 'productivity', 'fitness'],
+            url: 'https://michaelsboost.github.io/Beacon/',
+            img: 'https://raw.githubusercontent.com/michaelsboost/Beacon/main/imgs/screenshots/screenshot-training.png',
+            author: 'michaelsboost',
+            authorUrl: 'https://michaelsboost.com/',
+            description: 'Interactive survival training with guides, simulations, and progress tracking.',
+            features: ['Survival Training', 'Progress Tracking', 'Alpine.js']
+          },
+          {
+            title: 'The Trading Game 🎮',
+            tags: ['trading', 'game', 'finance', 'simulation'],
+            url: 'https://michaelsboost.github.io/TheTradingGame/',
+            img: 'https://raw.githubusercontent.com/michaelsboost/TheTradingGame/gh-pages/imgs/screenshot.jpeg',
+            author: 'michaelsboost',
+            authorUrl: 'https://michaelsboost.com/',
+            description: 'Binary options trading simulator for high-speed decision-making practice.',
+            features: ['Trading Simulator', 'Binary Options', 'Performance Analysis']
+          },
+          {
+            title: 'Compound Calculator 📈',
+            tags: ['finance', 'productivity', 'tools'],
+            url: 'https://michaelsboost.github.io/CompoundCalculator',
+            img: 'https://raw.githubusercontent.com/michaelsboost/CompoundCalculator/main/screenshot.png',
+            author: 'michaelsboost',
+            authorUrl: 'https://michaelsboost.com/',
+            description: 'Plan trading growth with precise compound interest calculations.',
+            features: ['Finance', 'Calculator', 'Trading Tools']
+          },
+          {
+            title: 'PropForge',
+            tags: ['trading', 'simulation', 'education'],
+            url: 'https://michaelsboost.github.io/PropForge',
+            img: 'https://raw.githubusercontent.com/michaelsboost/PropForge/main/imgs/screenshot.jpeg',
+            author: 'michaelsboost',
+            authorUrl: 'https://michaelsboost.com/',
+            description: 'Prop firm training simulator for challenge preparation.',
+            features: ['Trading Sim', 'Prop Firm', 'Training']
+          },
+          {
+            title: 'Plainly',
+            tags: ['productivity', 'tools', 'writing'],
+            url: 'https://michaelsboost.github.io/Plainly/',
+            img: 'https://raw.githubusercontent.com/michaelsboost/Plainly/main/imgs/screenshot.jpeg',
+            author: 'michaelsboost',
+            authorUrl: 'https://michaelsboost.com/',
+            description: 'Markdown editor with live preview and export to DOCX, PDF, and more.',
+            features: ['Markdown', 'Export', 'Productivity']
+          },
+          {
+            title: 'RITE 🏋️‍♂️',
+            tags: ['fitness', 'productivity', 'health'],
+            url: 'https://michaelsboost.github.io/Rite/',
+            img: 'https://raw.githubusercontent.com/michaelsboost/Rite/gh-pages/imgs/screenshot.jpeg',
+            author: 'michaelsboost',
+            authorUrl: 'https://michaelsboost.com/',
+            description: 'Minimalist browser-based fitness timer with audio cues and lap tracking.',
+            features: ['Fitness', 'Timer', 'Audio Cues']
+          },
+          {
+            title: 'Character Party',
+            tags: ['creative', 'writing', 'tools'],
+            url: 'https://michaelsboost.github.io/Character-Party/',
+            img: 'https://raw.githubusercontent.com/michaelsboost/Character-Party/gh-pages/imgs/screenshot.png',
+            author: 'michaelsboost',
+            authorUrl: 'https://michaelsboost.com/',
+            description: 'Character idea generator with unique combinations and hyperlink exploration.',
+            features: ['Creative', 'Generator', 'Storytelling']
+          }
+        ]
+      }">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold">Made with kodeWeave</h2>
+          <p class="text-white/70 mt-2">Real projects built by the community showcasing kodeWeave's versatility.</p>
+        </div>
+        
+        <nav class="overflow-auto flex flex-wrap gap-3 m-auto">
+          <div class="flex gap-3 list-none m-auto p-4 text-center whitespace-nowrap">
+            <button @click="filter='all'" :class="filter==='all'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
+              All Projects
+            </button>
+            <button @click="filter='trading'" :class="filter==='trading'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
+              Trading
+            </button>
+            <button @click="filter='game'" :class="filter==='game'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
+              Games
+            </button>
+            <button @click="filter='productivity'" :class="filter==='productivity'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
+              Productivity
+            </button>
+            <button @click="filter='fitness'" :class="filter==='fitness'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
+              Fitness
+            </button>
+              <button @click="filter='creative'" :class="filter==='creative'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
+                Creative
+              </button>
             
-            <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
-              <div class="flex items-center gap-4 mb-4">
-                <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center text-slate-900 font-bold">SH</div>
-                <div>
-                  <div class="font-semibold">SaaSHub</div>
-                  <div class="text-sm text-white/60">Software Review Platform</div>
+            <button @click="filter='finance'" :class="filter==='finance'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
+              Finance
+            </button>
+            <button @click="filter='education'" :class="filter==='education'?'bg-brand-500 text-slate-900':'bg-white/5 text-white hover:bg-white/10'" class="px-4 py-2 rounded-xl border border-white/10 transition-colors">
+              Education
+            </button>
+          </div>
+        </nav>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 auto-rows-fr">
+          <template x-for="(item,idx) in items" :key="idx">
+            <a :href="item.url" target="_blank" x-show="filter==='all' || item.tags.includes(filter)" class="reveal group block rounded-2xl overflow-hidden border border-white/10 bg-white/5 card-hover relative">
+              <div class="aspect-video overflow-hidden bg-slate-800">
+                <img :src="item.img" :alt="item.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              </div>
+              <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4">
+                <div class="text-center">
+                  <p class="text-sm text-white/80 mb-3" x-text="item.description"></p>
+                  <div class="flex flex-wrap justify-center gap-1 mb-3">
+                    <template x-for="feature in item.features" :key="feature">
+                      <span class="px-2 py-1 bg-brand-500/20 text-brand-300 rounded text-xs" x-text="feature"></span>
+                    </template>
+                  </div>
+                  <button class="mb-2 px-4 py-2 rounded-lg bg-brand-500 text-slate-900 font-medium">
+                    Live Demo
+                  </button>
+                  <template x-if="item.authorUrl">
+                    <a :href="item.authorUrl" target="_blank" class="text-xs text-brand-300 hover:text-brand-200 transition-colors block">
+                      by <span x-text="item.author"></span>
+                    </a>
+                  </template>
                 </div>
               </div>
-              <p class="text-white/80 italic">"The tool is lightweight, meaning it doesn't require extensive system resources to run, making it suitable for use on older or less powerful machines."</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- FINAL CTA -->
-      <section class="py-20 gradient-bg text-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 class="text-4xl font-extrabold">Ready to Weave Your Web Magic?</h2>
-          <p class="text-xl mt-4 max-w-2xl mx-auto">Join thousands of developers who use kodeWeave to prototype, experiment, and create at lightning speed.</p>
-          <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/go" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-white hover:bg-gray-100 text-slate-900 font-bold shadow-glow transition-all group">
-              <i class="fas fa-bolt"></i>
-              Launch kodeWeave Now
-              <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+              <div class="p-4">
+                <div class="flex justify-between items-start mb-2">
+                  <div class="flex flex-wrap gap-1">
+                    <template x-for="tag in item.tags" :key="tag">
+                      <span class="px-2 py-1 bg-brand-500/20 text-brand-300 rounded text-xs" x-text="'#' + tag"></span>
+                    </template>
+                  </div>
+                  <template x-if="item.authorUrl">
+                    <a :href="item.authorUrl" target="_blank" class="text-xs text-brand-300 hover:text-brand-200 transition-colors" x-text="item.author"></a>
+                  </template>
+                  <template x-if="!item.authorUrl">
+                    <div class="text-xs text-white/60" x-text="item.author"></div>
+                  </template>
+                </div>
+                <h3 class="font-semibold text-white mt-2" x-text="item.title"></h3>
+              </div>
             </a>
-            <a href="#features" class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur transition-colors">
-              <i class="fas fa-list-ul"></i>
-              Explore Features
-            </a>
-          </div>
-          <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm">
-            <span class="flex items-center gap-2">
-              <i class="fas fa-check-circle"></i>
-              No registration required
-            </span>
-            <span class="flex items-center gap-2">
-              <i class="fas fa-check-circle"></i>
-              Installable PWA
-            </span>
-            <span class="flex items-center gap-2">
-              <i class="fas fa-check-circle"></i>
-              Works offline
-            </span>
-            <span class="flex items-center gap-2">
-              <i class="fas fa-check-circle"></i>
-              Mobile-optimized
-            </span>
-          </div>
+          </template>
         </div>
-      </section>
+        
+        <div class="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10 text-center">
+          <h3 class="text-xl font-bold">Share Your Creation</h3>
+          <p class="text-white/70 mt-2 mb-8 max-w-2xl mx-auto">Have you built something amazing with kodeWeave? Share your project link with us and we might feature it here to inspire others.</p>
+          <a href="https://github.com/michaelsboost/kodeWeave/issues" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-slate-900 font-semibold shadow-glow transition-all">
+            <i class="fas fa-code"></i>
+            Submit Project
+          </a>
+        </div>
+      </div>
+    </section>
 
-      <!-- FOOTER -->
-      <footer class="border-t border-white/10 bg-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
-          <div>
-            <div class="flex items-center gap-2 mb-4">
-              <svg class="w-7 h-7 text-brand-400 group-hover:text-brand-300 transition" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <defs>
-                  <linearGradient id="grad" x1="100%" y1="50%" x2="0%" y2="50%">
-                    <stop offset="0" stop-color="#22d3ee"></stop>
-                    <stop offset="1" stop-color="#178a9c"></stop>
-                  </linearGradient>
-                </defs>
-                <circle cx="256" cy="256" r="256" fill="url(#grad)"></circle>
-                <path fill="#fff" d="M251 58.7c-4.6.1-20.8 2-29.3 3.7-28.3 5.4-66.9 22.6-73 32.7-1.9 3.1-2 7.2-2 160.8 0 152.3.1 157.7 1.9 160.7 5.2 8.5 36.7 23.7 63.5 30.5 9.8 2.5 34.3 6.3 38.5 6 2-.2 2-1 2.3-73.1.1-40.8.7-73.3 1.2-73.8 1.4-1.4 7.3 1.9 10.4 5.7 1.5 1.8 13.8 20.7 27.4 41.8 51.4 80 50.5 78.5 53.3 79.2 3.3.8 12.6-3.8 27.6-13.8 14.2-9.5 23.9-17.8 34.8-30 11.3-12.6 14.8-17.4 14.8-20.3 0-1.2-15-24.5-33.4-52-18.4-27.4-34.1-51.2-35-52.9-.9-1.7-1.5-4.1-1.5-5.4 0-1.3 12.5-22.3 28.5-47.9 44.5-71.1 41.9-66.3 38.8-72.8-2.6-5.4-15.4-19.7-26.1-29.1-11.5-10.1-35.1-26-39.9-26.9-2.9-.6-4-.3-5.9 1.7-1.3 1.3-20.4 32.3-42.3 68.9-22 36.6-41.1 68-42.4 69.8-2.6 3.6-6.7 6.1-8.7 5.4-1-.4-1.3-18.2-1.3-84.4 0-49.5-.4-84.2-.9-84.6-.1-.1-.5-.1-1.2-.1z"></path>
-              </svg>
-              <span class="font-bold text-lg">kodeWeave</span>
+    <!-- TESTIMONIALS -->
+    <section class="py-20 border-t border-white/10 bg-gradient-to-b from-slate-900 to-slate-950">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-12">What Developers Say</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold">DM</div>
+              <div>
+                <div class="font-semibold">Darin Murphy</div>
+                <div class="text-sm text-white/60">Google Play Review</div>
+              </div>
             </div>
-            <p class="text-white/60">The fastest real-time coding playground. Built with ♥ for the web community.</p>
-            <p class="text-white/40 mt-4">© 2015-<span x-text="new Date().getFullYear()"></span> kodeWeave. All rights reserved.</p>
+            <p class="text-white/80 italic">"I've been using kodeWeave for several months now and really love it! It makes it possible to live code in HTML, Javascript and CSS, all at the same time! Awesome!"</p>
           </div>
           
-          <div>
-            <h3 class="font-semibold mb-3">Product</h3>
-            <ul class="space-y-2 text-white/70">
-              <li><a href="#features" class="hover:text-white transition-colors">Features</a></li>
-              <li><a href="#benchmarks" class="hover:text-white transition-colors">Benchmarks</a></li>
-              <li><a href="#compare" class="hover:text-white transition-colors">Compare</a></li>
-              <li><a href="/go" target="_blank" class="hover:text-white transition-colors">Launch App</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 class="font-semibold mb-3">Resources</h3>
-            <ul class="space-y-2 text-white/70">
-              <li><a href="https://github.com/michaelsboost/kodeWeave" class="hover:text-white transition-colors">GitHub</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 class="font-semibold mb-3">Community</h3>
-            <ul class="space-y-2 text-white/70">
-              <li><a href="#gallery" class="hover:text-white transition-colors">Made with kodeWeave</a></li>
-              <li><a href="https://twitter.com/kodeweave_app" class="hover:text-white transition-colors">Twitter</a></li>
-              <li><a href="https://github.com/michaelsboost/kodeWeave/issues" class="hover:text-white transition-colors">Contribute</a></li>
-            </ul>
+          <div class="reveal p-6 rounded-2xl bg-white/5 border border-white/10 card-hover">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center text-slate-900 font-bold">SH</div>
+              <div>
+                <div class="font-semibold">SaaSHub</div>
+                <div class="text-sm text-white/60">Software Review Platform</div>
+              </div>
+            </div>
+            <p class="text-white/80 italic">"The tool is lightweight, meaning it doesn't require extensive system resources to run, making it suitable for use on older or less powerful machines."</p>
           </div>
         </div>
-      </footer>
-    </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="py-20 gradient-bg text-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-extrabold">Ready to Weave Your Web Magic?</h2>
+        <p class="text-xl mt-4 max-w-2xl mx-auto">Join thousands of developers who use kodeWeave to prototype, experiment, and create at lightning speed.</p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/go" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-white hover:bg-gray-100 text-slate-900 font-bold shadow-glow transition-all group">
+            <i class="fas fa-bolt"></i>
+            Launch kodeWeave Now
+            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </a>
+          <a href="#features" class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur transition-colors">
+            <i class="fas fa-list-ul"></i>
+            Explore Features
+          </a>
+        </div>
+        <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm">
+          <span class="flex items-center gap-2">
+            <i class="fas fa-check-circle"></i>
+            No registration required
+          </span>
+          <span class="flex items-center gap-2">
+            <i class="fas fa-check-circle"></i>
+            Installable PWA
+          </span>
+          <span class="flex items-center gap-2">
+            <i class="fas fa-check-circle"></i>
+            Works offline
+          </span>
+          <span class="flex items-center gap-2">
+            <i class="fas fa-check-circle"></i>
+            Mobile-optimized
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10 bg-slate-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="w-7 h-7 text-brand-400 group-hover:text-brand-300 transition" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="grad" x1="100%" y1="50%" x2="0%" y2="50%">
+                  <stop offset="0" stop-color="#22d3ee"></stop>
+                  <stop offset="1" stop-color="#178a9c"></stop>
+                </linearGradient>
+              </defs>
+              <circle cx="256" cy="256" r="256" fill="url(#grad)"></circle>
+              <path fill="#fff" d="M251 58.7c-4.6.1-20.8 2-29.3 3.7-28.3 5.4-66.9 22.6-73 32.7-1.9 3.1-2 7.2-2 160.8 0 152.3.1 157.7 1.9 160.7 5.2 8.5 36.7 23.7 63.5 30.5 9.8 2.5 34.3 6.3 38.5 6 2-.2 2-1 2.3-73.1.1-40.8.7-73.3 1.2-73.8 1.4-1.4 7.3 1.9 10.4 5.7 1.5 1.8 13.8 20.7 27.4 41.8 51.4 80 50.5 78.5 53.3 79.2 3.3.8 12.6-3.8 27.6-13.8 14.2-9.5 23.9-17.8 34.8-30 11.3-12.6 14.8-17.4 14.8-20.3 0-1.2-15-24.5-33.4-52-18.4-27.4-34.1-51.2-35-52.9-.9-1.7-1.5-4.1-1.5-5.4 0-1.3 12.5-22.3 28.5-47.9 44.5-71.1 41.9-66.3 38.8-72.8-2.6-5.4-15.4-19.7-26.1-29.1-11.5-10.1-35.1-26-39.9-26.9-2.9-.6-4-.3-5.9 1.7-1.3 1.3-20.4 32.3-42.3 68.9-22 36.6-41.1 68-42.4 69.8-2.6 3.6-6.7 6.1-8.7 5.4-1-.4-1.3-18.2-1.3-84.4 0-49.5-.4-84.2-.9-84.6-.1-.1-.5-.1-1.2-.1z"></path>
+            </svg>
+            <span class="font-bold text-lg">kodeWeave</span>
+          </div>
+          <p class="text-white/60">The fastest real-time coding playground. Built with ♥ for the web community.</p>
+          <p class="text-white/40 mt-4">© 2015-<span x-text="new Date().getFullYear()"></span> kodeWeave. All rights reserved.</p>
+        </div>
+        
+        <div>
+          <h3 class="font-semibold mb-3">Product</h3>
+          <ul class="space-y-2 text-white/70">
+            <li><a href="#features" class="hover:text-white transition-colors">Features</a></li>
+            <li><a href="#benchmarks" class="hover:text-white transition-colors">Benchmarks</a></li>
+            <li><a href="#compare" class="hover:text-white transition-colors">Compare</a></li>
+            <li><a href="/go" target="_blank" class="hover:text-white transition-colors">Launch App</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="font-semibold mb-3">Resources</h3>
+          <ul class="space-y-2 text-white/70">
+            <li><a href="https://github.com/michaelsboost/kodeWeave" class="hover:text-white transition-colors">GitHub</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="font-semibold mb-3">Community</h3>
+          <ul class="space-y-2 text-white/70">
+            <li><a href="#gallery" class="hover:text-white transition-colors">Made with kodeWeave</a></li>
+            <li><a href="https://twitter.com/kodeweave_app" class="hover:text-white transition-colors">Twitter</a></li>
+            <li><a href="https://github.com/michaelsboost/kodeWeave/issues" class="hover:text-white transition-colors">Contribute</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
 
     <script src="dist/script.js"></script>
   </body>
