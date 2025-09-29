@@ -1,12 +1,12 @@
 {
-  "theme_color": "#13171f",
-  "background_color": "#13171f",
+  "theme_color": "#020716",
+  "background_color": "#020716",
   "display": "standalone",
   "start_url": "./index.html",
   "lang": "en-US",
   "name": "kodeWeave",
   "short_name": "kodeWeave",
-  "description": "kodeWeave is your on the go coding playground! Design with TailwindCSS or Pico.css, see how your app or website will look and behave on a desktop.",
+  "description": "Code anywhere with kodeWeave - blazing-fast playground that works in your browser. Build HTML/CSS/JS apps, export PWAs, import assets, take screenshots - all client-side.",
   "icons": [
     {
       "src": "./imgs/logo-192x192.png",

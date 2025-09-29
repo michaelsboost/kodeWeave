@@ -59,7 +59,7 @@ let p = {
   html: ``,
   css: ``,
   javascript: ``,
-  logo: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiCiAgIHZpZXdCb3g9IjAgMCA1MTEuOTk5OTkgNTExLjk5OTk5IgogICBoZWlnaHQ9IjUxMiIKICAgd2lkdGg9IjUxMiIKICAgdmVyc2lvbj0iMS4xIgogICBpZD0ic3ZnNDE5MCI+CiAgPG1ldGFkYXRhCiAgICAgaWQ9Im1ldGFkYXRhNDE5NiI+CiAgICA8cmRmOlJERj4KICAgICAgPGNjOldvcmsKICAgICAgICAgcmRmOmFib3V0PSIiPgogICAgICAgIDxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PgogICAgICAgIDxkYzp0eXBlCiAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4KICAgICAgICA8ZGM6dGl0bGU+PC9kYzp0aXRsZT4KICAgICAgPC9jYzpXb3JrPgogICAgPC9yZGY6UkRGPgogIDwvbWV0YWRhdGE+CiAgPGRlZnMKICAgICBpZD0iZGVmczQxOTQiPgogICAgPGxpbmVhckdyYWRpZW50CiAgICAgICBpZD0ibGluZWFyR3JhZGllbnQ0Mjc2Ij4KICAgICAgPHN0b3AKICAgICAgICAgaWQ9InN0b3A0Mjc4IgogICAgICAgICBvZmZzZXQ9IjAiCiAgICAgICAgIHN0eWxlPSJzdG9wLWNvbG9yOiNmZDVkOTI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wCiAgICAgICAgIGlkPSJzdG9wNDI4MCIKICAgICAgICAgb2Zmc2V0PSIxIgogICAgICAgICBzdHlsZT0ic3RvcC1jb2xvcjojZmYwMDAwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudAogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiCiAgICAgICB5Mj0iMjU3LjMxMjUiCiAgICAgICB4Mj0iMC4xMzQwNDE2NSIKICAgICAgIHkxPSIyNTcuMzEyNSIKICAgICAgIHgxPSI1MTEuNzE4NzUiCiAgICAgICBpZD0ibGluZWFyR3JhZGllbnQ0MjgyIgogICAgICAgeGxpbms6aHJlZj0iI2xpbmVhckdyYWRpZW50NDI3NiIgLz4KICA8L2RlZnM+CiAgPGcKICAgICBpZD0iZzQyODQiPgogICAgPGNpcmNsZQogICAgICAgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOnVybCgjbGluZWFyR3JhZGllbnQ0MjgyKTtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZTtzdHJva2Utd2lkdGg6MTI7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTo3MiwgNzI7c3Ryb2tlLWRhc2hvZmZzZXQ6MDtzdHJva2Utb3BhY2l0eToxIgogICAgICAgaWQ9InBhdGg0MjcwIgogICAgICAgY3g9IjI1NiIKICAgICAgIGN5PSIyNTYiCiAgICAgICByPSIyNTYiIC8+CiAgICA8cGF0aAogICAgICAgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmU7c3Ryb2tlLXdpZHRoOjEyO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6NzIsIDcyO3N0cm9rZS1kYXNob2Zmc2V0OjA7c3Ryb2tlLW9wYWNpdHk6MSIKICAgICAgIGQ9Im0gMjUxLjA2MDY4LDU4LjY3ODI3MiBjIC00LjU2MDMyLDAuMDcwMzUgLTIwLjc2MDYxLDIuMDQxOTQ1IC0yOS4yOTc5MiwzLjY1NTk4NCAtMjguMzQzOTEsNS4zNTg2MiAtNjYuODgwODEsMjIuNjE5ODE0IC03My4wMzY5OSwzMi43MTkwNjEgLTEuODk3NTUsMy4xMTI5MzUgLTEuOTQ2MTYsNy4xNDcwMTMgLTEuOTQ2MTYsMTYwLjgxNzAyMyAwLDE1Mi4yNTg4IDAuMDY3MSwxNTcuNzI0NjQgMS44OTk5OCwxNjAuNzMxMjEgNS4yMDU5OSw4LjUzOTg5IDM2LjcyMDAzLDIzLjcwOTM0IDYzLjQ1MTMzLDMwLjU0MTM0IDkuNzY1NzIsMi40OTU5MyAzNC4zMzUwOSw2LjM0NDggMzguNTA3NTQsNi4wMzE2OSAyLjAwMzg4LC0wLjE1MDM2IDIuMDMyMDMsLTAuOTc0NjkgMi4yODkyMSwtNzMuMDkzMjQgMC4xNDU1OCwtNDAuODM3NTkgMC42NTY0MywtNzMuMzM0MTQgMS4xNjEwOSwtNzMuODM4OTYgMS4zNzc1MSwtMS4zNzc5NSA3LjM0NzM5LDEuODg0NzMgMTAuMzU3NTIsNS42NjIxNSAxLjQ2MjAyLDEuODM0NjggMTMuNzk3NTUsMjAuNjU1MjggMjcuNDE3NzQsNDEuODE5NDMgNTEuNDQ0NTIsNzkuOTM4NDcgNTAuNDY1MTEsNzguNDc3OTggNTMuMzA0OTQsNzkuMTkwOTQgMy4zMjQ3OCwwLjgzNDc0IDEyLjU2NzA4LC0zLjc4OTQ3IDI3LjU3NjA2LC0xMy43ODU4MyAxNC4yNDMzOCwtOS40ODY0NiAyMy44ODU1LC0xNy43ODMxIDM0LjgxOTcyLC0yOS45NjcxNyAxMS4yOTUwMiwtMTIuNTg2MTUgMTQuODMwMzksLTE3LjQxNzg1IDE0LjgzMDM5LC0yMC4yNTMwOCAwLC0xLjIyMDA5IC0xNC45NzA2LC0yNC41NDAzMyAtMzMuNDAxMzMsLTUyLjAyODQ2IC0xOC4zNzA1NywtMjcuMzk4MzcgLTM0LjEwMTA3LC01MS4xNjg3NiAtMzQuOTU4MjgsLTUyLjgyNjk2IC0wLjg1NzIzLC0xLjY1ODIgLTEuNTU2OTMsLTQuMDczMzUgLTEuNTU2OTMsLTUuMzY1MTkgMCwtMS4zMjEyMyAxMi40ODk1OSwtMjIuMjk0ODcgMjguNTQ1ODQsLTQ3Ljk0MzUyIDQ0LjQ4MzE1LC03MS4wNTg1NiA0MS45MzgzMywtNjYuMjkxNzggMzguODMwODEsLTcyLjg0MjQ3IC0yLjU1NzU1LC01LjM5MTM2IC0xNS4zNjI2MiwtMTkuNjU4MDkgLTI2LjEzMTI5LC0yOS4xMTU4NyAtMTEuNDU0NTksLTEwLjA2MDE5MSAtMzUuMDY0MTMsLTI1Ljk1MDI3NiAtMzkuOTA2MTIsLTI2Ljg1ODkzNCAtMi45NDE1NCwtMC41NTIwMSAtMy45NzUxOSwtMC4yNDY3ODggLTUuOTE3NjYsMS43NDIyMDEgLTEuMjk1NjQsMS4zMjY2NDggLTIwLjM1MDEyLDMyLjM0ODMwMyAtNDIuMzQwNDgsNjguOTM1NzIzIC0yMS45OTAzNiwzNi41ODc0IC00MS4wNjUzOSw2Ny45OTE2NyAtNDIuMzg2NjUsNjkuNzg3MDIgLTIuNjE5NTQsMy41NTkzNyAtNi43MzI4MSw2LjA5MzA2IC04LjczNDYzLDUuMzc4MzggLTAuOTk5NDcsLTAuMzU2ODMgLTEuMjY2NjUsLTE4LjE3MDM1IC0xLjI2NjY1LC04NC40NDM5NCAwLC00OS41MTMxOTYgLTAuMzc4NjQsLTg0LjIxOTIyNiAtMC45MjM2LC04NC41NTYxMzggLTAuMTE5ODQsLTAuMDc0MSAtMC41MzYwMSwtMC4xMDI0NDYgLTEuMTg3NDgsLTAuMDkyMzggeiIKICAgICAgIGlkPSJwYXRoNDI2MCIgLz4KICA8L2c+Cjwvc3ZnPgo=",
+  logo: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcgCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIgogICB2aWV3Qm94PSIwIDAgNTEyIDUxMiIKICAgd2lkdGg9IjUxMiIKICAgaGVpZ2h0PSI1MTIiPgogICA8ZGVmcz4KICAgICAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMTAwJSIgeTE9IjUwJSIgeDI9IjAlIiB5Mj0iNTAlIj4KICAgICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmQ1ZDkyIi8+CiAgICAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmMDAwMCIvPgogICAgICA8L2xpbmVhckdyYWRpZW50PgogICA8L2RlZnM+CiAgIDxjaXJjbGUgY3g9IjI1NiIgY3k9IjI1NiIgcj0iMjU2IiBmaWxsPSJ1cmwoI2dyYWQpIi8+CiAgIDxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0yNTEgNTguN2MtNC42LjEtMjAuOCAyLTI5LjMgMy43LTI4LjMgNS40LTY2LjkgMjIuNi03MyAzMi43LTEuOSAzLjEtMiA3LjItMiAxNjAuOCAwIDE1Mi4zLjEgMTU3LjcgMS45IDE2MC43IDUuMiA4LjUgMzYuNyAyMy43IDYzLjUgMzAuNSA5LjggMi41IDM0LjMgNi4zIDM4LjUgNiAyLS4yIDItMSAyLjMtNzMuMS4xLTQwLjguNy03My4zIDEuMi03My44IDEuNC0xLjQgNy4zIDEuOSAxMC40IDUuNyAxLjUgMS44IDEzLjggMjAuNyAyNy40IDQxLjggNTEuNCA4MCA1MC41IDc4LjUgNTMuMyA3OS4yIDMuMy44IDEyLjYtMy44IDI3LjYtMTMuOCAxNC4yLTkuNSAyMy45LTE3LjggMzQuOC0zMCAxMS4zLTEyLjYgMTQuOC0xNy40IDE0LjgtMjAuMyAwLTEuMi0xNS0yNC41LTMzLjQtNTItMTguNC0yNy40LTM0LjEtNTEuMi0zNS01Mi45LS45LTEuNy0xLjUtNC4xLTEuNS01LjQgMC0xLjMgMTIuNS0yMi4zIDI4LjUtNDcuOSA0NC41LTcxLjEgNDEuOS02Ni4zIDM4LjgtNzIuOC0yLjYtNS40LTE1LjQtMTkuNy0yNi4xLTI5LjEtMTEuNS0xMC4xLTM1LjEtMjYtMzkuOS0yNi45LTIuOS0uNi00LS4zLTUuOSAxLjctMS4zIDEuMy0yMC40IDMyLjMtNDIuMyA2OC45LTIyIDM2LjYtNDEuMSA2OC00Mi40IDY5LjgtMi42IDMuNi02LjcgNi4xLTguNyA1LjQtMS0uNC0xLjMtMTguMi0xLjMtODQuNCAwLTQ5LjUtLjQtODQuMi0uOS04NC42LS4xLS4xLS41LS4xLTEuMi0uMXoiLz4KPC9zdmc+",
   console: false,
   dark: true,
   previewDark: true,
@@ -481,67 +481,26 @@ const icons = (function() {
   const previewIconCSS = "h-3 -mt-1";
 
   return {
-    logo: `<svg
-      class="${SidebarIconCSS}" 
-      xmlns:dc="http://purl.org/dc/elements/1.1/"
-      xmlns:cc="http://creativecommons.org/ns#"
-      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-      xmlns:svg="http://www.w3.org/2000/svg"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      viewBox="0 0 511.99999 511.99999"
-      height="512"
-      width="512"
-      version="1.1"
-      id="svg4190">
-      <metadata
-        id="metadata4196">
-        <rdf:RDF>
-          <cc:Work
-            rdf:about="">
-            <dc:format>image/svg+xml</dc:format>
-            <dc:type
-              rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-            <dc:title></dc:title>
-          </cc:Work>
-        </rdf:RDF>
-      </metadata>
-      <defs
-        id="defs4194">
-        <linearGradient
-          id="linearGradient4276">
-          <stop
-            id="stop4278"
-            offset="0"
-            style="stop-color:#fd5d92;stop-opacity:1" />
-          <stop
-            id="stop4280"
-            offset="1"
-            style="stop-color:#ff0000;stop-opacity:1" />
-        </linearGradient>
-        <linearGradient
-          gradientUnits="userSpaceOnUse"
-          y2="257.3125"
-          x2="0.13404165"
-          y1="257.3125"
-          x1="511.71875"
-          id="linearGradient4282"
-          xlink:href="#linearGradient4276" />
-      </defs>
-      <g
-        id="g4284">
-        <circle
-          style="opacity:1;fill:url(#linearGradient4282);fill-opacity:1;stroke:none;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:72, 72;stroke-dashoffset:0;stroke-opacity:1"
-          id="path4270"
-          cx="256"
-          cy="256"
-          r="256" />
-        <path
-          style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:72, 72;stroke-dashoffset:0;stroke-opacity:1"
-          d="m 251.06068,58.678272 c -4.56032,0.07035 -20.76061,2.041945 -29.29792,3.655984 -28.34391,5.35862 -66.88081,22.619814 -73.03699,32.719061 -1.89755,3.112935 -1.94616,7.147013 -1.94616,160.817023 0,152.2588 0.0671,157.72464 1.89998,160.73121 5.20599,8.53989 36.72003,23.70934 63.45133,30.54134 9.76572,2.49593 34.33509,6.3448 38.50754,6.03169 2.00388,-0.15036 2.03203,-0.97469 2.28921,-73.09324 0.14558,-40.83759 0.65643,-73.33414 1.16109,-73.83896 1.37751,-1.37795 7.34739,1.88473 10.35752,5.66215 1.46202,1.83468 13.79755,20.65528 27.41774,41.81943 51.44452,79.93847 50.46511,78.47798 53.30494,79.19094 3.32478,0.83474 12.56708,-3.78947 27.57606,-13.78583 14.24338,-9.48646 23.8855,-17.7831 34.81972,-29.96717 11.29502,-12.58615 14.83039,-17.41785 14.83039,-20.25308 0,-1.22009 -14.9706,-24.54033 -33.40133,-52.02846 -18.37057,-27.39837 -34.10107,-51.16876 -34.95828,-52.82696 -0.85723,-1.6582 -1.55693,-4.07335 -1.55693,-5.36519 0,-1.32123 12.48959,-22.29487 28.54584,-47.94352 44.48315,-71.05856 41.93833,-66.29178 38.83081,-72.84247 -2.55755,-5.39136 -15.36262,-19.65809 -26.13129,-29.11587 -11.45459,-10.060191 -35.06413,-25.950276 -39.90612,-26.858934 -2.94154,-0.55201 -3.97519,-0.246788 -5.91766,1.742201 -1.29564,1.326648 -20.35012,32.348303 -42.34048,68.935723 -21.99036,36.5874 -41.06539,67.99167 -42.38665,69.78702 -2.61954,3.55937 -6.73281,6.09306 -8.73463,5.37838 -0.99947,-0.35683 -1.26665,-18.17035 -1.26665,-84.44394 0,-49.513196 -0.37864,-84.219226 -0.9236,-84.556138 -0.11984,-0.0741 -0.53601,-0.102446 -1.18748,-0.09238 z"
-          id="path4260" />
-      </g>
-    </svg>`,
+    logo: `<svg 
+        class="${SidebarIconCSS}" 
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:cc="http://creativecommons.org/ns#"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:svg="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 0 512 512"
+        width="512"
+        height="512">
+        <defs>
+            <linearGradient id="grad" x1="100%" y1="50%" x2="0%" y2="50%">
+              <stop offset="0" stop-color="#fd5d92"/>
+              <stop offset="1" stop-color="#ff0000"/>
+            </linearGradient>
+        </defs>
+        <circle cx="256" cy="256" r="256" fill="url(#grad)"/>
+        <path fill="#fff" d="M251 58.7c-4.6.1-20.8 2-29.3 3.7-28.3 5.4-66.9 22.6-73 32.7-1.9 3.1-2 7.2-2 160.8 0 152.3.1 157.7 1.9 160.7 5.2 8.5 36.7 23.7 63.5 30.5 9.8 2.5 34.3 6.3 38.5 6 2-.2 2-1 2.3-73.1.1-40.8.7-73.3 1.2-73.8 1.4-1.4 7.3 1.9 10.4 5.7 1.5 1.8 13.8 20.7 27.4 41.8 51.4 80 50.5 78.5 53.3 79.2 3.3.8 12.6-3.8 27.6-13.8 14.2-9.5 23.9-17.8 34.8-30 11.3-12.6 14.8-17.4 14.8-20.3 0-1.2-15-24.5-33.4-52-18.4-27.4-34.1-51.2-35-52.9-.9-1.7-1.5-4.1-1.5-5.4 0-1.3 12.5-22.3 28.5-47.9 44.5-71.1 41.9-66.3 38.8-72.8-2.6-5.4-15.4-19.7-26.1-29.1-11.5-10.1-35.1-26-39.9-26.9-2.9-.6-4-.3-5.9 1.7-1.3 1.3-20.4 32.3-42.3 68.9-22 36.6-41.1 68-42.4 69.8-2.6 3.6-6.7 6.1-8.7 5.4-1-.4-1.3-18.2-1.3-84.4 0-49.5-.4-84.2-.9-84.6-.1-.1-.5-.1-1.2-.1z"/>
+      </svg>`,
     twitterfill: `<svg class="${SidebarIconCSS}" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
       <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
     </svg>`,
@@ -1792,7 +1751,6 @@ window.App = {
                       <div 
                         data-ignore
                         class="h-full"
-                        aria-label="html editor"
                         name="html editor"
                         id="htmlEditor"></div>
                     </div>
@@ -1800,7 +1758,6 @@ window.App = {
                       <div 
                         data-ignore
                         class="h-full"
-                        aria-label="css editor"
                         name="css editor"
                         id="cssEditor"></div>
                     </div>
@@ -1808,7 +1765,6 @@ window.App = {
                       <div 
                         data-ignore
                         class="h-full"
-                        aria-label="javascript editor"
                         name="javascript editor"
                         id="jsEditor"></div>
                     </div>
