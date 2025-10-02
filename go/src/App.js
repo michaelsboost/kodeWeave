@@ -3487,11 +3487,11 @@ window.fetchResources = obj => {
           const fileType = getBase64FileType(src);
           const fileName = `${getBase64FileName()}.${fileType}`;
           imageResources.push({ url: src, fileName: fileName });
-          img.src = `imgs/${fileName}`;
+          img.setAttribute('href', `imgs/${fileName}`);
         } else {
           const fileName = getFileName(src);
           imageResources.push({ url: src, fileName: fileName });
-          img.src = `imgs/${getFileNameAndType(src).fileName}`;
+          img.setAttribute('href', `imgs/${getFileNameAndType(src).fileName}`);
         }
       }
 
