@@ -3479,6 +3479,38 @@ window.fetchResources = obj => {
         });
       }
     });
+    body.querySelectorAll('image').forEach(img => {
+      if (img.hasAttribute('href')) {
+        const src = img.getAttribute('href');
+
+        if (isBase64(src)) {
+          const fileType = getBase64FileType(src);
+          const fileName = `${getBase64FileName()}.${fileType}`;
+          imageResources.push({ url: src, fileName: fileName });
+          img.src = `imgs/${fileName}`;
+        } else {
+          const fileName = getFileName(src);
+          imageResources.push({ url: src, fileName: fileName });
+          img.src = `imgs/${getFileNameAndType(src).fileName}`;
+        }
+      }
+
+      if (img.hasAttribute('srcset')) {
+        img.srcset.split(',').forEach(srcset => {
+          const url = srcset.trim().split(' ')[0];
+          if (isBase64(url)) {
+            const fileType = getBase64FileType(src);
+            const fileName = `${getBase64FileName()}.${fileType}`;
+            imageResources.push({ url: url, fileName: fileName });
+            img.src = `imgs/${fileName}`;
+          } else {
+            const fileName = getFileName(url);
+            imageResources.push({ url: url, fileName: fileName });
+            img.src = `imgs/${getFileNameAndType(img.getAttribute('src')).fileName}`;
+          }
+        });
+      }
+    });
 
     // Extract audio URLs and filenames
     body.querySelectorAll('audio').forEach(audio => {
