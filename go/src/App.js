@@ -153,7 +153,7 @@ let d = {
       ],
       meta: ''
     },
-    'bulm css': {
+    'bulma css': {
       libraries: [
         "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css",
         "https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/css/bulma-extensions.min.css",
@@ -177,6 +177,12 @@ let d = {
       libraries: [
         "https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css",
         "https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"
+      ],
+      meta: ''
+    },
+    'create js': {
+      libraries: [
+        "https://code.createjs.com/1.0.0/createjs.min.js"
       ],
       meta: ''
     },
@@ -332,6 +338,12 @@ let d = {
       ],
       meta: ''
     },
+    'picnic css': {
+      libraries: [
+        "https://cdn.jsdelivr.net/npm/picnic"
+      ],
+      meta: ''
+    },
     'pico.css': {
       libraries: [
         "https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.min.css",
@@ -447,15 +459,22 @@ let d = {
       ],
       meta: ''
     },
-    'vivus': {
+    'vis js': {
       libraries: [
-        "https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.6/vivus.min.js"
+        "https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"
       ],
       meta: ''
     },
     'vite': {
       libraries: [
         "https://unpkg.com/vite@latest/dist/vite.min.js"
+      ],
+      meta: ''
+    },
+    'vivus': {
+      libraries: [
+        "https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.6/vivus.min.js"
       ],
       meta: ''
     },
