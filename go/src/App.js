@@ -40,7 +40,7 @@ let app = {
     href: 'https://michaelsboost.com/',
     src: 'imgs/author.jpg'
   },
-  version: '1.2.4',
+  version: '1.2.5',
   url: 'https://github.com/michaelsboost/kodeWeave/',
   license: 'https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE'
 }
@@ -1094,6 +1094,17 @@ function Menu() {
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
                   </svg>
                   <span>download json</span>
+                </button>
+              </li>
+              <li class="p-0 list-none">
+                <button 
+                  class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
+                  style="color: unset;" 
+                  onclick="data.menuDialog = null; exportSingleHTML()">
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+                  </svg>
+                  <span>download html</span>
                 </button>
               </li>
               <li class="p-0 list-none">
@@ -3635,6 +3646,99 @@ window.downloadJSON = async () => {
     removeScript("libraries/jszip/FileSaver.min.js");
   }
 }
+window.exportSingleHTML = async (opts = {}) => {
+  const {
+    returnHTML = false // 🔥 If true, return the HTML string instead of downloading
+  } = opts;
+
+  try {
+    // Ensure FileSaver is available only if we plan to download
+    if (!returnHTML) {
+      await loadScripts(["libraries/jszip/FileSaver.min.js"]);
+    }
+
+    // Helpers
+    const safe = {
+      title: (project.title || project.name || 'kodeWeave Project'),
+      description: (project.description || ''),
+      author: (project.author || ''),
+      theme: project.previewDark ? '#13171f' : '#d9e0e5'
+    };
+    const escapeInlineJS = (s='') => String(s).replace(/<\/script>/gi, '<\\/script>');
+    const escapeInlineCSS = (s='') => String(s).replace(/<\/style>/gi, '<\\/style>');
+
+    // Classify libraries
+    let scriptTags = '', cssTags = '', gFonts = '';
+    (project.libraries || []).forEach(lib => {
+      if (typeof lib !== 'string') return;
+      if (lib.endsWith('.js'))      scriptTags += `<script src="${lib}"></script>\n    `;
+      else if (lib.endsWith('.css')) cssTags  += `<link href="${lib}" rel="stylesheet">\n    `;
+      else                          gFonts    += `<link href="${lib}" rel="stylesheet">\n    `;
+    });
+
+    // Inline JS
+    let singleScript = '';
+    if (project.javascript) {
+      if (project.javascript_pre_processor === 'babel') {
+        singleScript =
+`<script src="https://michaelsboost.github.io/kodeWeave/go/libraries/babel.min.js"></script>
+<script type="text/babel"${project.module ? ' data-type="module"' : ''}>
+${escapeInlineJS(project.javascript)}
+</script>`;
+      } else if (project.javascript_pre_processor === 'typescript') {
+        singleScript =
+`<script type="text/typescript">
+${escapeInlineJS(project.javascript)}
+</script>
+<script type="text/javascript" src="https://michaelsboost.github.io/typescript-compile/js/typescript.min.js"></script>
+<script type="text/javascript" src="https://michaelsboost.github.io/typescript-compile/js/typescript.compile.min.js"></script>`;
+      } else {
+        singleScript =
+`<script${project.module ? ' type="module"' : ''}>
+${escapeInlineJS(project.javascript)}
+</script>`;
+      }
+    }
+
+    // 🔥 Compose the final HTML string
+    const htmlContent = `<!DOCTYPE html>
+<html lang="en" data-theme="${project.previewDark ? 'dark' : 'light'}">
+  <head>
+    <title>${safe.title}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="${safe.description}">
+    <meta name="author" content="${safe.author}">
+    <meta name="theme-color" content="${safe.theme}">
+    <link rel="shortcut icon" type="image/x-icon" href="imgs/logo.svg">
+    ${gFonts}${cssTags}${project.meta ? project.meta + '\n    ' : ''}
+    ${project.css ? `<style>${escapeInlineCSS(project.css)}</style>` : ''}
+  </head>
+  <body>
+${project.html || ''}
+
+    ${scriptTags}${singleScript}
+  </body>
+</html>`;
+
+    // 🔄 If returnHTML is true, don't download — just return the string
+    if (returnHTML) {
+      return htmlContent;
+    }
+
+    // Otherwise, proceed with download
+    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+    const safeName = (project.name || 'project').toLowerCase().replace(/\s+/g, '');
+    saveAs(blob, `${safeName}.html`);
+
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    if (!returnHTML) {
+      removeScripts(['libraries/jszip/FileSaver.min.js']);
+    }
+  }
+}
 window.getFile = async (url, callback = null) => {
   try {
     const response = await fetch(url);
@@ -4189,7 +4293,7 @@ self.addEventListener('message', (event) => {
     if (project.javascript_pre_processor === 'typescript') zip.file('dist/script.js', minifiedJS);
 
     // script tag for test.html
-    let placeScript = `<script src="dist/script.js" ${project.module ? 'type="module"' : ''}></script>`;
+    let placeScript = `<script src="dist/script.js"${project.module ? ' type="module"' : ''}></script>`;
     if (project.javascript_pre_processor === 'babel') {
       const library = "libraries/preprocessors/babel.min.js";
       const data = await getFile(library);
@@ -4199,7 +4303,7 @@ self.addEventListener('message', (event) => {
       zip.folder('libraries').file(name, data);
 
       placeScript = `<script src="libraries/babel.min.js"></script>
-    <script type="text/babel" src="src/script.jsx" ${project.module ? 'data-type="module"' : ''}></script>`;
+    <script type="text/babel" src="src/script.jsx"${project.module ? ' data-type="module"' : ''}></script>`;
     }
     if (project.javascript_pre_processor === 'typescript') {
       let library = "libraries/preprocessors/typescript.min.js";
@@ -4218,7 +4322,7 @@ self.addEventListener('message', (event) => {
     <script type="text/javascript" src="libraries/typescript.min.js"></script>
     <script type="text/javascript" src="libraries/typescript.compile.min.js"></script>`;
     }
-  
+
     // Add index.html
     const indexHtmlContent = `<!DOCTYPE html>
 <html lang="en" data-theme="${project.previewDark ? 'dark' : 'light'}">
@@ -4252,8 +4356,8 @@ self.addEventListener('message', (event) => {
 
 ${html}
 
-    ${scriptTags ? scriptTags : ''}
-    ${project.javascript ? placeScript : ''}
+${scriptTags ? scriptTags : ''}
+${project.javascript ? placeScript : ''}
   </body>
 </html>`;
     const indexHtmlContentCompiled = `<!DOCTYPE html>
@@ -4286,9 +4390,11 @@ ${html}
     
 ${html}
 
-    ${project.javascript ? `<script src="dist/script.js" ${project.module ? 'type="module"' : ''}></script>` : ''}${(project.pwa ? swinit : '')}
+    ${project.javascript ? `<script src="dist/script.js"${project.module ? ' type="module"' : ''}></script>` : ''}${(project.pwa ? swinit : '')}
   </body>
 </html>`;
+    const singleHTML = await exportSingleHTML({ returnHTML: true });
+    zip.file('single-indexed.html', singleHTML);
     zip.file('test.html', indexHtmlContent);
     zip.file('index.html', indexHtmlContentCompiled);
     if (project.html_pre_processor === 'html') zip.file('src/source.html', project.html);
