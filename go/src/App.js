@@ -3326,46 +3326,172 @@ window.importJSON = obj => {
   setPreprocessor('javascript', obj.javascript_pre_processor);
   project.autorun = clone.autorun;
 }
+window.htmlToProjectJSON_text = htmlRaw => {
+  // -------- TEXT-ONLY HTML IMPORT (no DOMParser) --------
+  function kw_stripTemplatesForExtraction(html) {
+    // Keep original HTML elsewhere; here we remove templates to avoid
+    // accidentally capturing scripts/styles inside <template> blocks.
+    return html.replace(/<template\b[^>]*>[\s\S]*?<\/template>/gi, '');
+  }
+
+  function kw_matchAll(regex, str) {
+    const out = [];
+    let m;
+    while ((m = regex.exec(str)) !== null) out.push(m);
+    return out;
+  }
+
+  const html = String(htmlRaw || '');
+
+  // <title>
+  const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+  const title = titleMatch ? titleMatch[1].trim() : '';
+
+  // metas
+  const metaNameRe = /<meta[^>]*\bname=["']?([^"'>\s]+)["']?[^>]*\bcontent=["']?([^"'>]*)["']?[^>]*>/gi;
+  const metaPropRe = /<meta[^>]*\bproperty=["']?([^"'>\s]+)["']?[^>]*\bcontent=["']?([^"'>]*)["']?[^>]*>/gi;
+  let description = '', author = '', ogUrl = '';
+  for (const m of kw_matchAll(metaNameRe, html)) {
+    const n = (m[1] || '').toLowerCase(); const c = m[2] || '';
+    if (!description && n === 'description') description = c;
+    if (!author && n === 'author') author = c;
+  }
+  for (const m of kw_matchAll(metaPropRe, html)) {
+    const p = (m[1] || '').toLowerCase(); const c = m[2] || '';
+    if (!ogUrl && p === 'og:url') ogUrl = c;
+  }
+
+  // external libs
+  const libraries = [];
+  const linkRe = /<link[^>]*\bhref=["']([^"']+)["'][^>]*>/gi;
+  for (const m of kw_matchAll(linkRe, html)) {
+    const tag = m[0]; const href = m[1]; if (!href) continue;
+    const rel = (tag.match(/\brel=["']?([^"'>\s]+)["']?/i)?.[1] || '').toLowerCase();
+    const isCSS  = rel === 'stylesheet' || /\.css(\?|$)/i.test(href);
+    const isFont = /fonts\.googleapis\.com|fonts\.gstatic\.com|\/font(s)?\b/i.test(href);
+    if (isCSS || isFont) libraries.push(href);
+  }
+  const scriptSrcRe = /<script[^>]*\bsrc=["']([^"']+)["'][^>]*>(?:<\/script>)?/gi;
+  for (const m of kw_matchAll(scriptSrcRe, html)) { const src = m[1]; if (src) libraries.push(src); }
+
+  // inline CSS
+  const cssParts = [];
+  const styleRe = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
+  for (const m of kw_matchAll(styleRe, html)) cssParts.push(m[1] || '');
+  const css = cssParts.join('\n\n/* --- */\n\n');
+
+  // inline JS (ignore template content)
+  const noTpl = kw_stripTemplatesForExtraction(html);
+  const inlineScriptRe = /<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi;
+  const inlineTypeRe   = /<script(?![^>]*\bsrc=)[^>]*\btype=["']?([^"'>\s]+)["']?[^>]*>/i;
+
+  const jsParts = []; let module = false;
+  for (const m of kw_matchAll(inlineScriptRe, noTpl)) {
+    const openTag = m[0].slice(0, m[0].indexOf('>') + 1);
+    const body = m[1] || '';
+    const t = openTag.match(inlineTypeRe)?.[1]?.toLowerCase() || '';
+    if (t === 'module') module = true;
+    if (body.trim()) jsParts.push(body);
+  }
+  const javascript = jsParts.join('\n\n// ---\n\n');
+
+  // body html
+  const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+  const bodyHTML = bodyMatch ? bodyMatch[1] : html;
+
+  // preserve head bits
+  const headBits = [];
+  const keepHeadRe = /<(?:base|link(?=[^>]*\b(rel|as)=(["'])(?:icon|shortcut icon|apple-touch-icon|manifest|preload)\2)|meta(?=\s+(name|http-equiv|property)=)|script(?=[^>]*\btype=["']importmap["']))[^>]*>(?:<\/script>)?/gi;
+  for (const m of kw_matchAll(keepHeadRe, html)) headBits.push(m[0]);
+
+  // Detect theme from <html ... data-theme="">
+  const themeMatch = html.match(/<html[^>]*\bdata-theme=["']?([^"'>\s]+)["']?[^>]*>/i);
+  const theme = themeMatch ? themeMatch[1].toLowerCase() : 'light';
+  const previewDark = theme === 'dark';   // this reflects the *actual dark mode UI*
+  const dark = !previewDark;              // internal flag where false = dark mode, true = light mode
+
+  return {
+    name: title || 'Imported Project',
+    version: "0.0.1",
+    title: title || '',
+    description: description || '',
+    author: author || '',
+    url: ogUrl || '',
+    meta: headBits.join('\n'),
+    libraries: Array.from(new Set(libraries)),
+    html_pre_processor: "html",
+    css_pre_processor: "css",
+    javascript_pre_processor: "javascript",
+    html: bodyHTML,
+    css: css || '',
+    javascript: javascript || '',
+    logo: "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcgCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIgogICB2aWV3Qm94PSIwIDAgNTEyIDUxMiIKICAgd2lkdGg9IjUxMiIKICAgaGVpZ2h0PSI1MTIiPgogICA8ZGVmcz4KICAgICAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMTAwJSIgeTE9IjUwJSIgeDI9IjAlIiB5Mj0iNTAlIj4KICAgICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmQ1ZDkyIi8+CiAgICAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmMDAwMCIvPgogICAgICA8L2xpbmVhckdyYWRpZW50PgogICA8L2RlZnM+CiAgIDxjaXJjbGUgY3g9IjI1NiIgY3k9IjI1NiIgcj0iMjU2IiBmaWxsPSJ1cmwoI2dyYWQpIi8+CiAgIDxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0yNTEgNTguN2MtNC42LjEtMjAuOCAyLTI5LjMgMy43LTI4LjMgNS40LTY2LjkgMjIuNi03MyAzMi43LTEuOSAzLjEtMiA3LjItMiAxNjAuOCAwIDE1Mi4zLjEgMTU3LjcgMS45IDE2MC43IDUuMiA4LjUgMzYuNyAyMy43IDYzLjUgMzAuNSA5LjggMi41IDM0LjMgNi4zIDM4LjUgNiAyLS4yIDItMSAyLjMtNzMuMS4xLTQwLjguNy03My4zIDEuMi03My44IDEuNC0xLjQgNy4zIDEuOSAxMC40IDUuNyAxLjUgMS44IDEzLjggMjAuNyAyNy40IDQxLjggNTEuNCA4MCA1MC41IDc4LjUgNTMuMyA3OS4yIDMuMy44IDEyLjYtMy44IDI3LjYtMTMuOCAxNC4yLTkuNSAyMy45LTE3LjggMzQuOC0zMCAxMS4zLTEyLjYgMTQuOC0xNy40IDE0LjgtMjAuMyAwLTEuMi0xNS0yNC41LTMzLjQtNTItMTguNC0yNy40LTM0LjEtNTEuMi0zNS01Mi45LS45LTEuNy0xLjUtNC4xLTEuNS01LjQgMC0xLjMgMTIuNS0yMi4zIDI4LjUtNDcuOSA0NC41LTcxLjEgNDEuOS02Ni4zIDM4LjgtNzIuOC0yLjYtNS40LTE1LjQtMTkuNy0yNi4xLTI5LjEtMTEuNS0xMC4xLTM1LjEtMjYtMzkuOS0yNi45LTIuOS0uNi00LS4zLTUuOSAxLjctMS4zIDEuMy0yMC40IDMyLjMtNDIuMyA2OC45LTIyIDM2LjYtNDEuMSA2OC00Mi40IDY5LjgtMi42IDMuNi02LjcgNi4xLTguNyA1LjQtMS0uNC0xLjMtMTguMi0xLjMtODQuNCAwLTQ5LjUtLjQtODQuMi0uOS04NC42LS4xLS4xLS41LS4xLTEuMi0uMXoiLz4KPC9zdmc+",
+    console: false,
+    dark: true,
+    previewDark: dark || '',
+    module: module || '',
+    autorun: true,
+    pwa: false,
+    preview: true,
+    activePanel: 'html',
+    columns: false,
+    columnsRight: true
+  };
+}
 window.importProject = () => {
   Modal.render({
     title: "Are you sure you want to load a new project?",
     content: `<div class="p-4 text-center">All current data will be lost.</div>`,
-    onClose: function () {
-      data.menuDialog = true;
-    },
+    onClose: function () { data.menuDialog = true; },
     onConfirm: function() {
       if (window.location.hash) {
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }
 
-      history.replaceState(null, '', window.location.pathname + window.location.search);
       const input = document.createElement('input');
       input.type = 'file';
-      input.accept = '.json';
+      input.accept = '.json,.html,text/html,application/json'; // ✅ only json or html
 
       input.addEventListener('change', (event) => {
         const file = event.target.files[0];
-        
-        if (!file) {
-          console.error('No file selected.');
+        if (!file) { console.error('No file selected.'); return; }
+
+        const name = (file.name || '').toLowerCase();
+        const isJSON = name.endsWith('.json');
+        const isHTML = name.endsWith('.html') || file.type === 'text/html';
+
+        // Hard gate: only .json or .html
+        if (!isJSON && !isHTML) {
+          console.error('Unsupported file type. Please select a .json or .html file.');
+          input.remove();
           return;
         }
-    
+
         const reader = new FileReader();
-    
-        reader.onload = event => {
+        reader.onload = evt => {
           try {
-            importJSON(JSON.parse(event.target.result));
+            const raw = String(evt.target.result || '');
+
+            let obj;
+            if (isJSON) {
+              obj = JSON.parse(raw);
+            } else {
+              // HTML path (text-only parsing)
+              obj = htmlToProjectJSON_text(raw);
+            }
+
+            importJSON(obj);
             renderPreview(true);
-          } catch (error) {
-            console.error('Error parsing JSON file:', error);
+          } catch (e) {
+            console.error('Error importing project:', e);
+          } finally {
+            input.remove();
           }
         };
-    
+
         reader.readAsText(file);
-        input.remove();
       });
-    
+
       input.click();
     }
   });
