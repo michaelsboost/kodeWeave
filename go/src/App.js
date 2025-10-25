@@ -3327,66 +3327,80 @@ window.importJSON = obj => {
   project.autorun = clone.autorun;
 }
 window.htmlToProjectJSON_text = htmlRaw => {
-  // -------- TEXT-ONLY HTML IMPORT (no DOMParser) --------
-  function kw_stripTemplatesForExtraction(html) {
-    // Keep original HTML elsewhere; here we remove templates to avoid
-    // accidentally capturing scripts/styles inside <template> blocks.
-    return html.replace(/<template\b[^>]*>[\s\S]*?<\/template>/gi, '');
-  }
+  // --- utils ---
+  const kw_matchAll = (re, s) => { const out = []; let m; while ((m = re.exec(s)) !== null) out.push(m); return out; };
 
-  function kw_matchAll(regex, str) {
-    const out = [];
-    let m;
-    while ((m = regex.exec(str)) !== null) out.push(m);
-    return out;
+  // Replace <template> blocks with placeholders, run a transform, then restore them.
+  function kw_withTemplatesPreserved(html, transformFn) {
+    const templates = [];
+    const placeholder = (i) => `__KW_TEMPLATE_PLACEHOLDER_${i}__`;
+    const tplRe = /<template\b[^>]*>[\s\S]*?<\/template>/gi;
+    let i = 0;
+    const withoutTpl = html.replace(tplRe, (m) => { templates.push(m); return placeholder(i++); });
+    let transformed = transformFn(withoutTpl);
+    templates.forEach((tpl, idx) => { transformed = transformed.replace(placeholder(idx), tpl); });
+    return transformed;
   }
 
   const html = String(htmlRaw || '');
 
   // <title>
-  const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
-  const title = titleMatch ? titleMatch[1].trim() : '';
+  const title = (html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] || '').trim();
 
   // metas
   const metaNameRe = /<meta[^>]*\bname=["']?([^"'>\s]+)["']?[^>]*\bcontent=["']?([^"'>]*)["']?[^>]*>/gi;
   const metaPropRe = /<meta[^>]*\bproperty=["']?([^"'>\s]+)["']?[^>]*\bcontent=["']?([^"'>]*)["']?[^>]*>/gi;
   let description = '', author = '', ogUrl = '';
   for (const m of kw_matchAll(metaNameRe, html)) {
-    const n = (m[1] || '').toLowerCase(); const c = m[2] || '';
+    const n = (m[1] || '').toLowerCase(), c = m[2] || '';
     if (!description && n === 'description') description = c;
     if (!author && n === 'author') author = c;
   }
   for (const m of kw_matchAll(metaPropRe, html)) {
-    const p = (m[1] || '').toLowerCase(); const c = m[2] || '';
+    const p = (m[1] || '').toLowerCase(), c = m[2] || '';
     if (!ogUrl && p === 'og:url') ogUrl = c;
   }
 
   // external libs
   const libraries = [];
+  const extraHeadBits = []; // collect defer scripts here
+
+  // <link ... href=...>
   const linkRe = /<link[^>]*\bhref=["']([^"']+)["'][^>]*>/gi;
   for (const m of kw_matchAll(linkRe, html)) {
-    const tag = m[0]; const href = m[1]; if (!href) continue;
+    const tag = m[0], href = m[1]; if (!href) continue;
     const rel = (tag.match(/\brel=["']?([^"'>\s]+)["']?/i)?.[1] || '').toLowerCase();
     const isCSS  = rel === 'stylesheet' || /\.css(\?|$)/i.test(href);
     const isFont = /fonts\.googleapis\.com|fonts\.gstatic\.com|\/font(s)?\b/i.test(href);
     if (isCSS || isFont) libraries.push(href);
   }
-  const scriptSrcRe = /<script[^>]*\bsrc=["']([^"']+)["'][^>]*>(?:<\/script>)?/gi;
-  for (const m of kw_matchAll(scriptSrcRe, html)) { const src = m[1]; if (src) libraries.push(src); }
 
-  // inline CSS
-  const cssParts = [];
-  const styleRe = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
-  for (const m of kw_matchAll(styleRe, html)) cssParts.push(m[1] || '');
-  const css = cssParts.join('\n\n/* --- */\n\n');
+  // <script src=...>  → if defer present, keep full tag in meta; else push src to libraries
+  const scriptSrcTagRe = /<script[^>]*\bsrc=["']([^"']+)["'][^>]*>(?:<\/script>)?/gi;
+  for (const m of kw_matchAll(scriptSrcTagRe, html)) {
+    const fullTag = m[0];
+    const src = m[1];
+    if (!src) continue;
+    const hasDefer = /\bdefer\b/i.test(fullTag);
+    if (hasDefer) {
+      extraHeadBits.push(fullTag); // stays in meta
+    } else {
+      libraries.push(src);         // normal external dep
+    }
+  }
 
-  // inline JS (ignore template content)
-  const noTpl = kw_stripTemplatesForExtraction(html);
+  // inline CSS (all <style>)
+  const css = kw_matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi, html)
+    .map(m => m[1] || '')
+    .join('\n\n/* --- */\n\n');
+
+  // inline JS (ignore <template> content)
+  const htmlNoTpl = html.replace(/<template\b[^>]*>[\s\S]*?<\/template>/gi, '');
   const inlineScriptRe = /<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi;
   const inlineTypeRe   = /<script(?![^>]*\bsrc=)[^>]*\btype=["']?([^"'>\s]+)["']?[^>]*>/i;
-
-  const jsParts = []; let module = false;
-  for (const m of kw_matchAll(inlineScriptRe, noTpl)) {
+  const jsParts = [];
+  let module = false;
+  for (const m of kw_matchAll(inlineScriptRe, htmlNoTpl)) {
     const openTag = m[0].slice(0, m[0].indexOf('>') + 1);
     const body = m[1] || '';
     const t = openTag.match(inlineTypeRe)?.[1]?.toLowerCase() || '';
@@ -3395,20 +3409,50 @@ window.htmlToProjectJSON_text = htmlRaw => {
   }
   const javascript = jsParts.join('\n\n// ---\n\n');
 
-  // body html
-  const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-  const bodyHTML = bodyMatch ? bodyMatch[1] : html;
+  // body HTML (keep templates, but remove <script> and <style> outside templates)
+  const bodyHTMLRaw = (html.match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1]) ?? html;
+  const bodyHTML = kw_withTemplatesPreserved(bodyHTMLRaw, (s) =>
+    s
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+      .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '')
+  );
 
-  // preserve head bits
-  const headBits = [];
-  const keepHeadRe = /<(?:base|link(?=[^>]*\b(rel|as)=(["'])(?:icon|shortcut icon|apple-touch-icon|manifest|preload)\2)|meta(?=\s+(name|http-equiv|property)=)|script(?=[^>]*\btype=["']importmap["']))[^>]*>(?:<\/script>)?/gi;
-  for (const m of kw_matchAll(keepHeadRe, html)) headBits.push(m[0]);
+  // ----- META FILTERING -----
+  // Gather candidate head bits (importmaps, base, preload, etc.)
+  const headCandidates = kw_matchAll(
+    /<(?:base|link(?=[^>]*\brel=)|meta(?=\s+(name|http-equiv|property)=)|script(?=[^>]*\btype=["']importmap["']))[^>]*>(?:<\/script>)?/gi,
+    html
+  ).map(m => m[0]);
 
-  // Detect theme from <html ... data-theme="">
-  const themeMatch = html.match(/<html[^>]*\bdata-theme=["']?([^"'>\s]+)["']?[^>]*>/i);
-  const theme = themeMatch ? themeMatch[1].toLowerCase() : 'light';
-  const previewDark = theme === 'dark';   // this reflects the *actual dark mode UI*
-  const dark = !previewDark;              // internal flag where false = dark mode, true = light mode
+  // Exclude tags KodeWeave injects by default
+  const isDefaultMeta = (tag) =>
+    /<meta[^>]*\bname=["']viewport["']/i.test(tag) ||
+    /<meta[^>]*\bname=["']description["']/i.test(tag) ||
+    /<meta[^>]*\bname=["']author["']/i.test(tag) ||
+    /<meta[^>]*\bname=["']theme-color["']/i.test(tag);
+
+  const isDefaultIcon = (tag) =>
+    /<link[^>]*\brel=["'](?:icon|shortcut icon|apple-touch-icon)["']/i.test(tag) ||
+    /<link[^>]*\brel=["']manifest["']/i.test(tag);
+
+  // Allow-list: keep only things KW doesn't manage automatically
+  const isImportMap = (tag) => /<script[^>]*\btype=["']importmap["']/i.test(tag);
+  const isBase      = (tag) => /^<base\b/i.test(tag);
+  const isPreload   = (tag) => /<link[^>]*\brel=["']preload["']/i.test(tag);
+
+  const filteredHeadBits = headCandidates.filter(tag =>
+    !isDefaultMeta(tag) &&
+    !isDefaultIcon(tag) &&
+    (isImportMap(tag) || isBase(tag) || isPreload(tag))
+  );
+
+  // merge + dedupe meta bits (only filtered + defer scripts)
+  const metaCombined = Array.from(new Set([...filteredHeadBits, ...extraHeadBits])).join('\n');
+
+  // theme detection (inverted internal flag)
+  const theme = (html.match(/<html[^>]*\bdata-theme=["']?([^"'>\s]+)["']?[^>]*>/i)?.[1] || 'light').toLowerCase();
+  const previewDark = theme === 'dark';
+  const dark = !previewDark; // internal inversion
 
   return {
     name: title || 'Imported Project',
@@ -3417,7 +3461,7 @@ window.htmlToProjectJSON_text = htmlRaw => {
     description: description || '',
     author: author || '',
     url: ogUrl || '',
-    meta: headBits.join('\n'),
+    meta: metaCombined,
     libraries: Array.from(new Set(libraries)),
     html_pre_processor: "html",
     css_pre_processor: "css",
