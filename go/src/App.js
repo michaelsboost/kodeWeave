@@ -1093,18 +1093,18 @@ function Menu() {
                   <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
                   </svg>
-                  <span>download json</span>
+                  <span>save project (.json)</span>
                 </button>
               </li>
               <li class="p-0 list-none">
                 <button 
                   class="w-full flex gap-2 text-sm capitalize border-0 p-2 rounded-md bg-transparent" 
                   style="color: unset;" 
-                  onclick="data.menuDialog = null; exportSingleHTML()">
+                  onclick="data.menuDialog = null; downloadHTML()">
                   <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
                   </svg>
-                  <span>download html</span>
+                  <span>export project (.html)</span>
                 </button>
               </li>
               <li class="p-0 list-none">
@@ -1115,7 +1115,7 @@ function Menu() {
                   <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                   </svg>
-                  <span>download zip</span>
+                  <span>download zip archive</span>
                 </button>
               </li>
               <li class="p-0 list-none">
@@ -3816,7 +3816,7 @@ window.downloadJSON = async () => {
     removeScript("libraries/jszip/FileSaver.min.js");
   }
 }
-window.exportSingleHTML = async (opts = {}) => {
+window.downloadHTML = async (opts = {}) => {
   const {
     returnHTML = false // 🔥 If true, return the HTML string instead of downloading
   } = opts;
@@ -3880,7 +3880,7 @@ ${escapeInlineJS(project.javascript)}
     <meta name="description" content="${safe.description}">
     <meta name="author" content="${safe.author}">
     <meta name="theme-color" content="${safe.theme}">
-    <link rel="shortcut icon" type="image/x-icon" href="imgs/logo.svg">
+    <link rel="shortcut icon" type="image/x-icon" href="${project.logo}">
     ${gFonts}${cssTags}${project.meta ? project.meta + '\n    ' : ''}
     ${project.css ? `<style>${escapeInlineCSS(project.css)}</style>` : ''}
   </head>
@@ -4563,7 +4563,7 @@ ${html}
     ${project.javascript ? `<script src="dist/script.js"${project.module ? ' type="module"' : ''}></script>` : ''}${(project.pwa ? swinit : '')}
   </body>
 </html>`;
-    const singleHTML = await exportSingleHTML({ returnHTML: true });
+    const singleHTML = await downloadHTML({ returnHTML: true });
     zip.file('single-indexed.html', singleHTML);
     zip.file('test.html', indexHtmlContent);
     zip.file('index.html', indexHtmlContentCompiled);
