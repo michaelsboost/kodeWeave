@@ -82,6 +82,10 @@ let d = {
   libraries: null,
   demos: null,
   chosenFramework: '',
+  lastSelectedMediaType: 'image',
+  lastMediaQuery: '',
+  lastSearchResults: '',
+  lastDisplayedResultsHTML: '',
   frameworks: {
     'alpine.js': {
       libraries: [
@@ -2094,16 +2098,17 @@ window.searchMedia = () => {
       </nav>
       <select id="media-type-select" class="p-2 w-full">
         <option value="all">All</option>
-        <option value="image" selected>Images</option>
-        <option value="audio">Audios</option>
-        <option value="svg">SVGs</option>
+        <option value="image" ${d.lastSelectedMediaType === 'image' ? 'selected' : ''}>Images</option>
+        <option value="audio" ${d.lastSelectedMediaType === 'audio' ? 'selected' : ''}>Audios</option>
+        <option value="svg" ${d.lastSelectedMediaType === 'svg' ? 'selected' : ''}>SVGs</option>
       </select>
 
       <!-- Search Input and Button -->
       <fieldset role="group" class="border-0 shadow-none">
         <input 
           id="search-input" 
-          type="text" 
+          type="search" 
+          value="${d.lastMediaQuery}"
           placeholder="Search for media..." 
           class="p-2 w-full" 
           onkeydown="if (event.key === 'Enter') { document.getElementById('search-btn').click(); }"
@@ -2112,7 +2117,9 @@ window.searchMedia = () => {
       </fieldset>
 
       <!-- Search Results -->
-      <div id="search-results" class="mt-4 grid grid-cols-4 gap-4"></div>
+      <div id="search-results" class="mt-4">
+        ${d.lastDisplayedResultsHTML || ''}
+      </div>
 
       <!-- Additional Information -->
       <div class="font-thin text-xs">
@@ -2133,9 +2140,74 @@ window.searchMedia = () => {
       const fileInput = document.getElementById('file-input');
       searchInput.focus();
 
+      // Reattach event handlers for any existing audio elements
+      if (d.lastDisplayedResultsHTML) {
+        setTimeout(() => {
+          // Reattach audio event handlers
+          resultsContainer.querySelectorAll('audio').forEach((audioElement, index) => {
+            const selectButton = audioElement.closest('nav')?.querySelector('button');
+            if (selectButton) {
+              selectButton.onclick = () => {
+                copyToClipboard(audioElement.outerHTML);
+                alert('Audio HTML copied to clipboard');
+                closeOpenDialog();
+              };
+            }
+          });
+          
+          // Reattach image event handlers
+          resultsContainer.querySelectorAll('img[src^="http"]').forEach(img => {
+            const parentDiv = img.closest('.cursor-pointer');
+            if (parentDiv) {
+              parentDiv.onclick = () => {
+                copyToClipboard(img.src);
+                alert('Image URL copied to clipboard');
+                closeOpenDialog();
+              };
+            }
+          });
+          
+          // For icons, we need to handle them differently since they load async
+          const placeholderDivs = resultsContainer.querySelectorAll('div[id^="icon-"]');
+          if (placeholderDivs.length > 0 && d.lastSearchResults) {
+            const iconResults = d.lastSearchResults.filter(r => r.type === 'icon');
+            iconResults.forEach((icon, index) => {
+              if (apiConnection && placeholderDivs[index]) {
+                getFile(icon.url, (error, svgContent) => {
+                  if (!error) {
+                    const parser = new DOMParser();
+                    const svgDoc = parser.parseFromString(svgContent, 'image/svg+xml');
+                    const svgElement = svgDoc.querySelector('svg');
+                    if (svgElement) {
+                      svgElement.removeAttribute('width');
+                      svgElement.removeAttribute('height');
+                      const serializer = new XMLSerializer();
+                      const cleanedSvgContent = serializer.serializeToString(svgElement);
+                      
+                      const iconDiv = document.createElement('div');
+                      iconDiv.className = "cursor-pointer";
+                      iconDiv.innerHTML = cleanedSvgContent;
+                      iconDiv.onclick = () => {
+                        copyToClipboard(iconDiv.innerHTML);
+                        alert('copied to clipboard');
+                        closeOpenDialog();
+                      };
+                      
+                      placeholderDivs[index].parentNode.replaceChild(iconDiv, placeholderDivs[index]);
+                    }
+                  }
+                });
+              }
+            });
+          }
+        }, 100);
+      }
+
       const handleSearch = async () => {
-        const query = searchInput.value;
-        const mediaType = mediaTypeSelect.value;
+        d.lastMediaQuery = searchInput.value;
+        const query = d.lastMediaQuery;
+        d.lastSelectedMediaType = mediaTypeSelect.value;
+        const mediaType = d.lastSelectedMediaType;
 
         if (query) {
           let results = [];
@@ -2151,15 +2223,21 @@ window.searchMedia = () => {
             const icons = await searchIcons(query);
             results.push(...icons.map(icon => ({ type: 'icon', url: `https://api.iconify.design/${icon}.svg` })));
           }
+          
+          // Store results globally
+          d.lastSearchResults = results;
           displayResults(results);
         } else {
           resultsContainer.innerHTML = '';
+          d.lastSearchResults = null;
+          d.lastDisplayedResultsHTML = '';
         }
       };
 
       mediaTypeSelect.onchange = handleSearch;
       searchInput.oninput = handleSearch;
       searchBtn.onclick = handleSearch;
+      if (d.lastMediaQuery && !d.lastSearchResults) searchBtn.onclick();
 
       fileInput.onchange = async (event) => {
         const file = event.target.files[0];
@@ -2175,8 +2253,8 @@ window.searchMedia = () => {
   loading="lazy"
   class="cursor-pointer w-full"
 />`;
-copyToClipboard(resultHTML);
-alert('Image copied to clipboard');
+            copyToClipboard(resultHTML);
+            alert('Image copied to clipboard');
           } else if (file.type.startsWith('audio/')) {
             resultHTML = `<audio controls class="w-full" preload="true">
   <source src="${base64}" type="${file.type}">
@@ -2209,9 +2287,21 @@ alert('Image copied to clipboard');
 
       function displayResults(results) {
         if (navigator.onLine) {
+          let displayedHTML = '';
+          
+          // Set appropriate grid classes based on content
+          const hasImages = results.some(r => r.type === 'image');
+          const hasIcons = results.some(r => r.type === 'icon');
+          const hasAudio = results.some(r => r.type === 'audio');
+          
+          if (hasImages || hasIcons) {
+            resultsContainer.className = "mt-4 grid grid-cols-4 gap-4";
+          } else if (hasAudio) {
+            resultsContainer.className = "mt-4 grid grid-cols-1 gap-1";
+          }
+          
           resultsContainer.innerHTML = results.map(result => {
             if (result.type === 'image') {
-              resultsContainer.className = "mt-4 grid grid-cols-4 gap-4";
               const imgHTML = `
                 <img 
                   src="${result.url}" 
@@ -2220,39 +2310,23 @@ alert('Image copied to clipboard');
                   loading="lazy"
                   class="cursor-pointer w-full"
                 />`;
-              // Remove 'class' attribute
-              const parser = new DOMParser();
-              const imgDoc = parser.parseFromString(imgHTML, 'text/html');
-              const imgElement = imgDoc.querySelector('img');
-              if (imgElement) imgElement.removeAttribute('class');
-              const cleanedImgHTML = imgElement.outerHTML;
-
-              // Properly escape HTML for the onclick attribute
-              const escapedImgHTML = cleanedImgHTML
-                .replace(/`/g, '\\`') // Escape backticks
-                .replace(/</g, '&lt;') // Escape less than signs
-                .replace(/>/g, '&gt;') // Escape greater than signs
-                .replace(/"/g, '&quot;'); // Escape double quotes
-
-              return `
-                <div class="cursor-pointer" onclick="copyToClipboard(\`${escapedImgHTML}\`); alert('Image HTML copied to clipboard'); closeOpenDialog();">
+              const resultDivHTML = `
+                <div class="cursor-pointer" data-image-url="${result.url}">
                   ${imgHTML}
                 </div>`;
+              displayedHTML += resultDivHTML;
+              return resultDivHTML;
             } else if (result.type === 'audio') {
-              resultsContainer.className = "mt-4 grid grid-cols-1 gap-1";
-              return `
+              const resultDivHTML = `
                 <div>
                   <div class="font-thin mb-2 text-left">${result.title}</div>
                   <figure class="m-0 mb-2">
                     <nav class="text-center flex justify-between place-items-center">
-<audio controls class="w-full" preload="true">
-  <source src="${result.url}" type="${result.mime_type}">
-  Your browser does not support the audio element.
-</audio>
-                      <button 
-                        class="ml-4 font-thin text-xs" 
-                        onclick="copyToClipboard(this.previousElementSibling.outerHTML); alert('Audio HTML copied to clipboard'); closeOpenDialog();"
-                      >
+                      <audio controls class="w-full" preload="true" data-audio-url="${result.url}">
+                        <source src="${result.url}" type="${result.mime_type}">
+                        Your browser does not support the audio element.
+                      </audio>
+                      <button class="ml-4 font-thin text-xs">
                         Select
                       </button>
                     </nav>
@@ -2263,13 +2337,20 @@ alert('Image copied to clipboard');
                   </figure>
                   <hr/>
                 </div>`;
+              displayedHTML += resultDivHTML;
+              return resultDivHTML;
             } else if (result.type === 'icon') {
-              resultsContainer.className = "mt-4 grid grid-cols-4 gap-4";
               if (apiConnection) {
+                // Create placeholder for icon
+                const placeholderId = 'icon-' + Math.random().toString(36).substr(2, 9);
+                const placeholderHTML = `<div id="${placeholderId}" data-icon-url="${result.url}">Loading...</div>`;
+                displayedHTML += placeholderHTML;
+                
                 // Fetch and render SVG content
                 getFile(result.url, (error, svgContent) => {
                   if (error) {
-                    resultsContainer.innerHTML = "Unable to fetch SVG.";
+                    const placeholder = document.getElementById(placeholderId);
+                    if (placeholder) placeholder.innerHTML = "Unable to fetch SVG.";
                   } else {
                     // Remove width and height attributes from SVG content
                     const parser = new DOMParser();
@@ -2280,19 +2361,63 @@ alert('Image copied to clipboard');
                       svgElement.removeAttribute('height');
                       const serializer = new XMLSerializer();
                       const cleanedSvgContent = serializer.serializeToString(svgElement);
-                      resultsContainer.innerHTML += `
-                        <div class="cursor-pointer" onclick="copyToClipboard(this.innerHTML); alert('copied to clipboard'); closeOpenDialog();">${cleanedSvgContent}</div>`;
+                      
+                      const iconDiv = document.createElement('div');
+                      iconDiv.className = "cursor-pointer";
+                      iconDiv.innerHTML = cleanedSvgContent;
+                      iconDiv.onclick = () => {
+                        copyToClipboard(iconDiv.innerHTML);
+                        alert('copied to clipboard');
+                        closeOpenDialog();
+                      };
+                      
+                      const placeholder = document.getElementById(placeholderId);
+                      if (placeholder) {
+                        placeholder.parentNode.replaceChild(iconDiv, placeholder);
+                      }
                     }
                   }
                 });
+                return placeholderHTML;
               } else {
-                resultsContainer.className = "mt-4 grid grid-cols-1 gap-4";
-                resultsContainer.innerHTML = "Unable to search: Connection not found!";
+                const errorHTML = `<div class="mt-4 grid grid-cols-1 gap-4">Unable to search: Connection not found!</div>`;
+                displayedHTML += errorHTML;
+                return errorHTML;
               }
             }
           }).join('');
+          
+          // Store the displayed HTML for when modal reopens
+          d.lastDisplayedResultsHTML = displayedHTML;
+          
+          // Attach event handlers for newly created elements
+          setTimeout(() => {
+            // Image click handlers
+            resultsContainer.querySelectorAll('[data-image-url]').forEach(div => {
+              div.onclick = () => {
+                const url = div.getAttribute('data-image-url');
+                copyToClipboard(url);
+                alert('Image URL copied to clipboard');
+                closeOpenDialog();
+              };
+            });
+            
+            // Audio button handlers
+            resultsContainer.querySelectorAll('audio').forEach(audioElement => {
+              const selectButton = audioElement.closest('nav')?.querySelector('button');
+              if (selectButton) {
+                selectButton.onclick = () => {
+                  copyToClipboard(audioElement.outerHTML);
+                  alert('Audio HTML copied to clipboard');
+                  closeOpenDialog();
+                };
+              }
+            });
+          }, 0);
         } else {
-          resultsContainer.innerHTML = "Unable to search: Connection not found!";
+          const errorHTML = "Unable to search: Connection not found!";
+          resultsContainer.innerHTML = errorHTML;
+          d.lastDisplayedResultsHTML = errorHTML;
         }
       }
     }
