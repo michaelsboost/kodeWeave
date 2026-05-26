@@ -5,7 +5,9 @@ _kodeWeave is your on-the-go coding playground!_
 
 ![kodeWeave](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/screenshot.png)
 
-[![MIT License](https://img.shields.io/github/license/michaelsboost/kodeWeave)](LICENSE) [![GitHub Stars](https://img.shields.io/github/stars/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/issues)
+[![MIT License](https://img.shields.io/github/license/michaelsboost/kodeWeave)](LICENSE) [![GitHub Stars](https://img.shields.io/github/stars/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/issues)  [![X (formerly Twitter)](https://img.shields.io/twitter/url/https/twitter.com/kodeweave_app?style=social&label=Follow%20%40kodeweave_app)](https://x.com/kodeweave_app)  
+
+
 
 ----------
 
