@@ -1,45 +1,167 @@
+# 🧶 kodeWeave
 
-# **kodeWeave**
+Your on-the-go web development environment.
 
-_kodeWeave is your on-the-go coding playground!_
+### Build websites, apps, games, and Progressive Web Apps directly in your browser.
 
-![kodeWeave](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/screenshot.png)
+⚡ No installation  
+🌐 Works offline  
+🚀 Export as PWAs  
+📱 Mobile & Desktop Friendly  
+🆓 Free & Open Source  
 
-[![MIT License](https://img.shields.io/github/license/michaelsboost/kodeWeave)](LICENSE) [![GitHub Stars](https://img.shields.io/github/stars/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/issues)  [![X (formerly Twitter)](https://img.shields.io/twitter/url/https/twitter.com/kodeweave_app?style=social&label=Follow%20%40kodeweave_app)](https://x.com/kodeweave_app)  
+![kodeWeave](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/header.png)  
+![Screenshot](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/screenshot.png)
 
+[![MIT License](https://img.shields.io/github/license/michaelsboost/kodeWeave)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/issues)
+[![Follow @kodeweave_app](https://img.shields.io/twitter/url/https/twitter.com/kodeweave_app?style=social&label=Follow%20%40kodeweave_app)](https://x.com/kodeweave_app)
 
+---
+
+## 🤔 Why kodeWeave?
+
+Most development environments ask:
+
+"Have you installed everything yet?"
+
+kodeWeave asks:
+
+"What do you want to build?"
+
+---
+
+⚡ Open the app  
+🧪 Choose a framework  
+🎨 Start creating  
+🚀 Ship when you're ready  
+
+---
+
+No installation.
+No build tools.
+No package managers.
+No configuration headaches.
+
+Just a fast, browser-based development environment that helps you go from idea to application.
+
+---
+
+## 🎮 Built with kodeWeave
+
+kodeWeave isn't just for experiments.
+
+It's been used to create real applications used by real people.
+
+### 🧭 Beacon Survival
+
+An offline-first survival training and preparedness application.
+
+🌐 https://michaelsboost.com/Beacon
+
+![Beacon](https://michaelsboost.com/Beacon/imgs/screenshots/screenshot-training.jpeg)
+
+---
+
+### 🏋️ Rite Fitness Timer
+
+A minimalist workout timer built for interval training, stretching, martial arts, and daily fitness routines.
+
+🌐 https://michaelsboost.com/Rite
+
+![Rite](https://michaelsboost.com/Rite/imgs/screenshot.jpeg)
+
+---
+
+### 📈 Chart Dojo
+
+An interactive chart-reading dojo designed to sharpen trading intuition through repetition and practice.
+
+🌐 https://michaelsboost.com/ChartDojo
+
+![Chart Dojo](https://michaelsboost.com/ChartDojo/imgs/screenshot-1.jpeg)
+
+---
+
+### 🚀 And Many More
+
+Explore additional projects built with kodeWeave:
+
+🌐 https://michaelsboost.com/kodeWeave
+
+---
+
+## ✨ Why Developers Choose kodeWeave
+
+🌐 Works completely offline
+
+📱 Designed for desktop and mobile devices
+
+⚛️ Experiment with frameworks instantly
+
+📦 No installation required
+
+🚀 Progressive Web App export built in
+
+🖼️ Built-in asset discovery tools
+
+🔗 Share projects through URLs
+
+📸 Generate screenshots with a click
+
+🆓 Free and open source
+
+---
+
+## ⚡ Performance
+
+kodeWeave is powered by JavaScript Proxies, a custom Virtual DOM, and a DOM diffing engine designed for speed and responsiveness.
+
+### Lighthouse Scores
+
+✅ Performance: 100  
+✅ Accessibility: 93  
+✅ Best Practices: 100  
+✅ SEO: 100  
+
+![Lighthouse Scores](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/lighthouse.png)
+
+---
+
+## **📰 Featured On**
+
+kodeWeave has been highlighted on several notable platforms:
+
+🌟 [**Web Designer Depot**](https://www.webdesignerdepot.com/5-essential-open-source-tools-for-web-designers/)  
+🌟 [**List Of Freeware**](https://listoffreeware.com/free-open-source-dreamweaver-alternative-software-windows/)  
+🌟 [**Bootstrap Dash**](https://www.bootstrapdash.com/blog/codepen-alternatives)  
+🌟 [**APTRON**](https://aptronnoida.in/blog/essential-open-source-tools-for-web-designers/)  
+🌟 [**Linux for Devices**](https://www.linuxfordevices.com/tutorials/linux/adobe-dreamweaver-alternatives)  
 
 ----------
 
-## **🚀 About kodeWeave**
+## 🚀 Try kodeWeave
 
-kodeWeave is a **real-time coding playground** designed for developers, offering a feature-rich environment similar to **CodePen**, but with **built-in APIs**, **offline support**, and **PWA exportation**. It allows users to prototype apps, websites, and games quickly, whether on **mobile or desktop**, all without relying on external servers.
+### Online
 
-With **lightning-fast performance**, kodeWeave leverages **JavaScript Proxies, a custom Virtual DOM, and a diffing algorithm** to optimize speed and efficiency—delivering **Lighthouse scores unmatched by other coding playgrounds**.
+🌐 https://michaelsboost.com/kodeWeave/go
 
-----------
+### Run Locally
 
-## **🌟 Features**
+```bash
+git clone https://github.com/michaelsboost/kodeWeave.git
+cd kodeWeave
+python3 -m http.server 8000
+```
 
-✅ **Live HTML, CSS, and JavaScript Editing** – Instant, real-time preview.  
-✅ **Built-in APIs** – Easily import images, SVGs, and audio from Openverse and Iconify.  
-✅ **Supports Popular Frameworks** – Start projects with React, Vue, Angular, TypeScript, Alpine, Solid, Preact, Mithril, Hyperapp, Aurelia, Lit, Knockout, Moon, Stimulus, and more.  
-✅ **Client-Side Only** – No backend required; works entirely in the browser.  
-✅ **Instant CSS Updates** – Changes in the CSS tab update the **style tag** directly in the preview without reloading the page, making styling interactive elements like modals seamless.  
-✅ **PWA Export** – Convert your project into a fully functional **Progressive Web App (PWA)**.  
-✅ **Offline-Ready** – Service workers ensure projects work offline.  
-✅ **File Uploads to Base64** – Upload any file and instantly convert it to Base64.  
-✅ **Virtual Device Preview** – View how your project looks on desktop and mobile.  
-✅ **Code Tidy & Formatting** – Auto-format messy code with one click.  
-✅ **Built-in Terminal** – See JavaScript errors in real-time.  
-✅ **Light & Dark Mode** – Supports theme switching (also works in **PicoCSS** projects).  
-✅ **JS, Babel, ES6 Support** – Work with modern JavaScript seamlessly.  
-✅ **Emmet Integration** – Speed up HTML and CSS coding.  
-✅ **Share to CodePen** – Export and share your project instantly.  
-✅ **URL-Based Sharing** – Save and share projects via **Base64-encoded URLs**.  
-✅ **Website Screenshot Tool** – Capture project previews with a single click.
+Open:
 
-----------
+```text
+http://localhost:8000
+```
+
+---
 
 ## **🛠️ Tech Stack**
 
@@ -58,104 +180,9 @@ kodeWeave uses a number of open-source projects to work properly:
 
 ----------
 
-## **📰 Featured On**
+## 🤝 Contributing
 
-kodeWeave has been highlighted on several notable platforms:
-
-- [**Web Designer Depot**](https://www.webdesignerdepot.com/5-essential-open-source-tools-for-web-designers/)  
-- [**List Of Freeware**](https://listoffreeware.com/free-open-source-dreamweaver-alternative-software-windows/)  
-- [**Bootstrap Dash**](https://www.bootstrapdash.com/blog/codepen-alternatives)  
-- [**APTRON**](https://aptronnoida.in/blog/essential-open-source-tools-for-web-designers/)  
-- [**Linux for Devices**](https://www.linuxfordevices.com/tutorials/linux/adobe-dreamweaver-alternatives)  
-
-----------
-
-## **📥 Installation & Setup**
-
-kodeWeave is **fully web-based** – no installation needed. Try it now:  
-➡️ [kodeWeave Online](https://michaelsboost.com/kodeWeave/go)
-
-Or, to run locally:
-
-### **Clone the Repository**
-
-> git clone 
-> https://github.com/michaelsboost/kodeWeave.git 
-> cd kodeWeave` 
-
-### **Start a Local Server**
-
-To preview kodeWeave locally, use a simple Python server:
-
-bash
-
-> python3 -m http.server 8000` 
-
-Then, open `http://localhost:8000` in your browser.
-
-----------
-
-## **📦 Exporting a PWA**
-
-kodeWeave makes exporting a **Progressive Web App (PWA)** effortless.
-
-### **Steps to Export a PWA:**
-
-1.  Create your project in kodeWeave.
-2.  Click **Export as PWA**.
-3.  A ZIP file will be generated with:
-    -   `index.html` (your project’s entry point)
-    -   `sw.js` (service worker for offline support)
-    -   `manifest.json` (PWA metadata)
-    -   All necessary assets
-4.  Extract and upload to your web server!
-
-----------
-
-## **⚡ Performance & Lighthouse Scores**
-
-Unlike other coding playgrounds, kodeWeave achieves **top-tier performance** thanks to a custom **Virtual DOM & Diffing Algorithm** built with **JavaScript Proxies**.
-
-### **Lighthouse Scores**
-
-✅ **Performance:** `100`  
-✅ **Accessibility:** `93`  
-✅ **Best Practices:** `100`  
-✅ **SEO:** `100`
-
-![Lighthouse Scores](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/lighthouse.png)
-
-----------
-
-## **🎮 Projects Built with kodeWeave**
-
-kodeWeave has been used to create powerful applications, including:
-
-### **🎯 [Beacon Survival App](https://michaelsboost.com/Beacon)**
-
-A **progressive survival application** designed to provide **offline survival knowledge**, built entirely with kodeWeave.
-
-### 🏋️ [Rite Fitness Timer](https://michaelsboost.com/Rite)
-A clean, minimalist fitness timer for interval training, workouts, stretching, and daily movement routines—adaptable to any fitness style.
-
-### **📈 [Chart Dojo](https://michaelsboost.com/ChartDojo)**
-
-Sharpen your **trader’s intuition** with this **interactive technical analysis dojo**, where **practice, consistency, and progression** forge real-world chart mastery.
-
-[and many more...](https://michaelsboost.com/kodeWeave)
-
-----------
-
-## **📜 License**
-
-kodeWeave is **open-source** under the **MIT License**.  
-See the full license: [LICENSE](https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE).
-
-----------
-
-## **💡 Want to Contribute?**
-
-Awesome! kodeWeave is **free and open-source**, and contributions are always welcome.
+kodeWeave is **free and open-source**, and contributions are always welcome.
 
 ### **How You Can Help:**
 
@@ -177,9 +204,12 @@ If kodeWeave has been helpful to you, here are some ways you can show support:
 
 Your support helps keep kodeWeave free, open-source, and constantly improving. 🚀
 
-----------
+---
 
-## **📧 Contact**
+## 👋 About the Creator
 
-For questions, feature requests, or collaborations, reach out to:  
-**Michael Schwartz** – [michaelsboost.com](https://michaelsboost.com/)
+Created by Michael Schwartz
+
+🌐 https://michaelsboost.com
+
+Building tools, apps, and experiments that make technology more accessible, practical, and fun.
