@@ -11,8 +11,8 @@
    height="512">
    <defs>
       <linearGradient id="grad" x1="100%" y1="50%" x2="0%" y2="50%">
-         <stop offset="0" stop-color="#fd5d92"/>
-         <stop offset="1" stop-color="#ff0000"/>
+         <stop offset="0" stop-color="#22d3ee"/>
+         <stop offset="1" stop-color="#178a9c"/>
       </linearGradient>
    </defs>
    <circle cx="256" cy="256" r="256" fill="url(#grad)"/>
