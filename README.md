@@ -10,8 +10,8 @@ Your on-the-go web development environment.
 📱 Mobile & Desktop Friendly  
 🆓 Free & Open Source  
 
-![kodeWeave](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/header.png)  
-![Screenshot](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/screenshot.png)
+![kodeWeave](imgs/header.png)  
+![Screenshot](imgs/screenshot.png)
 
 [![MIT License](https://img.shields.io/github/license/michaelsboost/kodeWeave)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/stargazers)
