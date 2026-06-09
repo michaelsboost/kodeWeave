@@ -73,7 +73,7 @@ let p = {
   previewDark: true,
   columns: false,
   columnsRight: true,
-  activePanel: null,
+  activePanel: 'html',
   preview: true,
   console: false,
   
@@ -1264,7 +1264,12 @@ function PreviewMenu() {
 
   const previewSize = `
     <div class="relative">
-      <select id="selectedSize" onchange="resizeCanvas(this.value)" class="${selectClass}" value="${data.selectedSize}">
+      <select 
+        id="selectedSize" 
+        aria-label="Device screen size"
+        onchange="resizeCanvas(this.value)" 
+        class="${selectClass}" 
+        value="${data.selectedSize}">
         <option value="none" ${data.selectedSize === 'none' ? 'selected' : ''}>📱 Select Device Size</option>
         ${Object.keys(sizeOptions).map(group => `
           <optgroup label="${group}" class="bg-[#0f1522]">
@@ -2636,7 +2641,10 @@ window.setPreprocessor = async (editor, value) => {
     } else if (editor === 'javascript') {
       project.javascript_pre_processor = value;
       if (!window.editorManager || !window.editorManager.jsEditor) return;
-      window.editorManager.setMode(project.javascript_pre_processor === 'javascript' ? 'javascript' : value, editorManager.jsEditor);
+      console.log('Calling setMode with:', {
+        mode: project.javascript_pre_processor === 'javascript' ? 'javascript' : value,
+        editor: editorManager.jsEditor
+      });
     }
   } catch (error) {
     console.error('Error setting preprocessor:', error);
