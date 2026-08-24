@@ -173,7 +173,7 @@ kodeWeave uses a number of open-source projects to work properly:
 -   **[FileSaver.js](https://github.com/eligrey/FileSaver.js/)** – Allows local file saving in JavaScript (prebuilt with JSZip).
 -   **[cdnjs](https://cdnjs.com/api)** – Enables easy addition of the latest libraries and frameworks via search.
 -   **[Emmet](http://emmet.io/)** – CodeMirror plugin for Zen Coding.
--   **[Pico.css](https://picocss.com/)** and **[Tailwind CSS](https://tailwindcss.com/)** – Styles the application’s interface.
+-   **[Tailwind CSS](https://tailwindcss.com/)** – Styles the application’s interface.
 -   **[HeroIcons](https://heroicons.com/)** and **[Font Awesome](https://fontawesome.com/)** – Icon libraries used in the UI. _(Twitter logo icon was custom-designed.)_
 -   **[Openverse API](https://docs.openverse.org/api/guides/documentation.html)** – Enables users to search for images and audio files for their weave.
 -   **[Iconify API](https://iconify.design/docs/api/)** – Allows users to search and add vector graphics (SVGs) to their weave.
