@@ -40,7 +40,7 @@ let app = {
     href: 'https://michaelsboost.com/',
     src: 'imgs/author.jpg'
   },
-  version: '1.3.0',
+  version: '1.3.1',
   url: 'https://github.com/michaelsboost/kodeWeave/',
   license: 'https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE'
 }
@@ -573,12 +573,116 @@ const icons = (function() {
   };
 })();
 
+// IndexedDB project storage
+const KODEWEAVE_DB_NAME = 'kodeWeaveDB';
+const KODEWEAVE_DB_VERSION = 1;
+const KODEWEAVE_STORE_NAME = 'projects';
+const KODEWEAVE_PROJECT_KEY = 'currentProject';
+let projectSaveTimer = null;
+
+function openKodeWeaveDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(KODEWEAVE_DB_NAME, KODEWEAVE_DB_VERSION);
+
+    request.onupgradeneeded = event => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains(KODEWEAVE_STORE_NAME)) {
+        db.createObjectStore(KODEWEAVE_STORE_NAME);
+      }
+    };
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function saveProjectToIndexedDB(projectData) {
+  const db = await openKodeWeaveDB();
+  const serializedProject = JSON.stringify(projectData);
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(KODEWEAVE_STORE_NAME, 'readwrite');
+    transaction.objectStore(KODEWEAVE_STORE_NAME).put(serializedProject, KODEWEAVE_PROJECT_KEY);
+
+    transaction.oncomplete = () => {
+      db.close();
+      resolve();
+    };
+
+    transaction.onerror = () => {
+      const error = transaction.error;
+      db.close();
+      reject(error);
+    };
+
+    transaction.onabort = transaction.onerror;
+  });
+}
+
+async function loadProjectFromIndexedDB() {
+  const db = await openKodeWeaveDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(KODEWEAVE_STORE_NAME, 'readonly');
+    const request = transaction.objectStore(KODEWEAVE_STORE_NAME).get(KODEWEAVE_PROJECT_KEY);
+
+    request.onsuccess = () => {
+      db.close();
+      if (!request.result) {
+        resolve(null);
+        return;
+      }
+
+      try {
+        resolve(JSON.parse(request.result));
+      } catch (error) {
+        reject(error);
+      }
+    };
+
+    request.onerror = () => {
+      const error = request.error;
+      db.close();
+      reject(error);
+    };
+  });
+}
+
+async function clearProjectFromIndexedDB() {
+  const db = await openKodeWeaveDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(KODEWEAVE_STORE_NAME, 'readwrite');
+    transaction.objectStore(KODEWEAVE_STORE_NAME).delete(KODEWEAVE_PROJECT_KEY);
+
+    transaction.oncomplete = () => {
+      db.close();
+      resolve();
+    };
+
+    transaction.onerror = () => {
+      const error = transaction.error;
+      db.close();
+      reject(error);
+    };
+  });
+}
+
+function queueProjectSave() {
+  clearTimeout(projectSaveTimer);
+  projectSaveTimer = setTimeout(() => {
+    saveProjectToIndexedDB(project).catch(error => {
+      console.error('Unable to autosave project:', error);
+    });
+  }, 500);
+}
+
 // Reactive objects
 window.project = onChange(p, async (property, oldValue, newValue) => {
   const iframe = document.getElementById('iframe');
   const doc = iframe ? iframe.contentWindow.document : null;
   if (oldValue !== newValue) {
-    localStorage.setItem('kodeWeave', JSON.stringify(project));
+    queueProjectSave();
     App.render('#app');
     
     if (property.toString() === 'activePanel') {
@@ -1376,18 +1480,6 @@ function PreviewMenu() {
             </svg>
           </button>
 
-          <!-- Snapshot/Screenshot Button -->
-          <button 
-            aria-label="take screenshot"
-            onclick="screenshot()"
-            class="${buttonClass}"
-            title="Take screenshot">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
-            </svg>
-          </button>
-
           <!-- Theme Toggle Button -->
           <button 
             onclick="project.previewDark = !project.previewDark;" 
@@ -2099,7 +2191,9 @@ window.emptyStorage = () => {
   Modal.render({
     title: "Are you sure you want to a new clean slate?",
     content: '<div class="p-4 text-center">All current data will be lost.</div>',
-    onConfirm() {
+    async onConfirm() {
+      clearTimeout(projectSaveTimer);
+
       if (window.location.hash) {
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }
@@ -2140,6 +2234,12 @@ window.emptyStorage = () => {
         });
       }
     
+      try {
+        await clearProjectFromIndexedDB();
+      } catch (error) {
+        console.error('Unable to clear IndexedDB:', error);
+      }
+
       location.reload();
     }
   });
@@ -2410,6 +2510,17 @@ window.showExportModal = () => {
         <div class="flex-1 text-left">
           <div class="font-semibold text-white group-hover:text-cyan-300 transition">Download ZIP Archive</div>
           <div class="text-xs text-slate-500">Complete project with all assets</div>
+        </div>
+      </button>
+
+      <button onclick="closeExportModal(); screenshot()" class="w-full p-3 rounded-xl bg-white/[.05] hover:bg-white/[.1] transition flex items-center gap-3 group">
+        <svg class="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+        </svg>
+        <div class="flex-1 text-left">
+          <div class="font-semibold text-white group-hover:text-cyan-300 transition">Website Snapshot</div>
+          <div class="text-xs text-slate-500">Save a full-page screenshot of the preview</div>
         </div>
       </button>
       
@@ -3229,8 +3340,8 @@ window.htmlToProjectJSON_text = htmlRaw => {
 }
 window.importProject = () => {
   Modal.render({
-    title: "Are you sure you want to load a new project?",
-    content: `<div class="p-4 text-center">All current data will be lost.</div>`,
+    title: "Import a project or code file?",
+    content: `<div class="p-4 text-center">Project files replace the current project. HTML fragments, CSS files, and JavaScript files replace only their matching editor.</div>`,
     onConfirm: function() {
       if (window.location.hash) {
         history.replaceState(null, '', window.location.pathname + window.location.search);
@@ -3238,7 +3349,7 @@ window.importProject = () => {
 
       const input = document.createElement('input');
       input.type = 'file';
-      input.accept = '.json,.html,text/html,application/json'; // ✅ only json or html
+      input.accept = '.json,.html,.htm,.css,.js,text/html,text/css,text/javascript,application/javascript,application/json';
 
       input.addEventListener('change', (event) => {
         const file = event.target.files[0];
@@ -3246,11 +3357,12 @@ window.importProject = () => {
 
         const name = (file.name || '').toLowerCase();
         const isJSON = name.endsWith('.json');
-        const isHTML = name.endsWith('.html') || file.type === 'text/html';
+        const isHTML = name.endsWith('.html') || name.endsWith('.htm') || file.type === 'text/html';
+        const isCSS = name.endsWith('.css') || file.type === 'text/css';
+        const isJS = name.endsWith('.js') || file.type === 'text/javascript' || file.type === 'application/javascript';
 
-        // Hard gate: only .json or .html
-        if (!isJSON && !isHTML) {
-          console.error('Unsupported file type. Please select a .json or .html file.');
+        if (!isJSON && !isHTML && !isCSS && !isJS) {
+          console.error('Unsupported file type. Please select a .json, .html, .css, or .js file.');
           input.remove();
           return;
         }
@@ -3260,16 +3372,29 @@ window.importProject = () => {
           try {
             const raw = String(evt.target.result || '');
 
-            let obj;
             if (isJSON) {
-              obj = JSON.parse(raw);
+              data.activeNav = null;
+              importJSON(JSON.parse(raw));
+            } else if (isCSS) {
+              setPreprocessor('css', 'css');
+              project.css = raw;
+              project.activePanel = 'css';
+              data.activeNav = 'CSS';
+            } else if (isJS) {
+              setPreprocessor('javascript', 'javascript');
+              project.javascript = raw;
+              project.activePanel = 'javascript';
+              data.activeNav = 'Javascript';
+            } else if (/<(?:head|body)\b/i.test(raw)) {
+              data.activeNav = null;
+              importJSON(htmlToProjectJSON_text(raw));
             } else {
-              // HTML path (text-only parsing)
-              obj = htmlToProjectJSON_text(raw);
+              setPreprocessor('html', 'html');
+              project.html = raw;
+              project.activePanel = 'html';
+              data.activeNav = 'HTML';
             }
 
-            data.activeNav = null;
-            importJSON(obj);
             renderPreview(true);
           } catch (e) {
             console.error('Error importing project:', e);
@@ -4757,17 +4882,39 @@ window.diffNodes = (oldNode, newNode) => {
 
 // Once dom has loaded init functions
 document.addEventListener('DOMContentLoaded', function() {
-  window.onload = () => {
+  window.onload = async () => {
     window.galleryCache = null;
     App.render('#app');
     if (window.initEditors) initEditors();
     getIFrameClientSize();
 
-    if (localStorage.getItem('kodeWeave')) {
-      importJSON(JSON.parse(localStorage.getItem('kodeWeave')));
+    let savedProject = null;
+
+    try {
+      savedProject = await loadProjectFromIndexedDB();
+    } catch (error) {
+      console.error('Unable to load project from IndexedDB:', error);
+    }
+
+    if (!savedProject) {
+      const legacyProject = localStorage.getItem('kodeWeave');
+
+      if (legacyProject) {
+        try {
+          savedProject = JSON.parse(legacyProject);
+          await saveProjectToIndexedDB(savedProject);
+          localStorage.removeItem('kodeWeave');
+        } catch (error) {
+          console.error('Unable to migrate saved project:', error);
+        }
+      }
+    }
+
+    if (savedProject) {
+      importJSON(savedProject);
       renderPreview(true);
     }
-  }
+  };
   window.onresize = () => getIFrameClientSize();
   preloadFrameworkTemplates();
   const filterSelect = document.getElementById('mediaTypeFilter');
