@@ -8,11 +8,11 @@
   ;(() => {
     // Compressed representation of the Grapheme_Cluster_Break=Extend
     // information from
-    // http://www.unicode.org/Public/16.0.0/ucd/auxiliary/GraphemeBreakProperty.txt.
+    // http://www.unicode.org/Public/17.0.0/ucd/auxiliary/GraphemeBreakProperty.txt.
     // Each pair of elements represents a range, as an offet from the
     // previous range and a length. Numbers are in base-36, with the empty
-    // string being a shorthand for 1.
-    let numbers = "lc,34,7n,7,7b,19,,,,2,,2,,,20,b,1c,l,g,,2t,7,2,6,2,2,,4,z,,u,r,2j,b,1m,9,9,,o,4,,9,,3,,5,17,3,3b,f,,w,1j,,,,4,8,4,,3,7,a,2,t,,1m,,,,2,4,8,,9,,a,2,q,,2,2,1l,,4,2,4,2,2,3,3,,u,2,3,,b,2,1l,,4,5,,2,4,,k,2,m,6,,,1m,,,2,,4,8,,7,3,a,2,u,,1n,,,,c,,9,,14,,3,,1l,3,5,3,,4,7,2,b,2,t,,1m,,2,,2,,3,,5,2,7,2,b,2,s,2,1l,2,,,2,4,8,,9,,a,2,t,,20,,4,,2,3,,,8,,29,,2,7,c,8,2q,,2,9,b,6,22,2,r,,,,,,1j,e,,5,,2,5,b,,10,9,,2u,4,,6,,2,2,2,p,2,4,3,g,4,d,,2,2,6,,f,,jj,3,qa,3,t,3,t,2,u,2,1s,2,,7,8,,2,b,9,,19,3,3b,2,y,,3a,3,4,2,9,,6,3,63,2,2,,1m,,,7,,,,,2,8,6,a,2,,1c,h,1r,4,1c,7,,,5,,14,9,c,2,w,4,2,2,,3,1k,,,2,3,,,3,1m,8,2,2,48,3,,d,,7,4,,6,,3,2,5i,1m,,5,ek,,5f,x,2da,3,3x,,2o,w,fe,6,2x,2,n9w,4,,a,w,2,28,2,7k,,3,,4,,p,2,5,,47,2,q,i,d,,12,8,p,b,1a,3,1c,,2,4,2,2,13,,1v,6,2,2,2,2,c,,8,,1b,,1f,,,3,2,2,5,2,,,16,2,8,,6m,,2,,4,,fn4,,kh,g,g,g,a6,2,gt,,6a,,45,5,1ae,3,,2,5,4,14,3,4,,4l,2,fx,4,ar,2,49,b,4w,,1i,f,1k,3,1d,4,2,2,1x,3,10,5,,8,1q,,c,2,1g,9,a,4,2,,2n,3,2,,,2,6,,4g,,3,8,l,2,1l,2,,,,,m,,e,7,3,5,5f,8,2,3,,,n,,29,,2,6,,,2,,,2,,2,6j,,2,4,6,2,,2,r,2,2d,8,2,,,2,2y,,,,2,6,,,2t,3,2,4,,5,77,9,,2,6t,,a,2,,,4,,40,4,2,2,4,,w,a,14,6,2,4,8,,9,6,2,3,1a,d,,2,ba,7,,6,,,2a,m,2,7,,2,,2,3e,6,3,,,2,,7,,,20,2,3,,,,9n,2,f0b,5,1n,7,t4,,1r,4,29,,f5k,2,43q,,,3,4,5,8,8,2,7,u,4,44,3,1iz,1j,4,1e,8,,e,,m,5,,f,11s,7,,h,2,7,,2,,5,79,7,c5,4,15s,7,31,7,240,5,gx7k,2o,3k,6o".split(",").map(s => s ? parseInt(s, 36) : 1);
+    // string being a shorthand for 1. See bin/build-extenders.js.
+    let numbers = "lc,34,7n,7,7b,19,,,,2,,2,,,20,b,1c,l,g,,2t,7,2,6,2,2,,4,z,,u,r,2j,b,1m,9,9,,o,4,,9,,3,,5,17,3,1n,9,16,o,,x,1i,3,,i,,7,a,2,t,3,1k,,,7,2,2,2,3,9,,a,2,q,,2,3,1k,,,5,4,2,2,3,3,,u,2,3,,b,3,1k,,,8,,3,,3,k,2,m,6,,3,1k,,,7,2,2,2,3,7,3,a,2,u,,1n,5,3,3,,4,9,,14,5,1j,,,7,,3,,4,7,2,b,2,t,3,1k,,,7,,3,,4,7,2,b,2,f,,c,4,1j,2,,7,,3,,4,9,,a,2,t,3,1y,,4,6,,,,8,i,2,1p,,,8,c,8,2q,,,a,b,7,21,2,r,,,,,,4,2,1d,k,,2,5,b,,10,9,,2u,b,,6,n,4,4,3,g,4,d,,,3,6,,f,,jj,3,qa,4,s,3,t,2,u,2,1s,w,9,,19,3,,,39,2,y,,3a,c,4,c,63,5,1l,a,,,,,2,o,2,,1c,1a,2,c,k,5,1b,h,12,9,c,3,u,d,1k,e,1c,k,48,3,,l,4,,6,,2,3,5i,1s,ek,,5f,x,2da,3,3x,,2o,w,fe,6,2x,2,n9w,4,,a,w,2,28,2,7k,,3,,4,,n,5,4,,2b,2,1e,i,q,i,d,,12,8,p,d,18,4,1b,e,10,,1v,e,c,,8,2,1a,,1f,,,3,2,2,5,2,,,15,5,5,2,6k,8,,2,fn4,,kh,g,g,g,a6,2,gt,,6a,,45,5,1ae,3,,2,5,4,14,3,4,,4l,2,fx,4,1t,5,8t,2,25,6,1y,b,1d,4,3e,3,1h,f,15,,2,2,a,4,19,b,7,,1p,3,10,e,g,2,18,,c,3,1c,e,8,4,,2,2k,c,6,,2,,4d,c,l,4,1j,2,,7,2,2,2,3,9,,a,2,2,7,3,5,1v,9,,,2,,,4,,5,,,e,2,2a,i,n,,29,k,6j,7,2,9,r,2,2a,h,2y,d,2t,3,2,a,74,f,6t,6,,2,2,4,,,,2,3x,7,2,7,3,,s,a,14,7,,4,8,,9,b,1a,g,5i,8,5j,8,,8,2a,m,,e,3e,6,3,,,2,,7,,,1u,5,,2,,5,9n,4,9,2,,,1c,7,3,5,n,,44l,,6,f,8ug,i,1xc,5,1n,7,t4,,,1j,7,4,29,,b,2,f57,2,3mp,1a,2,n,f2,5,3,6,8,8,2,7,u,4,44,3,1iz,1j,4,1e,8,,e,,m,5,,f,11s,7,,h,2,7,,2,,5,2s,,4g,7,af,,1p,4,e4,4,72,2,6r,,2,,7,2,5,,d6,7,31,7,240,5".split(",").map(s => s ? parseInt(s, 36) : 1);
     for (let i = 0, n = 0; i < numbers.length; i++)
       (i % 2 ? rangeTo : rangeFrom).push(n = n + numbers[i]);
   })();
@@ -62,7 +62,7 @@
   }
 
   function prevClusterBreak(str, pos, includeExtending) {
-    while (pos > 0) {
+    while (pos > 1) {
       let found = nextClusterBreak(str, pos - 2, includeExtending);
       if (found < pos) return found
       pos--;
@@ -1344,10 +1344,18 @@
       /**
       The upper boundary of the range.
       */
-      to, flags) {
+      to, flags, 
+      /**
+      The goal column (stored vertical offset) associated with a
+      cursor. This is used to preserve the vertical position when
+      [moving](https://codemirror.net/6/docs/ref/#view.EditorView.moveVertically) across
+      lines of different length.
+      */
+      goalColumn) {
           this.from = from;
           this.to = to;
           this.flags = flags;
+          this.goalColumn = goalColumn;
       }
       /**
       The anchor of the range—the side that doesn't move when you
@@ -1371,22 +1379,22 @@
       */
       get assoc() { return this.flags & 8 /* RangeFlag.AssocBefore */ ? -1 : this.flags & 16 /* RangeFlag.AssocAfter */ ? 1 : 0; }
       /**
+      A flag that, when set, makes some selection-extending commands
+      treat the range's head and anchor as exchangeable, so that for
+      example Shift-ArrowUp will make the lower side of the selection
+      the anchor, even if that was the head before. Used to implement
+      MacOS-style undirectional selections.
+      */
+      get undirectional() {
+          return (this.flags & 64 /* RangeFlag.Undirectional */) > 0;
+      }
+      /**
       The bidirectional text level associated with this cursor, if
       any.
       */
       get bidiLevel() {
           let level = this.flags & 7 /* RangeFlag.BidiLevelMask */;
           return level == 7 ? null : level;
-      }
-      /**
-      The goal column (stored vertical offset) associated with a
-      cursor. This is used to preserve the vertical position when
-      [moving](https://codemirror.net/6/docs/ref/#view.EditorView.moveVertically) across
-      lines of different length.
-      */
-      get goalColumn() {
-          let value = this.flags >> 6 /* RangeFlag.GoalColumnOffset */;
-          return value == 16777215 /* RangeFlag.NoGoalColumn */ ? undefined : value;
       }
       /**
       Map this range through a change, producing a valid range in the
@@ -1401,7 +1409,7 @@
               from = change.mapPos(this.from, 1);
               to = change.mapPos(this.to, -1);
           }
-          return from == this.from && to == this.to ? this : new SelectionRange(from, to, this.flags);
+          return from == this.from && to == this.to ? this : new SelectionRange(from, to, this.flags, this.goalColumn);
       }
       /**
       Extend this range to cover at least `from` to `to`.
@@ -1435,8 +1443,8 @@
       /**
       @internal
       */
-      static create(from, to, flags) {
-          return new SelectionRange(from, to, flags);
+      static create(from, to, flags, goalColumn) {
+          return new SelectionRange(from, to, flags, goalColumn);
       }
   }
   /**
@@ -1551,19 +1559,26 @@
       */
       static cursor(pos, assoc = 0, bidiLevel, goalColumn) {
           return SelectionRange.create(pos, pos, (assoc == 0 ? 0 : assoc < 0 ? 8 /* RangeFlag.AssocBefore */ : 16 /* RangeFlag.AssocAfter */) |
-              (bidiLevel == null ? 7 : Math.min(6, bidiLevel)) |
-              ((goalColumn !== null && goalColumn !== void 0 ? goalColumn : 16777215 /* RangeFlag.NoGoalColumn */) << 6 /* RangeFlag.GoalColumnOffset */));
+              (bidiLevel == null ? 7 : Math.min(6, bidiLevel)), goalColumn);
       }
       /**
       Create a selection range.
       */
       static range(anchor, head, goalColumn, bidiLevel, assoc) {
-          let flags = ((goalColumn !== null && goalColumn !== void 0 ? goalColumn : 16777215 /* RangeFlag.NoGoalColumn */) << 6 /* RangeFlag.GoalColumnOffset */) |
-              (bidiLevel == null ? 7 : Math.min(6, bidiLevel));
+          let flags = bidiLevel == null ? 7 : Math.min(6, bidiLevel);
           if (!assoc && anchor != head)
               assoc = head < anchor ? 1 : -1;
-          return head < anchor ? SelectionRange.create(head, anchor, 32 /* RangeFlag.Inverted */ | 16 /* RangeFlag.AssocAfter */ | flags)
-              : SelectionRange.create(anchor, head, (!assoc ? 0 : assoc < 0 ? 8 /* RangeFlag.AssocBefore */ : 16 /* RangeFlag.AssocAfter */) | flags);
+          if (assoc)
+              flags |= assoc < 0 ? 8 /* RangeFlag.AssocBefore */ : 16 /* RangeFlag.AssocAfter */;
+          return head < anchor ? SelectionRange.create(head, anchor, flags | 32 /* RangeFlag.Inverted */, goalColumn)
+              : SelectionRange.create(anchor, head, flags, goalColumn);
+      }
+      /**
+      Create an [undirectional](https://codemirror.net/6/docs/ref/#state.SelectionRange.undirectional)
+      selection range.
+      */
+      static undirectionalRange(from, to) {
+          return SelectionRange.create(from, to, 64 /* RangeFlag.Undirectional */, undefined);
       }
       /**
       @internal
@@ -1735,6 +1750,7 @@
               }
           };
       }
+      get extension() { return this; }
   }
   function compareArray(a, b, compare) {
       if (a.length != b.length)
@@ -1932,6 +1948,7 @@
           this.inner = inner;
           this.prec = prec;
       }
+      get extension() { return this; }
   }
   /**
   Extension compartments can be used to make a configuration
@@ -1966,6 +1983,7 @@
           this.compartment = compartment;
           this.inner = inner;
       }
+      get extension() { return this; }
   }
   class Configuration {
       constructor(base, compartments, dynamicSlots, address, staticValues, facets) {
@@ -2075,6 +2093,8 @@
           else {
               let content = ext.extension;
               if (!content)
+                  throw new Error(`Unrecognized extension value in extension set (${ext}).`);
+              if (content == ext)
                   throw new Error(`Unrecognized extension value in extension set (${ext}). This sometimes happens because multiple instances of @codemirror/state are loaded, breaking instanceof checks.`);
               inner(content, prec);
           }
@@ -3140,7 +3160,7 @@
           this.value = value;
           this.maxPoint = maxPoint;
       }
-      get length() { return this.to[this.to.length - 1]; }
+      get length() { return last$3(this.to); }
       // Find the index of the given position and side. Use the ranges'
       // `from` pos when `end == false`, `to` when `end == true`.
       findIndex(pos, side, end, startAt = 0) {
@@ -3163,9 +3183,9 @@
               if (f(this.from[i] + offset, this.to[i] + offset, this.value[i]) === false)
                   return false;
       }
-      map(offset, changes) {
+      map(offset, changes, basePos, baseSide, spill) {
           let value = [], from = [], to = [], newPos = -1, maxPoint = -1;
-          for (let i = 0; i < this.value.length; i++) {
+          iter: for (let i = 0; i < this.value.length; i++) {
               let val = this.value[i], curFrom = this.from[i] + offset, curTo = this.to[i] + offset, newFrom, newTo;
               if (curFrom == curTo) {
                   let mapped = changes.mapPos(curFrom, val.startSide, val.mapMode);
@@ -3190,9 +3210,27 @@
                   newPos = newFrom;
               if (val.point)
                   maxPoint = Math.max(maxPoint, newTo - newFrom);
-              value.push(val);
-              from.push(newFrom - newPos);
-              to.push(newTo - newPos);
+              if ((newFrom - basePos || val.startSide - baseSide) >= 0) {
+                  value.push(val);
+                  from.push(newFrom - newPos);
+                  to.push(newTo - newPos);
+                  basePos = newTo;
+                  baseSide = val.endSide;
+              }
+              else {
+                  if (newFrom == newTo) { // Try to reorder points to fit in here
+                      for (let i = value.length - 1; i > 0; i--) {
+                          if ((newFrom - to[i - 1] || val.startSide - value[i - 1].endSide) <= 0) {
+                              value.splice(i, 0, val);
+                              from.splice(i, 0, newFrom);
+                              to.splice(i, 0, newTo);
+                              continue iter;
+                          }
+                      }
+                  }
+                  // Otherwise, spill into a new layer
+                  spill(newFrom, newTo, val);
+              }
           }
           return { mapped: value.length ? new Chunk(from, to, value, maxPoint) : null, pos: newPos };
       }
@@ -3279,7 +3317,7 @@
           while (cur.value || i < add.length) {
               if (i < add.length && (cur.from - add[i].from || cur.startSide - add[i].value.startSide) >= 0) {
                   let range = add[i++];
-                  if (!builder.addInner(range.from, range.to, range.value))
+                  if (!builder.addInner(range.from, range.to, range.value, false))
                       spill.push(range);
               }
               else if (cur.rangeIndex == 1 && cur.chunkIndex < this.chunk.length &&
@@ -3290,7 +3328,7 @@
               }
               else {
                   if (!filter || filterFrom > cur.to || filterTo < cur.from || filter(cur.from, cur.to, cur.value)) {
-                      if (!builder.addInner(cur.from, cur.to, cur.value))
+                      if (!builder.addInner(cur.from, cur.to, cur.value, false))
                           spill.push(Range$1.create(cur.from, cur.to, cur.value));
                   }
                   cur.next();
@@ -3306,6 +3344,12 @@
           if (changes.empty || this.isEmpty)
               return this;
           let chunks = [], chunkPos = [], maxPoint = -1;
+          let spilled;
+          let spill = (from, to, value) => {
+              if (!spilled)
+                  spilled = new RangeSetBuilder();
+              spilled.addRange(from, to, value, false);
+          };
           for (let i = 0; i < this.chunk.length; i++) {
               let start = this.chunkPos[i], chunk = this.chunk[i];
               let touch = changes.touchesRange(start, start + chunk.length);
@@ -3315,7 +3359,9 @@
                   chunkPos.push(changes.mapPos(start));
               }
               else if (touch === true) {
-                  let { mapped, pos } = chunk.map(start, changes);
+                  let [prevPos, prevSide] = !chunks.length ? [-1, -1]
+                      : [last$3(chunkPos) + last$3(chunks).length, last$3(last$3(chunks).value).endSide];
+                  let { mapped, pos } = chunk.map(start, changes, prevPos, prevSide, spill);
                   if (mapped) {
                       maxPoint = Math.max(maxPoint, mapped.maxPoint);
                       chunks.push(mapped);
@@ -3324,6 +3370,8 @@
               }
           }
           let next = this.nextLayer.map(changes);
+          if (spilled)
+              next = spilled.finishInner(next);
           return chunks.length == 0 ? next : new RangeSet(chunkPos, chunks, next || RangeSet.empty, maxPoint);
       }
       /**
@@ -3465,7 +3513,7 @@
       static join(sets) {
           if (!sets.length)
               return RangeSet.empty;
-          let result = sets[sets.length - 1];
+          let result = last$3(sets);
           for (let i = sets.length - 2; i >= 0; i--) {
               for (let layer = sets[i]; layer != RangeSet.empty; layer = layer.nextLayer)
                   result = new RangeSet(layer.chunkPos, layer.chunk, result, Math.max(layer.maxPoint, result.maxPoint));
@@ -3477,6 +3525,7 @@
   The empty set of ranges.
   */
   RangeSet.empty = /*@__PURE__*/new RangeSet([], [], null, -1);
+  function last$3(arr) { return arr[arr.length - 1]; }
   function lazySort(ranges) {
       if (ranges.length > 1)
           for (let prev = ranges[0], i = 1; i < ranges.length; i++) {
@@ -3527,16 +3576,20 @@
       Add a range. Ranges should be added in sorted (by `from` and
       `value.startSide`) order.
       */
-      add(from, to, value) {
-          if (!this.addInner(from, to, value))
-              (this.nextLayer || (this.nextLayer = new RangeSetBuilder)).add(from, to, value);
+      add(from, to, value) { this.addRange(from, to, value, true); }
+      /**
+      @internal
+      */
+      addRange(from, to, value, strict) {
+          if (!this.addInner(from, to, value, strict))
+              (this.nextLayer || (this.nextLayer = new RangeSetBuilder)).addRange(from, to, value, strict);
       }
       /**
       @internal
       */
-      addInner(from, to, value) {
+      addInner(from, to, value, strict) {
           let diff = from - this.lastTo || value.startSide - this.last.endSide;
-          if (diff <= 0 && (from - this.lastFrom || value.startSide - this.last.startSide) < 0)
+          if (strict && diff <= 0 && (from - this.lastFrom || value.startSide - this.last.startSide) < 0)
               throw new Error("Ranges must be added sorted by `from` position and `startSide`");
           if (diff < 0)
               return false;
@@ -4800,8 +4853,11 @@
   function maxOffset(node) {
       return node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length;
   }
-  function flattenRect(rect, left) {
-      let x = left ? rect.left : rect.right;
+  function flattenRect(rect, toLeft) {
+      let { left, right } = rect;
+      if (left == right)
+          return rect;
+      let x = toLeft ? left : right;
       return { left: x, right: x, top: rect.top, bottom: rect.bottom };
   }
   function windowRect(win) {
@@ -4968,6 +5024,22 @@
           this.focusOffset = focusOffset;
       }
   }
+  function getScrollStack(target) {
+      let stack = [];
+      for (let cur = target; cur; cur = cur.nodeType == 11 ? cur.host : cur.parentNode) {
+          if (cur.nodeType == 1)
+              stack.push({ node: cur, left: cur.scrollLeft, top: cur.scrollTop });
+      }
+      return stack;
+  }
+  function restoreScrollStack(stack, vert = true) {
+      for (let { node, left, top } of stack) {
+          if (vert && node.scrollTop != top)
+              node.scrollTop = top;
+          if (node.scrollLeft != left)
+              node.scrollLeft = left;
+      }
+  }
   let preventScrollSupported = null;
   // Safari 26 breaks preventScroll support
   if (browser.safari && browser.safari_version >= 26)
@@ -4979,12 +5051,7 @@
           return dom.setActive(); // in IE
       if (preventScrollSupported)
           return dom.focus(preventScrollSupported);
-      let stack = [];
-      for (let cur = dom; cur; cur = cur.parentNode) {
-          stack.push(cur, cur.scrollTop, cur.scrollLeft);
-          if (cur == cur.ownerDocument)
-              break;
-      }
+      let stack = getScrollStack(dom);
       dom.focus(preventScrollSupported == null ? {
           get preventScroll() {
               preventScrollSupported = { preventScroll: true };
@@ -4993,13 +5060,7 @@
       } : undefined);
       if (!preventScrollSupported) {
           preventScrollSupported = false;
-          for (let i = 0; i < stack.length;) {
-              let elt = stack[i++], top = stack[i++], left = stack[i++];
-              if (elt.scrollTop != top)
-                  elt.scrollTop = top;
-              if (elt.scrollLeft != left)
-                  elt.scrollLeft = left;
-          }
+          restoreScrollStack(stack);
       }
   }
   let scratchRange;
@@ -6065,7 +6126,7 @@
           return this.posBefore(tile) + tile.length;
       }
       covers(side) { return true; }
-      coordsIn(pos, side) { return null; }
+      coordsIn(pos, side, rtl) { return null; }
       domPosFor(off, side) {
           let index = domIndex(this.dom);
           let after = this.length ? off > 0 : side > 0;
@@ -6252,6 +6313,9 @@
       }
       get domAttrs() { return this.attrs; }
       // Find the tile associated with a given position in this line.
+      // Side -2/2 is handled specially, in that it allows the position
+      // returned to be before (-2) or after (2) widgets that would always
+      // be after/before a cursor position.
       resolveInline(pos, side, forCoords) {
           let before = null, beforeOff = -1, after = null, afterOff = -1;
           function scan(tile, pos) {
@@ -6261,12 +6325,12 @@
                       if (child.isComposite()) {
                           scan(child, pos - off);
                       }
-                      else if ((!after || after.isHidden && (side > 0 || forCoords && onSameLine(after, child))) &&
-                          (end > pos || (child.flags & 32 /* TileFlag.After */))) {
+                      else if ((!after || after.isHidden && (side > 0 && !(after.flags & 32 /* TileFlag.After */) || forCoords && onSameLine(after, child))) &&
+                          (end > pos || (child.flags & 32 /* TileFlag.After */) && side <= 1)) {
                           after = child;
                           afterOff = pos - off;
                       }
-                      else if (off < pos || (child.flags & 16 /* TileFlag.Before */) && !child.isHidden) {
+                      else if (off < pos || (child.flags & 16 /* TileFlag.Before */) && !child.isHidden && side >= -1) {
                           before = child;
                           beforeOff = pos - off;
                       }
@@ -6278,11 +6342,11 @@
           let target = ((side < 0 ? before : after) || before || after);
           return target ? { tile: target, offset: target == before ? beforeOff : afterOff } : null;
       }
-      coordsIn(pos, side) {
+      coordsIn(pos, side, rtl) {
           let found = this.resolveInline(pos, side, true);
           if (!found)
               return fallbackRect(this);
-          return found.tile.coordsIn(Math.max(0, found.offset), side);
+          return found.tile.coordsIn(Math.max(0, found.offset), side, rtl);
       }
       domIn(pos, side) {
           let found = this.resolveInline(pos, side);
@@ -6346,7 +6410,7 @@
       }
       isText() { return true; }
       toString() { return JSON.stringify(this.text); }
-      coordsIn(pos, side) {
+      coordsIn(pos, side, rtl) {
           let length = this.dom.nodeValue.length;
           if (pos > length)
               pos = length;
@@ -6356,7 +6420,7 @@
                   if (pos) {
                       from--;
                       flatten = 1;
-                  } // FIXME this is wrong in RTL text
+                  }
                   else if (to < length) {
                       to++;
                       flatten = -1;
@@ -6375,7 +6439,7 @@
           let rect = rects[(flatten ? flatten < 0 : side >= 0) ? 0 : rects.length - 1];
           if (browser.safari && !flatten && rect.width == 0)
               rect = Array.prototype.find.call(rects, r => r.width) || rect;
-          return flatten ? flattenRect(rect, flatten < 0) : rect || null;
+          return rtl == null ? rect : flattenRect(rect, (flatten ? flatten > 0 : side < 0) == rtl);
       }
       static of(text, dom) {
           let tile = new TextTile(dom || document.createTextNode(text), text);
@@ -6451,7 +6515,10 @@
       }
       get isHidden() { return true; }
       get overrideDOMText() { return Text.empty; }
-      coordsIn(pos) { return this.dom.getBoundingClientRect(); }
+      coordsIn(pos, side, rtl) {
+          let rect = this.dom.getBoundingClientRect();
+          return rtl == null ? rect : flattenRect(rect, (side > 0) == rtl);
+      }
   }
   // Represents a position in the tile tree.
   class TilePointer {
@@ -6469,20 +6536,21 @@
           let { tile, index, beforeBreak, parents } = this;
           while (dist || side > 0) {
               if (!tile.isComposite()) {
-                  if (index == tile.length) {
+                  let len = tile.length;
+                  if (index < len && dist) {
+                      let take = Math.min(dist, len - index);
+                      if (walker)
+                          walker.skip(tile, index, index + take);
+                      dist -= take;
+                      index += take;
+                  }
+                  if (index == len) {
                       beforeBreak = !!tile.breakAfter;
                       ({ tile, index } = parents.pop());
                       index++;
                   }
                   else if (!dist) {
                       break;
-                  }
-                  else {
-                      let take = Math.min(dist, tile.length - index);
-                      if (walker)
-                          walker.skip(tile, index, index + take);
-                      dist -= take;
-                      index += take;
                   }
               }
               else if (beforeBreak) {
@@ -6813,8 +6881,8 @@
       find(cls, test, type = 2 /* Reused.DOM */) {
           let i = cls.bucket;
           let bucket = this.buckets[i], off = this.index[i];
-          for (let j = bucket.length - 1; j >= 0; j--) {
-              // Look at the most recently added items first (last-in, first-out)
+          for (let j = 0; j < bucket.length; j++) {
+              // Look at the most oldest items first (first-in, first-out)
               let index = (j + off) % bucket.length, tile = bucket[index];
               if ((!test || test(tile)) && !this.reused.has(tile)) {
                   bucket.splice(index, 1);
@@ -6916,6 +6984,7 @@
               if (composition && next.fromA <= composition.range.fromA && next.toA >= composition.range.toA) {
                   this.forward(next.fromA, composition.range.fromA, composition.range.fromA < composition.range.toA ? 1 : -1);
                   this.emit(posB, composition.range.fromB);
+                  this.builder.flushBuffer();
                   this.cache.clear(); // Must not reuse DOM across composition
                   this.builder.addComposition(composition, compositionContext);
                   this.text.skip(composition.range.toB - composition.range.fromB);
@@ -7016,7 +7085,7 @@
       }
       emit(from, to) {
           let pendingLineAttrs = null;
-          let b = this.builder, markCount = 0;
+          let b = this.builder, markCount = -1;
           let openEnd = RangeSet.spans(this.decorations, from, to, {
               point: (from, to, deco, active, openStart, index) => {
                   if (deco instanceof PointDecoration) {
@@ -7067,10 +7136,13 @@
                       }
                       pendingLineAttrs = null;
                   }
+                  markCount = active.length;
               }
           });
-          b.addLineStartIfNotCovered(pendingLineAttrs);
-          this.openWidget = openEnd > markCount;
+          if (markCount > -1)
+              this.openWidget = openEnd > markCount;
+          if (!this.openWidget)
+              b.addLineStartIfNotCovered(pendingLineAttrs);
           this.openMarks = openEnd;
       }
       forward(from, to, side = 1) {
@@ -7477,7 +7549,7 @@
       domAtPos(pos, side) {
           let { tile, offset } = this.tile.resolveBlock(pos, side);
           if (tile.isWidget())
-              return tile.domPosFor(pos, side);
+              return tile.domPosFor(offset, side);
           return tile.domIn(offset, side);
       }
       inlineDOMNearPos(pos, side) {
@@ -7514,14 +7586,16 @@
               after = null;
           return before && side < 0 || !after ? before.domIn(beforeOff, side) : after.domIn(afterOff, side);
       }
-      coordsAt(pos, side) {
+      // Get the coord of the element at the given side of the given
+      // position. If rtl is given, flatten it using that text direction.
+      coordsAt(pos, side, rtl) {
           let { tile, offset } = this.tile.resolveBlock(pos, side);
           if (tile.isWidget()) {
               if (tile.widget instanceof BlockGapWidget)
                   return null;
               return tile.coordsInWidget(offset, side, true);
           }
-          return tile.coordsIn(offset, side);
+          return tile.coordsIn(offset, side, rtl);
       }
       lineAt(pos, side) {
           let { tile } = this.tile.resolveBlock(pos, side);
@@ -7695,7 +7769,6 @@
           this.blockWrappers = this.view.state.facet(blockWrappers).map(v => typeof v == "function" ? v(this.view) : v);
       }
       scrollIntoView(target) {
-          var _a;
           if (target.isSnapshot) {
               let ref = this.view.viewState.lineBlockAt(target.range.head);
               this.view.scrollDOM.scrollTop = ref.top - target.yMargin;
@@ -7712,7 +7785,7 @@
               }
           }
           let { range } = target;
-          let rect = this.coordsAt(range.head, (_a = range.assoc) !== null && _a !== void 0 ? _a : (range.empty ? 0 : range.head > range.anchor ? -1 : 1)), other;
+          let rect = this.coordsAt(range.head, range.assoc || (range.head > range.anchor ? -1 : 1)), other;
           if (!rect)
               return;
           if (!range.empty && (other = this.coordsAt(range.anchor, range.anchor > range.head ? -1 : 1)))
@@ -7732,11 +7805,14 @@
           // can affect it. So this tries to kludge around the problem by
           // calling scrollIntoView on the scroll target's line.
           if (window.visualViewport && window.innerHeight - window.visualViewport.height > 1 &&
-              (rect.top > window.pageYOffset + window.visualViewport.offsetTop + window.visualViewport.height ||
-                  rect.bottom < window.pageYOffset + window.visualViewport.offsetTop)) {
+              (rect.top > window.visualViewport.offsetTop + window.visualViewport.height ||
+                  rect.bottom < window.visualViewport.offsetTop)) {
               let line = this.view.docView.lineAt(range.head, 1);
-              if (line)
+              if (line) {
+                  let stack = getScrollStack(line.dom);
                   line.dom.scrollIntoView({ block: "nearest" });
+                  restoreScrollStack(stack, false);
+              }
           }
       }
       lineHasWidget(pos) {
@@ -7895,7 +7971,7 @@
               break;
           to = next;
       }
-      return EditorSelection.range(from + line.from, to + line.from);
+      return EditorSelection.undirectionalRange(from + line.from, to + line.from);
   }
   function posAtCoordsImprecise(view, contentRect, block, x, y) {
       let into = Math.round((x - contentRect.left) * view.defaultCharacterWidth);
@@ -8032,8 +8108,12 @@
           else {
               let from = skipAtomicRanges(atoms, range.from, -1);
               let to = skipAtomicRanges(atoms, range.to, 1);
-              if (from != range.from || to != range.to)
-                  updated = EditorSelection.range(range.from == range.anchor ? from : to, range.from == range.head ? from : to);
+              if (from != range.from || to != range.to) {
+                  if (range.undirectional)
+                      updated = EditorSelection.undirectionalRange(range.from, range.to);
+                  else
+                      updated = EditorSelection.range(range.from == range.anchor ? from : to, range.from == range.head ? from : to);
+              }
           }
           if (updated) {
               if (!ranges)
@@ -8129,12 +8209,11 @@
       }
       // Scan through the rectangles for the content of a tile with inline
       // content, looking for one that overlaps the queried position
-      // vertically andis
-      // closest horizontally. The caller is responsible for dividing its
-      // content into N pieces, and pass an array with N+1 positions
-      // (including the position after the last piece). For a text tile,
-      // these will be character clusters, for a composite tile, these
-      // will be child tiles.
+      // vertically and is closest horizontally. The caller is responsible
+      // for dividing its content into N pieces, and pass an array with
+      // N+1 positions (including the position after the last piece). For
+      // a text tile, these will be character clusters, for a composite
+      // tile, these will be child tiles.
       scan(positions, getRects, recursed = false) {
           let lo = 0, hi = positions.length - 1, seen = new Set();
           let bidi = this.bidiIn(positions[0], positions[hi]);
@@ -8155,23 +8234,22 @@
           search: while (lo < hi) {
               let dist = hi - lo, mid = (lo + hi) >> 1;
               adjust: if (seen.has(mid)) {
-                  let scan = lo + Math.floor(Math.random() * dist);
-                  for (let i = 0; i < dist; i++) {
+                  for (let i = 1; i < dist; i++) {
+                      let scan = mid + i;
+                      if (scan >= hi)
+                          scan -= dist;
                       if (!seen.has(scan)) {
                           mid = scan;
                           break adjust;
                       }
-                      scan++;
-                      if (scan == hi)
-                          scan = lo; // Wrap around
                   }
                   break search; // No index found, we're done
               }
               seen.add(mid);
-              let rects = getRects(mid);
+              let rects = getRects(mid), side = 0;
               if (rects)
                   for (let i = 0; i < rects.length; i++) {
-                      let rect = rects[i], side = 0;
+                      let rect = rects[i];
                       // Ignore empty rectangles when there are other rectangles
                       if (rect.width == 0 && rects.length > 1)
                           continue;
@@ -8196,16 +8274,18 @@
                           if (off)
                               side = (off < 0) == (this.baseDir == Direction.LTR) ? -1 : 1;
                       }
-                      // Narrow binary search when it is safe to do so
-                      if (side == -1 && (!bidi || this.baseDirAt(positions[mid], 1)))
-                          hi = mid;
-                      else if (side == 1 && (!bidi || this.baseDirAt(positions[mid + 1], -1)))
-                          lo = mid + 1;
                   }
+              // Narrow binary search when it is safe to do so
+              if (side == -1 && (!bidi || this.baseDirAt(positions[mid], 1)))
+                  hi = mid;
+              else if (side == 1 && (!bidi || this.baseDirAt(positions[mid + 1], -1)))
+                  lo = mid + 1;
           }
           // If no element with y overlap is found, find the nearest element
           // on the y axis, move this.y into it, and retry the scan.
           if (!closestRect) {
+              if (!below && !above)
+                  return { i: 0, after: false };
               let side = above && (!below || (this.y - above.bottom < below.top - this.y)) ? above : below;
               this.y = (side.top + side.bottom) / 2;
               return this.scan(positions, getRects, true);
@@ -8438,7 +8518,8 @@
               // Chrome will put the selection *inside* them, confusing
               // posFromDOM
               let vp = view.viewport;
-              if ((browser.ios || browser.chrome) && curSel.main.empty && head != anchor &&
+              if ((browser.ios || browser.chrome) && head != anchor &&
+                  Math.min(head, anchor) <= curSel.main.from && Math.max(head, anchor) >= curSel.main.to &&
                   (vp.from > 0 || vp.to < view.state.doc.length)) {
                   let from = Math.min(head, anchor), to = Math.max(head, anchor);
                   let offFrom = vp.from - from, offTo = vp.to - to;
@@ -8748,6 +8829,7 @@
           this.view = view;
           this.lastKeyCode = 0;
           this.lastKeyTime = 0;
+          this.touchActive = false;
           this.lastTouchTime = 0;
           this.lastTouchX = 0;
           this.lastTouchY = 0;
@@ -8759,13 +8841,15 @@
           // (after which we retroactively handle them and reset the DOM) to
           // avoid messing up the virtual keyboard state.
           this.pendingIOSKey = undefined;
-          /**
-          When enabled (>-1), tab presses are not given to key handlers,
-          leaving the browser's default behavior. If >0, the mode expires
-          at that timestamp, and any other keypress clears it.
-          Esc enables temporary tab focus mode for two seconds when not
-          otherwise handled.
-          */
+          // Set to a time stap by scroll events when touch isn't active on
+          // iOS, to work around an issue where Safari will abort the scroll
+          // momentum if we set scrollTop
+          this.lastIOSMomentumScroll = 0;
+          // When enabled (>-1), tab presses are not given to key handlers,
+          // leaving the browser's default behavior. If >0, the mode expires
+          // at that timestamp, and any other keypress clears it.
+          // Esc enables temporary tab focus mode for two seconds when not
+          // otherwise handled.
           this.tabFocusMode = -1;
           this.lastSelectionOrigin = null;
           this.lastSelectionTime = 0;
@@ -8873,12 +8957,17 @@
           // state. So we let it go through, and then, in
           // applyDOMChange, notify key handlers of it and reset to
           // the state they produce.
-          let pending;
-          if (browser.ios && !event.synthetic && !event.altKey && !event.metaKey && !event.shiftKey &&
-              ((pending = PendingKeys.find(key => key.keyCode == event.keyCode)) && !event.ctrlKey ||
+          if (browser.ios && !event.synthetic && !event.altKey && !event.metaKey &&
+              (PendingKeys.some(key => key.keyCode == event.keyCode) && !event.ctrlKey ||
                   EmacsyPendingKeys.indexOf(event.key) > -1 && event.ctrlKey)) {
-              this.pendingIOSKey = pending || event;
-              setTimeout(() => this.flushIOSKey(), 250);
+              let mods = { ctrlKey: event.ctrlKey, altKey: event.altKey, metaKey: event.metaKey, shiftKey: event.shiftKey };
+              // On iOS with autocapitalize, drop the shift modifier for these
+              // keys, since it will be set at the start of every sentence.
+              if (mods.shiftKey && browser.ios && !/^(off|none)$/.test(this.view.contentDOM.autocapitalize) &&
+                  iosVirtualKeyboardOpen(this.view.win))
+                  mods.shiftKey = false;
+              this.pendingIOSKey = { key: event.key, keyCode: event.keyCode, mods };
+              setTimeout(() => this.flushIOSKey(), 50);
               return true;
           }
           if (event.keyCode != 229)
@@ -8887,13 +8976,13 @@
       }
       flushIOSKey(change) {
           let key = this.pendingIOSKey;
-          if (!key)
+          if (!key || this.view.observer.pendingRecords().length)
               return false;
           // This looks like an autocorrection before Enter
           if (key.key == "Enter" && change && change.from < change.to && /^\S+$/.test(change.insert.toString()))
               return false;
           this.pendingIOSKey = undefined;
-          return dispatchKey(this.view.contentDOM, key.key, key.keyCode, key instanceof KeyboardEvent ? key : undefined);
+          return dispatchKey(this.view.contentDOM, key.key, key.keyCode, key.mods);
       }
       ignoreDuringComposition(event) {
           if (!/^key/.test(event.type) || event.synthetic)
@@ -8930,6 +9019,11 @@
           if (this.mouseSelection)
               this.mouseSelection.destroy();
       }
+  }
+  function iosVirtualKeyboardOpen(win) {
+      if (!win.visualViewport)
+          return false;
+      return win.visualViewport.height * win.visualViewport.scale / win.document.documentElement.clientHeight < 0.85;
   }
   function bindHandler(plugin, handler) {
       return (view, event) => {
@@ -9181,8 +9275,11 @@
       });
   }
   observers.scroll = view => {
-      view.inputState.lastScrollTop = view.scrollDOM.scrollTop;
-      view.inputState.lastScrollLeft = view.scrollDOM.scrollLeft;
+      let iState = view.inputState;
+      iState.lastScrollTop = view.scrollDOM.scrollTop;
+      iState.lastScrollLeft = view.scrollDOM.scrollLeft;
+      if (browser.ios && !iState.touchActive)
+          iState.lastIOSMomentumScroll = Date.now();
   };
   observers.wheel = observers.mousewheel = view => {
       view.inputState.lastWheelEvent = Date.now();
@@ -9195,6 +9292,7 @@
   };
   observers.touchstart = (view, e) => {
       let iState = view.inputState, touch = e.targetTouches[0];
+      iState.touchActive = true;
       iState.lastTouchTime = Date.now();
       if (touch) {
           iState.lastTouchX = touch.clientX;
@@ -9204,6 +9302,9 @@
   };
   observers.touchmove = view => {
       view.inputState.setSelectionOrigin("select.pointer");
+  };
+  observers.touchend = (view, e) => {
+      view.inputState.touchActive = false;
   };
   handlers.mousedown = (view, event) => {
       view.observer.flush();
@@ -9250,7 +9351,7 @@
           let from = visual ? visual.posAtStart : line.from, to = visual ? visual.posAtEnd : line.to;
           if (to < view.state.doc.length && to == line.to)
               to++;
-          return EditorSelection.range(from, to);
+          return EditorSelection.undirectionalRange(from, to);
       }
   }
   const BadMouseDetail = browser.ie && browser.ie_version <= 11;
@@ -9308,7 +9409,7 @@
           if (tile && tile.isWidget()) {
               let from = tile.posAtStart, to = from + tile.length;
               if (from >= range.to || to <= range.from)
-                  range = EditorSelection.range(from, to);
+                  range = EditorSelection.undirectionalRange(from, to);
           }
       }
       let { inputState } = view;
@@ -10881,9 +10982,8 @@
               scaleBlock(this.heightMap.lineAt(this.scaler.fromDOM(height), QueryType$1.ByHeight, this.heightOracle, 0, 0), this.scaler);
       }
       getScrollOffset() {
-          let base = this.scrollParent == this.view.scrollDOM ? this.scrollParent.scrollTop
+          return this.scrollParent == this.view.scrollDOM ? this.scrollParent.scrollTop * this.scaleY
               : (this.scrollParent ? this.scrollParent.getBoundingClientRect().top : 0) - this.view.contentDOM.getBoundingClientRect().top;
-          return base * this.scaleY;
       }
       scrollAnchorAt(scrollOffset) {
           let block = this.lineBlockAtHeight(scrollOffset + 8);
@@ -11098,6 +11198,7 @@
           padding: "0 2px 0 6px"
       },
       ".cm-layer": {
+          userSelect: "none", // #1708
           position: "absolute",
           left: 0,
           top: 0,
@@ -11229,6 +11330,8 @@
           backgroundColor: "#f5f5f5",
           color: "black"
       },
+      ".cm-panels-top": { top: "0" },
+      ".cm-panels-bottom": { bottom: "0" },
       "&light .cm-panels-top": {
           borderBottom: "1px solid #ddd"
       },
@@ -11272,8 +11375,9 @@
           userSelect: "none"
       },
       ".cm-highlightSpace": {
-          backgroundImage: "radial-gradient(circle at 50% 55%, #aaa 20%, transparent 5%)",
-          backgroundPosition: "center",
+          background: "radial-gradient(circle at 50% 55%, #aaa 20%, transparent 0) no-repeat",
+          backgroundSize: ".4em",
+          backgroundPosition: "calc(min(50%, 0px)) center"
       },
       ".cm-highlightTab": {
           backgroundImage: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="20"><path stroke="%23888" stroke-width="1" fill="none" d="M1 10H196L190 5M190 15L196 10M197 4L197 16"/></svg>')`,
@@ -11932,7 +12036,6 @@
           for (let event in this.handlers)
               context.addEventListener(event, this.handlers[event]);
           this.measureReq = { read: view => {
-                  this.editContext.updateControlBounds(view.contentDOM.getBoundingClientRect());
                   let sel = getSelection(view.root);
                   if (sel && sel.rangeCount)
                       this.editContext.updateSelectionBounds(sel.getRangeAt(0).getBoundingClientRect());
@@ -12385,7 +12488,7 @@
               this.observer.forceFlush();
           let updated = null;
           let scroll = this.viewState.scrollParent, scrollOffset = this.viewState.getScrollOffset();
-          let { scrollAnchorPos, scrollAnchorHeight } = this.viewState;
+          let { scrollAnchorPos, scrollAnchorHeight, scaleY: scrollScale } = this.viewState;
           if (Math.abs(scrollOffset - this.viewState.scrollOffset) > 1)
               scrollAnchorHeight = -1;
           this.viewState.scrollAnchorHeight = -1;
@@ -12394,13 +12497,14 @@
                   if (scrollAnchorHeight < 0) {
                       if (isScrolledToBottom(scroll || this.win)) {
                           scrollAnchorPos = -1;
-                          scrollAnchorHeight = this.viewState.heightMap.height;
+                          scrollAnchorHeight = this.viewState.heightMap.height / this.viewState.scaleY;
                       }
                       else {
                           let block = this.viewState.scrollAnchorAt(scrollOffset);
                           scrollAnchorPos = block.from;
                           scrollAnchorHeight = block.top;
                       }
+                      scrollScale = this.viewState.scaleY;
                   }
                   this.updateState = 1 /* UpdateState.Measuring */;
                   let changed = this.viewState.measure();
@@ -12464,15 +12568,18 @@
                           else {
                               let newAnchorHeight = scrollAnchorPos < 0 ? this.viewState.heightMap.height :
                                   this.viewState.lineBlockAt(scrollAnchorPos).top;
-                              let diff = (newAnchorHeight - scrollAnchorHeight) / this.scaleY;
+                              let diff = (newAnchorHeight / this.viewState.scaleY) - (scrollAnchorHeight / scrollScale);
                               if ((diff > 1 || diff < -1) &&
+                                  !(browser.ios && this.inputState.lastIOSMomentumScroll > Date.now() - 100) &&
                                   (scroll == this.scrollDOM || this.hasFocus ||
                                       Math.max(this.inputState.lastWheelEvent, this.inputState.lastTouchTime) > Date.now() - 100)) {
                                   scrollOffset = scrollOffset + diff;
-                                  if (scroll)
-                                      scroll.scrollTop += diff;
-                                  else
+                                  if (!scroll)
                                       this.win.scrollBy(0, diff);
+                                  else if (scrollAnchorPos < 0)
+                                      scroll.scrollTop = scroll.scrollHeight;
+                                  else
+                                      scroll.scrollTop += diff;
                                   scrollAnchorHeight = -1;
                                   continue;
                               }
@@ -12757,12 +12864,9 @@
       */
       coordsAtPos(pos, side = 1) {
           this.readMeasured();
-          let rect = this.docView.coordsAt(pos, side);
-          if (!rect || rect.left == rect.right)
-              return rect;
           let line = this.state.doc.lineAt(pos), order = this.bidiSpans(line);
           let span = order[BidiSpan.find(order, pos - line.from, -1, side)];
-          return flattenRect(rect, (span.dir == Direction.LTR) == (side > 0));
+          return this.docView.coordsAt(pos, side, span.dir == Direction.RTL);
       }
       /**
       Return the rectangle around a given character. If `pos` does not
@@ -13832,9 +13936,11 @@
       },
       class: "cm-selectionLayer"
   });
+  // https://discuss.codemirror.net/t/firefox-153-ignores-transparent-selection-styling/9838
+  const selectionBg = browser.gecko && browser.gecko_version == 153 ? "#ffffff01" : "transparent";
   const hideNativeSelection = /*@__PURE__*/Prec.highest(/*@__PURE__*/EditorView.theme({
       ".cm-line": {
-          "& ::selection, &::selection": { backgroundColor: "transparent !important" },
+          "& ::selection, &::selection": { backgroundColor: `${selectionBg} !important` },
           caretColor: "transparent !important"
       },
       ".cm-content": {
@@ -14904,7 +15010,6 @@
           if (!this.dom) {
               this.dom = document.createElement("div");
               this.dom.className = this.top ? "cm-panels cm-panels-top" : "cm-panels cm-panels-bottom";
-              this.dom.style[this.top ? "top" : "bottom"] = "0";
               let parent = this.container || this.view.dom;
               parent.insertBefore(this.dom, this.top ? parent.firstChild : null);
           }
@@ -14983,6 +15088,19 @@
               });
               return form;
           }) };
+  }
+  /**
+  Find the [`Panel`](https://codemirror.net/6/docs/ref/#view.Panel) for an open dialog, using a class
+  name as identifier.
+  */
+  function getDialog(view, className) {
+      let dialogs = view.state.field(dialogField, false) || [];
+      for (let open of dialogs) {
+          let panel = getPanel(view, open);
+          if (panel && panel.dom.classList.contains(className))
+              return panel;
+      }
+      return null;
   }
   const dialogField = /*@__PURE__*/StateField.define({
       create() { return []; },
@@ -18839,8 +18957,7 @@
   }
   /**
   A subclass of [`Language`](https://codemirror.net/6/docs/ref/#language.Language) for use with Lezer
-  [LR parsers](https://lezer.codemirror.net/docs/ref#lr.LRParser)
-  parsers.
+  [LR parsers](https://lezer.codemirror.net/docs/ref#lr.LRParser).
   */
   class LRLanguage extends Language {
       constructor(data, parser, name) {
@@ -19929,17 +20046,24 @@
           if (tr.isUserEvent("delete"))
               tr.changes.iterChangedRanges((fromA, toA) => folded = clearTouchedFolds(folded, fromA, toA));
           folded = folded.map(tr.changes);
+          let rangesToFold = [];
           for (let e of tr.effects) {
               if (e.is(foldEffect) && !foldExists(folded, e.value.from, e.value.to)) {
-                  let { preparePlaceholder } = tr.state.facet(foldConfig);
-                  let widget = !preparePlaceholder ? foldWidget :
-                      Decoration.replace({ widget: new PreparedFoldWidget(preparePlaceholder(tr.state, e.value)) });
-                  folded = folded.update({ add: [widget.range(e.value.from, e.value.to)] });
+                  rangesToFold.push(e.value);
               }
               else if (e.is(unfoldEffect)) {
                   folded = folded.update({ filter: (from, to) => e.value.from != from || e.value.to != to,
                       filterFrom: e.value.from, filterTo: e.value.to });
               }
+          }
+          if (rangesToFold.length) {
+              let { preparePlaceholder } = tr.state.facet(foldConfig);
+              let decorations = rangesToFold.map(value => {
+                  let widget = !preparePlaceholder ? foldWidget :
+                      Decoration.replace({ widget: new PreparedFoldWidget(preparePlaceholder(tr.state, value)) });
+                  return widget.range(value.from, value.to);
+              });
+              folded = folded.update({ add: decorations });
           }
           // Clear folded ranges that cover the selection head
           if (tr.selection)
@@ -20258,7 +20382,7 @@
       or array of tags in their `tag` property, and either a single
       `class` property providing a static CSS class (for highlighter
       that rely on external styling), or a
-      [`style-mod`](https://github.com/marijnh/style-mod#documentation)-style
+      [`style-mod`](https://code.haverbeke.berlin/marijn/style-mod#documentation)-style
       set of CSS properties (which define the styling for those tags).
       
       The CSS rules created for a highlighter will be emitted in the
@@ -21347,8 +21471,10 @@
   on, if any.
   */
   const cursorMatchingBracket = ({ state, dispatch }) => toMatchingBracket(state, dispatch, false);
-  function extendSel(target, how) {
+  function extendSel(target, forward, how) {
       let selection = updateSel(target.state.selection, range => {
+          if (range.undirectional && (range.head >= range.anchor) != forward)
+              range = EditorSelection.range(range.head, range.anchor);
           let head = how(range);
           return EditorSelection.range(range.anchor, head.head, head.goalColumn, head.bidiLevel || undefined, head.assoc);
       });
@@ -21358,7 +21484,7 @@
       return true;
   }
   function selectByChar(view, forward) {
-      return extendSel(view, range => view.moveByChar(range, forward));
+      return extendSel(view, forward, range => view.moveByChar(range, forward));
   }
   /**
   Move the selection head one character to the left, while leaving
@@ -21370,7 +21496,7 @@
   */
   const selectCharRight = view => selectByChar(view, ltrAtCursor(view));
   function selectByGroup(view, forward) {
-      return extendSel(view, range => view.moveByGroup(range, forward));
+      return extendSel(view, forward, range => view.moveByGroup(range, forward));
   }
   /**
   Move the selection head one [group](https://codemirror.net/6/docs/ref/#commands.cursorGroupLeft) to
@@ -21384,13 +21510,19 @@
   /**
   Move the selection head over the next syntactic element to the left.
   */
-  const selectSyntaxLeft = view => extendSel(view, range => moveBySyntax(view.state, range, !ltrAtCursor(view)));
+  const selectSyntaxLeft = view => {
+      let forward = !ltrAtCursor(view);
+      return extendSel(view, forward, range => moveBySyntax(view.state, range, forward));
+  };
   /**
   Move the selection head over the next syntactic element to the right.
   */
-  const selectSyntaxRight = view => extendSel(view, range => moveBySyntax(view.state, range, ltrAtCursor(view)));
+  const selectSyntaxRight = view => {
+      let forward = ltrAtCursor(view);
+      return extendSel(view, forward, range => moveBySyntax(view.state, range, forward));
+  };
   function selectByLine(view, forward) {
-      return extendSel(view, range => view.moveVertically(range, forward));
+      return extendSel(view, forward, range => view.moveVertically(range, forward));
   }
   /**
   Move the selection head one line up.
@@ -21401,7 +21533,7 @@
   */
   const selectLineDown = view => selectByLine(view, true);
   function selectByPage(view, forward) {
-      return extendSel(view, range => view.moveVertically(range, forward, pageInfo(view).height));
+      return extendSel(view, forward, range => view.moveVertically(range, forward, pageInfo(view).height));
   }
   /**
   Move the selection head one page up.
@@ -21414,27 +21546,33 @@
   /**
   Move the selection head to the next line boundary.
   */
-  const selectLineBoundaryForward = view => extendSel(view, range => moveByLineBoundary(view, range, true));
+  const selectLineBoundaryForward = view => extendSel(view, true, range => moveByLineBoundary(view, range, true));
   /**
   Move the selection head to the previous line boundary.
   */
-  const selectLineBoundaryBackward = view => extendSel(view, range => moveByLineBoundary(view, range, false));
+  const selectLineBoundaryBackward = view => extendSel(view, false, range => moveByLineBoundary(view, range, false));
   /**
   Move the selection head one line boundary to the left.
   */
-  const selectLineBoundaryLeft = view => extendSel(view, range => moveByLineBoundary(view, range, !ltrAtCursor(view)));
+  const selectLineBoundaryLeft = view => {
+      let forward = !ltrAtCursor(view);
+      return extendSel(view, forward, range => moveByLineBoundary(view, range, forward));
+  };
   /**
   Move the selection head one line boundary to the right.
   */
-  const selectLineBoundaryRight = view => extendSel(view, range => moveByLineBoundary(view, range, ltrAtCursor(view)));
+  const selectLineBoundaryRight = view => {
+      let forward = ltrAtCursor(view);
+      return extendSel(view, forward, range => moveByLineBoundary(view, range, forward));
+  };
   /**
   Move the selection head to the start of the line.
   */
-  const selectLineStart = view => extendSel(view, range => EditorSelection.cursor(view.lineBlockAt(range.head).from));
+  const selectLineStart = view => extendSel(view, false, range => EditorSelection.cursor(view.lineBlockAt(range.head).from));
   /**
   Move the selection head to the end of the line.
   */
-  const selectLineEnd = view => extendSel(view, range => EditorSelection.cursor(view.lineBlockAt(range.head).to));
+  const selectLineEnd = view => extendSel(view, true, range => EditorSelection.cursor(view.lineBlockAt(range.head).to));
   /**
   Move the selection to the start of the document.
   */
@@ -21474,7 +21612,7 @@
   Expand the selection to cover entire lines.
   */
   const selectLine = ({ state, dispatch }) => {
-      let ranges = selectedLineBlocks(state).map(({ from, to }) => EditorSelection.range(from, Math.min(to + 1, state.doc.length)));
+      let ranges = selectedLineBlocks(state).map(({ from, to }) => EditorSelection.undirectionalRange(from, Math.min(to + 1, state.doc.length)));
       dispatch(state.update({ selection: EditorSelection.create(ranges), userEvent: "select" }));
       return true;
   };
@@ -21497,7 +21635,7 @@
               if (((node.from < range.from && node.to >= range.to) ||
                   (node.to > range.to && node.from <= range.from)) &&
                   cur.next)
-                  return EditorSelection.range(node.to, node.from);
+                  return EditorSelection.undirectionalRange(node.from, node.to);
           }
           return range;
       });
@@ -22085,7 +22223,7 @@
   - Shift-Ctrl-k (Shift-Cmd-k on macOS): [`deleteLine`](https://codemirror.net/6/docs/ref/#commands.deleteLine)
   - Shift-Ctrl-\\ (Shift-Cmd-\\ on macOS): [`cursorMatchingBracket`](https://codemirror.net/6/docs/ref/#commands.cursorMatchingBracket)
   - Ctrl-/ (Cmd-/ on macOS): [`toggleComment`](https://codemirror.net/6/docs/ref/#commands.toggleComment).
-  - Shift-Alt-a: [`toggleBlockComment`](https://codemirror.net/6/docs/ref/#commands.toggleBlockComment).
+  - Shift-Alt-a (Shift-Ctrl-a on macOS): [`toggleBlockComment`](https://codemirror.net/6/docs/ref/#commands.toggleBlockComment).
   - Ctrl-m (Alt-Shift-m on macOS): [`toggleTabFocusMode`](https://codemirror.net/6/docs/ref/#commands.toggleTabFocusMode).
   */
   const defaultKeymap = /*@__PURE__*/[
@@ -22107,7 +22245,7 @@
       { key: "Shift-Mod-k", run: deleteLine },
       { key: "Shift-Mod-\\", run: cursorMatchingBracket },
       { key: "Mod-/", run: toggleComment },
-      { key: "Alt-A", run: toggleBlockComment },
+      { key: "Alt-A", mac: "Ctrl-A", run: toggleBlockComment },
       { key: "Ctrl-m", mac: "Shift-Alt-m", run: toggleTabFocusMode },
   ].concat(standardKeymap);
   /**
@@ -22440,9 +22578,17 @@
   number.
   */
   const gotoLine = view => {
+      let open = getDialog(view, "cm-goto-line");
+      if (open) {
+          let field = open.dom.querySelector("input[type=text]");
+          if (field)
+              field.select();
+          return true;
+      }
       let { state } = view;
       let line = String(state.doc.lineAt(view.state.selection.main.head).number);
       let { close, result } = showDialog(view, {
+          class: "cm-goto-line",
           label: state.phrase("Go to line"),
           input: { type: "text", name: "line", value: line },
           focus: true,
@@ -23021,6 +23167,7 @@
       else if (next.from == from && next.to == to) {
           replacement = state.toText(query.getReplacement(next));
           changes.push({ from: next.from, to: next.to, insert: replacement });
+          next = query.nextMatch(state, next.from, next.to);
           effects.push(EditorView.announce.of(state.phrase("replaced match on line $", state.doc.lineAt(from).number) + "."));
       }
       let changeSet = view.state.changes(changes);
@@ -25425,7 +25572,9 @@
           */
           this.depth = 0;
           /**
-          Any markers (i.e. block quote markers) parsed for the contexts. @internal
+          Any markers (i.e. block quote markers) parsed for the contexts.
+          A block parser that moves across lines, covering such marks, may
+          need to include these in its node structure.
           */
           this.markers = [];
           /**
@@ -25678,8 +25827,9 @@
   }
   function getListIndent(line, pos) {
       let indentAfter = line.countIndent(pos, line.pos, line.indent);
-      let indented = line.countIndent(line.skipSpace(pos), pos, indentAfter);
-      return indented >= indentAfter + 5 ? indentAfter + 1 : indented;
+      let skipped = line.skipSpace(pos);
+      let indented = line.countIndent(skipped, pos, indentAfter);
+      return indented >= indentAfter + 5 || skipped == line.text.length ? indentAfter + 1 : indented;
   }
   function addCodeText(marks, from, to) {
       let last = marks.length - 1;
@@ -26070,6 +26220,8 @@
                   }
               break;
           }
+          if (line.pos == line.text.length)
+              return this.nextLine() ? null : this.finish();
           let leaf = new LeafBlock(this.lineStart + line.pos, line.text.slice(line.pos));
           for (let parse of this.parser.leafBlockParsers)
               if (parse) {
@@ -27379,7 +27531,7 @@
       }
       return false;
   }
-  const delimiterLine = /^\|?(\s*:?-+:?\s*\|)+(\s*:?-+:?\s*)?$/;
+  const delimiterLine = /^[>\s]*\|?(\s*:?-+:?\s*\|)+(\s*:?-+:?\s*)?$/;
   class TableParser {
       constructor() {
           // Null means we haven't seen the second line yet, false means this
@@ -29854,12 +30006,12 @@
   }
 
   // This file was generated by lezer-generator. You probably shouldn't edit it.
-  const descendantOp = 135,
+  const descendantOp = 148,
     Unit = 1,
-    identifier$2 = 136,
-    callee = 137,
+    identifier$2 = 149,
+    callee = 150,
     VariableName = 2,
-    queryIdentifier = 138,
+    queryIdentifier = 151,
     queryVariableName = 3,
     QueryCallee = 4;
 
@@ -29968,32 +30120,32 @@
   });
 
   // This file was generated by lezer-generator. You probably shouldn't edit it.
-  const spec_callee = {__proto__:null,lang:44, "nth-child":44, "nth-last-child":44, "nth-of-type":44, "nth-last-of-type":44, dir:44, "host-context":44, if:90, url:132, "url-prefix":132, domain:132, regexp:132};
-  const spec_queryIdentifier = {__proto__:null,or:104, and:104, not:112, only:112, layer:186};
-  const spec_QueryCallee = {__proto__:null,selector:118, layer:182};
-  const spec_AtKeyword = {__proto__:null,"@import":178, "@media":190, "@charset":194, "@namespace":198, "@keyframes":204, "@supports":216, "@scope":220, "@font-feature-values":226};
-  const spec_identifier$1 = {__proto__:null,to:223};
+  const spec_callee = {__proto__:null,lang:44, "nth-child":44, "nth-last-child":44, "nth-of-type":44, "nth-last-of-type":44, dir:44, "host-context":44, if:90, url:158, "url-prefix":158, domain:158, regexp:158};
+  const spec_queryIdentifier = {__proto__:null,or:104, and:104, not:112, only:112, layer:212};
+  const spec_QueryCallee = {__proto__:null,selector:118, style:124, layer:208};
+  const spec_AtKeyword = {__proto__:null,"@import":204, "@media":216, "@charset":220, "@namespace":224, "@keyframes":230, "@supports":242, "@scope":246, "@font-feature-values":252};
+  const spec_identifier$1 = {__proto__:null,to:249};
   const parser$2 = LRParser.deserialize({
     version: 14,
-    states: "IpQYQdOOO#}QdOOP$UO`OOO%OQaO'#CfOOQP'#Ce'#CeO%VQdO'#CgO%[Q`O'#CgO%aQaO'#FdO&XQdO'#CkO&xQaO'#CcO'SQdO'#CnO'_QdO'#DtO'dQdO'#DvO'oQdO'#D}O'oQdO'#EQOOQP'#Fd'#FdO)OQhO'#EsOOQS'#Fc'#FcOOQS'#Ev'#EvQYQdOOO)VQdO'#EWO*cQhO'#E^O)VQdO'#E`O*jQdO'#EbO*uQdO'#EeO)zQhO'#EkO*}QdO'#EmO+YQdO'#EpO+_QaO'#CfO+fQ`O'#ETO+kQ`O'#FnO+vQdO'#FnQOQ`OOP,QO&jO'#CaPOOO)CAR)CAROOQP'#Ci'#CiOOQP,59R,59RO%VQdO,59ROOQP'#Cm'#CmOOQP,59V,59VO&XQdO,59VO,]QdO,59YO'_QdO,5:`O'dQdO,5:bO'oQdO,5:iO'oQdO,5:kO'oQdO,5:lO'oQdO'#E}O,hQ`O,58}O,pQdO'#ESOOQS,58},58}OOQP'#Cq'#CqOOQO'#Dr'#DrOOQP,59Y,59YO,wQ`O,59YO,|Q`O,59YOOQP'#Du'#DuOOQP,5:`,5:`O-RQpO'#DwO-^QdO'#DxO-cQ`O'#DxO-hQpO,5:bO.RQaO,5:iO.iQaO,5:lOOQW'#D^'#D^O/eQhO'#DgO/xQhO,5;_O)zQhO'#DeO0VQ`O'#DkO0[QhO'#DnOOQW'#Fj'#FjOOQS,5;_,5;_O0aQ`O'#DhOOQS-E8t-E8tOOQ['#Cv'#CvO0fQdO'#CwO0|QdO'#C}O1dQdO'#DQO1zQ!pO'#DSO4TQ!jO,5:rOOQO'#DX'#DXO,|Q`O'#DWO4eQ!nO'#FgO6hQ`O'#DYO6mQ`O'#DoOOQ['#Fg'#FgO6rQhO'#FqO7QQ`O,5:xO7VQ!bO,5:zOOQS'#Ed'#EdO7_Q`O,5:|O7dQdO,5:|OOQO'#Eg'#EgO7lQ`O,5;PO7qQhO,5;VO'oQdO'#DjOOQS,5;X,5;XO0aQ`O,5;XO7yQdO,5;XOOQS'#FU'#FUO8RQdO'#ErO7QQ`O,5;[O8ZQdO,5:oO8kQdO'#FPO8xQ`O,5<YO8xQ`O,5<YPOOO'#Eu'#EuP9TO&jO,58{POOO,58{,58{OOQP1G.m1G.mOOQP1G.q1G.qOOQP1G.t1G.tO,wQ`O1G.tO,|Q`O1G.tOOQP1G/z1G/zO9`QpO1G/|O9hQaO1G0TO:OQaO1G0VO:fQaO1G0WO:|QaO,5;iOOQO-E8{-E8{OOQS1G.i1G.iO;WQ`O,5:nO;]QdO'#DsO;dQdO'#CuOOQO'#Dz'#DzOOQO,5:d,5:dO-^QdO,5:dOOQP1G/|1G/|O)VQdO1G/|O;kQ!jO'#D^O;yQ!bO,59yO<RQhO,5:ROOQO'#Fk'#FkO;|Q!bO,59}O<ZQhO'#FVO)zQhO,59{O)zQhO'#FVO=OQhO1G0yOOQS1G0y1G0yO=YQhO,5:PO>QQhO'#DlOOQW,5:V,5:VOOQW,5:Y,5:YOOQW,5:S,5:SO>[Q!fO'#FhOOQS'#Fh'#FhOOQS'#Ex'#ExO?lQdO,59cOOQ[,59c,59cO@SQdO,59iOOQ[,59i,59iO@jQdO,59lOOQ[,59l,59lOOQ[,59n,59nO)VQdO,59pOAQQhO'#EYOOQW'#EY'#EYOAlQ`O1G0^O4^QhO1G0^OOQ[,59r,59rO)zQhO'#D[OOQ[,59t,59tOAqQ#tO,5:ZOA|QhO'#FROBZQ`O,5<]OOQS1G0d1G0dOOQS1G0f1G0fOOQS1G0h1G0hOBfQ`O1G0hOBkQdO'#EhOOQS1G0k1G0kOOQS1G0q1G0qOBvQaO,5:UO7QQ`O1G0sOOQS1G0s1G0sO0aQ`O1G0sOOQS-E9S-E9SOOQS1G0v1G0vOB}Q!fO1G0ZOCeQ`O'#EVOOQO1G0Z1G0ZOOQO,5;k,5;kOCjQdO,5;kOOQO-E8}-E8}OCwQ`O1G1tPOOO-E8s-E8sPOOO1G.g1G.gOOQP7+$`7+$`OOQP7+%h7+%hO)VQdO7+%hOOQS1G0Y1G0YODSQaO'#FmOD^Q`O,5:_ODcQ!fO'#EwOEaQdO'#FfOEkQ`O,59aOOQO1G0O1G0OOEpQ!bO7+%hO)VQdO1G/eOE{QhO1G/iOOQW1G/m1G/mOOQW1G/g1G/gOF^QhO,5;qOOQW-E9T-E9TOOQS7+&e7+&eOGRQhO'#D^OGaQhO'#FlOGlQ`O'#FlOGqQ`O,5:WOOQS-E8v-E8vOOQ[1G.}1G.}OOQ[1G/T1G/TOOQ[1G/W1G/WOOQ[1G/[1G/[OGvQdO,5:tOOQS7+%x7+%xOG{Q`O7+%xOHQQhO'#D]OHYQ`O,59vO)zQhO,59vOOQ[1G/u1G/uOHbQ`O1G/uOHgQhO,5;mOOQO-E9P-E9POOQS7+&S7+&SOHuQbO'#DSOOQO'#Ej'#EjOITQ`O'#EiOOQO'#Ei'#EiOI`Q`O'#FSOIhQdO,5;SOOQS,5;S,5;SOOQ[1G/p1G/pOOQS7+&_7+&_O7QQ`O7+&_OIsQ!fO'#FOO)VQdO'#FOOJzQdO7+%uOOQO7+%u7+%uOOQO,5:q,5:qOOQO1G1V1G1VOK_Q!bO<<ISOKjQdO'#E|OKtQ`O,5<XOOQP1G/y1G/yOOQS-E8u-E8uOK|QdO'#E{OLWQ`O,5<QOOQ]1G.{1G.{OOQP<<IS<<ISOL`Q`O<<ISOLeQdO7+%POOQO'#D`'#D`OLlQ!bO7+%TOLtQhO'#EzOMRQ`O,5<WO)VQdO,5<WOOQW1G/r1G/rOOQO'#E['#E[OMZQ`O1G0`OOQS<<Id<<IdO)VQdO,59wOMzQhO1G/bOOQ[1G/b1G/bONRQ`O1G/bOOQW-E8w-E8wOOQ[7+%a7+%aOOQO,5;T,5;TOBnQdO'#FTOI`Q`O,5;nOOQS,5;n,5;nOOQS-E9Q-E9QOOQS1G0n1G0nOOQS<<Iy<<IyONZQ!fO,5;jOOQS-E8|-E8|OOQO<<Ia<<IaOOQPAN>nAN>nO! bQ`OAN>nO! gQaO,5;hOOQO-E8z-E8zO! qQdO,5;gOOQO-E8y-E8yOOQW<<Hk<<HkOOQW<<Ho<<HoO! {QhO<<HoO!!^QhO,5;fO!!iQ`O,5;fOOQO-E8x-E8xO!!nQdO1G1rOGvQdO'#FQO!!xQ`O7+%zOOQW7+%z7+%zO!#QQ!bO1G/cOOQ[7+$|7+$|O!#]QhO7+$|P!#dQ`O'#EyOOQO,5;o,5;oOOQO-E9R-E9ROOQS1G1Y1G1YOOQPG24YG24YO!#iQ`OAN>ZO)VQdO1G1QO!#nQ`O7+'^OOQO,5;l,5;lOOQO-E9O-E9OOOQW<<If<<IfOOQ[<<Hh<<HhPOQW,5;e,5;eOOQWG23uG23uO!#vQdO7+&l",
-    stateData: "!$Z~O$QOS$RQQ~OWVO^_O`WOcYOdYOl`OmZOp[O!r]O!u^O!{dO#ReO#TfO#VgO#YhO#`iO#bjO#ekO#|RO$XTO~OQmOWVO^_O`WOcYOdYOl`OmZOp[O!r]O!u^O!{dO#ReO#TfO#VgO#YhO#`iO#bjO#ekO#|lO$XTO~O#z$bP~P!jO$RqO~O`YXcYXdYXmYXpYXsYX!aYX!rYX!uYX#{YX$X[X~OgYX~P$ZO#|sO~O$XuO~O$XuO`$WXc$WXd$WXm$WXp$WXs$WX!a$WX!r$WX!u$WX#{$WXg$WX~O#|vO~O`xOcyOdyOmzOp{O!r|O!u!OO#{}O~Os!RO!a!PO~P&^Of!XO#|!TO#}!UO~O#|!YO~OW!^O#|![O$X!]O~OWVO^_O`WOcYOdYOmZOp[O!r]O!u^O#|RO$XTO~OS!fOc!gOd!gOh!cOs!RO!Y!eO!]!jO$O!bO~On!iO~P(dOQ!tOh!mOp!nOs!oOu!wOw!wO}!uO!d!vO#|!lO#}!rO$]!pO~OS!fOc!gOd!gOh!cO!Y!eO!]!jO$O!bO~Os$eP~P)zOw!|O!d!vO#|!{O~Ow#OO#|#OO~Oh#ROs!RO#c#TO~O#|#VO~Oc!xX~P$ZOc#YO~On#ZO#z$bXr$bX~O#z$bXr$bX~P!jO$S#^O$T#^O$U#`O~Of#eO#|!TO#}!UO~Os!RO!a!PO~Or$bP~P!jOh#oO~Oh#pO~Oo!kX!o!kX$X!mX~O#|#qO~O$X#sO~Oo#tO!o#uO~O`xOcyOdyOmzOp{O~Os!qa!a!qa!r!qa!u!qa#{!qag!qa~P-pOs!ta!a!ta!r!ta!u!ta#{!tag!ta~P-pOS!fOc!gOd!gOh!cO!Y!eO!]!jO~OR#yOu#yOw#yO$O#vO$]!pO~P/POn$PO!U#|O!a#}O~P(dOh$RO~O$O$TO~Oh#RO~O`$WOc$WOg$ZOl$WOm$WOn$WO~P)VO`$WOc$WOl$WOm$WOn$WOo$]O~P)VO`$WOc$WOl$WOm$WOn$WOr$_O~P)VOP$`OSvXcvXdvXhvXnvXyvX!YvX!]vX!}vX#PvX$OvX!WvXQvX`vXgvXlvXmvXpvXsvXuvXwvX}vX!dvX#|vX#}vX$]vXovXrvX!avX#zvX$dvX!pvX~Oy$aO!}$bO#P$cOn$eP~P)zOh#pOS$ZXc$ZXd$ZXn$ZXy$ZX!Y$ZX!]$ZX!}$ZX#P$ZX$O$ZXQ$ZX`$ZXg$ZXl$ZXm$ZXp$ZXs$ZXu$ZXw$ZX}$ZX!d$ZX#|$ZX#}$ZX$]$ZXo$ZXr$ZX!a$ZX#z$ZX$d$ZX!p$ZX~Oh$gO~Oh$iO~O!U#|O!a$jOs$eXn$eX~Os!RO~On$mOy$aO~On$nO~Ow$oO!d!vO~Os$pO~Os!RO!U#|O~Os!RO#c$vO~O#|#VOs#fX~O$d$zOn!wa#z!war!wa~P)VOn#sX#z#sXr#sX~P!jOn#ZO#z$bar$ba~O$S#^O$T#^O$U%RO~Oo%TO!o%UO~Os!qi!a!qi!r!qi!u!qi#{!qig!qi~P-pOs!si!a!si!r!si!u!si#{!sig!si~P-pOs!ti!a!ti!r!ti!u!ti#{!tig!ti~P-pOs#qa!a#qa~P&^Or%VO~Og$aP~P'oOg$YP~P)VOc!SXg!QX!U!QX!W!SX~Oc%_O!W%`O~Og%aO!U#|O~O!U#|OS#yXc#yXd#yXh#yXn#yXs#yX!Y#yX!]#yX!a#yX$O#yX~On%eO!a#}O~P(dO!U#|OS!Xac!Xad!Xah!Xan!Xas!Xa!Y!Xa!]!Xa!a!Xa$O!Xag!Xa~O$O%fOg$`P~P/POy$aOQ$[X`$[Xc$[Xg$[Xh$[Xl$[Xm$[Xn$[Xp$[Xs$[Xu$[Xw$[X}$[X!d$[X#|$[X#}$[X$]$[Xo$[Xr$[X~O`$WOc$WOg%kOl$WOm$WOn$WO~P)VO`$WOc$WOl$WOm$WOn$WOo%lO~P)VO`$WOc$WOl$WOm$WOn$WOr%mO~P)VOh%oOS!|Xc!|Xd!|Xn!|X!Y!|X!]!|X$O!|X~On%pO~Og%uOw%vO!e%vO~Os#uX!a#uXn#uX~P)zO!a$jOs$ean$ea~On%yO~Or&QO#|%{O$]%zO~Og&RO~P&^Oy$aO!a&VO$d$zOn!wi#z!wir!wi~P)VO$c&YO~On#sa#z#sar#sa~P!jOn#ZO#z$bir$bi~O!a&]Og$aX~P&^Og&_O~Oy$aOQ#kXg#kXh#kXp#kXs#kXu#kXw#kX}#kX!a#kX!d#kX#|#kX#}#kX$]#kX~O!a&aOg$YX~P)VOg&cO~Oo&dOy$aO!p&eO~OR#yOu#yOw#yO$O&gO$]!pO~O!U#|OS#yac#yad#yah#yan#yas#ya!Y#ya!]#ya!a#ya$O#ya~Oc!SXg!QX!U!QX!a!QX~O!U#|O!a&iOg$`X~Oc&kO~Og&lO~O#|&mO~On&oO~Oc&pO!U#|O~Og&rOn&qO~Og&uO~O!U#|Os#ua!a#uan#ua~OP$`OsvX!avXgvX~O$]%zOs#]X!a#]X~Os!RO!a&wO~Or&{O#|%{O$]%zO~Oy$aOQ#rXh#rXn#rXp#rXs#rXu#rXw#rX}#rX!a#rX!d#rX#z#rX#|#rX#}#rX$]#rX$d#rXr#rX~O!a&VO$d$zOn!wq#z!wqr!wq~P)VOo'QOy$aO!p'RO~Og#pX!a#pX~P'oO!a&]Og$aa~Og#oX!a#oX~P)VO!a&aOg$Ya~Oo'QO~Og'WO~P)VOg'XO!W'YO~O$O%fOg#nX!a#nX~P/PO!a&iOg$`a~O`'_Og'aO~OS#mac#mad#mah#ma!Y#ma!]#ma$O#ma~Og'cO~PMcOg'cOn'dO~Oy$aOQ#rah#ran#rap#ras#rau#raw#ra}#ra!a#ra!d#ra#z#ra#|#ra#}#ra$]#ra$d#rar#ra~Oo'iO~Og#pa!a#pa~P&^Og#oa!a#oa~P)VOR#yOu#yOw#yO$O&gO$]%zO~O!U#|Og#na!a#na~Oc'kO~O!a&iOg$`i~P)VO`'_Og'oO~Oy$aOg!Pin!Pi~Og'pO~PMcOn'qO~Og'rO~O!a&iOg$`q~Og#nq!a#nq~P)VO$Q!e$R$]`$]y!u~",
-    goto: "4h$fPPPPP$gP$jP$s%V$s%i%{P$sP&R$sPP&XPPP&_&i&iPPPPP&iPP&iP'VP&iP&i(Q&iP(n(q(w(w)Z(wP(wP(wP(w(wP)j(w)vP(w)yPP*m*s$s*y$s+P+P+V+ZPP$sP$s$sP+a,],j,q$jP,zP,}P$jP$jP$jP-T$jP-W-Z-^-e$jP$jPP$jP-j$jP-m-s.S.j.x/O/Y/`/f/l/r/|0S0Y0`0f0lPPPPPPPPPPP0r0{P1q1t2vP3O3x4R4U4XPP4_RrQ_aOPco!R#Z$}q_OP]^co|}!O!P!R#R#Z#o$}&]qSOP]^co|}!O!P!R#R#Z#o$}&]qUOP]^co|}!O!P!R#R#Z#o$}&]QtTR#auQwWR#bxQ!VYR#cyQ#c!XS$f!s!tR%S#e!V!wdf!m!n!o#Y#p#u$Y$[$^$a$y%U%Z%_&V&W&a&f&k&p'U'^'k's!U!wdf!m!n!o#Y#p#u$Y$[$^$a$y%U%Z%_&V&W&a&f&k&p'U'^'k'sU#y!c%`'YU%}$p&P&wR&v%|!V!sdf!m!n!o#Y#p#u$Y$[$^$a$y%U%Z%_&V&W&a&f&k&p'U'^'k'sR$h!uQ%s$gR&s%tq!h`ei!c!d!e!q#|#}$O$R$e$g$j%t&iQ#w!cQ%h$RQ&h%`Q'[&iR'j'YQ#UjQ$U!jQ$t#TR&T$vR$S!f!U!wdf!m!n!o#Y#p#u$Y$[$^$a$y%U%Z%_&V&W&a&f&k&p'U'^'k'sQ!|gR$o!}Q!WYR#dyQ#c!WR%S#dQ!ZZR#fzQ!_[R#g{T!^[{Q#r!]R%]#sQ!SXQ!i`Q#SjQ#m!QQ$P!dQ$l!yQ$r#QQ$u#UQ$x#XQ%e$OQ&S$tQ&y&OQ&|&TR'h&xSnP!RQ#]oQ$|#ZR&Z$}ZmPo!R#Z$}Q${#YQ&X$yR'P&WR$e!qQ&n%oR'm'_R!}gR#PhR$q#PS&O$p&PR'f&wV%|$p&P&wR#XkQ#_qR%Q#_QcOSoP!RU!kco$}R$}#ZQ%Z#pY&`%Z&f'U'^'sQ&f%_Q'U&aQ'^&kR's'kQ$Y!mQ$[!nQ$^!oV%j$Y$[$^Q%t$gR&t%tQ&j%gS']&j'lR'l'^Q&b%ZR'V&bQ&^%WR'T&^Q!QXR#l!QQ&W$yR'O&WQ#[nS%O#[%PR%P#]Q'`&nR'n'`Q$k!xR%x$kQ&P$pR&z&PQ&x&OR'g&xQ#WkR$w#WQ$O!dR%d$O_bOPco!R#Z$}^XOPco!R#Z$}Q!`]Q!a^Q#h|Q#i}Q#j!OQ#k!PQ$s#RQ%W#oR'S&]R%[#pQ!qdQ!zf[$V!m!n!o$Y$[$^Q$y#Yd%Y#p%Z%_&a&f&k'U'^'k'sQ%^#uQ%n$aS&U$y&WQ&[%UQ&}&VR'b&p]$X!m!n!o$Y$[$^Q!d`U!xe!q$eQ#QiQ#x!cS#{!d$OQ$Q!eQ%b#|Q%c#}Q%g$RS%r$g%tQ%w$jR'Z&iQ#z!cQ&h%`R'j'YR%i$RR%X#oQpPR#n!RQ!yeQ$d!qR%q$e",
-    nodeNames: "⚠ Unit VariableName VariableName QueryCallee Comment StyleSheet RuleSet UniversalSelector TagSelector TagName NamespacedTagSelector NamespaceName TagName NestingSelector ClassSelector . ClassName PseudoClassSelector : :: PseudoClassName PseudoClassName ) ( ArgList ValueName ParenthesizedValue AtKeyword # ; ] [ BracketedValue } { BracedValue ColorLiteral NumberLiteral StringLiteral BinaryExpression BinOp CallExpression Callee IfExpression if ArgList IfBranch KeywordQuery FeatureQuery FeatureName BinaryQuery LogicOp ComparisonQuery CompareOp UnaryQuery UnaryQueryOp ParenthesizedQuery SelectorQuery selector ParenthesizedSelector CallQuery ArgList , PseudoQuery CallLiteral CallTag ParenthesizedContent PseudoClassName ArgList IdSelector IdName AttributeSelector AttributeName NamespacedAttribute NamespaceName AttributeName MatchOp MatchFlag ChildSelector ChildOp DescendantSelector SiblingSelector SiblingOp Block Declaration PropertyName Important ImportStatement import Layer layer LayerName layer MediaStatement media CharsetStatement charset NamespaceStatement namespace NamespaceName KeyframesStatement keyframes KeyframeName KeyframeList KeyframeSelector KeyframeRangeName SupportsStatement supports ScopeStatement scope to FontFeatureStatement font-feature-values FontName AtRule Styles",
-    maxTerm: 159,
+    states: "MrQYQdOOO#}QdOOP$UO`OOO%OQaO'#CfOOQP'#Ce'#CeO%VQdO'#CgO%[Q`O'#CgO%aQaO'#FqO&XQdO'#CkO&xQaO'#CcO'SQdO'#CnO'_QdO'#ERO'dQdO'#ETO'oQdO'#E[O'oQdO'#E_OOQP'#Fq'#FqO)RQhO'#FQOOQS'#Fp'#FpOOQS'#FT'#FTQYQdOOO)YQdO'#EeO*iQhO'#EkO)YQdO'#EmO*pQdO'#EoO*{QdO'#ErO)}QhO'#ExO+TQdO'#EzO+`QdO'#E}O+eQaO'#CfO+lQ`O'#EbO+qQ`O'#F}O+|QdO'#F}QOQ`OOP,WO&jO'#CaPOOO)CA`)CA`OOQP'#Ci'#CiOOQP,59R,59RO%VQdO,59ROOQP'#Cm'#CmOOQP,59V,59VO&XQdO,59VO,cQdO,59YO'_QdO,5:mO'dQdO,5:oO'oQdO,5:vO'oQdO,5:xO'oQdO,5:yO'oQdO'#F[O,nQ`O,58}O,vQdO'#EaOOQS,58},58}OOQP'#Cq'#CqOOQO'#EP'#EPOOQP,59Y,59YO,}Q`O,59YO-SQ`O,59YOOQP'#ES'#ESOOQP,5:m,5:mO-XQpO'#EUO-dQdO'#EVO-iQ`O'#EVO-nQpO,5:oO.XQaO,5:vO.oQaO,5:yOOQW'#D^'#D^O/nQhO'#DgO0RQhO,5;lO)}QhO'#DeO0`Q`O'#DnO0eQhO'#D{OOQW'#Fw'#FwOOQS,5;l,5;lO0jQ`O'#DhO0oQ`O'#DkOOQS-E9R-E9ROOQ['#Cv'#CvO0tQdO'#CwO1[QdO'#C}O1rQdO'#DQO2YQ!pO'#DSO4fQ!jO,5;POOQO'#DX'#DXO-SQ`O'#DWO4vQ!nO'#FtO6|Q`O'#DYO7RQ`O'#D|OOQ['#Ft'#FtO7WQhO'#GQO7fQ`O,5;VO7kQ!bO,5;XOOQS'#Eq'#EqO7sQ`O,5;ZO7xQdO,5;ZOOQO'#Et'#EtO8QQ`O,5;^O8VQhO,5;dO'oQdO'#DjOOQS,5;f,5;fO0jQ`O,5;fO8_QdO,5;fOOQS'#Fc'#FcO8gQdO'#FPO7fQ`O,5;iO8oQdO,5:|O9PQdO'#F^O9^Q`O,5<iO9^Q`O,5<iPOOO'#FS'#FSP9iO&jO,58{POOO,58{,58{OOQP1G.m1G.mOOQP1G.q1G.qOOQP1G.t1G.tO,}Q`O1G.tO-SQ`O1G.tOOQP1G0X1G0XO9tQpO1G0ZO9|QaO1G0bO:dQaO1G0dO:zQaO1G0eO;bQaO,5;vOOQO-E9Y-E9YOOQS1G.i1G.iO;lQ`O,5:{O;qQdO'#EQO;xQdO'#CuOOQO'#EX'#EXOOQO,5:q,5:qO-dQdO,5:qOOQP1G0Z1G0ZO)YQdO1G0ZO<PQ!jO'#D^O<_Q!bO,59yO<gQhO,5:ROOQO'#Fx'#FxO<bQ!bO,59}O<oQhO'#FdO)}QhO,59{O)}QhO'#FdO=gQhO1G1WOOQS1G1W1G1WO=qQhO,5:PO>lQhO'#DoOOQW,5:Y,5:YOOQW,5:g,5:gOOQW,5:S,5:SO>vQhO,5:VO?bQ!fO'#FuOOQS'#Fu'#FuOOQS'#FV'#FVO@rQdO,59cOOQ[,59c,59cOAYQdO,59iOOQ[,59i,59iOApQdO,59lOOQ[,59l,59lOOQ[,59n,59nO)YQdO,59pOBWQhO'#EgOOQW'#Eg'#EgOBuQ`O1G0kO4oQhO1G0kOOQ[,59r,59rO)}QhO'#D[OOQ[,59t,59tOBzQ#tO,5:hOCVQhO'#F`OCdQ`O,5<lOOQS1G0q1G0qOOQS1G0s1G0sOOQS1G0u1G0uOCoQ`O1G0uOCtQdO'#EuOOQS1G0x1G0xOOQS1G1O1G1OODPQaO,5:UO7fQ`O1G1QOOQS1G1Q1G1QO0jQ`O1G1QOOQS-E9a-E9aOOQS1G1T1G1TODWQ!fO1G0hODnQ`O'#EdOOQO1G0h1G0hOOQO,5;x,5;xODsQdO,5;xOOQO-E9[-E9[OEQQ`O1G2TPOOO-E9Q-E9QPOOO1G.g1G.gOOQP7+$`7+$`OOQP7+%u7+%uO)YQdO7+%uOOQS1G0g1G0gOE]QaO'#F|OEgQ`O,5:lOElQ!fO'#FUOFjQdO'#FsOFtQ`O,59aOOQO1G0]1G0]OFyQ!bO7+%uO)YQdO1G/eOGUQhO1G/iOOQW1G/m1G/mOOQW1G/g1G/gOGgQhO,5<OOOQW-E9b-E9bOOQS7+&r7+&rOH_QhO'#D^OHmQhO'#F{OHxQ`O'#F{OH}Q`O,5:ZOISQ!bO'#D`O>vQhO'#DmOI_QhO'#DsOIgQhO'#DuOIlQ!jO'#FzOOQO'#Fz'#FzOIwQ`O'#DxOJPQ!bO'#DzOOQO'#Fy'#FyOJUQ`O1G/qOOQS-E9T-E9TOOQ[1G.}1G.}OOQ[1G/T1G/TOOQ[1G/W1G/WOOQ[1G/[1G/[OJZQdO,5;ROOQS7+&V7+&VOJ`Q`O7+&VOJeQhO'#D]OJmQ`O,59vO)}QhO,59vOOQ[1G0S1G0SOJuQ`O1G0SOJzQhO,5;zOOQO-E9^-E9^OOQS7+&a7+&aOKYQbO'#DSOOQO'#Ew'#EwOKhQ`O'#EvOOQO'#Ev'#EvOKsQ`O'#FaOK{QdO,5;aOOQS,5;a,5;aOOQ[1G/p1G/pOOQS7+&l7+&lO7fQ`O7+&lOLWQ!fO'#F]O)YQdO'#F]OM_QdO7+&SOOQO7+&S7+&SOOQO,5;O,5;OOOQO1G1d1G1dOMrQ!bO<<IaOM}QdO'#FZONXQ`O,5<hOOQP1G0W1G0WOOQS-E9S-E9SONaQdO'#FYONkQ`O,5<_OOQ]1G.{1G.{OOQP<<Ia<<IaONsQ`O<<IaONxQdO7+%POOQO'#D`'#D`O! PQ!bO7+%TO! XQhO'#FXO! fQ`O,5<gO)YQdO,5<gOOQW1G/u1G/uO! nQ`O,5:XO>vQhO'#DtOOQO,5:_,5:_O! sQhO,5:aO! {QhO,5:fO)YQdO,5:dOOQW7+%]7+%]OOQO'#Ei'#EiO!!SQ`O1G0mOOQS<<Iq<<IqO)YQdO,59wO!!vQhO1G/bOOQ[1G/b1G/bO!!}Q`O1G/bOOQW-E9U-E9UOOQ[7+%n7+%nOOQO,5;b,5;bOCwQdO'#FbOKsQ`O,5;{OOQS,5;{,5;{OOQS-E9_-E9_OOQS1G0{1G0{OOQS<<JW<<JWO!#VQ!fO,5;wOOQS-E9Z-E9ZOOQO<<In<<InOOQPAN>{AN>{O!$^Q`OAN>{O!$cQaO,5;uOOQO-E9X-E9XO!$mQdO,5;tOOQO-E9W-E9WOOQW<<Hk<<HkOOQW<<Ho<<HoO!$wQhO<<HoO!%YQhO'#D^O!%hQhO,5;sO!%sQ`O,5;sOOQO-E9V-E9VO!%xQdO1G2RO!&SQhO1G/sO!&[Q`O,5:`O>vQhO'#DwOOQO1G/{1G/{O!&aQ!bO1G0QO!&iQdO1G0OOJZQdO'#F_O!&pQ`O7+&XOOQW7+&X7+&XO!&xQ!bO1G/cOOQ[7+$|7+$|O!'TQhO7+$|P!'[Q`O'#FWOOQO,5;|,5;|OOQO-E9`-E9`OOQS1G1g1G1gOOQPG24gG24gO!'aQ`OAN>ZO)YQdO1G1_O!'fQ`O7+'mOOQO1G/z1G/zO!'nQ`O,5:cO!'sQhO7+%lOOQO,5;y,5;yOOQO-E9]-E9]OOQW<<Is<<IsOOQ[<<Hh<<HhPOQW,5;r,5;rOOQWG23uG23uO!'zQdO7+&yOOQO1G/}1G/}OOQO<<IW<<IW",
+    stateData: "!(_~O$_OS$`QQ~OWVO^_O`WOcYOdYOl`OmZOp[O#P]O#S^O#YdO#`eO#bfO#dgO#ghO#miO#ojO#rkO$ZRO$fTO~OQmOWVO^_O`WOcYOdYOl`OmZOp[O#P]O#S^O#YdO#`eO#bfO#dgO#ghO#miO#ojO#rkO$ZlO$fTO~O$X$qP~P!jO$`qO~O`YXcYXdYXmYXpYXsYX!eYX#PYX#SYX$YYX$f[X~OgYX~P$ZO$ZsO~O$fuO~O$fuO`$eXc$eXd$eXm$eXp$eXs$eX!e$eX#P$eX#S$eX$Y$eXg$eX~O$ZvO~O`xOcyOdyOmzOp{O#P|O#S!OO$Y}O~Os!RO!e!PO~P&^Of!XO$Z!TO$[!UO~O$Z!YO~OW!^O$Z![O$f!]O~OWVO^_O`WOcYOdYOmZOp[O#P]O#S^O$ZRO$fTO~OS!fOc!gOd!gOh!cOs!RO!Y!eO!]!jO!`!kO$]!bO~On!iO~P(dOQ!uOh!nOp!oOs!pOu!xOw!xO}!vO!q!wO$Z!mO$[!sO$j!qO~OS!fOc!gOd!gOh!cO!Y!eO!]!jO!`!kO$]!bO~Os$tP~P)}Ow!}O!q!wO$Z!|O~Ow#PO$Z#PO~Oh#SOs!RO#p#UO~O$Z#WO~Oc#VX~P$ZOc#ZO~On#[O$X$qXr$qX~O$X$qXr$qX~P!jO$a#_O$b#_O$c#aO~Of#fO$Z!TO$[!UO~Os!RO!e!PO~Or$qP~P!jOh#pO~Oh#qO~Oo!xX!|!xX$f!zX~O$Z#rO~O$f#tO~Oo#uO!|#vO~O`xOcyOdyOmzOp{O~Os#Oa!e#Oa#P#Oa#S#Oa$Y#Oag#Oa~P-vOs#Ra!e#Ra#P#Ra#S#Ra$Y#Rag#Ra~P-vOS!fOc!gOd!gOh!cO!Y!eO!]!jO!`!kO~OR#zOu#zOw#zO$]#wO$j!qO~P/VOn$QO!U#}O!e$OO~P(dOh$SO~O$]$UO~Oh#SO~Oh$WO~O`$YOc$YOg$]Ol$YOm$YOn$YO~P)YO`$YOc$YOl$YOm$YOn$YOo$_O~P)YO`$YOc$YOl$YOm$YOn$YOr$aO~P)YOP$bOSvXcvXdvXhvXnvXyvX!YvX!]vX!`vX#[vX#^vX$]vX!WvXQvX`vXgvXlvXmvXpvXsvXuvXwvX}vX!qvX$ZvX$[vX$jvXovXrvX!evX$XvX$svX!}vX~Oy$cO#[$dO#^$eOn$tP~P)}Oh#qOS$hXc$hXd$hXn$hXy$hX!Y$hX!]$hX!`$hX#[$hX#^$hX$]$hXQ$hX`$hXg$hXl$hXm$hXp$hXs$hXu$hXw$hX}$hX!q$hX$Z$hX$[$hX$j$hXo$hXr$hX!e$hX$X$hX$s$hX!}$hX~Oh$iO~Oh$kO~O!U#}O!e$lOs$tXn$tX~Os!RO~On$oOy$cO~On$pO~Ow$qO!q!wO~Os$rO~Os!RO!U#}O~Os!RO#p$xO~O$Z#WOs#sX~O$s$|On#Ua$X#Uar#Ua~P)YOn$QX$X$QXr$QX~P!jOn#[O$X$qar$qa~O$a#_O$b#_O$c%TO~Oo%VO!|%WO~Os#Oi!e#Oi#P#Oi#S#Oi$Y#Oig#Oi~P-vOs#Qi!e#Qi#P#Qi#S#Qi$Y#Qig#Qi~P-vOs#Ri!e#Ri#P#Ri#S#Ri$Y#Rig#Ri~P-vOs$Oa!e$Oa~P&^Or%XO~Og$pP~P'oOg$gP~P)YOc!SXg!QX!U!QX!W!SX~Oc%aO!W%bO~Og%cO!U#}O~O!U#}OS$WXc$WXd$WXh$WXn$WXs$WX!Y$WX!]$WX!`$WX!e$WX$]$WX~On%gO!e$OO~P(dO!U#}OS!Xac!Xad!Xah!Xan!Xas!Xa!Y!Xa!]!Xa!`!Xa!e!Xa$]!Xag!Xa~O$]%hOg$oP~P/VOR#zOS!fOh%mOu#zOw#zO!Y%nO$]%lO$j!qO~Oy$cOQ$iX`$iXc$iXg$iXh$iXl$iXm$iXn$iXp$iXs$iXu$iXw$iX}$iX!q$iX$Z$iX$[$iX$j$iXo$iXr$iX~O`$YOc$YOg%wOl$YOm$YOn$YO~P)YO`$YOc$YOl$YOm$YOn$YOo%xO~P)YO`$YOc$YOl$YOm$YOn$YOr%yO~P)YOh%{OS#ZXc#ZXd#ZXn#ZX!Y#ZX!]#ZX!`#ZX$]#ZX~On%|O~Og&ROw&SO!r&SO~Os$SX!e$SXn$SX~P)}O!e$lOs$tan$ta~On&VO~Or&^O$Z&XO$j&WO~Og&_O~P&^Oy$cO!e&cO$s$|On#Ui$X#Uir#Ui~P)YO$r&fO~On$Qa$X$Qar$Qa~P!jOn#[O$X$qir$qi~O!e&iOg$pX~P&^Og&kO~Oy$cOQ#xXg#xXh#xXp#xXs#xXu#xXw#xX}#xX!e#xX!q#xX$Z#xX$[#xX$j#xX~O!e&mOg$gX~P)YOg&oO~Oo&pOy$cO!}&qO~OR#zOu#zOw#zO$]&sO$j!qO~O!U#}OS$Wac$Wad$Wah$Wan$Was$Wa!Y$Wa!]$Wa!`$Wa!e$Wa$]$Wa~Oc!dXg!QX!U!QX!e!QX~O!U#}O!e&uOg$oX~Oc&wO~Og&xO~Oc!mXg!mX!W!SX~OS!fOh&zO~O!U&|O~O!U&|O!W&}Og$nX~Oc'OOg!lX~O!W&}O~Og'PO~O$Z'QO~On'SO~Oc'TO!U#}O~Og'VOn'UO~Og'YO~O!U#}Os$Sa!e$San$Sa~OP$bOsvX!evXgvX~O$j&WOs#jX!e#jX~Os!RO!e'[O~Or'`O$Z&XO$j&WO~Oy$cOQ$PXh$PXn$PXp$PXs$PXu$PXw$PX}$PX!e$PX!q$PX$X$PX$Z$PX$[$PX$j$PX$s$PXr$PX~O!e&cO$s$|On#Uq$X#Uqr#Uq~P)YOo'eOy$cO!}'fO~Og#}X!e#}X~P'oO!e&iOg$pa~Og#|X!e#|X~P)YO!e&mOg$ga~Oo'eO~Og'kO~P)YOg'lO!W'mO~O$]'nOg#{X!e#{X~P/VO!e&uOg$oa~Og'sO~OS!fOh'uO~OS!fO~PGUO`'yOg'{O~OS#zac#zad#zah#za!Y#za!]#za!`#za$]#za~Og'}O~P!![Og'}On(OO~Oy$cOQ$Pah$Pan$Pap$Pas$Pau$Paw$Pa}$Pa!e$Pa!q$Pa$X$Pa$Z$Pa$[$Pa$j$Pa$s$Par$Pa~Oo(TO~Og#}a!e#}a~P&^Og#|a!e#|a~P)YOR#zOu#zOw#zO$]&sO$j&WO~Oc!fXg!QX!U!QX!e!QX~O!U#}Og#{a!e#{a~Oc(VO~O!e&uOg$oi~P)YOg!ai!U!ji~Og(XO~O!W(ZOg!ni~Og!li~P)YO`'yOg(^O~Oy$cOg!Pin!Pi~Og(_O~P!![On(`O~Og(aO~O!e&uOg$oq~Og(cO~OS!fO~P!$wOg#{q!e#{q~P)YO$_!r$`$j`$jy#S~",
+    goto: "7g$uPPPPP$vP$yP%S%f%S%x&[P%SP&b%SPP&hPPP&n&x&xPPPPP&xPP&xP'hP&xP&x(k&xP)Z)^)d)d)v)dP)dP)dP)d)dP*])dP*i*o+e+hP+k*i+n*i+q+w+z,Q+z)d,WPP,|-S%S-Y%S-`-`-f-jPP%SP%S%SP-p.l.y/Q$yP/ZP/^P$yP$yP$yP/d$yP/g/j/m/t$yP$yPP$yP/y$yP/|0S0c0}1]1c1m1s1y2P2V2a2g2m2s2y3PPPPPPPPPPPP3V3`P4U4X5]P5e6_6t+z7Q7T7WPP7^RrQ_aOPco!R#[%Pq_OP]^co|}!O!P!R#S#[#p%P&iqSOP]^co|}!O!P!R#S#[#p%P&iqUOP]^co|}!O!P!R#S#[#p%P&iQtTR#buQwWR#cxQ!VYR#dyQ#d!XS$h!t!uR%U#f!Z!xdf!n!o!p#Z#q#v$[$^$`$c${%W%]%a&c&d&m&r&w'O'T'i'r'x(V(b!Y!xdf!n!o!p#Z#q#v$[$^$`$c${%W%]%a&c&d&m&r&w'O'T'i'r'x(V(bb#z!c$W%b%m&z&}'m'u(ZU&Z$r&]'[R'Z&Y!Z!tdf!n!o!p#Z#q#v$[$^$`$c${%W%]%a&c&d&m&r&w'O'T'i'r'x(V(bR$j!vQ&P$iR'W&Qq!h`ei!c!d!e!r#}$O$P$S$g$i$l&Q&uQ#x!cW%s$W%m&z'uQ&t%bQ'w&}Q(U'mR(d(ZQ#VjQ$V!jQ$v#UR&a$xX%q$W%m&z'up!h`ei!c!d!e!r#}$O$P$S$g$i$l&Q&uW%p$W%m&z'uQ&{%nQ'v&|Q'w&}R(d(ZR$T!fR%j$SR'p&uR&{%nX%o$W%m&z'uR'v&|X%t$W%m&z'uX%r$W%m&z'u!Y!xdf!n!o!p#Z#q#v$[$^$`$c${%W%]%a&c&d&m&r&w'O'T'i'r'x(V(bQ!}gR$q#OQ!WYR#eyQ#d!WR%U#eQ!ZZR#gzQ!_[R#h{T!^[{Q#s!]R%_#tQ!SXQ!i`Q#TjQ#n!QQ$Q!dQ$n!zQ$t#RQ$w#VQ$z#YQ%g$PQ&`$vQ'^&[Q'a&aR(S']SnP!RQ#^oQ%O#[R&g%PZmPo!R#[%PQ$}#ZQ&e${R'd&dR$g!rQ'R%{R(['yR#OgR#QhR$s#QS&[$r&]R(Q'[V&Y$r&]'[R#YkQ#`qR%S#`QcOSoP!RU!lco%PR%P#[Q%]#q[&l%]&r'i'r'x(bQ&r%aQ'i&mQ'r&wQ'x'OR(b(VQ$[!nQ$^!oQ$`!pV%v$[$^$`Q&Q$iR'X&QQ&v%iS'q&v(WR(W'rQ&n%]R'j&nQ&j%YR'h&jQ!QXR#m!QQ&d${R'c&dQ#]nS%Q#]%RR%R#^Q'z'RR(]'zQ$m!yR&U$mQ&]$rR'_&]Q']&[R(R']Q#XkR$y#XQ$P!dR%f$P_bOPco!R#[%P^XOPco!R#[%PQ!`]Q!a^Q#i|Q#j}Q#k!OQ#l!PQ$u#SQ%Y#pR'g&iR%^#qQ!rdQ!{f[$X!n!o!p$[$^$`Q${#Zh%[#q%]%a&m&r&w'O'i'r'x(V(bQ%`#vQ%z$cS&b${&dQ&h%WQ'b&cR'|'T]$Z!n!o!p$[$^$`Q!d`U!ye!r$gQ#RiQ#y!cS#|!d$PQ$R!eQ%d#}Q%e$OQ%i$SS&O$i&QQ&T$lR'o&uQ#{!cW%s$W%m&z'uQ&t%bQ'w&}Q(U'mR(d(ZQ%u$WQ&y%mQ't&zR(Y'uR%k$SR%Z#pQpPR#o!RQ!zeQ$f!rR%}$g",
+    nodeNames: "⚠ Unit VariableName VariableName QueryCallee Comment StyleSheet RuleSet UniversalSelector TagSelector TagName NamespacedTagSelector NamespaceName TagName NestingSelector ClassSelector . ClassName PseudoClassSelector : :: PseudoClassName PseudoClassName ) ( ArgList ValueName ParenthesizedValue AtKeyword # ; ] [ BracketedValue } { BracedValue ColorLiteral NumberLiteral StringLiteral BinaryExpression BinOp CallExpression Callee IfExpression if ArgList IfBranch KeywordQuery FeatureQuery FeatureName BinaryQuery LogicOp ComparisonQuery CompareOp UnaryQuery UnaryQueryOp ParenthesizedQuery SelectorQuery selector ParenthesizedSelector StyleQuery style ParenthesedQuery CallQuery ArgList PropertyName , PropertyName UnaryQuery ParenthesedQuery BinaryQuery ParenthesedQuery ParenthesedQuery StyleFeature PropertyName StyleRange PseudoQuery CallLiteral CallTag ParenthesizedContent PseudoClassName ArgList IdSelector IdName AttributeSelector AttributeName NamespacedAttribute NamespaceName AttributeName MatchOp MatchFlag ChildSelector ChildOp DescendantSelector SiblingSelector SiblingOp Block Declaration PropertyName Important ImportStatement import Layer layer LayerName layer MediaStatement media CharsetStatement charset NamespaceStatement namespace NamespaceName KeyframesStatement keyframes KeyframeName KeyframeList KeyframeSelector KeyframeRangeName SupportsStatement supports ScopeStatement scope to FontFeatureStatement font-feature-values FontName AtRule Styles",
+    maxTerm: 174,
     nodeProps: [
       ["isolate", -2,5,39,""],
       ["openedBy", 23,"(",31,"[",34,"{"],
       ["closedBy", 24,")",32,"]",35,"}"]
     ],
     propSources: [cssHighlighting],
-    skippedNodes: [0,5,117],
+    skippedNodes: [0,5,130],
     repeatNodeCount: 17,
-    tokenData: "K`~R!bOX%ZX^&R^p%Zpq&Rqr)ers)vst+jtu2Xuv%Zvw3Rwx3dxy5Ryz5dz{5i{|6S|}:u}!O;W!O!P;u!P!Q<^!Q![=V![!]>Q!]!^>|!^!_?_!_!`@Z!`!a@n!a!b%Z!b!cAo!c!k%Z!k!lC|!l!u%Z!u!vC|!v!}%Z!}#OD_#O#P%Z#P#QDp#Q#R2X#R#]%Z#]#^ER#^#g%Z#g#hC|#h#o%Z#o#pIf#p#qIw#q#rJ`#r#sJq#s#y%Z#y#z&R#z$f%Z$f$g&R$g#BY%Z#BY#BZ&R#BZ$IS%Z$IS$I_&R$I_$I|%Z$I|$JO&R$JO$JT%Z$JT$JU&R$JU$KV%Z$KV$KW&R$KW&FU%Z&FU&FV&R&FV;'S%Z;'S;=`KY<%lO%Z`%^SOy%jz;'S%j;'S;=`%{<%lO%j`%oS!e`Oy%jz;'S%j;'S;=`%{<%lO%j`&OP;=`<%l%j~&Wh$Q~OX%jX^'r^p%jpq'rqy%jz#y%j#y#z'r#z$f%j$f$g'r$g#BY%j#BY#BZ'r#BZ$IS%j$IS$I_'r$I_$I|%j$I|$JO'r$JO$JT%j$JT$JU'r$JU$KV%j$KV$KW'r$KW&FU%j&FU&FV'r&FV;'S%j;'S;=`%{<%lO%j~'yh$Q~!e`OX%jX^'r^p%jpq'rqy%jz#y%j#y#z'r#z$f%j$f$g'r$g#BY%j#BY#BZ'r#BZ$IS%j$IS$I_'r$I_$I|%j$I|$JO'r$JO$JT%j$JT$JU'r$JU$KV%j$KV$KW'r$KW&FU%j&FU&FV'r&FV;'S%j;'S;=`%{<%lO%jj)jS$dYOy%jz;'S%j;'S;=`%{<%lO%j~)yWOY)vZr)vrs*cs#O)v#O#P*h#P;'S)v;'S;=`+d<%lO)v~*hOw~~*kRO;'S)v;'S;=`*t;=`O)v~*wXOY)vZr)vrs*cs#O)v#O#P*h#P;'S)v;'S;=`+d;=`<%l)v<%lO)v~+gP;=`<%l)vj+oYmYOy%jz!Q%j!Q![,_![!c%j!c!i,_!i#T%j#T#Z,_#Z;'S%j;'S;=`%{<%lO%jj,dY!e`Oy%jz!Q%j!Q![-S![!c%j!c!i-S!i#T%j#T#Z-S#Z;'S%j;'S;=`%{<%lO%jj-XY!e`Oy%jz!Q%j!Q![-w![!c%j!c!i-w!i#T%j#T#Z-w#Z;'S%j;'S;=`%{<%lO%jj.OYuY!e`Oy%jz!Q%j!Q![.n![!c%j!c!i.n!i#T%j#T#Z.n#Z;'S%j;'S;=`%{<%lO%jj.uYuY!e`Oy%jz!Q%j!Q![/e![!c%j!c!i/e!i#T%j#T#Z/e#Z;'S%j;'S;=`%{<%lO%jj/jY!e`Oy%jz!Q%j!Q![0Y![!c%j!c!i0Y!i#T%j#T#Z0Y#Z;'S%j;'S;=`%{<%lO%jj0aYuY!e`Oy%jz!Q%j!Q![1P![!c%j!c!i1P!i#T%j#T#Z1P#Z;'S%j;'S;=`%{<%lO%jj1UY!e`Oy%jz!Q%j!Q![1t![!c%j!c!i1t!i#T%j#T#Z1t#Z;'S%j;'S;=`%{<%lO%jj1{SuY!e`Oy%jz;'S%j;'S;=`%{<%lO%jd2[UOy%jz!_%j!_!`2n!`;'S%j;'S;=`%{<%lO%jd2uS!oS!e`Oy%jz;'S%j;'S;=`%{<%lO%jb3WS^QOy%jz;'S%j;'S;=`%{<%lO%j~3gWOY3dZw3dwx*cx#O3d#O#P4P#P;'S3d;'S;=`4{<%lO3d~4SRO;'S3d;'S;=`4];=`O3d~4`XOY3dZw3dwx*cx#O3d#O#P4P#P;'S3d;'S;=`4{;=`<%l3d<%lO3d~5OP;=`<%l3dj5WShYOy%jz;'S%j;'S;=`%{<%lO%j~5iOg~n5pUWQyWOy%jz!_%j!_!`2n!`;'S%j;'S;=`%{<%lO%jj6ZWyW!uQOy%jz!O%j!O!P6s!P!Q%j!Q![9x![;'S%j;'S;=`%{<%lO%jj6xU!e`Oy%jz!Q%j!Q![7[![;'S%j;'S;=`%{<%lO%jj7cY!e`$]YOy%jz!Q%j!Q![7[![!g%j!g!h8R!h#X%j#X#Y8R#Y;'S%j;'S;=`%{<%lO%jj8WY!e`Oy%jz{%j{|8v|}%j}!O8v!O!Q%j!Q![9_![;'S%j;'S;=`%{<%lO%jj8{U!e`Oy%jz!Q%j!Q![9_![;'S%j;'S;=`%{<%lO%jj9fU!e`$]YOy%jz!Q%j!Q![9_![;'S%j;'S;=`%{<%lO%jj:P[!e`$]YOy%jz!O%j!O!P7[!P!Q%j!Q![9x![!g%j!g!h8R!h#X%j#X#Y8R#Y;'S%j;'S;=`%{<%lO%jj:zS!aYOy%jz;'S%j;'S;=`%{<%lO%jj;]WyWOy%jz!O%j!O!P6s!P!Q%j!Q![9x![;'S%j;'S;=`%{<%lO%jj;zU`YOy%jz!Q%j!Q![7[![;'S%j;'S;=`%{<%lO%j~<cTyWOy%jz{<r{;'S%j;'S;=`%{<%lO%j~<yS!e`$R~Oy%jz;'S%j;'S;=`%{<%lO%jj=[[$]YOy%jz!O%j!O!P7[!P!Q%j!Q![9x![!g%j!g!h8R!h#X%j#X#Y8R#Y;'S%j;'S;=`%{<%lO%jj>VUcYOy%jz![%j![!]>i!];'S%j;'S;=`%{<%lO%jj>pSdY!e`Oy%jz;'S%j;'S;=`%{<%lO%jj?RSnYOy%jz;'S%j;'S;=`%{<%lO%jh?dU!WWOy%jz!_%j!_!`?v!`;'S%j;'S;=`%{<%lO%jh?}S!WW!e`Oy%jz;'S%j;'S;=`%{<%lO%jl@bS!WW!oSOy%jz;'S%j;'S;=`%{<%lO%jj@uV!rQ!WWOy%jz!_%j!_!`?v!`!aA[!a;'S%j;'S;=`%{<%lO%jbAcS!rQ!e`Oy%jz;'S%j;'S;=`%{<%lO%jjArYOy%jz}%j}!OBb!O!c%j!c!}CP!}#T%j#T#oCP#o;'S%j;'S;=`%{<%lO%jjBgW!e`Oy%jz!c%j!c!}CP!}#T%j#T#oCP#o;'S%j;'S;=`%{<%lO%jjCW[lY!e`Oy%jz}%j}!OCP!O!Q%j!Q![CP![!c%j!c!}CP!}#T%j#T#oCP#o;'S%j;'S;=`%{<%lO%jhDRS!pWOy%jz;'S%j;'S;=`%{<%lO%jjDdSpYOy%jz;'S%j;'S;=`%{<%lO%jnDuSo^Oy%jz;'S%j;'S;=`%{<%lO%jjEWU!pWOy%jz#a%j#a#bEj#b;'S%j;'S;=`%{<%lO%jbEoU!e`Oy%jz#d%j#d#eFR#e;'S%j;'S;=`%{<%lO%jbFWU!e`Oy%jz#c%j#c#dFj#d;'S%j;'S;=`%{<%lO%jbFoU!e`Oy%jz#f%j#f#gGR#g;'S%j;'S;=`%{<%lO%jbGWU!e`Oy%jz#h%j#h#iGj#i;'S%j;'S;=`%{<%lO%jbGoU!e`Oy%jz#T%j#T#UHR#U;'S%j;'S;=`%{<%lO%jbHWU!e`Oy%jz#b%j#b#cHj#c;'S%j;'S;=`%{<%lO%jbHoU!e`Oy%jz#h%j#h#iIR#i;'S%j;'S;=`%{<%lO%jbIYS$cQ!e`Oy%jz;'S%j;'S;=`%{<%lO%jjIkSsYOy%jz;'S%j;'S;=`%{<%lO%jfI|U$XUOy%jz!_%j!_!`2n!`;'S%j;'S;=`%{<%lO%jjJeSrYOy%jz;'S%j;'S;=`%{<%lO%jfJvU!uQOy%jz!_%j!_!`2n!`;'S%j;'S;=`%{<%lO%j`K]P;=`<%l%Z",
-    tokenizers: [descendant, unitToken, identifiers, queryIdentifiers, 1, 2, 3, 4, new LocalTokenGroup("m~RRYZ[z{a~~g~aO$T~~dP!P!Qg~lO$U~~", 28, 142)],
-    topRules: {"StyleSheet":[0,6],"Styles":[1,116]},
-    dynamicPrecedences: {"84":1},
-    specialized: [{term: 137, get: (value) => spec_callee[value] || -1},{term: 138, get: (value) => spec_queryIdentifier[value] || -1},{term: 4, get: (value) => spec_QueryCallee[value] || -1},{term: 28, get: (value) => spec_AtKeyword[value] || -1},{term: 136, get: (value) => spec_identifier$1[value] || -1}],
-    tokenPrec: 2256
+    tokenData: "K`~R!bOX%ZX^&R^p%Zpq&Rqr)ers)vst+jtu2Xuv%Zvw3Rwx3dxy5Ryz5dz{5i{|6S|}:u}!O;W!O!P;u!P!Q<^!Q![=V![!]>Q!]!^>|!^!_?_!_!`@Z!`!a@n!a!b%Z!b!cAo!c!k%Z!k!lC|!l!u%Z!u!vC|!v!}%Z!}#OD_#O#P%Z#P#QDp#Q#R2X#R#]%Z#]#^ER#^#g%Z#g#hC|#h#o%Z#o#pIf#p#qIw#q#rJ`#r#sJq#s#y%Z#y#z&R#z$f%Z$f$g&R$g#BY%Z#BY#BZ&R#BZ$IS%Z$IS$I_&R$I_$I|%Z$I|$JO&R$JO$JT%Z$JT$JU&R$JU$KV%Z$KV$KW&R$KW&FU%Z&FU&FV&R&FV;'S%Z;'S;=`KY<%lO%Z`%^SOy%jz;'S%j;'S;=`%{<%lO%j`%oS!r`Oy%jz;'S%j;'S;=`%{<%lO%j`&OP;=`<%l%j~&Wh$_~OX%jX^'r^p%jpq'rqy%jz#y%j#y#z'r#z$f%j$f$g'r$g#BY%j#BY#BZ'r#BZ$IS%j$IS$I_'r$I_$I|%j$I|$JO'r$JO$JT%j$JT$JU'r$JU$KV%j$KV$KW'r$KW&FU%j&FU&FV'r&FV;'S%j;'S;=`%{<%lO%j~'yh$_~!r`OX%jX^'r^p%jpq'rqy%jz#y%j#y#z'r#z$f%j$f$g'r$g#BY%j#BY#BZ'r#BZ$IS%j$IS$I_'r$I_$I|%j$I|$JO'r$JO$JT%j$JT$JU'r$JU$KV%j$KV$KW'r$KW&FU%j&FU&FV'r&FV;'S%j;'S;=`%{<%lO%jj)jS$sYOy%jz;'S%j;'S;=`%{<%lO%j~)yWOY)vZr)vrs*cs#O)v#O#P*h#P;'S)v;'S;=`+d<%lO)v~*hOw~~*kRO;'S)v;'S;=`*t;=`O)v~*wXOY)vZr)vrs*cs#O)v#O#P*h#P;'S)v;'S;=`+d;=`<%l)v<%lO)v~+gP;=`<%l)vj+oYmYOy%jz!Q%j!Q![,_![!c%j!c!i,_!i#T%j#T#Z,_#Z;'S%j;'S;=`%{<%lO%jj,dY!r`Oy%jz!Q%j!Q![-S![!c%j!c!i-S!i#T%j#T#Z-S#Z;'S%j;'S;=`%{<%lO%jj-XY!r`Oy%jz!Q%j!Q![-w![!c%j!c!i-w!i#T%j#T#Z-w#Z;'S%j;'S;=`%{<%lO%jj.OYuY!r`Oy%jz!Q%j!Q![.n![!c%j!c!i.n!i#T%j#T#Z.n#Z;'S%j;'S;=`%{<%lO%jj.uYuY!r`Oy%jz!Q%j!Q![/e![!c%j!c!i/e!i#T%j#T#Z/e#Z;'S%j;'S;=`%{<%lO%jj/jY!r`Oy%jz!Q%j!Q![0Y![!c%j!c!i0Y!i#T%j#T#Z0Y#Z;'S%j;'S;=`%{<%lO%jj0aYuY!r`Oy%jz!Q%j!Q![1P![!c%j!c!i1P!i#T%j#T#Z1P#Z;'S%j;'S;=`%{<%lO%jj1UY!r`Oy%jz!Q%j!Q![1t![!c%j!c!i1t!i#T%j#T#Z1t#Z;'S%j;'S;=`%{<%lO%jj1{SuY!r`Oy%jz;'S%j;'S;=`%{<%lO%jd2[UOy%jz!_%j!_!`2n!`;'S%j;'S;=`%{<%lO%jd2uS!|S!r`Oy%jz;'S%j;'S;=`%{<%lO%jb3WS^QOy%jz;'S%j;'S;=`%{<%lO%j~3gWOY3dZw3dwx*cx#O3d#O#P4P#P;'S3d;'S;=`4{<%lO3d~4SRO;'S3d;'S;=`4];=`O3d~4`XOY3dZw3dwx*cx#O3d#O#P4P#P;'S3d;'S;=`4{;=`<%l3d<%lO3d~5OP;=`<%l3dj5WShYOy%jz;'S%j;'S;=`%{<%lO%j~5iOg~n5pUWQyWOy%jz!_%j!_!`2n!`;'S%j;'S;=`%{<%lO%jj6ZWyW#SQOy%jz!O%j!O!P6s!P!Q%j!Q![9x![;'S%j;'S;=`%{<%lO%jj6xU!r`Oy%jz!Q%j!Q![7[![;'S%j;'S;=`%{<%lO%jj7cY!r`$jYOy%jz!Q%j!Q![7[![!g%j!g!h8R!h#X%j#X#Y8R#Y;'S%j;'S;=`%{<%lO%jj8WY!r`Oy%jz{%j{|8v|}%j}!O8v!O!Q%j!Q![9_![;'S%j;'S;=`%{<%lO%jj8{U!r`Oy%jz!Q%j!Q![9_![;'S%j;'S;=`%{<%lO%jj9fU!r`$jYOy%jz!Q%j!Q![9_![;'S%j;'S;=`%{<%lO%jj:P[!r`$jYOy%jz!O%j!O!P7[!P!Q%j!Q![9x![!g%j!g!h8R!h#X%j#X#Y8R#Y;'S%j;'S;=`%{<%lO%jj:zS!eYOy%jz;'S%j;'S;=`%{<%lO%jj;]WyWOy%jz!O%j!O!P6s!P!Q%j!Q![9x![;'S%j;'S;=`%{<%lO%jj;zU`YOy%jz!Q%j!Q![7[![;'S%j;'S;=`%{<%lO%j~<cTyWOy%jz{<r{;'S%j;'S;=`%{<%lO%j~<yS!r`$`~Oy%jz;'S%j;'S;=`%{<%lO%jj=[[$jYOy%jz!O%j!O!P7[!P!Q%j!Q![9x![!g%j!g!h8R!h#X%j#X#Y8R#Y;'S%j;'S;=`%{<%lO%jj>VUcYOy%jz![%j![!]>i!];'S%j;'S;=`%{<%lO%jj>pSdY!r`Oy%jz;'S%j;'S;=`%{<%lO%jj?RSnYOy%jz;'S%j;'S;=`%{<%lO%jh?dU!WWOy%jz!_%j!_!`?v!`;'S%j;'S;=`%{<%lO%jh?}S!WW!r`Oy%jz;'S%j;'S;=`%{<%lO%jl@bS!WW!|SOy%jz;'S%j;'S;=`%{<%lO%jj@uV#PQ!WWOy%jz!_%j!_!`?v!`!aA[!a;'S%j;'S;=`%{<%lO%jbAcS#PQ!r`Oy%jz;'S%j;'S;=`%{<%lO%jjArYOy%jz}%j}!OBb!O!c%j!c!}CP!}#T%j#T#oCP#o;'S%j;'S;=`%{<%lO%jjBgW!r`Oy%jz!c%j!c!}CP!}#T%j#T#oCP#o;'S%j;'S;=`%{<%lO%jjCW[lY!r`Oy%jz}%j}!OCP!O!Q%j!Q![CP![!c%j!c!}CP!}#T%j#T#oCP#o;'S%j;'S;=`%{<%lO%jhDRS!}WOy%jz;'S%j;'S;=`%{<%lO%jjDdSpYOy%jz;'S%j;'S;=`%{<%lO%jnDuSo^Oy%jz;'S%j;'S;=`%{<%lO%jjEWU!}WOy%jz#a%j#a#bEj#b;'S%j;'S;=`%{<%lO%jbEoU!r`Oy%jz#d%j#d#eFR#e;'S%j;'S;=`%{<%lO%jbFWU!r`Oy%jz#c%j#c#dFj#d;'S%j;'S;=`%{<%lO%jbFoU!r`Oy%jz#f%j#f#gGR#g;'S%j;'S;=`%{<%lO%jbGWU!r`Oy%jz#h%j#h#iGj#i;'S%j;'S;=`%{<%lO%jbGoU!r`Oy%jz#T%j#T#UHR#U;'S%j;'S;=`%{<%lO%jbHWU!r`Oy%jz#b%j#b#cHj#c;'S%j;'S;=`%{<%lO%jbHoU!r`Oy%jz#h%j#h#iIR#i;'S%j;'S;=`%{<%lO%jbIYS$rQ!r`Oy%jz;'S%j;'S;=`%{<%lO%jjIkSsYOy%jz;'S%j;'S;=`%{<%lO%jfI|U$fUOy%jz!_%j!_!`2n!`;'S%j;'S;=`%{<%lO%jjJeSrYOy%jz;'S%j;'S;=`%{<%lO%jfJvU#SQOy%jz!_%j!_!`2n!`;'S%j;'S;=`%{<%lO%j`K]P;=`<%l%Z",
+    tokenizers: [descendant, unitToken, identifiers, queryIdentifiers, 1, 2, 3, 4, new LocalTokenGroup("m~RRYZ[z{a~~g~aO$b~~dP!P!Qg~lO$c~~", 28, 155)],
+    topRules: {"StyleSheet":[0,6],"Styles":[1,129]},
+    dynamicPrecedences: {"97":1},
+    specialized: [{term: 150, get: (value) => spec_callee[value] || -1},{term: 151, get: (value) => spec_queryIdentifier[value] || -1},{term: 4, get: (value) => spec_QueryCallee[value] || -1},{term: 28, get: (value) => spec_AtKeyword[value] || -1},{term: 149, get: (value) => spec_identifier$1[value] || -1}],
+    tokenPrec: 2444
   });
 
   let _properties = null;
@@ -31355,7 +31507,7 @@
   });
   /**
   A language provider based on the [Lezer HTML
-  parser](https://github.com/lezer-parser/html), extended with the
+  parser](https://code.haverbeke.berlin/lezer/html), extended with the
   JavaScript and CSS parsers to parse the content of `<script>` and
   `<style>` tags.
   */
@@ -31385,6 +31537,17 @@
       ]);
   }
   const selfClosers = /*@__PURE__*/new Set(/*@__PURE__*/"area base br col command embed frame hr img input keygen link meta param source track wbr menuitem".split(" "));
+  function isClosed(doc, elt, name) {
+      var _a;
+      for (;;) {
+          if (((_a = elt.lastChild) === null || _a === void 0 ? void 0 : _a.name) != "CloseTag")
+              return false;
+          let next = elt.parent;
+          if (!next || elementName$1(doc, next) != name)
+              return true;
+          elt = next;
+      }
+  }
   /**
   Extension that will automatically insert close tags when a `>` or
   `/` is typed.
@@ -31395,14 +31558,13 @@
           return false;
       let base = insertTransaction(), { state } = base;
       let closeTags = state.changeByRange(range => {
-          var _a, _b, _c;
+          var _a;
           let didType = state.doc.sliceString(range.from - 1, range.to) == text;
           let { head } = range, after = syntaxTree(state).resolveInner(head, -1), name;
           if (didType && text == ">" && after.name == "EndTag") {
               let tag = after.parent;
-              if (((_b = (_a = tag.parent) === null || _a === void 0 ? void 0 : _a.lastChild) === null || _b === void 0 ? void 0 : _b.name) != "CloseTag" &&
-                  (name = elementName$1(state.doc, tag.parent, head)) &&
-                  !selfClosers.has(name)) {
+              if ((name = elementName$1(state.doc, tag.parent, head)) &&
+                  !selfClosers.has(name) && !isClosed(state.doc, tag.parent, name)) {
                   let to = head + (state.doc.sliceString(head, head + 1) === ">" ? 1 : 0);
                   let insert = `</${name}>`;
                   return { range, changes: { from: head, to, insert } };
@@ -31410,7 +31572,7 @@
           }
           else if (didType && text == "/" && after.name == "IncompleteCloseTag") {
               let tag = after.parent;
-              if (after.from == head - 2 && ((_c = tag.lastChild) === null || _c === void 0 ? void 0 : _c.name) != "CloseTag" &&
+              if (after.from == head - 2 && ((_a = tag.lastChild) === null || _a === void 0 ? void 0 : _a.name) != "CloseTag" &&
                   (name = elementName$1(state.doc, tag, head)) && !selfClosers.has(name)) {
                   let to = head + (state.doc.sliceString(head, head + 1) === ">" ? 1 : 0);
                   let insert = `${name}>`;
@@ -31646,6 +31808,8 @@
           let emptyLine = pos >= (inner.to - inner.spaceAfter.length) && !/\S/.test(line.text.slice(inner.to));
           // Empty line in list
           if (inner.item && emptyLine) {
+              if (inner.item.from < line.from && !/^[\s>]*$/.test(line.text.slice(0, inner.to)))
+                  return dont = { range };
               let first = inner.node.firstChild, second = inner.node.getChild("ListItem", "ListItem");
               // Not second item or blank line before: delete a level of markup
               if (first.to >= pos || second && second.to < pos ||
@@ -31791,7 +31955,7 @@
                       // Only apply this if we're on the line that has the
                       // construct's syntax, or there's only indentation in the
                       // target range
-                      (!inner.item || line.from <= inner.item.from || !/\S/.test(line.text.slice(0, inner.to)))) {
+                      ((inner.item && line.from <= inner.item.from) || /^[\s>]*$/.test(line.text.slice(0, inner.to)))) {
                       let start = line.from + inner.from;
                       // Replace a list item marker with blank space
                       if (inner.item && inner.node.from < inner.item.from && /\S/.test(line.text.slice(inner.from, inner.to))) {
