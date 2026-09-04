@@ -40,7 +40,7 @@ let app = {
     href: 'https://michaelsboost.com/',
     src: 'imgs/author.jpg'
   },
-  version: '1.3.1',
+  version: '1.3.2',
   url: 'https://github.com/michaelsboost/kodeWeave/',
   license: 'https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE'
 }
@@ -4731,6 +4731,38 @@ window.createBlobURL = (content, type) => {
   const blob = new Blob([content], { type });
   return URL.createObjectURL(blob);
 }
+
+let previewThemeObserver = null;
+
+window.observePreviewTheme = iframe => {
+  if (previewThemeObserver) {
+    previewThemeObserver.disconnect();
+    previewThemeObserver = null;
+  }
+
+  const iframeDocument = iframe?.contentDocument || iframe?.contentWindow?.document;
+  const root = iframeDocument?.documentElement;
+  if (!root) return;
+
+  const syncPreviewTheme = () => {
+    const theme = String(root.getAttribute('data-theme') || '').toLowerCase();
+    if (theme !== 'light' && theme !== 'dark') return;
+
+    const previewDark = theme === 'dark';
+    if (project.previewDark !== previewDark) {
+      project.previewDark = previewDark;
+    }
+  };
+
+  syncPreviewTheme();
+
+  previewThemeObserver = new MutationObserver(syncPreviewTheme);
+  previewThemeObserver.observe(root, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+}
+
 window.renderPreview = async (forceRun = false) => {
   const iframe = document.getElementById('iframe');
   if (!iframe) return;
@@ -4795,6 +4827,7 @@ window.renderPreview = async (forceRun = false) => {
   const newHtmlBlobURL = createBlobURL(iframeSrc, 'text/html');
 
   if (forceRun) {
+    iframe.onload = () => observePreviewTheme(iframe);
     iframe.setAttribute('src', newHtmlBlobURL);
   }
 }

@@ -3219,13 +3219,15 @@
               }
               else {
                   if (newFrom == newTo) { // Try to reorder points to fit in here
-                      for (let i = value.length - 1; i > 0; i--) {
-                          if ((newFrom - to[i - 1] || val.startSide - value[i - 1].endSide) <= 0) {
+                      for (let i = value.length; i > 0; i--) {
+                          if ((newFrom - (to[i - 1] + newPos) || val.startSide - value[i - 1].endSide) >= 0) {
                               value.splice(i, 0, val);
-                              from.splice(i, 0, newFrom);
-                              to.splice(i, 0, newTo);
+                              from.splice(i, 0, newFrom - newPos);
+                              to.splice(i, 0, newTo - newPos);
                               continue iter;
                           }
+                          if ((newFrom - (from[i - 1] + newPos) || val.endSide - value[i - 1].startSide) > 0)
+                              break;
                       }
                   }
                   // Otherwise, spill into a new layer
