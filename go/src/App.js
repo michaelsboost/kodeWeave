@@ -986,22 +986,10 @@ function SettingsPage() {
       </div>
       
       <div class="flex gap-2">
-        <div class="relative group">
-          <button onclick="toggleExportMenuSettings()" class="h-10 px-4 rounded-2xl bg-white/[.05] hover:bg-white/[.1] text-sm font-semibold text-slate-300 hover:text-white transition flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-            Export
-          </button>
-          <div id="exportMenuSettings" class="absolute right-0 top-full mt-1 w-56 rounded-xl bg-[#0f1522] border border-white/[.08] shadow-2xl overflow-hidden z-50 hidden">
-            <div class="py-1">
-              <button onclick="downloadJSON(); hideExportMenuSettings()" class="w-full px-4 py-2 text-left text-sm text-slate-300 hover:bg-white/[.08] hover:text-white transition">💾 Save Project (.json)</button>
-              <button onclick="downloadHTML(); hideExportMenuSettings()" class="w-full px-4 py-2 text-left text-sm text-slate-300 hover:bg-white/[.08] hover:text-white transition">📄 Export as HTML</button>
-              <button onclick="downloadProject(); hideExportMenuSettings()" class="w-full px-4 py-2 text-left text-sm text-slate-300 hover:bg-white/[.08] hover:text-white transition">📦 Download ZIP Archive</button>
-              <div class="border-t border-white/[.08] my-1"></div>
-              <button onclick="shareProject(); hideExportMenuSettings()" class="w-full px-4 py-2 text-left text-sm text-slate-300 hover:bg-white/[.08] hover:text-white transition">🔗 Share Weave</button>
-              <button onclick="shareToCodepen(); hideExportMenuSettings()" class="w-full px-4 py-2 text-left text-sm text-slate-300 hover:bg-white/[.08] hover:text-white transition">🎨 Share to CodePen</button>
-            </div>
-          </div>
-        </div>
+        <button onclick="showExportModal()" class="h-10 px-4 rounded-2xl bg-white/[.05] hover:bg-white/[.1] text-sm font-semibold text-slate-300 hover:text-white transition flex items-center gap-2" title="Export project">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+          Export
+        </button>
         <button onclick="activeNav(null)" class="h-10 px-4 rounded-2xl bg-gradient-to-r from-violet-500 to-cyan-400 text-sm font-semibold text-white shadow-[0_0_28px_rgba(124,58,237,.28)]">
           Done
         </button>
@@ -4824,11 +4812,15 @@ window.renderPreview = async (forceRun = false) => {
     <script type="${project.module ? 'module' : 'text/javascript'}" src="${jsLink}"></script>
   </body>
 </html>`;
-  const newHtmlBlobURL = createBlobURL(iframeSrc, 'text/html');
-
   if (forceRun) {
+    // Use srcdoc instead of a blob URL for the preview document. A blob-backed
+    // top-level preview can strip the useful HTTP(S) referrer/origin context
+    // that nested third-party embeds (for example YouTube lightboxes) rely on.
+    // srcdoc keeps the preview isolated by the iframe sandbox while making its
+    // embedding context behave much closer to the exported project.
     iframe.onload = () => observePreviewTheme(iframe);
-    iframe.setAttribute('src', newHtmlBlobURL);
+    iframe.removeAttribute('src');
+    iframe.srcdoc = iframeSrc;
   }
 }
 
