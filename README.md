@@ -1,153 +1,133 @@
 # 🧶 kodeWeave
 
-Your on-the-go web development environment.
+**Build it. Preview it. Share it.**
 
-### Build websites, apps, games, and Progressive Web Apps directly in your browser.
+**From an idea to a working website, app, or game — right in your browser.**
 
-⚡ No installation  
-🌐 Works offline  
-🚀 Export as PWAs  
-📱 Mobile & Desktop Friendly  
-🆓 Free & Open Source  
+AI can help write code. kodeWeave gives you a place to make it yours: experiment, edit, run, refine, export, and share interactive projects. Free, open source, and ready on desktop or mobile — no account required.
 
-![kodeWeave](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/header.png)  
-![Screenshot](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/screenshot.png)
+![kodeWeave](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/header.png)
 
+[![Launch App](https://img.shields.io/badge/launch-kodeWeave-00bcd4)](https://michaelsboost.com/kodeWeave/go/)
+[![Version](https://img.shields.io/badge/version-1.3.3-ff2b75)](https://github.com/michaelsboost/kodeWeave)
 [![MIT License](https://img.shields.io/github/license/michaelsboost/kodeWeave)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/michaelsboost/kodeWeave)](https://github.com/michaelsboost/kodeWeave/issues)
-[![Follow @kodeweave_app](https://img.shields.io/twitter/url/https/twitter.com/kodeweave_app?style=social&label=Follow%20%40kodeweave_app)](https://x.com/kodeweave_app)
+[![Follow on X](https://img.shields.io/badge/follow-%40kodeweave__app-111827)](https://x.com/kodeweave_app)
 
 ---
 
-## 🤔 Why kodeWeave?
+## 💡 What will you make?
 
-Most development environments ask:
+**A landing page. A game. A timer. A dashboard. A full interactive app.**
 
-"Have you installed everything yet?"
+kodeWeave gives you HTML, CSS, and JavaScript editors, a live preview, ready-to-explore framework templates, and ways to take your work beyond the editor. Create on desktop or mobile, then export your project or send someone a link to try it.
 
-kodeWeave asks:
-
-"What do you want to build?"
-
----
-
-⚡ Open the app  
-🧪 Choose a framework  
-🎨 Start creating  
-🚀 Ship when you're ready  
-
----
-
-No installation.
-No build tools.
-No package managers.
-No configuration headaches.
-
-Just a fast, browser-based development environment that helps you go from idea to application.
-
----
+![kodeWeave editor screenshot](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/screenshot.png)
 
 ## 🎮 Built with kodeWeave
 
-kodeWeave isn't just for experiments.
-
-It's been used to create real applications used by real people.
+These projects show the range of things you can make — from practical tools to interactive experiences.
 
 ### 🧭 Beacon Survival
 
 An offline-first survival training and preparedness application.
 
-🌐 https://michaelsboost.com/Beacon
+**[Launch Beacon Survival](https://michaelsboost.com/Beacon)**
 
-![Beacon](https://michaelsboost.com/Beacon/imgs/screenshots/screenshot-training.jpeg)
-
----
+![Beacon Survival screenshot](https://michaelsboost.com/Beacon/imgs/screenshots/screenshot-training.jpeg)
 
 ### 🏋️ Rite Fitness Timer
 
-A minimalist workout timer built for interval training, stretching, martial arts, and daily fitness routines.
+A minimalist workout timer for interval training, stretching, martial arts, and everyday fitness.
 
-🌐 https://michaelsboost.com/Rite
+**[Launch Rite Fitness Timer](https://michaelsboost.com/Rite)**
 
-![Rite](https://michaelsboost.com/Rite/imgs/screenshot.jpeg)
-
----
+![Rite Fitness Timer screenshot](https://michaelsboost.com/Rite/imgs/screenshot.jpeg)
 
 ### 📈 Chart Dojo
 
-An interactive chart-reading dojo designed to sharpen trading intuition through repetition and practice.
+An interactive chart-reading dojo for practicing trading pattern recognition and decision-making.
 
-🌐 https://michaelsboost.com/ChartDojo
+**[Launch Chart Dojo](https://michaelsboost.com/ChartDojo)**
 
-![Chart Dojo](https://michaelsboost.com/ChartDojo/imgs/screenshot-1.jpeg)
+![Chart Dojo screenshot](https://michaelsboost.com/ChartDojo/imgs/screenshot-1.jpeg)
 
----
-
-### 🚀 And Many More
-
-Explore additional projects built with kodeWeave:
-
-🌐 https://michaelsboost.com/kodeWeave
+**[Explore more projects on the kodeWeave homepage](https://michaelsboost.com/kodeWeave/)**
 
 ---
 
-## ✨ Why Developers Choose kodeWeave
+## ✨ Everything you need to start creating
 
-🌐 Works completely offline
+- **Live coding workspace:** Edit HTML, CSS, and JavaScript and preview your work.
+- **Framework starters:** Start from templates such as Alpine and React instead of an empty file.
+- **Build anywhere:** Work in a mobile or desktop browser, with offline capabilities after the app's required resources are available.
+- **Import and export:** Save portable kodeWeave JSON projects or work with a complete standalone HTML file containing HTML, CSS, and JavaScript; use the app's available export options, including PWA-related exports.
+- **Share and preview:** Turn a publicly hosted project file into a full-screen preview link.
+- **Open in the editor:** Send a project URL that loads into kodeWeave with the HTML editor visible.
+- **Creative resources:** Explore built-in asset discovery and screenshot tools.
+- **No account required:** Free and open-source, with no mandatory cloud workspace.
 
-📱 Designed for desktop and mobile devices
+## 🔗 One project. Two ways to share it.
 
-⚛️ Experiment with frameworks instantly
+kodeWeave accepts publicly hosted **kodeWeave JSON projects** and **standalone HTML files**. You can put an entire application in one HTML file—including its CSS and JavaScript—and share or import it directly, without converting it to JSON. Both file formats support two experiences:
 
-📦 No installation required
+| Mode | What your friend sees |
+| --- | --- |
+| **Share** (`/share/?project=...`) | The project running full-screen, without the editor. |
+| **Embed / Import** (`/embed/?project=...`) | kodeWeave opening the project in its editor, with HTML selected. |
 
-🚀 Progressive Web App export built in
+### 🧪 Try a real project: Motiv8
 
-🖼️ Built-in asset discovery tools
+Explore the same working app in **two file formats**. Each format can be previewed full-screen or opened in the kodeWeave editor.
 
-🔗 Share projects through URLs
+| Project format | Full-screen preview | Open in editor | Source file |
+| --- | --- | --- | --- |
+| **kodeWeave JSON** — portable project data | [▶ View app](https://michaelsboost.com/kodeWeave/share/?project=https%3A%2F%2Fmichaelsboost.com%2Fmotiv8%2Fmotiv8-kodeWeave.json) | [✏️ Edit project](https://michaelsboost.com/kodeWeave/embed/?project=https%3A%2F%2Fmichaelsboost.com%2Fmotiv8%2Fmotiv8-kodeWeave.json) | [View JSON](https://michaelsboost.com/motiv8/motiv8-kodeWeave.json) |
+| **Single HTML file** — HTML, CSS, and JavaScript in one file | [▶ View app](https://michaelsboost.com/kodeWeave/share/?project=https%3A%2F%2Fmichaelsboost.com%2Fmotiv8%2Fsingle-indexed.html) | [✏️ Edit project](https://michaelsboost.com/kodeWeave/embed/?project=https%3A%2F%2Fmichaelsboost.com%2Fmotiv8%2Fsingle-indexed.html) | [View HTML](https://michaelsboost.com/motiv8/single-indexed.html) |
 
-📸 Generate screenshots with a click
+**Share** opens the running app without the editor. **Embed / Import** loads the file into kodeWeave so you can explore and modify it.
 
-🆓 Free and open source
+### Make links for your own projects
+
+1. Export a kodeWeave JSON project **or** prepare a standalone HTML file containing your app.
+2. Host that file somewhere publicly accessible, such as a GitHub repository using its **raw file URL**.
+3. In kodeWeave's **Export** dialog, find **Share & Embed**, paste the hosted URL, and copy the link you want.
+
+For example, given a file at `https://example.com/my-project.json`, your links would look like:
+
+```text
+https://michaelsboost.com/kodeWeave/share/?project=https://example.com/my-project.json
+https://michaelsboost.com/kodeWeave/embed/?project=https://example.com/my-project.json
+```
+
+The project URL can point to a `.json` or `.html` file. It is a reference to a hosted file: generating a link **does not upload the file**. Remote hosts must permit the browser to fetch the content (for example, through appropriate CORS headers). The project must remain accessible for shared links to work.
 
 ---
 
-## ⚡ Performance
+## ⚡ Built for the browser
 
-kodeWeave is powered by JavaScript Proxies, a custom Virtual DOM, and a DOM diffing engine designed for speed and responsiveness.
+kodeWeave uses JavaScript Proxies, a custom Virtual DOM, and DOM diffing to power its interface. Its goal is a responsive development environment without requiring every creator to set up a conventional desktop toolchain.
 
-### Lighthouse Scores
+![Lighthouse results](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/lighthouse.png)
 
-✅ Performance: 100  
-✅ Accessibility: 93  
-✅ Best Practices: 100  
-✅ SEO: 100  
+*Lighthouse image reflects a captured audit, not a guarantee of current scores on every device or deployment.*
 
-![Lighthouse Scores](https://raw.githubusercontent.com/michaelsboost/kodeWeave/main/imgs/lighthouse.png)
+## 📰 Featured on
+
+- [Web Designer Depot](https://www.webdesignerdepot.com/5-essential-open-source-tools-for-web-designers/)
+- [List Of Freeware](https://listoffreeware.com/free-open-source-dreamweaver-alternative-software-windows/)
+- [Bootstrap Dash](https://www.bootstrapdash.com/blog/codepen-alternatives)
+- [APTRON](https://aptronnoida.in/blog/essential-open-source-tools-for-web-designers/)
+- [Linux for Devices](https://www.linuxfordevices.com/tutorials/linux/adobe-dreamweaver-alternatives)
 
 ---
 
-## **📰 Featured On**
+## 🚀 Get started
 
-kodeWeave has been highlighted on several notable platforms:
+Use the **Launch App** badge at the top to open the hosted editor. No installation is required.
 
-🌟 [**Web Designer Depot**](https://www.webdesignerdepot.com/5-essential-open-source-tools-for-web-designers/)  
-🌟 [**List Of Freeware**](https://listoffreeware.com/free-open-source-dreamweaver-alternative-software-windows/)  
-🌟 [**Bootstrap Dash**](https://www.bootstrapdash.com/blog/codepen-alternatives)  
-🌟 [**APTRON**](https://aptronnoida.in/blog/essential-open-source-tools-for-web-designers/)  
-🌟 [**Linux for Devices**](https://www.linuxfordevices.com/tutorials/linux/adobe-dreamweaver-alternatives)  
-
-----------
-
-## 🚀 Try kodeWeave
-
-### Online
-
-🌐 https://michaelsboost.com/kodeWeave/go
-
-### Run Locally
+To run the repository locally:
 
 ```bash
 git clone https://github.com/michaelsboost/kodeWeave.git
@@ -155,61 +135,37 @@ cd kodeWeave
 python3 -m http.server 8000
 ```
 
-Open:
+Then visit `http://localhost:8000/go/` to use the editor. Some development changes require rebuilding the JavaScript bundle; use the project's build tooling for those changes.
 
-```text
-http://localhost:8000
-```
+## 🛠️ Technology and tools
 
----
+kodeWeave brings together open-source technologies and browser APIs, including:
 
-## **🛠️ Tech Stack**
+- [CodeMirror](https://codemirror.net/) — code editing
+- [Emmet](https://emmet.io/) — faster HTML and CSS authoring
+- [Tailwind CSS](https://tailwindcss.com/) — interface styling
+- [JSZip](https://stuk.github.io/jszip/) and [FileSaver.js](https://github.com/eligrey/FileSaver.js/) — client-side exports
+- [html2canvas](https://html2canvas.hertzen.com/) — screenshots
+- [cdnjs](https://cdnjs.com/api) — library discovery
+- [Openverse](https://openverse.org/) and [Iconify](https://iconify.design/) — creative asset discovery
+- Heroicons and Font Awesome — interface icons
 
-kodeWeave uses a number of open-source projects to work properly:
+## 🤝 Contribute
 
--   **[CodeMirror v6](http://codemirror.net/)** – Powerful web-based text editor.
--   **[html2canvas](https://html2canvas.hertzen.com/)** – Capture screenshots in JavaScript.
--   **[JSZip](https://stuk.github.io/jszip/)** – Package ZIP files locally in JavaScript.
--   **[FileSaver.js](https://github.com/eligrey/FileSaver.js/)** – Allows local file saving in JavaScript (prebuilt with JSZip).
--   **[cdnjs](https://cdnjs.com/api)** – Enables easy addition of the latest libraries and frameworks via search.
--   **[Emmet](http://emmet.io/)** – CodeMirror plugin for Zen Coding.
--   **[Tailwind CSS](https://tailwindcss.com/)** – Styles the application’s interface.
--   **[HeroIcons](https://heroicons.com/)** and **[Font Awesome](https://fontawesome.com/)** – Icon libraries used in the UI. _(Twitter logo icon was custom-designed.)_
--   **[Openverse API](https://docs.openverse.org/api/guides/documentation.html)** – Enables users to search for images and audio files for their weave.
--   **[Iconify API](https://iconify.design/docs/api/)** – Allows users to search and add vector graphics (SVGs) to their weave.
+kodeWeave is free and open-source. Bug reports, pull requests, usability improvements, documentation fixes, and new ideas are welcome.
 
-----------
+**[View source](https://github.com/michaelsboost/kodeWeave) · [Report an issue](https://github.com/michaelsboost/kodeWeave/issues) · [Star the repository](https://github.com/michaelsboost/kodeWeave/stargazers)**
 
-## 🤝 Contributing
+## ❤️ Support the project
 
-kodeWeave is **free and open-source**, and contributions are always welcome.
+If kodeWeave helps you create something, share your work, star the repository, or contribute code and feedback. You can also [support continued development](https://michaelsboost.com/donate).
 
-### **How You Can Help:**
+## 📄 License
 
-🔹 **Submit a Pull Request** – Found a bug? Have a feature idea? Let's build together!  
-🔹 **Spread the Word** – Share kodeWeave with fellow developers & creators.  
-🔹 **Fork & Experiment** – kodeWeave is yours to play with—have fun with it!
+kodeWeave is free, open-source software licensed under the [MIT License](LICENSE).
 
-If kodeWeave has been helpful to you, here are some ways you can show support:
+## 👋 Creator
 
-[![ko-fi](https://storage.ko-fi.com/cdn/useruploads/d666bcdd-8d38-47d4-b78b-018d4b726d48.png)](https://ko-fi.com/michaelsboost)
+Created by Michael Schwartz · [michaelsboost.com](https://michaelsboost.com) · [@kodeweave_app](https://x.com/kodeweave_app)
 
-☕ **Buy me a coffee:** [ko-fi.com/michaelsboost](http://ko-fi.com/michaelsboost)  
-🎨 **Grab some of my art prints:** [DeviantArt Store](https://deviantart.com/michaelsboost/prints)  
-👕 **Get a kodeWeave T-shirt or gear:** [Merch Store](https://michaelsboost.com/gear)  
-📚 **Check out my Graphic Design Course:** [Learn Design](https://michaelsboost.com/graphicdesign)  
-🛒 **Register as a customer on my store:** [Visit Store](https://michaelsboost.com/store)  
-💙 **Donate via PayPal:** [Support via PayPal](https://michaelsboost.com/donate)  
-💸 **Donate via Cash App:** [Support via SquareCash](https://cash.me/$michaelsboost)
-
-Your support helps keep kodeWeave free, open-source, and constantly improving. 🚀
-
----
-
-## 👋 About the Creator
-
-Created by Michael Schwartz
-
-🌐 https://michaelsboost.com
-
-Building tools, apps, and experiments that make technology more accessible, practical, and fun.
+**Build something. Share it. Inspire someone else to build.**

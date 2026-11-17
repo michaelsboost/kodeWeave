@@ -40,7 +40,7 @@ let app = {
     href: 'https://michaelsboost.com/',
     src: 'imgs/author.jpg'
   },
-  version: '1.3.2',
+  version: '1.3.3',
   url: 'https://github.com/michaelsboost/kodeWeave/',
   license: 'https://github.com/michaelsboost/kodeWeave/blob/main/LICENSE'
 }
@@ -88,6 +88,29 @@ let p = {
   pwaBgColorLight: "#d9e0e5",
   pwaBgColorDark: "#13171f"
 };
+// Defaults for project-scoped data; global UI preferences are retained separately.
+const freshProjectDefaults = JSON.parse(JSON.stringify(p));
+function clearProjectAddress() {
+  const url = new URL(window.location.href);
+  url.searchParams.delete('project');
+  url.hash = '';
+  history.replaceState(history.state, '', url.pathname + url.search);
+}
+function resetProjectFields() {
+  clearTimeout(projectSaveTimer);
+  // Replace all project fields, including optional settings from previous projects.
+  for (const key of Object.keys(project)) {
+    if (!(key in freshProjectDefaults)) delete project[key];
+  }
+  for (const [key, value] of Object.entries(freshProjectDefaults)) {
+    project[key] = value && typeof value === 'object'
+      ? JSON.parse(JSON.stringify(value)) : value;
+  }
+  data.activeNav = 'HTML';
+  data.settings = null;
+  data.libraries = null;
+}
+
 let d = {
   searchLibKey: null,
   librarySuggestions: null,
@@ -2466,6 +2489,61 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
+// A hosted JSON/HTML file is required: this feature never uploads local projects.
+window.updateProjectShareLinks = () => {
+  const field = document.getElementById('kw-hosted-project-url');
+  const share = document.getElementById('kw-share-link');
+  const embed = document.getElementById('kw-embed-link');
+  const status = document.getElementById('kw-share-status');
+  if (!field || !share || !embed || !status) return;
+  const raw = field.value.trim();
+  share.value = '';
+  embed.value = '';
+  if (!raw) {
+    status.textContent = 'Host your exported JSON file, then paste its public URL here.';
+    return;
+  }
+  try {
+    const project = new URL(raw, window.location.href);
+    if (!['http:', 'https:'].includes(project.protocol) || project.username || project.password) {
+      throw new Error('Invalid project URL');
+    }
+    const root = new URL('../', new URL(window.location.pathname, window.location.origin));
+    const shareUrl = new URL('share/', root);
+    const embedUrl = new URL('embed/', root);
+    shareUrl.searchParams.set('project', project.href);
+    embedUrl.searchParams.set('project', project.href);
+    share.value = shareUrl.href;
+    embed.value = embedUrl.href;
+    status.textContent = 'Links ready. The project must be publicly hosted and accessible to visitors.';
+  } catch (_) {
+    status.textContent = 'Enter a valid HTTP or HTTPS project URL.';
+  }
+};
+window.copyProjectShareLink = async (kind) => {
+  const el = document.getElementById(kind === 'embed' ? 'kw-embed-link' : 'kw-share-link');
+  const status = document.getElementById('kw-share-status');
+  if (!el || !el.value) {
+    if (status) status.textContent = 'Enter a valid hosted project URL first.';
+    return;
+  }
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(el.value);
+    } else {
+      el.focus();
+      el.select();
+      if (!document.execCommand('copy')) throw new Error('Copy unavailable');
+    }
+    if (status) status.textContent = `${kind === 'embed' ? 'Import' : 'Preview'} link copied!`;
+  } catch (_) {
+    el.focus();
+    el.select();
+    if (status) status.textContent = 'Copy the selected URL manually.';
+  }
+};
+
 window.showExportModal = () => {
   const modalContent = `
     <div class="space-y-2">
@@ -2524,6 +2602,36 @@ window.showExportModal = () => {
         </div>
       </button>
       
+      <div class="border-t border-white/[.08] my-3"></div>
+      <div class="rounded-2xl bg-white/[.04] border border-white/[.08] p-3 space-y-3">
+        <div class="flex items-center gap-2 text-cyan-300 font-semibold">
+          <span aria-hidden="true">🔗</span> Share &amp; Embed
+        </div>
+        <p class="text-xs text-slate-400">Paste a publicly hosted kodeWeave JSON or HTML file URL to generate links for friends. This does not upload your project.</p>
+        <label for="kw-hosted-project-url" class="block text-xs text-slate-300">Hosted project URL</label>
+        <input id="kw-hosted-project-url" type="url" inputmode="url" autocomplete="url"
+          placeholder="https://example.com/project.json"
+          oninput="updateProjectShareLinks()"
+          class="w-full min-w-0 rounded-xl bg-slate-950 border border-white/[.12] text-white text-sm px-3 py-3 outline-none focus:border-cyan-400" />
+        <div class="space-y-1">
+          <label for="kw-share-link" class="block text-xs text-slate-300">Full-screen preview</label>
+          <div class="flex gap-2">
+            <input id="kw-share-link" readonly aria-label="Share URL" placeholder="Share URL appears here"
+              class="min-w-0 flex-1 rounded-xl bg-slate-950 border border-white/[.1] text-slate-300 text-xs px-3 py-2" />
+            <button type="button" onclick="copyProjectShareLink('share')" class="shrink-0 rounded-xl bg-cyan-500/20 text-cyan-200 hover:bg-cyan-500/30 px-3 py-2 text-xs font-semibold">Copy</button>
+          </div>
+        </div>
+        <div class="space-y-1">
+          <label for="kw-embed-link" class="block text-xs text-slate-300">Open in kodeWeave editor</label>
+          <div class="flex gap-2">
+            <input id="kw-embed-link" readonly aria-label="Embed URL" placeholder="Import URL appears here"
+              class="min-w-0 flex-1 rounded-xl bg-slate-950 border border-white/[.1] text-slate-300 text-xs px-3 py-2" />
+            <button type="button" onclick="copyProjectShareLink('embed')" class="shrink-0 rounded-xl bg-cyan-500/20 text-cyan-200 hover:bg-cyan-500/30 px-3 py-2 text-xs font-semibold">Copy</button>
+          </div>
+        </div>
+        <p id="kw-share-status" role="status" aria-live="polite" class="text-xs text-slate-400">Host your exported JSON file, then paste its public URL here.</p>
+      </div>
+
       <button onclick="shareToCodepen(); closeExportModal()" class="w-full p-3 rounded-xl bg-white/[.05] hover:bg-white/[.1] transition flex items-center gap-3 group">
         <svg class="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5L6.5 7 12 3.5 17.5 7 12 9.5zm0 2.5l-6-3v4l6 3 6-3v-4l-6 3z"/>
@@ -3003,8 +3111,6 @@ window.fileToBase64 = file => {
   });
 }
 window.newProject = async (name) => {
-  history.replaceState(null, '', window.location.pathname + window.location.search);
-  
   // Define quick templates (modern UI templates)
   const quickTemplates = [
     'blank'
@@ -3038,7 +3144,10 @@ window.newProject = async (name) => {
       template = await response.json();
     }
     
-    // Apply template data to project
+    // Apply the new template to a clean workspace, not the previous project.
+    resetProjectFields();
+    clearProjectAddress();
+    project.activePanel = 'html';
     function capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -3103,7 +3212,10 @@ window.newProject = async (name) => {
       CloseLabel: "OK"
     });
     
-    // Start with empty project as fallback
+    // Start with a clean project even when a template is unavailable.
+    resetProjectFields();
+    clearProjectAddress();
+    project.activePanel = 'html';
     project.html = `<div class="flex flex-col items-center justify-center absolute inset-0">
       <h1 class="text-3xl font-thin mb-4">Start Coding!</h1>
       <p class="text-xl mb-4">Your ${name} project is ready</p>
@@ -3127,6 +3239,10 @@ window.importJSON = obj => {
   if (window.location.hash) {
     history.replaceState(null, '', window.location.pathname + window.location.search);
   }
+  if (typeof obj !== 'object' || typeof obj.html !== 'string') {
+    throw new Error('Invalid kodeWeave project');
+  }
+  resetProjectFields();
   const clone = { ...obj };
   project.autorun = false;
   project.name = obj.name;
@@ -3168,7 +3284,11 @@ window.importJSON = obj => {
   setPreprocessor('html', obj.html_pre_processor);
   setPreprocessor('css', obj.css_pre_processor);
   setPreprocessor('javascript', obj.javascript_pre_processor);
-  project.autorun = clone.autorun;
+  for (const key of ['pwaThemeColorLight', 'pwaThemeColorDark', 'pwaBgColorLight', 'pwaBgColorDark']) {
+    if (obj[key] !== undefined) project[key] = obj[key];
+  }
+  project.autorun = clone.autorun !== undefined ? clone.autorun : true;
+  clearProjectAddress();
 }
 window.htmlToProjectJSON_text = htmlRaw => {
   // --- utils ---
@@ -4662,7 +4782,10 @@ if (window.location.hash) {
   try {
     const compressedData = decodeURIComponent(hash);
     const jsonData = LZString.decompressFromEncodedURIComponent(compressedData);
-    project = JSON.parse(jsonData);
+    const hashProject = JSON.parse(jsonData);
+    if (!hashProject || typeof hashProject.html !== 'string') throw new Error('Invalid shared project');
+    Object.assign(p, freshProjectDefaults, hashProject);
+    clearProjectAddress();
   } catch (error) {
     console.error('Failed to load project from URL:', error);
   }
@@ -4935,7 +5058,27 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    if (savedProject) {
+    // A project URL takes precedence over the last locally saved workspace.
+    const projectParam = new URLSearchParams(window.location.search).get('project');
+    if (projectParam) {
+      try {
+        const source = new URL(projectParam, window.location.origin);
+        if (!['http:', 'https:'].includes(source.protocol)) throw new Error('Unsupported project URL');
+        const response = await fetch(source);
+        if (!response.ok) throw new Error(`Project fetch failed (${response.status})`);
+        const raw = await response.text();
+        const isHtml = /\.html?(?:$|[?#])/i.test(source.pathname);
+        const imported = isHtml ? htmlToProjectJSON_text(raw) : JSON.parse(raw);
+        if (!imported || typeof imported.html !== 'string') throw new Error('Invalid project format');
+        imported.activePanel = 'html';
+        importJSON(imported);
+        project.activePanel = 'html';
+        renderPreview(true);
+      } catch (error) {
+        console.error('Unable to import URL project:', error);
+        alert('Unable to import project: ' + error.message);
+      }
+    } else if (savedProject) {
       importJSON(savedProject);
       renderPreview(true);
     }
