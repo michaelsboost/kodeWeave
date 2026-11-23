@@ -4282,6 +4282,7 @@ ${project.description}`;
   "devDependencies": {
     ${cssBuild || twFound ? `"autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
+    "postcss-cli": "^11.0.1",
     "postcss-import": "^16.1.0",
     "cssnano": "^7.0.2",${twFound ? `
     "tailwindcss": "^3.4.4",` : ''}` : ''}
@@ -4292,6 +4293,8 @@ ${project.description}`;
   }
 }`;
     zip.file("package.json", nodeStr);
+    // Include the Termux build helper only in ZIP project exports.
+    zip.file("build-termux.sh", atob("IyEvdXNyL2Jpbi9lbnYgYmFzaApzZXQgLUVldW8gcGlwZWZhaWwKCnByb2plY3RfZGlyPSIkKGNkICIkKGRpcm5hbWUgIiR7QkFTSF9TT1VSQ0VbMF19IikiICYmIHB3ZCAtUCkiCmNkICIkcHJvamVjdF9kaXIiCgppZiBbWyAhIC1mIHBhY2thZ2UuanNvbiBdXTsgdGhlbgogIGVjaG8gIkVycm9yOiBwYWNrYWdlLmpzb24gd2FzIG5vdCBmb3VuZCBpbiAkcHJvamVjdF9kaXIiID4mMgogIGV4aXQgMQpmaQpjb21tYW5kIC12IG5vZGUgPi9kZXYvbnVsbCAyPiYxIHx8IHsgZWNobyAiRXJyb3I6IE5vZGUuanMgaXMgcmVxdWlyZWQuIiA+JjI7IGV4aXQgMTsgfQpjb21tYW5kIC12IG5wbSA+L2Rldi9udWxsIDI+JjEgfHwgeyBlY2hvICJFcnJvcjogbnBtIGlzIHJlcXVpcmVkLiIgPiYyOyBleGl0IDE7IH0KCmluc3RhbGxfZGVwcygpIHsKICBpZiBbWyAtZiBwYWNrYWdlLWxvY2suanNvbiBdXTsgdGhlbgogICAgbnBtIGNpIC0tbm8tYXVkaXQgLS1uby1mdW5kCiAgZWxzZQogICAgbnBtIGluc3RhbGwgLS1uby1hdWRpdCAtLW5vLWZ1bmQKICBmaQp9CgojIEFuZHJvaWQgc2hhcmVkIHN0b3JhZ2UgZG9lcyBub3Qgc3VwcG9ydCB0aGUgc3ltbGlua3MgbnBtIGNyZWF0ZXMgaW4gbm9kZV9tb2R1bGVzLy5iaW4uCiMgVW5kZXIgVGVybXV4LCBidWlsZCBmcm9tIHByaXZhdGUgc3RvcmFnZSBhbmQgY29weSBkaXN0IGJhY2sgdG8gdGhlIHByb2plY3QuCmlmIFtbICIke1BSRUZJWDotfSIgPT0gL2RhdGEvZGF0YS9jb20udGVybXV4L2ZpbGVzL3VzciogXV07IHRoZW4KICBmb3IgY21kIGluIHJzeW5jIHNoYTI1NnN1bTsgZG8KICAgIGNvbW1hbmQgLXYgIiRjbWQiID4vZGV2L251bGwgMj4mMSB8fCB7CiAgICAgIGVjaG8gIkVycm9yOiAkY21kIGlzIHJlcXVpcmVkIGluIFRlcm11eC4gUnVuOiBwa2cgaW5zdGFsbCByc3luYyBjb3JldXRpbHMiID4mMgogICAgICBleGl0IDEKICAgIH0KICBkb25lCiAgcHJvamVjdF9pZD0iJChwcmludGYgJyVzJyAiJHByb2plY3RfZGlyIiB8IHNoYTI1NnN1bSB8IGN1dCAtYzEtMTIpIgogIGJ1aWxkX2Rpcj0iJFBSRUZJWC92YXIvdG1wL2tvZGV3ZWF2ZS1idWlsZC0kcHJvamVjdF9pZCIKICBucG1fY2FjaGVfZGlyPSIkUFJFRklYL3Zhci9jYWNoZS9rb2Rld2VhdmUtbnBtIgogIG1rZGlyIC1wICIkYnVpbGRfZGlyIiAiJG5wbV9jYWNoZV9kaXIiCiAgcnN5bmMgLWEgLS1kZWxldGUgLS1leGNsdWRlPScuZ2l0LycgLS1leGNsdWRlPSdub2RlX21vZHVsZXMvJyAiJHByb2plY3RfZGlyLyIgIiRidWlsZF9kaXIvIgogIGNkICIkYnVpbGRfZGlyIgogIGV4cG9ydCBucG1fY29uZmlnX2NhY2hlPSIkbnBtX2NhY2hlX2RpciIKICBpbnN0YWxsX2RlcHMKICBucG0gcnVuIGJ1aWxkCiAgbWtkaXIgLXAgIiRwcm9qZWN0X2Rpci9kaXN0IgogIHJzeW5jIC1hIC0tZGVsZXRlICIkYnVpbGRfZGlyL2Rpc3QvIiAiJHByb2plY3RfZGlyL2Rpc3QvIgplbHNlCiAgaW5zdGFsbF9kZXBzCiAgbnBtIHJ1biBidWlsZApmaQoKZWNobyAiQnVpbGQgY29tcGxldGU6ICRwcm9qZWN0X2Rpci9kaXN0Igo="));
 
     // PostCSS config
     if (cssBuild) {
